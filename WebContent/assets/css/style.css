@@ -1,0 +1,387 @@
+* {
+	outline: none!important;
+	box-sizing: border-box;
+}
+
+html, body {
+	font-family: sans-serif;
+	margin: 0;
+}
+
+img {
+	max-width: 100%;
+}
+
+header, footer {
+	background-color: #1290ff;
+	color: #ffffff;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.body-front header, .body-front footer {
+	background-color: #ed721a;
+}
+
+header {
+	margin-bottom: 30px;
+}
+
+footer {
+	margin-top: 30px;
+	text-align: center;
+	line-height: 20px;
+}
+
+.container {
+	width: calc(100% - 30px);
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 1100px;
+}
+
+.d-flex {
+	display: flex;
+}
+
+header .d-flex {
+	justify-content: space-between;
+}
+
+header .busca {
+	margin-top: 30px;
+}
+
+main {
+	min-height: calc(100vh - 270px);
+}
+
+main.main-default {
+	min-height: calc(100vh - 303px);
+}
+
+form:not(.busca-form) {
+	width: 100%;
+	max-width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+form:not(.busca-form) input[type="text"], form input[type="number"], form input[type="email"], form input[type="password"], form textarea, form input[type="date"], form select {
+	display: block;
+	border-radius: 6px;
+	padding: 10px;
+	width: 100%;
+	margin-bottom: 16px;
+	border: solid 1px #777777;
+}
+
+.button-finalizar, form:not(.busca-form) button, form:not(.busca-form) input[type="submit"] {
+	width: 100%;
+	max-width: 300px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	background-color: #1290ff;
+	color: #ffffff;
+	border: none;
+	padding: 10px;
+	margin-top: 30px;
+	font-size: 20px;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+form.form-buscar-clientes {
+	display: flex!important;
+	justify-content: flex-start;
+	margin-left: 0;
+}
+
+form.form-buscar-clientes input, form.form-buscar-clientes select, form.form-buscar-clientes button {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	margin-right: 13px;
+	width: 100px;
+	min-width: 100px;
+	height: 37px;
+}
+
+form.form-buscar-clientes button {
+	margin-top: 0px;
+}
+
+.boxes-wrapper {
+	display: flex;
+	margin: 20px -10px;
+	flex-wrap: wrap;
+}
+
+.box-single {
+	background-color: #dddddd;
+	position: relative;
+	margin: 10px; 
+	padding: 13px 20px;
+	width: calc(33.33333% - 20px);
+}
+
+.box-single .button-close {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	color: #ff0000;
+	text-decoration: none;
+}
+
+.form-add {
+	border: solid 1px #999999;
+	padding: 10px;
+	border-radius: 8px;
+}
+
+.pagination-wrapper {
+	margin-top: 20px;
+}
+
+table {
+	width: 100%;
+	text-align: center;
+}
+
+.text-lowercase {
+	text-transform: lowercase;
+}
+
+.books-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	margin-left: -10px;
+	margin-right: -10px;
+	width: auto;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.books-wrapper .book-single {
+	margin-left: 10px;
+	margin-right: 10px;
+	width: calc(33.333333% - 20px);
+}
+
+.books-wrapper .book-single img {
+	max-width: 100%;
+}
+
+.product-details-wrapper {
+	display: flex;
+}
+
+.product-details-wrapper .product-image-wrapper,
+.product-details-wrapper .form-carrinho-wrapper {
+	width: 50%;
+}
+
+.product-text-wrapper {
+	padding-left: 20px;
+}
+
+form.form-carrinho input {
+	display: block;
+	border-radius: 6px;
+	padding: 10px;
+	width: 100%;
+	margin-bottom: 16px;
+	border: solid 1px #777777;	
+}
+
+form.form-carrinho button,
+body.body-front .button-finalizar {
+	background-color: #ed721a;
+}
+
+.product-details-wrapper ul,
+.product-details-wrapper li {
+	width: 100%;
+}
+
+.carrinho-itens img {
+	width: 80px;
+}
+
+.button-finalizar {
+	text-align: center;
+	text-decoration: none;
+}
+
+tbody tr td {
+	padding: 10px 0;
+}
+
+tbody tr:nth-child(even) {
+	background-color: #dddddd;
+}
+
+tbody td:nth-child(even) {
+	background-color: #08f2;
+}
+
+thead tr {
+	background-color: #cccccc;	
+}
+
+thead tr th {
+	padding: 20px 0;
+}
+
+.listagem-livros img {
+	width: 80px;
+	height: 80px;
+	object-fit: contain;
+}
+
+form.form-config {
+	max-width: 1100px;
+}
+
+form.form-config input[type="number"] {
+	display: inline;
+	width: 80px;
+    margin: 0 4px;
+    height: 25px;
+}
+
+#myChart {
+	height: 250px!important;
+}
+
+.search-content {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.search-content .search-sidebar {
+	width: 200px;
+}
+
+.search-content .search-results {
+	width: calc(100% - 200px);
+}
+
+button.btn-orange, .body-front form:not(.busca-form) button {
+	background-color: #ed721a;
+}
+
+.troca-onus {
+	color: #ff0000;
+	font-weight: 700;
+}
+
+.admin-options-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.admin-options-wrapper .admin-block {
+	width: 50%;
+}
+
+textarea {
+	resize: vertical;
+	min-height: 100px;
+}
+
+.cartao-novo-wrapper, .cartoes-wrapper-checkout.boxes-wrapper {
+	display: block;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.cartoes-wrapper-checkout.boxes-wrapper .box-single,
+.cartao-novo-wrapper .box-single {
+	width: 100%;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.pristine-error.text-help {
+	margin-top: -12px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: red;
+}
+
+.form-group.has-danger input,
+.form-group.has-danger select,
+.form-group.has-danger textarea {
+	border-color: #ff0000!important;
+}
+
+form.form-cart {
+	max-width: 100%; 
+}
+
+.form-varios .varios-error-message {
+	text-align: center;
+	color: #ff0000;
+	display: none;
+}
+
+.form-varios.error {
+	background-color: #ffaabb;
+	padding: 20px;
+	margin-right: -20px;
+	margin-left: -20px;
+	width: auto;
+}
+
+.input-hidden-like {
+	width: 1px!important;
+    height: 1px;
+    padding: 0!important;
+    position: absolute;
+    top: -99999px;
+    left: -99999px;
+}
+
+.form-varios.error .varios-error-message {
+	display: block;
+}
+
+.form-cadastro-cliente input[type="hidden"] {
+	display: block;
+}
+
+.cancelado {
+	opacity: 0.5;
+	pointer-events: none;
+	cursor: disabled;
+}
+
+.js-paginated-table,
+.paginated-table-wrapper .tabela-pagina-single {
+	display: none;
+}
+
+.paginated-table-wrapper .tabela-pagina-single.active {
+	display: block;
+}
+
+.boxes-wrapper.boxes-cupons-troca .box-single {
+    width: calc(50% - 20px);
+}
+
+.configuracoes-d-flex {
+	display: flex;
+	justify-content: space-between;
+}
+
+.configuracoes-d-flex .button-finalizar {
+	margin-left: 0;
+    margin-right: 0;
+    width: 195px;
+}
+
+[data-js-linktopage].active {
+	background-color: #aaaaaa;
+	border: solid 1px black;
+}

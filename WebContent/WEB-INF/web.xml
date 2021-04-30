@@ -1,0 +1,828 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+	<display-name>trabalho-les</display-name>
+	<welcome-file-list>
+    	<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>servlets.Home</servlet-name>
+		<servlet-class>servlets.Home</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.Home</servlet-name>
+		<url-pattern>/home</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.HomeAdmin</servlet-name>
+		<servlet-class>servlets.HomeAdmin</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.HomeAdmin</servlet-name>
+		<url-pattern>/homeAdmin</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.Login</servlet-name>
+		<servlet-class>servlets.Login</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.Login</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.LoginAction</servlet-name>
+		<servlet-class>servlets.LoginAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.LoginAction</servlet-name>
+		<url-pattern>/loginAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.LoginAdmin</servlet-name>
+		<servlet-class>servlets.LoginAdmin</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.LoginAdmin</servlet-name>
+		<url-pattern>/loginAdmin</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.LoginAdminAction</servlet-name>
+		<servlet-class>servlets.LoginAdminAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.LoginAdminAction</servlet-name>
+		<url-pattern>/loginAdminAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.Logout</servlet-name>
+		<servlet-class>servlets.Logout</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.Logout</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.LogoutRedirect</servlet-name>
+		<servlet-class>servlets.LogoutRedirect</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.LogoutRedirect</servlet-name>
+		<url-pattern>/logoutRedirect</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.CadastroCliente</servlet-name>
+		<servlet-class>servlets.CadastroCliente</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.CadastroCliente</servlet-name>
+		<url-pattern>/cadastroCliente</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.CadastroClienteAction</servlet-name>
+		<servlet-class>servlets.actions.CadastroClienteAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.CadastroClienteAction</servlet-name>
+		<url-pattern>/cadastroClienteAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.CadastroUsuarioAction</servlet-name>
+		<servlet-class>servlets.actions.CadastroUsuarioAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.CadastroUsuarioAction</servlet-name>
+		<url-pattern>/cadastroUsuarioAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.EditarCliente</servlet-name>
+		<servlet-class>servlets.EditarCliente</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.EditarCliente</servlet-name>
+		<url-pattern>/editarCliente</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.EditarUsuarioAdmin</servlet-name>
+		<servlet-class>servlets.EditarUsuarioAdmin</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.EditarUsuarioAdmin</servlet-name>
+		<url-pattern>/editarUsuarioAdmin</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.AlterarSenhaUsuarioAdmin</servlet-name>
+		<servlet-class>servlets.AlterarSenhaUsuarioAdmin</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.AlterarSenhaUsuarioAdmin</servlet-name>
+		<url-pattern>/alterarSenhaUsuarioAdmin</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlterarSenhaUsuarioAdminAction</servlet-name>
+		<servlet-class>servlets.actions.AlterarSenhaUsuarioAdminAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlterarSenhaUsuarioAdminAction</servlet-name>
+		<url-pattern>/alterarSenhaUsuarioAdminAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlterarClienteAction</servlet-name>
+		<servlet-class>servlets.actions.AlterarClienteAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlterarClienteAction</servlet-name>
+		<url-pattern>/alterarClienteAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlterarClienteStatusAction</servlet-name>
+		<servlet-class>servlets.actions.AlterarClienteStatusAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlterarClienteStatusAction</servlet-name>
+		<url-pattern>/alterarClienteStatusAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlterarUsuarioAdminAction</servlet-name>
+		<servlet-class>servlets.actions.AlterarUsuarioAdminAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlterarUsuarioAdminAction</servlet-name>
+		<url-pattern>/alterarUsuarioAdminAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlterarUsuarioAdminStatusAction</servlet-name>
+		<servlet-class>servlets.actions.AlterarUsuarioAdminStatusAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlterarUsuarioAdminStatusAction</servlet-name>
+		<url-pattern>/alterarUsuarioAdminStatusAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.AlterarMeusDados</servlet-name>
+		<servlet-class>servlets.AlterarMeusDados</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.AlterarMeusDados</servlet-name>
+		<url-pattern>/alterarMeusDados</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlterarMeusDadosAction</servlet-name>
+		<servlet-class>servlets.actions.AlterarMeusDadosAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlterarMeusDadosAction</servlet-name>
+		<url-pattern>/alterarMeusDadosAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.AlterarSenhaMinha</servlet-name>
+		<servlet-class>servlets.AlterarSenhaMinha</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.AlterarSenhaMinha</servlet-name>
+		<url-pattern>/alterarMinhaSenha</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlterarMinhaSenhaAction</servlet-name>
+		<servlet-class>servlets.actions.AlterarMinhaSenhaAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlterarMinhaSenhaAction</servlet-name>
+		<url-pattern>/alterarMinhaSenhaAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.AlterarSenhaClienteOutro</servlet-name>
+		<servlet-class>servlets.AlterarSenhaClienteOutro</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.AlterarSenhaClienteOutro</servlet-name>
+		<url-pattern>/alterarSenhaCliente</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.ExcluirCliente</servlet-name>
+		<servlet-class>servlets.ExcluirCliente</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.ExcluirCliente</servlet-name>
+		<url-pattern>/excluirCliente</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.ListagemClientes</servlet-name>
+		<servlet-class>servlets.ListagemClientes</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.ListagemClientes</servlet-name>
+		<url-pattern>/listagemClientes</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.MinhaConta</servlet-name>
+		<servlet-class>servlets.MinhaConta</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.MinhaConta</servlet-name>
+		<url-pattern>/minhaConta</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.VerCarrinho</servlet-name>
+		<servlet-class>servlets.VerCarrinho</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.VerCarrinho</servlet-name>
+		<url-pattern>/carrinho</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.Busca</servlet-name>
+		<servlet-class>servlets.Busca</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.Busca</servlet-name>
+		<url-pattern>/busca</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.Checkout</servlet-name>
+		<servlet-class>servlets.Checkout</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.Checkout</servlet-name>
+		<url-pattern>/checkout</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.EsqueciMinhaSenha</servlet-name>
+		<servlet-class>servlets.EsqueciMinhaSenha</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.EsqueciMinhaSenha</servlet-name>
+		<url-pattern>/esqueciMinhaSenha</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.MeusPedidos</servlet-name>
+		<servlet-class>servlets.MeusPedidos</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.MeusPedidos</servlet-name>
+		<url-pattern>/meusPedidos</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.ListagemPedidosAdmin</servlet-name>
+		<servlet-class>servlets.ListagemPedidosAdmin</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.ListagemPedidosAdmin</servlet-name>
+		<url-pattern>/listagemPedidosAdmin</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.DetalhesPedido</servlet-name>
+		<servlet-class>servlets.DetalhesPedido</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.DetalhesPedido</servlet-name>
+		<url-pattern>/pedido</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.DetalhesPedidoAdmin</servlet-name>
+		<servlet-class>servlets.DetalhesPedidoAdmin</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.DetalhesPedidoAdmin</servlet-name>
+		<url-pattern>/pedidoAdmin</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.DetalhesProduto</servlet-name>
+		<servlet-class>servlets.DetalhesProduto</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.DetalhesProduto</servlet-name>
+		<url-pattern>/produto</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.CadastroUsuarioAdmin</servlet-name>
+		<servlet-class>servlets.CadastroUsuarioAdmin</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.CadastroUsuarioAdmin</servlet-name>
+		<url-pattern>/cadastroUsuarioAdmin</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.ListagemUsuariosAdmin</servlet-name>
+		<servlet-class>servlets.ListagemUsuariosAdmin</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.ListagemUsuariosAdmin</servlet-name>
+		<url-pattern>/listagemUsuariosAdmin</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.CadastroCupom</servlet-name>
+		<servlet-class>servlets.CadastroCupom</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.CadastroCupom</servlet-name>
+		<url-pattern>/cadastroCupom</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.EditarCupom</servlet-name>
+		<servlet-class>servlets.EditarCupom</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.EditarCupom</servlet-name>
+		<url-pattern>/editarCupom</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.ListagemCupons</servlet-name>
+		<servlet-class>servlets.ListagemCupons</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.ListagemCupons</servlet-name>
+		<url-pattern>/listagemCupons</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.CadastroLivro</servlet-name>
+		<servlet-class>servlets.CadastroLivro</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.CadastroLivro</servlet-name>
+		<url-pattern>/cadastroLivro</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.EditarLivro</servlet-name>
+		<servlet-class>servlets.EditarLivro</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.EditarLivro</servlet-name>
+		<url-pattern>/editarLivro</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.ListagemLivros</servlet-name>
+		<servlet-class>servlets.ListagemLivros</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.ListagemLivros</servlet-name>
+		<url-pattern>/listagemLivros</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.ListagemEstoque</servlet-name>
+		<servlet-class>servlets.ListagemEstoque</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.ListagemEstoque</servlet-name>
+		<url-pattern>/listagemEstoque</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.CadastroEstoque</servlet-name>
+		<servlet-class>servlets.CadastroEstoque</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.CadastroEstoque</servlet-name>
+		<url-pattern>/cadastroEstoque</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.SolicitarTroca</servlet-name>
+		<servlet-class>servlets.SolicitarTroca</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.SolicitarTroca</servlet-name>
+		<url-pattern>/solicitarTroca</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.Configuracoes</servlet-name>
+		<servlet-class>servlets.Configuracoes</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.Configuracoes</servlet-name>
+		<url-pattern>/configuracoes</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.ImplantarDominio</servlet-name>
+		<servlet-class>servlets.ImplantarDominio</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.ImplantarDominio</servlet-name>
+		<url-pattern>/implantarDominio</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.ListagemCuponsTroca</servlet-name>
+		<servlet-class>servlets.ListagemCuponsTroca</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.ListagemCuponsTroca</servlet-name>
+		<url-pattern>/listagemCuponsTroca</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.MeusCuponsTroca</servlet-name>
+		<servlet-class>servlets.MeusCuponsTroca</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.MeusCuponsTroca</servlet-name>
+		<url-pattern>/meusCuponsTroca</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.ListagemSolicitacoesTroca</servlet-name>
+		<servlet-class>servlets.ListagemSolicitacoesTroca</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.ListagemSolicitacoesTroca</servlet-name>
+		<url-pattern>/listagemSolicitacoesTroca</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.JustificarInativacaoLivro</servlet-name>
+		<servlet-class>servlets.JustificarInativacaoLivro</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.JustificarInativacaoLivro</servlet-name>
+		<url-pattern>/justificarInativacaoLivro</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.LivrosPendentesInativacao</servlet-name>
+		<servlet-class>servlets.LivrosPendentesInativacao</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.LivrosPendentesInativacao</servlet-name>
+		<url-pattern>/livrosPendentesInativacao</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.TodosPedidos</servlet-name>
+		<servlet-class>servlets.TodosPedidos</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.TodosPedidos</servlet-name>
+		<url-pattern>/todosPedidos</url-pattern>
+	</servlet-mapping>
+
+
+
+
+
+	<servlet>
+		<servlet-name>servlets.ListagemFornecedor</servlet-name>
+		<servlet-class>servlets.ListagemFornecedor</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.ListagemFornecedor</servlet-name>
+		<url-pattern>/listagemFornecedores</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.CadastroFornecedor</servlet-name>
+		<servlet-class>servlets.CadastroFornecedor</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.CadastroFornecedor</servlet-name>
+		<url-pattern>/cadastroFornecedor</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.EditarFornecedor</servlet-name>
+		<servlet-class>servlets.EditarFornecedor</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.EditarFornecedor</servlet-name>
+		<url-pattern>/editarFornecedor</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>servlets.ListagemGrupoPrecificacao</servlet-name>
+		<servlet-class>servlets.ListagemGrupoPrecificacao</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.ListagemGrupoPrecificacao</servlet-name>
+		<url-pattern>/listagemGruposPrecificacao</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.CadastroGrupoPrecificacao</servlet-name>
+		<servlet-class>servlets.CadastroGrupoPrecificacao</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.CadastroGrupoPrecificacao</servlet-name>
+		<url-pattern>/cadastroGrupoPrecificacao</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.EditarGrupoPrecificacao</servlet-name>
+		<servlet-class>servlets.EditarGrupoPrecificacao</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.EditarGrupoPrecificacao</servlet-name>
+		<url-pattern>/editarGrupoPrecificacao</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlterarFornecedorStatusAction</servlet-name>
+		<servlet-class>servlets.actions.AlterarFornecedorStatusAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlterarFornecedorStatusAction</servlet-name>
+		<url-pattern>/alterarFornecedorStatusAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlterarGrupoPrecificacaoStatusAction</servlet-name>
+		<servlet-class>servlets.actions.AlterarGrupoPrecificacaoStatusAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlterarGrupoPrecificacaoStatusAction</servlet-name>
+		<url-pattern>/alterarGrupoPrecificacaoStatusAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlterarCupomStatusAction</servlet-name>
+		<servlet-class>servlets.actions.AlterarCupomStatusAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlterarCupomStatusAction</servlet-name>
+		<url-pattern>/alterarCupomStatusAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.ConcluirInativacao</servlet-name>
+		<servlet-class>servlets.actions.ConcluirInativacao</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.ConcluirInativacao</servlet-name>
+		<url-pattern>/concluirInativacao</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlterarStatusPedido</servlet-name>
+		<servlet-class>servlets.actions.AlterarStatusPedido</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlterarStatusPedido</servlet-name>
+		<url-pattern>/alterarStatusPedido</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.DecidirPedidoTroca</servlet-name>
+		<servlet-class>servlets.actions.DecidirPedidoTroca</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.DecidirPedidoTroca</servlet-name>
+		<url-pattern>/decidirPedidoTroca</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.ConfirmarRecebimentoTroca</servlet-name>
+		<servlet-class>servlets.actions.ConfirmarRecebimentoTroca</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.ConfirmarRecebimentoTroca</servlet-name>
+		<url-pattern>/confirmarRecebimentoTroca</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlterarSenhaClienteAction</servlet-name>
+		<servlet-class>servlets.actions.AlterarSenhaClienteAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlterarSenhaClienteAction</servlet-name>
+		<url-pattern>/alterarSenhaClienteAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.CadastroLivroAction</servlet-name>
+		<servlet-class>servlets.actions.CadastroLivroAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.CadastroLivroAction</servlet-name>
+		<url-pattern>/cadastroLivroAction</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>servlets.NovaConta</servlet-name>
+		<servlet-class>servlets.NovaConta</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.NovaConta</servlet-name>
+		<url-pattern>/novaConta</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.NovaContaAction</servlet-name>
+		<servlet-class>servlets.actions.NovaContaAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.NovaContaAction</servlet-name>
+		<url-pattern>/novaContaAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AdicionarCarrinho</servlet-name>
+		<servlet-class>servlets.actions.AdicionarCarrinho</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AdicionarCarrinho</servlet-name>
+		<url-pattern>/adicionarCarrinho</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.RemoverItemCarrinho</servlet-name>
+		<servlet-class>servlets.actions.RemoverItemCarrinho</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.RemoverItemCarrinho</servlet-name>
+		<url-pattern>/removerItemCarrinho</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlteraQteItemCarrinho</servlet-name>
+		<servlet-class>servlets.actions.AlteraQteItemCarrinho</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlteraQteItemCarrinho</servlet-name>
+		<url-pattern>/alteraQteItemCarrinho</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.FinalizarCompra</servlet-name>
+		<servlet-class>servlets.actions.FinalizarCompra</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.FinalizarCompra</servlet-name>
+		<url-pattern>/finalizarCompra</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.CadastrarEstoqueAction</servlet-name>
+		<servlet-class>servlets.actions.CadastrarEstoqueAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.CadastrarEstoqueAction</servlet-name>
+		<url-pattern>/cadastrarEstoqueAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlterarConfiguracoes</servlet-name>
+		<servlet-class>servlets.actions.AlterarConfiguracoes</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlterarConfiguracoes</servlet-name>
+		<url-pattern>/alterarConfiguracoes</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>servlets.actions.ResetarConfiguracoes</servlet-name>
+		<servlet-class>servlets.actions.ResetarConfiguracoes</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.ResetarConfiguracoes</servlet-name>
+		<url-pattern>/resetarConfiguracoes</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>servlets.api.ConsultaPrecoCupomDesconto</servlet-name>
+		<servlet-class>servlets.api.ConsultaPrecoCupomDesconto</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.api.ConsultaPrecoCupomDesconto</servlet-name>
+		<url-pattern>/api/cupomDesconto</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.api.ConsultaPrecoCupomTroca</servlet-name>
+		<servlet-class>servlets.api.ConsultaPrecoCupomTroca</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.api.ConsultaPrecoCupomTroca</servlet-name>
+		<url-pattern>/api/cupomTroca</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.CadastroCupomDescontoAction</servlet-name>
+		<servlet-class>servlets.actions.CadastroCupomDescontoAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.CadastroCupomDescontoAction</servlet-name>
+		<url-pattern>/cadastroCupomDescontoAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlteraCupomStatusAction</servlet-name>
+		<servlet-class>servlets.actions.AlteraCupomStatusAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlteraCupomStatusAction</servlet-name>
+		<url-pattern>/alteraCupomStatusAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlterarCupomAction</servlet-name>
+		<servlet-class>servlets.actions.AlterarCupomAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlterarCupomAction</servlet-name>
+		<url-pattern>/alterarCupomAction</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>servlets.api.CalculaFrete</servlet-name>
+		<servlet-class>servlets.api.CalculaFrete</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.api.CalculaFrete</servlet-name>
+		<url-pattern>/api/calculaFrete</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.ReprovaPedido</servlet-name>
+		<servlet-class>servlets.actions.ReprovaPedido</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.ReprovaPedido</servlet-name>
+		<url-pattern>/reprovaPedido</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.ProcessaPedido</servlet-name>
+		<servlet-class>servlets.actions.ProcessaPedido</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.ProcessaPedido</servlet-name>
+		<url-pattern>/processarPedido</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.CadastroGrupoPrecificacaoAction</servlet-name>
+		<servlet-class>servlets.actions.CadastroGrupoPrecificacaoAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.CadastroGrupoPrecificacaoAction</servlet-name>
+		<url-pattern>/cadastroGrupoPrecificacaoAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.AlteraGrupoPrecificacaoAction</servlet-name>
+		<servlet-class>servlets.actions.AlteraGrupoPrecificacaoAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlteraGrupoPrecificacaoAction</servlet-name>
+		<url-pattern>/alteraGrupoPrecificacaoAction</url-pattern>
+	</servlet-mapping>
+	
+	
+
+
+	
+</web-app>
