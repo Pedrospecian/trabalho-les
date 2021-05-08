@@ -9,6 +9,7 @@ import utils.Campo;
 public class LoginViewHelper {
 	public boolean isAuthorized(HttpServletRequest req, HttpServletResponse resp, int tipoLogin) {
 		//redireciona o usuario caso ele nao esteja logado
+		//return true;
 		Cookie[] cookies = req.getCookies();
 
 		Campo[] campos = new Campo[4];
@@ -57,20 +58,20 @@ public class LoginViewHelper {
 		if (tipo == 2) {
 			if (auth) {
 				//cliente logado
-				header = "<div class='container'><div class='d-flex'><a href='/trabalho-les/home'>Home</a><div class='busca'><form class='busca-form' method='get' action='/trabalho-les/busca'><input type='text' name='term' cypress-term /><button cypress-busca>Pesquisar</button></form></div><div class='user-nome'><p>Olá, " + username + "</p><a href='/trabalho-les/minhaConta' cypress-minhaConta>Minha conta</a><br><a href='/trabalho-les/logout' cypress-logout>Logout</a></div></div></div>";
+				header = "<div class='container'><div class='d-flex'><a href='/trabalho-les/home' cypress-headerpaginainicial>Home</a><div class='busca'><form class='busca-form' method='get' action='/trabalho-les/busca'><input type='text' name='term' cypress-term /><button cypress-busca>Pesquisar</button></form></div><div class='user-nome'><p>Logado(a) como " + username + "</p><a href='/trabalho-les/minhaConta' cypress-minhaConta>Minha conta</a><br><a href='/trabalho-les/logout' cypress-logout>Logout</a></div></div></div>";
 			} else {
 				//cliente nao logado
-				header = "<div class='container'><div class='d-flex'><a href='/trabalho-les/home'>Home</a><div class='busca'><form class='busca-form' method='get' action='/trabalho-les/busca'><input type='text' name='term' cypress-term /><button cypress-busca>Pesquisar</button></form></div><a href='/trabalho-les/login' cypress-login>Login</a></div></div>";
+				header = "<div class='container'><div class='d-flex'><a href='/trabalho-les/home' cypress-headerpaginainicial>Home</a><div class='busca'><form class='busca-form' method='get' action='/trabalho-les/busca'><input type='text' name='term' cypress-term /><button cypress-busca>Pesquisar</button></form></div><a href='/trabalho-les/login' cypress-login>Login</a></div></div>";
 			}		
 		}
 
 		if (tipo == 1) {
 			if (auth) {
 				//admin logado
-				header = "<div class='container'><div class='d-flex'><a href='/trabalho-les/homeAdmin'>Home do admin</a><div class='user-nome'><p>Olá, " + username + "</p><a href='/trabalho-les/logout' cypress-logout>Logout</a></div></div></div>";
+				header = "<div class='container'><div class='d-flex'><a href='/trabalho-les/homeAdmin' cypress-homeAdmin>Home do admin</a><div class='user-nome'><p>Logado(a) como " + username + "</p><a href='/trabalho-les/logout' cypress-logout>Logout</a></div></div></div>";
 			} else {
 				//admin nao logado
-				header = "<div class='container'><div class='d-flex'><a href='/trabalho-les/homeAdmin'>Home do admin</a><a href='/trabalho-les/loginAdmin' cypress-loginAdmin>Login no admin</a></div>";
+				header = "<div class='container'><div class='d-flex'><a href='/trabalho-les/homeAdmin' cypress-homeAdmin>Home do admin</a><a href='/trabalho-les/loginAdmin' cypress-loginAdmin>Login no admin</a></div>";
 			}
 		}
 

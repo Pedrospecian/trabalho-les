@@ -40,7 +40,7 @@
 								<td>${registro.getQuantidade()}</td>
 								<td><span class="js-dinheiro">${registro.getItemCarrinho().getLivro().getPreco()}</span></td>
 								<td>${registro.getItemCarrinho().getCliente().getNome()}</td>
-								<td>
+								<td cypress-solicitacoestrocastatus>
 									<c:if test = '${registro.getStatus() == 0}'>
 										Troca solicitada. Aguardando decisão
 									</c:if>

@@ -77,7 +77,7 @@
 				</thead>
 				<tbody>
 					<c:forEach var="registro" items="${registros}">
-					<tr>
+					<tr data-status="${registro.getStatus()}">
 						<td>${registro.getId()}</td>
 						<td>
 							<span class="js-date-value">

@@ -65,7 +65,7 @@
 								<br>
 								Subtotal: <span class="js-dinheiro">${item.getLivro().getPreco() * item.getQuantidade()}</span>
 							</td>
-							<td>
+							<td cypress-quantidadeLivroPedido>
 								${item.getQuantidade()}
 
 								<c:if test = '${item.getQuantidadeItensTrocados() > 0}'>

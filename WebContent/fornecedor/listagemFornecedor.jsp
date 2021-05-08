@@ -34,8 +34,6 @@
 							<th>Id</th>
 							<th>Nome</th>
 							<th>E-mail</th>
-							<th>Endereço</th>
-							<th>Documento</th>
 							<th>Status</th>
 							<th>Ações</th>
 						</tr>
@@ -49,12 +47,6 @@
 								</td>
 								<td>
 									teste@teste.com
-								</td>
-								<td>
-									Rua teste, nº 1
-								</td>
-								<td>
-									11111111111 (CPF)
 								</td>
 								<td>Ativo</td>
 								<td>

@@ -1662,7 +1662,8 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			"inner join carrinhos_produtos on carrinhos_produtos.idCarrinhoProduto = solicitacoes_troca.idItemCarrinho " +
 			"inner join livros on carrinhos_produtos.idProduto = livros.id "+
 			"inner join carrinhos on carrinhos.id = carrinhos_produtos.idCarrinho "+
-			"inner join clientes on clientes.id = carrinhos.idUsuario;");
+			"inner join clientes on clientes.id = carrinhos.idUsuario "+
+			"order by solicitacoes_troca.id desc;");
 			
 			ResultSet rs = pst.executeQuery();
 			
