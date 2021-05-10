@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Listagem de Livros pendentes para inativação</title>
+	<title>Listagem de Livros pendentes para ativação</title>
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
 	</header>
 	<main>
 		<div class="container">
-			<h1>Listagem de livros pendentes para inativação</h1>
+			<h1>Listagem de livros pendentes para ativação</h1>
 			<h2>Buscar livros</h2>
 			<form method="get" action="#" class="form-buscar-clientes">
 				<input type="text" name="titulo" placeholder="Título" >
@@ -25,7 +25,7 @@
 					<option value="3">Beltrano</option>
 				</select>
 				<select name="categoriaInativacao">
-					<option>Categoria de inativação</option>
+					<option>Categoria de ativação</option>
 					<option value="1">Categoria 1</option>
 					<option value="2">Categoria 2</option>
 				</select>
@@ -41,7 +41,7 @@
 								<th>Capa</th>
 								<th>Título</th>
 								<th>Justificativa</th>
-								<th>Categoria de inativação</th>
+								<th>Categoria de ativação</th>
 								<th>Usuário responsável</th>
 								<th>Ações</th>
 							</tr>
@@ -56,9 +56,9 @@
 									<td>${solicitacao.getCategoria().getNome()}</td>
 									<td>Fulano</td>
 									<td>
-										<a href="/trabalho-les/concluirInativacao?id=${solicitacao.getId()}&aceite=1" cypress-aceitarInativacao>Aceitar inativação</a>
+										<a href="/trabalho-les/concluirAtivacao?id=${solicitacao.getId()}&aceite=1" cypress-aceitarAtivacao>Aceitar ativação</a>
 										<br>
-										<a href="/trabalho-les/concluirInativacao?id=${solicitacao.getId()}&aceite=0" cypress-recusarInativacao>Recusar inativação</a>
+										<a href="/trabalho-les/concluirAtivacao?id=${solicitacao.getId()}&aceite=0" cypress-recusarAtivacao>Recusar ativação</a>
 									</td>
 								</tr>
 							</c:forEach>					

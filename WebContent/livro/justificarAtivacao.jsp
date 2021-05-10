@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Justificar inativação</title>
+	<title>Justificar ativação</title>
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
@@ -14,12 +14,12 @@
 	</header>
 	<main class="main-default">
 		<div class="container">
-			<h1>Justificar inativação de ${livro.getTitulo()}</h1>
-			<p>Após enviar a justificativa, o administrador poderá inativar o livro ou não.</p>
-			<form action="/trabalho-les/cadastrarSolicitacaoInativacao" class="js-pristine-validation">
+			<h1>Justificar ativação de ${livro.getTitulo()}</h1>
+			<p>Após enviar a justificativa, o administrador poderá ativar o livro ou não.</p>
+			<form action="/trabalho-les/cadastrarSolicitacaoAtivacao" class="js-pristine-validation">
 				<input type="hidden" name="id" value="${livro.getId()}">
 				<div class="form-group">
-					<select name="categoriaInativacao" required data-pristine-required-message="Este campo é obrigatório" cypress-categoriaInativacao>
+					<select name="categoriaAtivacao" required data-pristine-required-message="Este campo é obrigatório" cypress-categoriaAtivacao>
 						<option value="">Categoria de inativação</option>
 						<c:forEach var="categoria" items="${categorias}">
 							<option value="${categoria.getId()}">${categoria.getNome()}</option>
