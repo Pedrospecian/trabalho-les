@@ -488,12 +488,30 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>servlets.JustificarAtivacaoLivro</servlet-name>
+		<servlet-class>servlets.JustificarAtivacaoLivro</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.JustificarAtivacaoLivro</servlet-name>
+		<url-pattern>/justificarAtivacaoLivro</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>servlets.LivrosPendentesInativacao</servlet-name>
 		<servlet-class>servlets.LivrosPendentesInativacao</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>servlets.LivrosPendentesInativacao</servlet-name>
 		<url-pattern>/livrosPendentesInativacao</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.LivrosPendentesAtivacao</servlet-name>
+		<servlet-class>servlets.LivrosPendentesAtivacao</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.LivrosPendentesAtivacao</servlet-name>
+		<url-pattern>/livrosPendentesAtivacao</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -820,7 +838,25 @@
 		<servlet-name>servlets.actions.AlteraGrupoPrecificacaoAction</servlet-name>
 		<url-pattern>/alteraGrupoPrecificacaoAction</url-pattern>
 	</servlet-mapping>
-	
+
+
+	<servlet>
+		<servlet-name>servlets.actions.CadastrarSolicitacaoInativacao</servlet-name>
+		<servlet-class>servlets.actions.CadastrarSolicitacaoInativacao</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.CadastrarSolicitacaoInativacao</servlet-name>
+		<url-pattern>/cadastrarSolicitacaoInativacao</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.CadastrarSolicitacaoAtivacao</servlet-name>
+		<servlet-class>servlets.actions.CadastrarSolicitacaoAtivacao</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.CadastrarSolicitacaoAtivacao</servlet-name>
+		<url-pattern>/cadastrarSolicitacaoAtivacao</url-pattern>
+	</servlet-mapping>
 	
 
 

@@ -1,8 +1,12 @@
 package facades;
 
 import dao.LivroDAO;
+import model.CategoriaInativacao;
+import model.CategoriaAtivacao;
 import model.Livro;
 import model.LivroEstoque;
+import model.SolicitacaoAtivacaoLivro;
+import model.SolicitacaoInativacaoLivro;
 import strategies.ValidarCampos;
 import utils.Campo;
 import utils.ResultadosBusca;
@@ -29,6 +33,26 @@ public class FachadaLivro implements IFachada< Livro, Campo[]> {
 		LivroDAO dao = new LivroDAO();
 
 		dao.select(campos);
+		ArrayList arrl = dao.selectVals;
+		ResultadosBusca rb = new ResultadosBusca(arrl);
+
+		return rb;
+	}
+
+	public ResultadosBusca getSolicitacoesAtivacao(Campo[] campos) {
+		LivroDAO dao = new LivroDAO();
+
+		dao.getSolicitacoesAtivacao(campos);
+		ArrayList arrl = dao.selectVals;
+		ResultadosBusca rb = new ResultadosBusca(arrl);
+
+		return rb;
+	}
+
+	public ResultadosBusca getSolicitacoesInativacao(Campo[] campos) {
+		LivroDAO dao = new LivroDAO();
+
+		dao.getSolicitacoesInativacao(campos);
 		ArrayList arrl = dao.selectVals;
 		ResultadosBusca rb = new ResultadosBusca(arrl);
 
@@ -76,6 +100,20 @@ public class FachadaLivro implements IFachada< Livro, Campo[]> {
 		LivroDAO dao = new LivroDAO();
 
 		dao.selectHome();
+		return dao.selectVals;
+	}
+
+	public ArrayList<CategoriaInativacao> getCategoriasInativacao() {
+		LivroDAO dao = new LivroDAO();
+
+		dao.getCategoriasInativacao();
+		return dao.selectVals;
+	}
+
+	public ArrayList<CategoriaAtivacao> getCategoriasAtivacao() {
+		LivroDAO dao = new LivroDAO();
+
+		dao.getCategoriasAtivacao();
 		return dao.selectVals;
 	}
 
@@ -139,5 +177,17 @@ public class FachadaLivro implements IFachada< Livro, Campo[]> {
 			e.printStackTrace();
 			//return "Erro de validação. Tente novamente.";
 		}		
+	}
+
+	public void inserirSolicitacaoInativacaoLivro(SolicitacaoInativacaoLivro sol) {
+		LivroDAO dao = new LivroDAO();
+		
+		dao.inserirSolicitacaoInativacaoLivro(sol);		
+	}
+	
+	public void inserirSolicitacaoAtivacaoLivro(SolicitacaoAtivacaoLivro sol) {
+		LivroDAO dao = new LivroDAO();
+		
+		dao.inserirSolicitacaoAtivacaoLivro(sol);		
 	}
 }

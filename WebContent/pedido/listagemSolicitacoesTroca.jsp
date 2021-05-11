@@ -76,11 +76,11 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<div class="pagination-wrapper">
+				<!--<div class="pagination-wrapper">
 					<c:forEach var="link" items="${linksPaginacao}" varStatus="loop">
 						<a href="?${link}">1</a>
 					</c:forEach>
-				</div>
+				</div>-->
 				<div class="paginated-table-wrapper"></div>
 				<div class="js-pagination-links"></div>
 			</c:if>

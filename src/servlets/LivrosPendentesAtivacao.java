@@ -11,7 +11,7 @@ import facades.FachadaLivro;
 import utils.ResultadosBusca;
 import viewHelpers.LoginViewHelper;
 
-public class LivrosPendentesInativacao extends HttpServlet {
+public class LivrosPendentesAtivacao extends HttpServlet {
 	private static final long serialVersionUID = 12;
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,11 +23,11 @@ public class LivrosPendentesInativacao extends HttpServlet {
 			resp.setCharacterEncoding("UTF-8");
 
 			FachadaLivro fachada = new FachadaLivro();
-			ResultadosBusca registros = fachada.getSolicitacoesInativacao(null);
+			ResultadosBusca registros = fachada.getSolicitacoesAtivacao(null);
 
 			req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
 			req.setAttribute("registros", registros.getResultados());
-			req.getRequestDispatcher("livro/listagemLivrosPendentesInativacao.jsp").forward(req, resp);
+			req.getRequestDispatcher("livro/listagemLivrosPendentesAtivacao.jsp").forward(req, resp);
 		}
 	}
 }

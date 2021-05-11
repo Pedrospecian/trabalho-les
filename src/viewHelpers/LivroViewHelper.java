@@ -152,5 +152,25 @@ public class LivroViewHelper {
 		return campos;
 	}
 
+	public static Campo[] getInativacaoCampos(HttpServletRequest req) {
+		Campo[] campos = new Campo[3];
+
+		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
+		campos[1] = new Campo(1, req.getParameter("categoriaInativacao"), true, "", true, "categoriaInativacao");
+		campos[2] = new Campo(0, req.getParameter("justificativa"), true, "", true, "justificativa");
+
+		return campos;
+	}
+	
+	public static Campo[] getAtivacaoCampos(HttpServletRequest req) {
+		Campo[] campos = new Campo[3];
+
+		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
+		campos[1] = new Campo(1, req.getParameter("categoriaAtivacao"), true, "", true, "categoriaAtivacao");
+		campos[2] = new Campo(0, req.getParameter("justificativa"), true, "", true, "justificativa");
+
+		return campos;
+	}
+
 	
 }

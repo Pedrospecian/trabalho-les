@@ -18,6 +18,8 @@ import dao.IDAO;
 
 import model.Livro;
 import model.LivroEstoque;
+import model.SolicitacaoAtivacaoLivro;
+import model.SolicitacaoInativacaoLivro;
 import model.GrupoPrecificacao;
 import model.ItemCarrinho;
 import model.Autor;
@@ -27,6 +29,9 @@ import model.Fornecedor;
 import model.Usuario;
 import model.Categoria;
 import utils.Campo;
+
+import model.CategoriaInativacao;
+import model.CategoriaAtivacao;
 
 public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 	private Connection connection = null;
@@ -131,6 +136,9 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 					new GrupoPrecificacao(rs.getLong("livros.idGrupoPrecificacao"), null, "", 0, 0), 
 					rs.getString("livros.edicao"));
 
+				livro.setEstoque(contaEstoque(livro, 0));
+				livro.setNumeroVendas(contaVendas(livro));
+
 				list.add(livro);
 			}
 			
@@ -153,6 +161,120 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			}			
 
 			return null;
+		}
+	}
+
+	public void getSolicitacoesAtivacao(Campo[] campos) {
+		PreparedStatement pst = null;
+		try {
+			connection = Conexao.getConnectionMySQL();
+			StringBuilder sql = new StringBuilder();
+			sql.append("Select * from solicitacoes_ativacao_livro " +
+				       "inner join livros on livros.id = solicitacoes_ativacao_livro.idLivro " +
+				       "inner join categorias_ativacao on categorias_ativacao.id = solicitacoes_ativacao_livro.idCategoria");
+			
+			pst = connection.prepareStatement(sql.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+
+			ResultSet rs = pst.executeQuery();
+			
+			ArrayList<SolicitacaoAtivacaoLivro> list = new ArrayList();
+			
+			while (rs.next()) {
+				Livro livro = new Livro(
+					rs.getLong("livros.id"),
+					rs.getDate("livros.dataCadastro")
+				);
+				livro.setCapa(rs.getString("livros.capa"));
+				livro.setTitulo(rs.getString("livros.titulo"));
+				CategoriaAtivacao categoria = new CategoriaAtivacao(
+					rs.getLong("categorias_ativacao.id"),
+					rs.getDate("categorias_ativacao.dataCadastro"),
+					rs.getString("categorias_ativacao.nome")
+				);
+				SolicitacaoAtivacaoLivro sol = new SolicitacaoAtivacaoLivro(
+					rs.getLong("solicitacoes_ativacao_livro.id"),
+					rs.getDate("solicitacoes_ativacao_livro.dataEntrada"),
+					categoria,
+					rs.getString("solicitacoes_ativacao_livro.justificativa"),
+					livro
+				);
+				list.add(sol);
+			}
+			
+			this.selectVals = list;
+			
+			pst.close();
+			connection.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pst != null) pst.close();
+				if(connection != null) connection.close();
+
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void getSolicitacoesInativacao(Campo[] campos) {
+		PreparedStatement pst = null;
+		try {
+			connection = Conexao.getConnectionMySQL();
+			StringBuilder sql = new StringBuilder();
+			sql.append("Select * from solicitacoes_inativacao_livro " +
+				       "inner join livros on livros.id = solicitacoes_inativacao_livro.idLivro " +
+				       "inner join categorias_inativacao on categorias_inativacao.id = solicitacoes_inativacao_livro.idCategoria");
+			
+			pst = connection.prepareStatement(sql.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+
+			ResultSet rs = pst.executeQuery();
+			
+			ArrayList<SolicitacaoInativacaoLivro> list = new ArrayList();
+			
+			while (rs.next()) {
+				Livro livro = new Livro(
+					rs.getLong("livros.id"),
+					rs.getDate("livros.dataCadastro")
+				);
+				livro.setCapa(rs.getString("livros.capa"));
+				livro.setTitulo(rs.getString("livros.titulo"));
+				CategoriaInativacao categoria = new CategoriaInativacao(
+					rs.getLong("categorias_inativacao.id"),
+					rs.getDate("categorias_inativacao.dataCadastro"),
+					rs.getString("categorias_inativacao.nome")
+				);
+				SolicitacaoInativacaoLivro sol = new SolicitacaoInativacaoLivro(
+					rs.getLong("solicitacoes_inativacao_livro.id"),
+					rs.getDate("solicitacoes_inativacao_livro.dataEntrada"),
+					categoria,
+					rs.getString("solicitacoes_inativacao_livro.justificativa"),
+					livro
+				);
+				list.add(sol);
+			}
+			
+			this.selectVals = list;
+			
+			pst.close();
+			connection.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pst != null) pst.close();
+				if(connection != null) connection.close();
+
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -477,7 +599,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 		try {
 			connection = Conexao.getConnectionMySQL();
 			StringBuilder sql = new StringBuilder();
-			sql.append("SELECT sum(quantidade) FROM livros_estoque where entradas.livroId = ? and entradas.tipoMovimentacao = 2");
+			sql.append("SELECT sum(quantidade) FROM livros_estoque where livroId = ? and tipoMovimentacao = 2");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -744,6 +866,174 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public void getCategoriasInativacao() {
+		PreparedStatement pst = null;
+		try {
+			connection = Conexao.getConnectionMySQL();
+			StringBuilder sql = new StringBuilder();
+			sql.append("Select * from categorias_inativacao;");
+			
+			pst = connection.prepareStatement(sql.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+
+			ResultSet rs = pst.executeQuery();
+			
+			ArrayList<CategoriaInativacao> list = new ArrayList();
+			
+			while (rs.next()) {
+				CategoriaInativacao categoria = new CategoriaInativacao(
+					rs.getLong("categorias_inativacao.id"), 
+					rs.getDate("categorias_inativacao.dataCadastro"), 
+					rs.getString("categorias_inativacao.nome"));
+
+				list.add(categoria);
+			}
+			
+			this.selectVals = list;
+			
+			pst.close();
+			connection.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void getCategoriasAtivacao() {
+		PreparedStatement pst = null;
+		try {
+			connection = Conexao.getConnectionMySQL();
+			StringBuilder sql = new StringBuilder();
+			sql.append("Select * from categorias_ativacao;");
+			
+			pst = connection.prepareStatement(sql.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+
+			ResultSet rs = pst.executeQuery();
+			
+			ArrayList<CategoriaAtivacao> list = new ArrayList();
+			
+			while (rs.next()) {
+				CategoriaAtivacao categoria = new CategoriaAtivacao(
+					rs.getLong("categorias_ativacao.id"), 
+					rs.getDate("categorias_ativacao.dataCadastro"), 
+					rs.getString("categorias_ativacao.nome"));
+
+				list.add(categoria);
+			}
+			
+			this.selectVals = list;
+			
+			pst.close();
+			connection.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void inserirSolicitacaoInativacaoLivro(SolicitacaoInativacaoLivro sol) {
+		PreparedStatement pst = null;
+		
+		try {
+			connection = Conexao.getConnectionMySQL();
+			connection.setAutoCommit(false);
+			
+			StringBuilder sql = new StringBuilder();
+			sql.append("INSERT INTO solicitacoes_inativacao_livro (dataEntrada, idCategoria, justificativa, idLivro) VALUES (?, ?, ?, ?);");
+			
+			pst = connection.prepareStatement(sql.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+
+			Date agora = new Date(); 
+
+			pst.setDate(1, new java.sql.Date(agora.getTime())); 
+			pst.setLong(2, sol.getCategoria().getId());
+			pst.setString(3, sol.getJustificativa());
+			pst.setLong(4, sol.getLivro().getId());
+			pst.executeUpdate();
+
+			StringBuilder sql2 = new StringBuilder();
+			sql2.append("UPDATE livros SET status = 2 WHERE id = ?");
+
+			PreparedStatement pst2 = connection.prepareStatement(sql2.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+
+			pst2.setLong(1, sol.getLivro().getId());
+
+			pst2.executeUpdate();
+			
+			connection.commit();
+		}catch (Exception e) {
+			try {
+				if(connection != null) connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pst != null) pst.close();
+				if(connection != null) connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+	public void inserirSolicitacaoAtivacaoLivro(SolicitacaoAtivacaoLivro sol) {
+		PreparedStatement pst = null;
+		
+		try {
+			connection = Conexao.getConnectionMySQL();
+			connection.setAutoCommit(false);
+			
+			StringBuilder sql = new StringBuilder();
+			sql.append("INSERT INTO solicitacoes_ativacao_livro (dataEntrada, idCategoria, justificativa, idLivro) VALUES (?, ?, ?, ?);");
+			
+			pst = connection.prepareStatement(sql.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+
+			Date agora = new Date(); 
+
+			pst.setDate(1, new java.sql.Date(agora.getTime())); 
+			pst.setLong(2, sol.getCategoria().getId());
+			pst.setString(3, sol.getJustificativa());
+			pst.setLong(4, sol.getLivro().getId());
+			pst.executeUpdate();
+
+			StringBuilder sql2 = new StringBuilder();
+			sql2.append("UPDATE livros SET status = 3 WHERE id = ?");
+
+			PreparedStatement pst2 = connection.prepareStatement(sql2.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+
+			pst2.setLong(1, sol.getLivro().getId());
+
+			pst2.executeUpdate();
+			
+			connection.commit();
+		}catch (Exception e) {
+			try {
+				if(connection != null) connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pst != null) pst.close();
+				if(connection != null) connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 	

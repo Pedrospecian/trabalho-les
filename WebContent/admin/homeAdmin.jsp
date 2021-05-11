@@ -35,6 +35,8 @@
 					<a href="/trabalho-les/listagemLivros" cypress-listagemLivros>Listagem de livros</a>
 					<br>
 					<a href="/trabalho-les/livrosPendentesInativacao" cypress-livrosPendentesInativacao>Livros pendentes de inativação</a>
+					<br>
+					<a href="/trabalho-les/livrosPendentesAtivacao" cypress-livrosPendentesAtivacao>Livros pendentes de ativação</a>
 				</div>
 				<div class="admin-block">
 					<h2>Cupons de desconto</h2>

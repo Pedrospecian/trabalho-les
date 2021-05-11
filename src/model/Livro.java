@@ -23,6 +23,7 @@ public class Livro extends EntidadeDominio {
 	private GrupoPrecificacao grupoPrecificacao;
 	private String edicao;
 	private int estoque;
+	private int numeroVendas;
 	
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
@@ -78,6 +79,14 @@ public class Livro extends EntidadeDominio {
 	
 	public int getNumeroPaginas() {
 		return this.numeroPaginas;
+	}
+
+	public void setNumeroVendas(int numeroVendas) {
+		this.numeroVendas = numeroVendas;
+	}
+	
+	public int getNumeroVendas() {
+		return this.numeroVendas;
 	}
 	
 	public void setSinopse(String sinopse) {

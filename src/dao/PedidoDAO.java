@@ -1449,6 +1449,8 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		        }
 
 				double excesso = Math.floor((pedido.getValorTotal() + pedido.getValorFrete() - totalCartoes - totalCuponsTroca - totalCupomDesconto) * 100) / 100;
+				System.out.println("============== o excesso ==========");
+				System.out.println(excesso);
 				if (excesso < 0) {
 					geraCupomTrocaExcesso(pedido.getCliente().getId(), excesso * (-1));
 				}
@@ -1939,6 +1941,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				"inner join carrinhos_produtos on carrinhos_produtos.idCarrinhoProduto = solicitacoes_troca.idItemCarrinho "+
 				"inner join livros on livros.id = carrinhos_produtos.idProduto "+
 				"inner join carrinhos on carrinhos.id = carrinhos_produtos.idCarrinho "+
+				"inner join pedidos on pedidos.idCarrinho = carrinhos.id "+
 				"inner join clientes on clientes.id = carrinhos.idUsuario "+
 				"where solicitacoes_troca.id = ?;");
 			
@@ -1962,6 +1965,17 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				pst.setString(3, rs.getString("clientes.nome").replaceAll(" ", "").toUpperCase() + dateFormat.format(new Date()) + String.valueOf(rs.getInt("solicitacoes_troca.quantidade") * rs.getDouble("carrinhos_produtos.precoMomentoCompra")).replaceAll(".", "") );
 				pst.setDouble(4, rs.getInt("solicitacoes_troca.quantidade") * rs.getDouble("carrinhos_produtos.precoMomentoCompra") );
 				pst.setInt(5, 1);
+
+				pst.executeUpdate();
+
+				System.out.println("====== ====== deveria alterar o status do pedido para trocado");
+
+				StringBuilder sql2 = new StringBuilder();
+				sql2.append("UPDATE pedidos SET status = 7 WHERE id = ?;");
+
+				pst = connection.prepareStatement(sql2.toString(),
+						Statement.RETURN_GENERATED_KEYS);				
+				pst.setLong(1, rs.getLong("pedidos.id"));
 
 				pst.executeUpdate();
 			}

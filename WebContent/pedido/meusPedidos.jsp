@@ -117,7 +117,7 @@
 								Troca autorizada (atualizado em 05/02/2021)
 							</c:if>
 							<c:if test = '${registro.getStatus() == 7}'>
-								Troca concluída (atualizado em 05/02/2021)
+								Trocado (atualizado em 05/02/2021)
 							</c:if>
 							<c:if test = '${registro.getStatus() == 8}'>
 								Reprovado (atualizado em 05/02/2021)

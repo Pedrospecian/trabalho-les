@@ -82,7 +82,7 @@ describe('Teste de condução de processo de compra', () => {
     cy.get('[cypress-carrinho]').click()
     cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/carrinho')
     cy.get('tr:first-child [cypress-quantidade]').clear().type(12)
-    cy.get('tr:last-child [cypress-remover]').click()
+    //cy.get('tr:last-child [cypress-remover]').click()
     cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/carrinho')
 
     cy.get('[cypress-logout]').click()
@@ -110,8 +110,8 @@ describe('Teste de condução de processo de compra', () => {
     cy.get('.js-cartoes-wrapper-checkout .box-single:first-child [cypress-valorPagoCartao]').type(1)
     cy.get('[cypress-submit]').click()
     cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/checkout')
-    cy.get('.js-cartoes-wrapper-checkout .box-single:first-child [cypress-valorPagoCartao]').clear().type(1064.90)
-    cy.wait(1000);
+    cy.get('.js-cartoes-wrapper-checkout .box-single:first-child [cypress-valorPagoCartao]').clear().type(2185.30)
+    cy.wait(2000);
     cy.get('[cypress-submit]').click()
     cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusPedidos')
 
@@ -130,7 +130,6 @@ describe('Teste de condução de processo de compra', () => {
     cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusPedidos')*/
 
     //cadastra um novo endereço
-    /*cy.visit('http://localhost:' + port + '/trabalho-les/checkout')
     cy.get('[cypress-enderecoEntregaNovo]').click()
 
     cy.get('[cypress-submit]').click()
@@ -138,7 +137,7 @@ describe('Teste de condução de processo de compra', () => {
 
     cy.get('.js-tipo-endereco').select('1')
     cy.get('.js-tipo-residencia').select('1')
-    cy.get('.js-funcao-endereco').select('1')
+    cy.get('.js-funcao-endereco').select('2')
     cy.get('.js-pais').select('1')
     cy.get('.js-cep').type('12345-678')
     cy.get('.js-tipo-logradouro').select('1')
@@ -147,12 +146,7 @@ describe('Teste de condução de processo de compra', () => {
     cy.get('.js-nome-endereco').type('Casa da minha tia')
     cy.get('.js-bairro').type('Perdizes')
     cy.get('.js-cidade').type('São Paulo')
-    cy.get('.js-uf').type('SP')*/
-
-    /*cy.get('.js-cartoes-wrapper-checkout .box-single:first-child [cypress-valorPagoCartao]').clear().type(1000)
-    cy.get('[cypress-submit]').click()
-
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusPedidos')*/
+    cy.get('.js-uf').type('SP')
     
     //cadastra um novo cartao
     //cy.visit('http://localhost:' + port + '/trabalho-les/checkout')
@@ -161,7 +155,7 @@ describe('Teste de condução de processo de compra', () => {
     cy.get('[cypress-submit]').click()
     cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/checkout')
 
-    cy.get('.js-cartoes-wrapper-checkout .box-single:first-child [cypress-valorPagoCartao]').clear().type(319.8)
+    cy.get('.js-cartoes-wrapper-checkout .box-single:first-child [cypress-valorPagoCartao]').clear().type(210.0)
 
     cy.get('.js-cartoes-novos-wrapper .box-single:first-child .js-numero-cartao').type("5206984449283106")
     cy.get('.js-cartoes-novos-wrapper .box-single:first-child .js-nome-cartao').type("cartao novo teste")
@@ -217,12 +211,12 @@ describe('Teste de condução de processo de compra', () => {
     cy.get('.js-cupom-troca').type('CUPOMTROCA9120214125074130')
     cy.get('.js-adicionar-cupom-troca').click()
 
-    cy.wait(500);
+    cy.wait(1000);
 
     cy.get('.js-cupom-troca').type('TESTELOGINHO20213825053846')
     cy.get('.js-adicionar-cupom-troca').click()
 
-    cy.wait(500);
+    cy.wait(1000);
 
     cy.get('[cypress-submit]').click()
     cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusPedidos')
@@ -401,7 +395,7 @@ describe('Teste de reprovação de pedido com cartão inválido', () => {
 
         cy.get('.enderecos-wrapper .box-single:first-child [cypress-enderecoEntrega]').click()
         cy.get('.js-cartoes-wrapper-checkout .box-single:nth-child(2) [cypress-valorPagoCartao]').clear().type(199.30)
-        cy.wait(1000);
+        cy.wait(2000);
         cy.get('[cypress-submit]').click()
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusPedidos')
 
@@ -437,7 +431,7 @@ describe('Teste de troca', () => {
         cy.get('[cypress-meuspedidos]').click()
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusPedidos')
 
-        cy.get('.tabela-pagina-single.active tr[data-status=4]').first().get('a[cypress-detalhes-pedido]').click()
+        cy.get('.tabela-pagina-single.active tr[data-status=4] a[cypress-detalhes-pedido]').first().click()
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/pedido?')
 
         cy.get('tr:first-child [cypress-trocaQtde]').type('2')
@@ -451,9 +445,12 @@ describe('Teste de troca', () => {
         cy.get('[cypress-meuspedidos]').click()
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusPedidos')
 
-        cy.get('.tabela-pagina-single.active tr[data-status=5]').first().get('a[cypress-detalhes-pedido]').click()
+        cy.get('.tabela-pagina-single.active tr[data-status=5] a[cypress-detalhes-pedido]').first().click()
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/pedido?')
-        cy.get('tr:first-child [cypress-quantidadeLivroPedido]').should('include', '2 -> troca solicitada')
+
+        cy.get('tr:first-child [cypress-quantidadeLivroPedido]').should(($lis) => {
+            expect($lis.eq(0)).to.contain('2 -> troca solicitada')
+        })
     });
 
     it('Recusa a solicitação da troca', () => {
@@ -467,7 +464,10 @@ describe('Teste de troca', () => {
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemSolicitacoesTroca')
 
         cy.get('.tabela-pagina-single.active tr:first-child a[cypress-recusartroca]').click()
-        cy.get('.tabela-pagina-single.active tr:first-child td[cypress-solicitacoestrocastatus]').should('include', 'Troca recusada')
+
+        cy.get('.tabela-pagina-single.active tr:first-child td[cypress-solicitacoestrocastatus]').should(($lis) => {
+            expect($lis.eq(0)).to.contain('Troca recusada')
+        })
 
         cy.get('[cypress-logout]').click()
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/home')
@@ -481,7 +481,9 @@ describe('Teste de troca', () => {
         cy.get('[cypress-minhaConta]').click()
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/minhaConta')
 
-        cy.get('.notificacoes-wrapper .notificacao-single:first-child').should('include', 'Aviso: um de seus pedidos de troca foi recusado.')
+        cy.get('.notificacoes-wrapper .notificacao-single:first-child').should(($lis) => {
+            expect($lis.eq(0)).to.contain('Aviso: um de seus pedidos de troca foi recusado.')
+        })
     });
 
     it('Aceita a solicitação da troca', () => {
@@ -497,7 +499,7 @@ describe('Teste de troca', () => {
         cy.get('[cypress-meuspedidos]').click()
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusPedidos')
 
-        cy.get('.tabela-pagina-single.active tr[data-status=4]').first().get('a[cypress-detalhes-pedido]').click()
+        cy.get('.tabela-pagina-single.active tr[data-status=4] a[cypress-detalhes-pedido]').first().click()
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/pedido?')
 
         cy.get('tr:first-child [cypress-trocaQtde]').type('2')
@@ -511,9 +513,12 @@ describe('Teste de troca', () => {
         cy.get('[cypress-meuspedidos]').click()
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusPedidos')
 
-        cy.get('.tabela-pagina-single.active tr[data-status=5]').first().get('a[cypress-detalhes-pedido]').click()
+        cy.get('.tabela-pagina-single.active tr[data-status=5] a[cypress-detalhes-pedido]').first().click()
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/pedido?')
-        cy.get('tr:first-child [cypress-quantidadeLivroPedido]').should('include', '2 -> troca solicitada')
+
+        cy.get('tr:first-child [cypress-quantidadeLivroPedido]').should(($lis) => {
+            expect($lis.eq(0)).to.contain('2 -> troca solicitada')
+        })
 
         cy.get('[cypress-logout]').click()
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/home')
@@ -528,7 +533,10 @@ describe('Teste de troca', () => {
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemSolicitacoesTroca')
 
         cy.get('.tabela-pagina-single.active tr:first-child a[cypress-autorizartroca]').click()
-        cy.get('.tabela-pagina-single.active tr:first-child td[cypress-solicitacoestrocastatus]').should('include', 'Troca aceita. Aguardando confirmação de recebimento')
+
+        cy.get('.tabela-pagina-single.active tr:first-child td[cypress-solicitacoestrocastatus]').should(($lis) => {
+            expect($lis.eq(0)).to.contain('Troca aceita. Aguardando confirmação de recebimento')
+        })
 
         cy.get('[cypress-logout]').click()
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/home')
@@ -542,43 +550,193 @@ describe('Teste de troca', () => {
         cy.get('[cypress-minhaConta]').click()
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/minhaConta')
 
-        cy.get('.notificacoes-wrapper .notificacao-single:first-child').should('include', 'Aviso: um de seus pedidos de troca foi aceito. Confira seus pedidos!')
+        cy.get('.notificacoes-wrapper .notificacao-single:first-child').should(($lis) => {
+            expect($lis.eq(0)).to.contain('Aviso: um de seus pedidos de troca foi aceito. Confira seus pedidos!')
+        })
     });
     
     it('Confirma recebimento de troca sem avarias', () => {
+        cy.visit('http://localhost:' + port + '/trabalho-les/login')
+        cy.get('[cypress-email]').type("teste@loginhio.com")
+        cy.get('[cypress-senha]').type("123Mudar!")
+        cy.get('[cypress-submit]').click()
+        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/home')
+
+        cy.get('[cypress-minhaConta]').click()
+        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/minhaConta')
+        cy.get('[cypress-meuscuponstroca]').click()
+        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusCuponsTroca')
+
+        cy.get('tr').then($cuponsTroca => {
+            const qtdeCuponsAtual = $cuponsTroca.length  
+
+            cy.get('[cypress-logout]').click()
+
+            cy.visit('http://localhost:' + port + '/trabalho-les/loginAdmin')
+            cy.get('[cypress-email]').type("teste@adminnovo.com")
+            cy.get('[cypress-senha]').type("123Mudar!")
+            cy.get('[cypress-submit]').click()
+            cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/homeAdmin')
+
+            //confere o estoque antes da confirmacao de recebimento
+            cy.get('[cypress-homeAdmin]').click()
+            cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/homeAdmin')
+            cy.get('[cypress-listagemlivros]').click()
+            cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemLivros')
+
+            cy.get('tr[data-id="6"] td[data-estoque]').then($estoque => {
+                const estoqueAnterior = $estoque.text()        
+
+                cy.get('[cypress-homeAdmin]').click()
+                cy.get('[cypress-listagemsolicitacoestroca]').click()
+                cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemSolicitacoesTroca')
+
+                cy.get('.tabela-pagina-single.active tr:first-child [cypress-retornarestoque]').click()
+                cy.get('.tabela-pagina-single.active tr:first-child [cypress-confirmarrecebimento]').click()
+                
+                cy.get('.tabela-pagina-single.active tr:first-child td[cypress-solicitacoestrocastatus]').should(($lis) => {
+                    expect($lis.eq(0)).to.contain('Recebimento confirmado. Os itens retornaram ao estoque')
+                })
+
+                //o estoque precisa ser alterado
+                cy.get('[cypress-logout]').click()
+                cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/home')
+
+                cy.visit('http://localhost:' + port + '/trabalho-les/loginAdmin')
+                cy.get('[cypress-email]').type("teste@adminnovo.com")
+                cy.get('[cypress-senha]').type("123Mudar!")
+                cy.get('[cypress-submit]').click()
+                cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/homeAdmin')
+                cy.get('[cypress-listagemlivros]').click()
+                cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemLivros')
+
+                cy.get('tr[data-id="6"] td[data-estoque]').should(($list) => {
+                    expect($list.eq(0)).to.contain(parseInt(estoqueAnterior) + 2)
+                })
+                    cy.get('[cypress-logout]').click()
+
+
+                    cy.visit('http://localhost:' + port + '/trabalho-les/login')
+                    cy.get('[cypress-email]').type("teste@loginhio.com")
+                    cy.get('[cypress-senha]').type("123Mudar!")
+                    cy.get('[cypress-submit]').click()
+                    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/home')
+
+                    cy.get('[cypress-minhaConta]').click()
+                    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/minhaConta')
+                    cy.get('[cypress-meuscuponstroca]').click()
+                    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusCuponsTroca')
+
+                    cy.get('tr').then($cuponsTrocanovo => {
+                        expect($cuponsTrocanovo.length).to.eq(qtdeCuponsAtual + 1)
+                    })
+
+                    //o status do produto precisa ser alterado para trocado
+
+                    cy.get('[cypress-minhaConta]').click()
+                    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/minhaConta')
+                    cy.get('[cypress-meuspedidos]').click()
+                    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusPedido')
+
+                    cy.get('.tabela-pagina-single.active tr[data-status=7] td[cypress-statusPedido]').should(($lis) => {
+                        expect($lis.eq(0)).to.contain('Trocado')
+                    })
+                
+            })
+        })
+    });
+
+    it('Confirma recebimento de troca com avarias', () => {
+        //o estoque precisa ser mantido
+        cy.visit('http://localhost:' + port + '/trabalho-les/login')
+        cy.get('[cypress-email]').type("teste@loginhio.com")
+        cy.get('[cypress-senha]').type("123Mudar!")
+        cy.get('[cypress-submit]').click()
+        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/home')
+
+        cy.get('[cypress-minhaConta]').click()
+        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/minhaConta')
+
+        cy.get('[cypress-meuspedidos]').click()
+        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusPedidos')
+        //6=>troca autorizada
+        //7=>troca concluida
+        /*cy.get('.tabela-pagina-single.active tr[data-status=7] a[cypress-detalhes-pedido]').should(($lis) => {
+            expect($lis.eq(0)).to.contain('Trocado')
+        })*/
+        cy.get('.tabela-pagina-single.active tr[data-status=7] a[cypress-detalhes-pedido]').first().click()
+        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/pedido?')
+
+        cy.get('tr:first-child [cypress-trocaQtde]').type('2')
+        cy.get('tr:first-child [cypress-submit]').click()
+
+        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/solicitarTroca')
+
+        cy.get('[cypress-minhaConta]').click()
+        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/minhaConta')
+
+        cy.get('[cypress-meuspedidos]').click()
+        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusPedidos')
+
+        cy.get('.tabela-pagina-single.active tr[data-status=5] a[cypress-detalhes-pedido]').first().click()
+        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/pedido?')
+
+        cy.get('tr:first-child [cypress-quantidadeLivroPedido]').should(($lis) => {
+            expect($lis.eq(0)).to.contain('2 -> troca solicitada')
+        })
+
+        //confere o estoque antes da confirmacao de recebimento
+        cy.get('[cypress-logout]').click()
+        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/home')
+
+        cy.visit('http://localhost:' + port + '/trabalho-les/loginAdmin')
+        cy.get('[cypress-email]').type("teste@adminnovo.com")
+        cy.get('[cypress-senha]').type("123Mudar!")
+        cy.get('[cypress-submit]').click()
+        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/homeAdmin')
+        cy.get('[cypress-listagemlivros]').click()
+        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemLivros')
+
+        cy.get('tr[data-id="6"] td[data-estoque]').then($estoque => {
+            const estoqueAnterior = $estoque.text()        
+
+            cy.get('[cypress-homeAdmin]').click()
+            cy.get('[cypress-listagemsolicitacoestroca]').click()
+            cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemSolicitacoesTroca')
+            cy.get('.tabela-pagina-single.active tr:first-child a[cypress-autorizartroca]').click()
+            cy.get('.tabela-pagina-single.active tr:first-child [cypress-confirmarrecebimento]').click()
+            
+            cy.get('.tabela-pagina-single.active tr:first-child td[cypress-solicitacoestrocastatus]').should(($lis) => {
+                expect($lis.eq(0)).to.contain('Recebimento confirmado. Os itens não retornaram ao estoque')
+            })
+
+            //o estoque precisa ser mantido como estava
+            cy.get('[cypress-homeAdmin]').click()
+            cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/homeAdmin')
+            cy.get('[cypress-listagemlivros]').click()
+            cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemLivros')
+
+
+            cy.get('tr[data-id="6"] td[data-estoque]').should(($lis) => {
+                expect($lis.eq(0)).to.contain(estoqueAnterior)
+            })
+        })
+
+        /*cy.get('[cypress-logout]').click()
+        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/home')
+
         cy.visit('http://localhost:' + port + '/trabalho-les/loginAdmin')
         cy.get('[cypress-email]').type("teste@adminnovo.com")
         cy.get('[cypress-senha]').type("123Mudar!")
         cy.get('[cypress-submit]').click()
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/homeAdmin')
 
-        //confere o estoque antes da confirmacao de recebimento
-        cy.get('[cypress-homeAdmin]').click()
-        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/homeAdmin')
-        cy.get('[cypress-listagemlivros]').click()
-        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemLivros')
-
-        cy.get('[cypress-homeAdmin]').click()
         cy.get('[cypress-listagemsolicitacoestroca]').click()
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemSolicitacoesTroca')
 
-        cy.get('.tabela-pagina-single.active tr:first-child [cypress-retornarestoque]').click()
-        cy.get('.tabela-pagina-single.active tr:first-child [cypress-confirmarrecebimento]').click()
-        cy.get('.tabela-pagina-single.active tr:first-child td[cypress-solicitacoestrocastatus]').should('include', 'Recebimento confirmado. Os itens retornaram ao estoque')
-        
-        //o estoque precisa ser alterado
-        cy.get('[cypress-homeAdmin]').click()
-        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/homeAdmin')
-        cy.get('[cypress-listagemlivros]').click()
-        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemLivros')
-    });
+        cy.get('.tabela-pagina-single.active tr:first-child a[cypress-autorizartroca]').click()
+        cy.get('.tabela-pagina-single.active tr:first-child td[cypress-solicitacoestrocastatus]').should('include', 'Troca aceita. Aguardando confirmação de recebimento')*/
 
-    it('Testa se o cliente recebeu cupons de troca', () => {
-
-    });
-
-    it('Confirma recebimento de troca com avarias', () => {
-        //o estoque precisa ser mantido
     });
 
 });
