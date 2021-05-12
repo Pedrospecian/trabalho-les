@@ -191,7 +191,19 @@ public class GrupoPrecificacaoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			
 			pst.executeUpdate();
 
+			StringBuilder sql2 = new StringBuilder();
+			sql2.append("Select id from livros where idGrupoPrecificacao;");
+
+			pst = connection.prepareStatement(sql2.toString(),
+					Statement.RETURN_GENERATED_KEYS);	
+			ResultSet rs = pst.executeQuery();
+
 			connection.commit();
+
+			while (rs.next()) {
+				alteraPreco(rs.getLong("livros.id"));
+			}
+
 		
 		} catch (Exception e) {
 			try {
@@ -208,6 +220,42 @@ public class GrupoPrecificacaoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+
+	private void alteraPreco(long idLivro) {
+		PreparedStatement pst = null;
+		try {
+			connection = Conexao.getConnectionMySQL();
+			connection.setAutoCommit(false);
+			StringBuilder sql = new StringBuilder();
+			sql.append("select max(livros_estoque.custo) as maiorCusto, livros.preco as precoAtual, grupos_precificacao.porcentagem from livros_estoque " +
+				"inner join livros on livros.id = livros_estoque.livroId " +
+				"inner join grupos_precificacao on grupos_precificacao.id = livros.idGrupoPrecificacao " +
+				"where livros_estoque.livroId = ? and livros_estoque.tipoMovimentacao = 1");
+			
+			pst = connection.prepareStatement(sql.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+			pst.setLong(1, idLivro);
+
+			ResultSet rs = pst.executeQuery();
+
+			if (rs.next()) {
+				StringBuilder sql2 = new StringBuilder();
+				sql2.append("update livros set preco = ? where id = ?;");
+				
+				pst = connection.prepareStatement(sql2.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+
+				pst.setDouble(1, Math.max(rs.getDouble("precoAtual"), rs.getDouble("maiorCusto") * (1 + (rs.getDouble("grupos_precificacao.porcentagem") / 100 ) )) );
+				pst.setLong(2, idLivro);
+				
+				pst.executeUpdate();
+
+				connection.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

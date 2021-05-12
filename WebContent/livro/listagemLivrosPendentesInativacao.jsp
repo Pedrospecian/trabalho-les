@@ -40,8 +40,9 @@
 								<th>Id</th>
 								<th>Capa</th>
 								<th>Título</th>
-								<th>Justificativa</th>
+								<th>Autor</th>
 								<th>Categoria de inativação</th>
+								<th>Justificativa</th>
 								<th>Usuário responsável</th>
 								<th>Ações</th>
 							</tr>
@@ -51,14 +52,15 @@
 								<tr>
 									<td>${solicitacao.getId()}</td>
 									<td><img src="/trabalho-les/assets/images/produtos/livro-manual.jpg"></td>
-									<td>${solicitacao.getLivro().getId()}</td>
-									<td>${solicitacao.getJustificativa()}</td>
+									<td>${solicitacao.getLivro().getTitulo()}</td>
+									<td>${solicitacao.getLivro().getAutor()}</td>
 									<td>${solicitacao.getCategoria().getNome()}</td>
+									<td>${solicitacao.getJustificativa()}</td>
 									<td>Fulano</td>
 									<td>
-										<a href="/trabalho-les/concluirInativacao?id=${solicitacao.getId()}&aceite=1" cypress-aceitarInativacao>Aceitar inativação</a>
+										<a href="/trabalho-les/concluirInativacao?id=${solicitacao.getLivro().getId()}&aceite=1" cypress-aceitarInativacao>Aceitar inativação</a>
 										<br>
-										<a href="/trabalho-les/concluirInativacao?id=${solicitacao.getId()}&aceite=0" cypress-recusarInativacao>Recusar inativação</a>
+										<a href="/trabalho-les/concluirInativacao?id=${solicitacao.getLivro().getId()}&aceite=0" cypress-recusarInativacao>Recusar inativação</a>
 									</td>
 								</tr>
 							</c:forEach>					

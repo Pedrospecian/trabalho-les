@@ -33,10 +33,12 @@
 					<a href="/trabalho-les/cadastroLivro" cypress-cadastroLivro>Cadastrar livros</a>
 					<br>
 					<a href="/trabalho-les/listagemLivros" cypress-listagemLivros>Listagem de livros</a>
-					<br>
-					<a href="/trabalho-les/livrosPendentesInativacao" cypress-livrosPendentesInativacao>Livros pendentes de inativação</a>
-					<br>
-					<a href="/trabalho-les/livrosPendentesAtivacao" cypress-livrosPendentesAtivacao>Livros pendentes de ativação</a>
+					<c:if test='${isAdmin.equals("true")}'>
+						<br>
+						<a href="/trabalho-les/livrosPendentesInativacao" cypress-livrosPendentesInativacao>Livros pendentes de inativação</a>
+						<br>
+						<a href="/trabalho-les/livrosPendentesAtivacao" cypress-livrosPendentesAtivacao>Livros pendentes de ativação</a>
+					</c:if>
 				</div>
 				<div class="admin-block">
 					<h2>Cupons de desconto</h2>

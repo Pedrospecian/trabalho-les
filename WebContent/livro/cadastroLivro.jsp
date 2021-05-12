@@ -19,7 +19,7 @@
 					<input type="text" name="titulo" placeholder="Título do Livro" required data-pristine-required-message="Este campo é obrigatório" cypress-titulo>
 				</div>
 				<div class="form-group">
-					<input type="text" name="edicao" placeholder="Edição" cypress-edicao>
+					<input type="text" name="edicao" placeholder="Edição" required cypress-edicao>
 				</div>
 				<div class="form-group">
 					<select name="autor" required data-pristine-required-message="Este campo é obrigatório" cypress-autor>

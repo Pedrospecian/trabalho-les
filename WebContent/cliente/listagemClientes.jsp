@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Listagem de clientes</title>
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
@@ -44,7 +44,7 @@
 					<option value="1" ${1 == campos[4].getValor() ? 'selected=\"selected\"' : ''}>Ativo</option>
 					<option value="0" ${campos[4].getValor().equals("0") ? 'selected=\"selected\"' : ''}>Inativo</option>
 				</select>
-				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por página" value="${campos[8].getValor()}" >
+				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por pÃ¡gina" value="${campos[8].getValor()}" >
 				<button type="submit">Buscar</button>
 			</form>
 			<c:if test = "${registros.size() > 0}">
@@ -53,7 +53,7 @@
 						<tr>
 							<th>Id</th>
 							<th>Data de cadastro</th>
-							<th>Código único</th>
+							<th>CÃ³digo Ãºnico</th>
 							<th>Nome</th>
 							<th>E-mail</th>
 							<th>Sexo</th>
@@ -61,7 +61,7 @@
 							<th>Tipo de cliente</th>
 							<th>Perfil de compra</th>
 							<th>Status</th>
-							<th>Ações</th>
+							<th>AÃ§Ãµes</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -107,13 +107,13 @@
 										Fiel
 									</c:if>
 									<c:if test = '${registro.getTotalPedidos() >= 50}'>
-										Grande fã
+										Grande fÃ£
 									</c:if>
 									(${registro.getTotalPedidos()} compras)
 								</td>
 								<td>${1 == registro.getStatus() ? 'Ativo' : 'Inativo'}</td>
 								<td>
-									<a href="/trabalho-les/todosPedidos?cliente=${registro.getId()}" cypress-listagemPedidosAdmin>Consultar transações</a>
+									<a href="/trabalho-les/todosPedidos?cliente=${registro.getId()}" cypress-listagemPedidosAdmin>Consultar transaÃ§Ãµes</a>
 									<br>
 									<a href="/trabalho-les/listagemCuponsTroca?id=${registro.getId()}" cypress-listagemCuponsTroca>Cupons de troca</a>
 									<br>
@@ -136,13 +136,13 @@
 				</div>
 			</c:if>
 			<c:if test = "${registros.size() <= 0}">
-				<p>Não foi encontrado nenhum registro.</p>
+				<p>NÃ£o foi encontrado nenhum registro.</p>
 			</c:if>
     	</div>
     </main>
 	<footer>
 		<div class="container">
-			<p>LES - Laboratório de Engenharia de Software</p>
+			<p>LES - LaboratÃ³rio de Engenharia de Software</p>
 			<br>
 			Aline Laconca - RA: 1840481922014
 			<br>

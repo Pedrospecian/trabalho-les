@@ -14,36 +14,38 @@
 	<main>
 		<div class="container">
 			<h1>Editar livro</h1>
-			<form action="/trabalho-les/listagemLivros" method="post" class="js-pristine-validation">
-				<input type="hidden" name="id" value="1">
+			<form action="/trabalho-les/alterarLivroAction" method="post" class="js-pristine-validation">
+				<input type="hidden" name="id" value="${livro.getId()}">
 				<div class="form-group">
-					<input type="text" name="titulo" placeholder="Título do Livro" value="Teste" required data-pristine-required-message="Este campo é obrigatório" cypress-titulo>
+					<input type="text" name="titulo" placeholder="Título do Livro" value="${livro.getTitulo()}" required data-pristine-required-message="Este campo é obrigatório" cypress-titulo>
+				</div>
+				<div class="form-group">
+					<input type="text" name="edicao" placeholder="Edição" value="${livro.getEdicao()}" required cypress-edicao>
 				</div>
 				<div class="form-group">
 					<select name="autor" required data-pristine-required-message="Este campo é obrigatório" cypress-autor>
 						<option value="">Autor</option>
-						<option value="1">Fulano</option>
-						<option value="2" selected>Beltrano</option>
-						<option value="3">Cicrano</option>
+						<c:forEach var="autor" items="${autores}">
+							<option
+								value="${autor.getId()}"
+								${autor.getId() == livro.getAutor().getId() ? 'selected=\"selected\"' : ''}
+							>
+								${autor.getNome()}
+							</option>
+						</c:forEach>
 					</select>
 				</div>
 				<div class="form-group">
 					<select name="editora" required data-pristine-required-message="Este campo é obrigatório" cypress-editora>
 						<option value="">Editora</option>
-						<option value="1">Companhia das Letras</option>
-						<option value="2">Aleph</option>
-						<option value="3">Suma</option>
-						<option value="4">Editora Intrínseca</option>
-						<option value="5">Grupo Editorial Record</option>
-						<option value="6">Editora Rocco</option>
-						<option value="7">Globo Livros</option>
-						<option value="8">Darkside Books</option>
-						<option value="9">Harper Collins</option>
-						<option value="10" selected>Editora Arqueiro</option>
-						<option value="11">Somos Educação</option>
-						<option value="12">Editora FTD</option>
-						<option value="13">Saraiva</option>
-						<option value="14">Brique Book</option>
+						<c:forEach var="editora" items="${editoras}">
+							<option
+								value="${editora.getId()}"
+								${editora.getId() == livro.getEditora().getId() ? 'selected=\"selected\"' : ''}
+							>
+								${editora.getNome()}
+							</option>
+						</c:forEach>
 					</select>
 				</div>
 				<label for="capa">Capa do livro</label>
@@ -59,73 +61,75 @@
 				<div class="boxes-wrapper js-boxes-categorias">
 					<input type="hidden" name="arrIdCategoria" class="js-arrIdCategoria">
 					<input type="hidden" name="removerCategorias" class="js-removerCategorias">
-					<div class="box-single">
-						<a href="#" class="button-close js-remove-existing-categoria" data-id="1">X</a>
-		                <div class="info-wrapper">
-		                  Técnicos e Profissionais
-		                </div>
-		            </div>
-		            <div class="box-single">
-						<a href="#" class="button-close js-remove-existing-categoria" data-id="2">X</a>
-		                <div class="info-wrapper">
-		                  Literatura
-		                </div>
-		            </div>
+					
+
+
+
+					<c:forEach var="categoria" items="${livro.getCategorias()}">
+						<div class="box-single">
+							<a href="#" class="button-close js-remove-existing-categoria" data-id="${categoria.getId()}">X</a>
+							<div class="info-wrapper">
+								${categoria.getNome()}
+							</div>
+						</div>
+					</c:forEach>
+
+
+
+
 				</div>
 				<select name="categoria" class="js-id-categoria">
 					<option value="">Categoria</option>
-					<option value="1">Literatura</option>
-					<option value="2">Técnicos e Profissionais</option>
-					<option value="3">Equilíbrio Pessoal</option>
-					<option value="4">Periódicos</option>
-					<option value="5">Literatura Infantil</option>
+					<c:forEach var="categoria" items="${categorias}">
+						<option value="${categoria.getId()}">
+							${categoria.getNome()}
+						</option>
+					</c:forEach>
 				</select>
 				<button type="button" class="js-adicionar-categoria">Adicionar categoria</button>
 				<br>
 				<div class="form-group">
-					<input type="number" name="ano" placeholder="Ano" min="0" value="2000" required data-pristine-required-message="Este campo é obrigatório" pattern="/^[0-9]+$/" data-pristine-pattern-message="Este campo precisa ser um número válido" cypress-ano>
+					<input type="number" name="ano" placeholder="Ano" min="0" value="${livro.getAno()}" required data-pristine-required-message="Este campo é obrigatório" pattern="/^[0-9]+$/" data-pristine-pattern-message="Este campo precisa ser um número válido" cypress-ano>
 				</div>
 				<div class="form-group">
-					<input type="text" name="isbn" placeholder="ISBN" required data-pristine-required-message="Este campo é obrigatório" value="124546" cypress-isbn>
+					<input type="text" name="isbn" placeholder="ISBN" required data-pristine-required-message="Este campo é obrigatório" value="${livro.getIsbn()}" cypress-isbn>
 				</div>
 				<div class="form-group">
-					<input type="number" name="numeroPaginas" placeholder="Número de Páginas" required data-pristine-required-message="Este campo é obrigatório" pattern="/^[0-9]+$/" data-pristine-pattern-message="Este campo precisa ser um número válido" min="1" value="400" cypress-numeroPaginas>
+					<input type="number" name="numeroPaginas" placeholder="Número de Páginas" required data-pristine-required-message="Este campo é obrigatório" pattern="/^[0-9]+$/" data-pristine-pattern-message="Este campo precisa ser um número válido" min="1" value="${livro.getNumeroPaginas()}" cypress-numeroPaginas>
 				</div>
 				<label for="sinopse">Sinopse</label>
 				<div class="form-group">
-					<textarea id="sinopse" name="sinopse" required data-pristine-required-message="Este campo é obrigatório" cypress-sinopse>Lorem ipsum dolor sit amet.</textarea>
+					<textarea id="sinopse" name="sinopse" required data-pristine-required-message="Este campo é obrigatório" cypress-sinopse>${livro.getSinopse()}</textarea>
 				</div>
 				<div class="form-group">
-					<input type="text" name="altura" placeholder="Altura" required data-pristine-required-message="Este campo é obrigatório" min="0" step="0.01" pattern="/^[0-9]+((\.|,)[0-9]+)?$/" data-pristine-pattern-message="Este campo precisa ser um número válido" min="0" step="0.01" value="40.12" cypress-altura>
+					<input type="text" name="altura" placeholder="Altura" required data-pristine-required-message="Este campo é obrigatório" min="0" step="0.01" pattern="/^[0-9]+((\.|,)[0-9]+)?$/" data-pristine-pattern-message="Este campo precisa ser um número válido" min="0" step="0.01" value="${livro.getAltura()}" cypress-altura>
 				</div>
 				<div class="form-group">
-					<input type="text" name="largura" placeholder="Largura" required data-pristine-required-message="Este campo é obrigatório" min="0" step="0.01" pattern="/^[0-9]+((\.|,)[0-9]+)?$/" data-pristine-pattern-message="Este campo precisa ser um número válido" min="0" step="0.01" value="40.12" cypress-largura>
+					<input type="text" name="largura" placeholder="Largura" required data-pristine-required-message="Este campo é obrigatório" min="0" step="0.01" pattern="/^[0-9]+((\.|,)[0-9]+)?$/" data-pristine-pattern-message="Este campo precisa ser um número válido" min="0" step="0.01" value="${livro.getLargura()}" cypress-largura>
 				</div>
 				<div class="form-group">
-					<input type="text" name="peso" placeholder="Peso" required data-pristine-required-message="Este campo é obrigatório" min="0" step="0.01" pattern="/^[0-9]+((\.|,)[0-9]+)?$/" data-pristine-pattern-message="Este campo precisa ser um número válido" min="0" step="0.01" value="40.12" cypress-peso>
+					<input type="text" name="peso" placeholder="Peso" required data-pristine-required-message="Este campo é obrigatório" min="0" step="0.01" pattern="/^[0-9]+((\.|,)[0-9]+)?$/" data-pristine-pattern-message="Este campo precisa ser um número válido" min="0" step="0.01" value="${livro.getPeso()}" cypress-peso>
 				</div>
 				<div class="form-group">
-					<input type="text" name="profundidade" placeholder="Profundidade" required data-pristine-required-message="Este campo é obrigatório" min="0" step="0.01" pattern="/^[0-9]+((\.|,)[0-9]+)?$/" data-pristine-pattern-message="Este campo precisa ser um número válido" min="0" step="0.01" value="40.12" cypress-profundidade>
+					<input type="text" name="profundidade" placeholder="Profundidade" required data-pristine-required-message="Este campo é obrigatório" min="0" step="0.01" pattern="/^[0-9]+((\.|,)[0-9]+)?$/" data-pristine-pattern-message="Este campo precisa ser um número válido" min="0" step="0.01" value="${livro.getProfundidade()}" cypress-profundidade>
 				</div>
 				<div class="form-group">
-					<input type="text" name="preco" placeholder="Preço de venda" required data-pristine-required-message="Este campo é obrigatório" min="0" step="0.01" pattern="/^[0-9]+((\.|,)[0-9]+)?$/" data-pristine-pattern-message="Este campo precisa ser um número válido" min="0" step="0.01" value="40.12" cypress-preco>
+					<input type="text" name="preco" placeholder="Preço de venda" required data-pristine-required-message="Este campo é obrigatório" min="0" step="0.01" pattern="/^[0-9]+((\.|,)[0-9]+)?$/" data-pristine-pattern-message="Este campo precisa ser um número válido" min="0" step="0.01" value="${livro.getPreco()}" cypress-preco>
 				</div>
 				<div class="form-group">
-					<input type="text" name="codigoBarras" placeholder="Código de barras" required data-pristine-required-message="Este campo é obrigatório" value="1245654766878" cypress-codigoBarras>
-				</div>
-				<div class="form-group">
-					<select name="status" required data-pristine-required-message="Este campo é obrigatório" cypress-status>
-						<option value="">Status</option>
-						<option value="1" selected>Ativo</option>
-						<option value="0">Inativo</option>
-					</select>
+					<input type="text" name="codigoBarras" placeholder="Código de barras" required data-pristine-required-message="Este campo é obrigatório" value="${livro.getCodigoBarras()}" cypress-codigoBarras>
 				</div>
 				<div class="form-group">
 					<select name="grupoPrecificacao" required data-pristine-required-message="Este campo é obrigatório" cypress-grupoPrecificacao>
 						<option value="">Grupo de precificação</option>
-						<option value="1">Basic (15% de lucro)</option>
-						<option value="2">Standard (30% de lucro)</option>
-						<option value="3" selected>Premium (50% de lucro)</option>
+						<c:forEach var="grupoPrecificacao" items="${gruposPrecificacao}">
+							<option
+								value="${grupoPrecificacao.getId()}"
+								${grupoPrecificacao.getId() == livro.getGrupoPrecificacao().getId() ? 'selected=\"selected\"' : ''}
+							>
+								${grupoPrecificacao.getNome()} (${grupoPrecificacao.getPorcentagem()}%)
+							</option>
+						</c:forEach>
 					</select>
 				</div>
 				

@@ -2,6 +2,7 @@ package facades;
 
 import dao.LivroDAO;
 import model.CategoriaInativacao;
+import model.Categoria;
 import model.CategoriaAtivacao;
 import model.Livro;
 import model.LivroEstoque;
@@ -189,5 +190,26 @@ public class FachadaLivro implements IFachada< Livro, Campo[]> {
 		LivroDAO dao = new LivroDAO();
 		
 		dao.inserirSolicitacaoAtivacaoLivro(sol);		
+	}
+
+	public void concluirInativacao(long idLivro, int aceite) {
+		LivroDAO dao = new LivroDAO();
+		
+		dao.concluirInativacao(idLivro, aceite);
+	}
+	
+	public void concluirAtivacao(long idLivro, int aceite) {
+		LivroDAO dao = new LivroDAO();
+		
+		dao.concluirAtivacao(idLivro, aceite);
+	}
+
+	public void deleteCategorias(Categoria[] categorias, long idLivro) {
+		try {	
+			LivroDAO dao = new LivroDAO();
+			dao.deleteCategorias(categorias, idLivro);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

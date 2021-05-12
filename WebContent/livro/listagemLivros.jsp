@@ -102,7 +102,7 @@
 									</td>
 									<td><span class="js-dinheiro">${livro.getPreco()}</span></td>
 									<td>R$ 15,00</td>
-									<td>13,333%</td>
+									<td>${livro.getGrupoPrecificacao().getPorcentagem()}%</td>
 									<td data-estoque>${livro.getEstoque()}</td>
 									<td>${livro.getNumeroVendas()}</td>
 									<td>

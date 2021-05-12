@@ -20,7 +20,7 @@
 				<input type="hidden" name="id" value="${livro.getId()}">
 				<div class="form-group">
 					<select name="categoriaAtivacao" required data-pristine-required-message="Este campo é obrigatório" cypress-categoriaAtivacao>
-						<option value="">Categoria de inativação</option>
+						<option value="">Categoria de ativação</option>
 						<c:forEach var="categoria" items="${categorias}">
 							<option value="${categoria.getId()}">${categoria.getNome()}</option>
 						</c:forEach>

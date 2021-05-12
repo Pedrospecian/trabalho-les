@@ -37,14 +37,15 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 	private Connection connection = null;
 	public ArrayList selectVals;
 	public int countVals;
-	public Livro selectSingleVal;
+	public Livro selectSingleVal;	
+	public Categoria[] selectCategoriasVal;
 
 	public ArrayList selectHome () {
 		PreparedStatement pst = null;
 		try {
 			connection = Conexao.getConnectionMySQL();
 			StringBuilder sql = new StringBuilder();
-			sql.append("Select * from livros where status = 1");
+			sql.append("Select * from livros where status = 1 OR status = 2");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -105,7 +106,10 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 		try {
 			connection = Conexao.getConnectionMySQL();
 			StringBuilder sql = new StringBuilder();
-			sql.append("Select * from livros inner join autores on livros.autorId = autores.id inner join editoras on livros.idEditora = editoras.id inner join grupos_precificacao on livros.idGrupoPrecificacao = grupos_precificacao.id");
+			sql.append("Select * from livros "+
+					   "inner join autores on livros.autorId = autores.id "+
+					   "inner join editoras on livros.idEditora = editoras.id "+
+					   "inner join grupos_precificacao on livros.idGrupoPrecificacao = grupos_precificacao.id");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -133,7 +137,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getString("livros.codigoBarras"), 
 					rs.getInt("livros.status"),
 					rs.getString("livros.capa"),				
-					new GrupoPrecificacao(rs.getLong("livros.idGrupoPrecificacao"), null, "", 0, 0), 
+					new GrupoPrecificacao(rs.getLong("livros.idGrupoPrecificacao"), null, "", rs.getDouble("grupos_precificacao.porcentagem"), 0), 
 					rs.getString("livros.edicao"));
 
 				livro.setEstoque(contaEstoque(livro, 0));
@@ -347,7 +351,11 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 		try {
 			connection = Conexao.getConnectionMySQL();
 			StringBuilder sql = new StringBuilder();
-			sql.append("Select * from livros inner join autores on livros.autorId = autores.id inner join editoras on livros.idEditora = editoras.id where livros.id = ?");
+			sql.append("Select * from livros "+
+					   "inner join autores on livros.autorId = autores.id "+
+					   "inner join editoras on livros.idEditora = editoras.id "+
+					   "inner join grupos_precificacao on livros.idGrupoPrecificacao = grupos_precificacao.id "+
+					   "where livros.id = ?");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -356,13 +364,19 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
+				this.getCategoriasDoLivro(rs.getLong("livros.id"));
+				Categoria[] categorias = this.selectCategoriasVal;
+
+				System.out.println("as categorias");
+				System.out.println(categorias.length);
+
 				Livro livro = new Livro(
 					rs.getLong("livros.id"),
 					rs.getDate("livros.dataCadastro"),
 					rs.getString("livros.titulo"),
 					new Autor(rs.getLong("autores.id"), rs.getDate("autores.dataCadastro"), rs.getString("autores.nome"), rs.getString("autores.resumo")),
 					new Editora(rs.getLong("editoras.id"), rs.getDate("editoras.dataCadastro"), rs.getString("editoras.nome"), rs.getString("editoras.descricao")),
-					null,
+					categorias,
 					rs.getString("livros.ano"),
 					rs.getString("livros.isbn"),
 					rs.getInt("livros.numeroPaginas"),
@@ -374,7 +388,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getString("livros.codigoBarras"),
 					rs.getInt("livros.status"),
 					rs.getString("livros.capa"),
-					null,
+					new GrupoPrecificacao(rs.getLong("grupos_precificacao.id"), null, null, rs.getDouble("grupos_precificacao.porcentagem"), 0),
 					rs.getString("livros.edicao")
 				);
 
@@ -384,6 +398,51 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 				return this.selectSingleVal;
 			}
 			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pst != null) pst.close();
+				if(connection != null) connection.close();
+
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}			
+
+			return null;
+		}
+	}
+
+	private Categoria[] getCategoriasDoLivro(long idLivro) {
+		PreparedStatement pst = null;
+		try {
+			connection = Conexao.getConnectionMySQL();
+			StringBuilder sql = new StringBuilder();
+
+			sql.append("select * from categorias " +
+				"inner join livros_categorias on livros_categorias.idCategoria = categorias.id " +
+				"where livros_categorias.idLivro = ?;");
+			
+			pst = connection.prepareStatement(sql.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+			pst.setLong(1, idLivro);		
+			ResultSet rs = pst.executeQuery();
+
+			ArrayList<Categoria> lista = new ArrayList();
+			while (rs.next()) {
+				lista.add(new Categoria(
+						rs.getLong("categorias.id"),
+						rs.getDate("categorias.dataCadastro"),
+						rs.getString("categorias.nome")
+				));
+			}
+
+			Categoria[] categorias = new Categoria[lista.size()];
+			lista.toArray(categorias);
+
+			this.selectCategoriasVal = categorias;
+			return categorias;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -442,6 +501,8 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 				idLivro = rs.getInt(1);
 			}
 			livro.setId(idLivro);
+
+			salvaCategorias(livro);
 			
 			connection.commit();
 		}catch (Exception e) {
@@ -620,7 +681,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 
 	public void update(EntidadeDominio entidade) {
-		/*Livro livro = (Livro) entidade;
+		Livro livro = (Livro) entidade;
 		PreparedStatement pst = null;
 		
 		try {
@@ -628,28 +689,48 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			connection.setAutoCommit(false);
 			
 			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE livro SET titulo = ?, autor = ?, editora = ?, categoria = ?, ano, isbn = ?, numerodepaginas = ?,  sinopse = ?,  altura = ?, largura = ?,peso = ?,profundidade = ?,preco = ?,codigodebarras = ?, status = ?,  WHERE livro.id = ?;");
+			sql.append("UPDATE livros SET " +
+					   "titulo = ?, autorId = ?, edicao = ?, " +
+					   "capa = ?, idEditora = ?, ano = ?, " +
+					   "isbn = ?, numeroPaginas = ?, sinopse = ?, " +
+					   "altura = ?, largura = ?, peso = ?, " +
+					   "profundidade = ?, preco = ?, codigoBarras = ?, idGrupoPrecificacao = ? " +
+					   "WHERE livros.id = ?;");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 
 			pst.setString(1, livro.getTitulo());
-			pst.setString(2, livro.getAutor());
-			pst.setString(3, livro.getEditora());
-			pst.setString(4, livro.getCategoria());
-			pst.setInt(5, livro.getAno());
-			pst.setInt(6, livro.getIsbn());
-			pst.setInt(7, livro.getNumerodepaginas());
-			pst.setString(8, livro.getSinopse());
-			pst.setFloat(9, livro.getAltura());
-			pst.setFloat(10, livro.getLargura());
-			pst.setFloat(11, livro.getPeso());
-			pst.setFloat(12, livro.getProfundidade());
-			pst.setFloat(13, livro.getPreco());
-			pst.setInt(14, livro.getCodigodebarras());
-			pst.setInt(15, livro.getStatus());
+			pst.setLong(2, livro.getAutor().getId());
+			pst.setString(3, livro.getEdicao());
+
+			pst.setString(4, livro.getCapa());
+			pst.setLong(5, livro.getEditora().getId());
+			pst.setString(6, livro.getAno());
+
+			pst.setString(7, livro.getIsbn());
+			pst.setInt(8, livro.getNumeroPaginas());
+			pst.setString(9, livro.getSinopse());
+
+			pst.setDouble(10, livro.getAltura());
+			pst.setDouble(11, livro.getLargura());
+			pst.setDouble(12, livro.getPeso());
+
+			pst.setDouble(13, livro.getProfundidade());
+			pst.setDouble(14, livro.getPreco());
+			pst.setString(15, livro.getCodigoBarras());
+			pst.setLong(16, livro.getGrupoPrecificacao().getId());
+
+			pst.setLong(17, livro.getId());
 			
 			pst.executeUpdate();
+
+			//alterar categorias
+			if (livro.getCategorias() != null) {
+				salvaCategorias(livro);
+			}
+
+			connection.commit();
 		
 		} catch (Exception e) {
 			try {
@@ -666,7 +747,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}*/
+		}
 	}
 
 	public void updateStatus(EntidadeDominio entidade) {
@@ -1034,6 +1115,141 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			}
 		}
 		
+	}
+
+	public void concluirInativacao(long idLivro, int aceite) {
+		PreparedStatement pst = null;
+		
+		try {
+			connection = Conexao.getConnectionMySQL();
+			connection.setAutoCommit(false);
+
+			StringBuilder sql = new StringBuilder();
+			sql.append("UPDATE livros SET status = ? WHERE id = ?;");
+			
+			pst = connection.prepareStatement(sql.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setLong(2, idLivro);
+		
+			if (aceite == 1) {
+				pst.setInt(1, 0);
+			} else {
+				pst.setInt(1, 1);
+			}
+			
+			pst.executeUpdate();
+
+			StringBuilder sql2 = new StringBuilder();
+			sql2.append("DELETE FROM solicitacoes_inativacao_livro WHERE idLivro = ?;");
+			
+			pst = connection.prepareStatement(sql2.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setLong(1, idLivro);
+		
+			pst.executeUpdate();
+
+			connection.commit();		
+		} catch (Exception e) {
+			try {
+				if(connection != null) connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void concluirAtivacao(long idLivro, int aceite) {
+		PreparedStatement pst = null;
+		
+		try {
+			connection = Conexao.getConnectionMySQL();
+			connection.setAutoCommit(false);
+
+			StringBuilder sql = new StringBuilder();
+			sql.append("UPDATE livros SET status = ? WHERE id = ?;");
+			
+			pst = connection.prepareStatement(sql.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setInt(1, aceite);
+			pst.setLong(2, idLivro);
+		
+			pst.executeUpdate();
+
+			StringBuilder sql2 = new StringBuilder();
+			sql2.append("DELETE FROM solicitacoes_ativacao_livro WHERE idLivro = ?;");
+			
+			pst = connection.prepareStatement(sql2.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setLong(1, idLivro);
+		
+			pst.executeUpdate();
+
+			connection.commit();		
+		} catch (Exception e) {
+			try {
+				if(connection != null) connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+
+			e.printStackTrace();
+		}		
+	}
+
+	private void salvaCategorias(Livro livro) throws SQLException, ClassNotFoundException {
+		PreparedStatement pst2 = null;
+		PreparedStatement pst = null;
+		
+		StringBuilder sql2 = new StringBuilder();
+		sql2.append("SELECT id FROM livros_categorias WHERE idCategoria = ? AND idLivro = ?;");
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("INSERT INTO livros_categorias(idCategoria, idLivro) VALUES (?, ?);");
+		
+		for (Categoria categoria : livro.getCategorias()) {
+
+			pst2 = connection.prepareStatement(sql2.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+			pst2.setLong(1, categoria.getId());
+			pst2.setLong(2, livro.getId());			
+
+			ResultSet rs = pst2.executeQuery();
+
+			if (!rs.next()) {
+				pst = connection.prepareStatement(sql.toString(),
+						Statement.RETURN_GENERATED_KEYS);
+				pst.setLong(1, categoria.getId());
+				pst.setLong(2, livro.getId());
+
+				pst.executeUpdate();
+			}
+		}
+	}
+
+	public void deleteCategorias(Categoria[] categorias, long idLivro) throws SQLException, ClassNotFoundException {
+		PreparedStatement pst = null;
+		connection = Conexao.getConnectionMySQL();
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append("DELETE FROM livros_categorias WHERE idCategoria = ? AND idLivro = ?;");
+		
+		for (Categoria categoria : categorias) {		
+
+			pst = connection.prepareStatement(
+					sql.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+			pst.setLong(1, categoria.getId());
+			pst.setLong(2, idLivro);
+
+			pst.executeUpdate();
+		}
 	}
 
 	

@@ -155,6 +155,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>servlets.actions.AlterarLivroAction</servlet-name>
+		<servlet-class>servlets.actions.AlterarLivroAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlterarLivroAction</servlet-name>
+		<url-pattern>/alterarLivroAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>servlets.actions.AlterarClienteStatusAction</servlet-name>
 		<servlet-class>servlets.actions.AlterarClienteStatusAction</servlet-class>
 	</servlet>
@@ -617,6 +626,15 @@
 	<servlet-mapping>
 		<servlet-name>servlets.actions.ConcluirInativacao</servlet-name>
 		<url-pattern>/concluirInativacao</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlets.actions.ConcluirAtivacao</servlet-name>
+		<servlet-class>servlets.actions.ConcluirAtivacao</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.ConcluirAtivacao</servlet-name>
+		<url-pattern>/concluirAtivacao</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

@@ -16,8 +16,8 @@ public class LivrosPendentesInativacao extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		LoginViewHelper lvh = new LoginViewHelper();
-		if(!lvh.isAuthorized(req, resp, 1)){
-			resp.sendRedirect("/trabalho-les/home");
+		if(!lvh.isAuthorized(req, resp, 3)){
+			resp.sendRedirect("/trabalho-les/homeAdmin");
 		}else{	
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");

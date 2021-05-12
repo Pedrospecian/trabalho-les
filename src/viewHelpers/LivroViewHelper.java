@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 
 import utils.Campo;
+import model.Categoria;
 import model.Livro;
 import utils.ResultadosBusca;
 
@@ -84,7 +85,7 @@ public class LivroViewHelper {
 		campos[14] = new Campo(1, req.getParameter("grupoPrecificacao"), true, "", true, "grupoPrecificacao");
 		campos[15] = new Campo(0, req.getParameter("edicao"), true, "", false, "edicao");
 
-		campos[16] = new Campo(6, req.getParameter("arrIdCategoria"), true, "", true, "arrIdCategoria");
+		campos[16] = new Campo(6, req.getParameter("arrIdCategoria"), true, "", false, "arrIdCategoria");
 		System.out.println("a capa VVV");
 		System.out.println(campos[3].getValor());
 
@@ -92,22 +93,29 @@ public class LivroViewHelper {
 	}
 
 	public static Campo[] getAlterarLivroActionCampos(HttpServletRequest req) {
-		Campo[] campos = new Campo[21]; 
+		Campo[] campos = new Campo[18]; 
 
 		campos[0] = new Campo(0, req.getParameter("titulo"), true, "", true, "titulo");
 		campos[1] = new Campo(0, req.getParameter("autor"), true, "", true, "autor");
 		campos[2] = new Campo(0, req.getParameter("editora"), true, "", true, "editora");
-		campos[3] = new Campo(0, req.getParameter("categoria"), true, "", true, "categoria");
+		campos[3] = new Campo(0, req.getParameter("capa"), true, "", false, "capa");
 		campos[4] = new Campo(1, req.getParameter("ano"), true, "", true, "ano");
 		campos[5] = new Campo(1, req.getParameter("isbn"), true, "", true, "isbn");
-		campos[6] = new Campo(1, req.getParameter("numerodepaginas"), true, "", true, "numerodepaginas");
+		campos[6] = new Campo(1, req.getParameter("numeroPaginas"), true, "", true, "numeroPaginas");
 		campos[7] = new Campo(0, req.getParameter("sinopse"), true, "", true, "sinopse");
 		campos[8] = new Campo(555, req.getParameter("altura"), true, "", true, "altura");
 		campos[9] = new Campo(555, req.getParameter("peso"), true, "", true, "peso");
 		campos[10] = new Campo(555, req.getParameter("profundidade"), true, "", true, "profundidade");
 		campos[11] = new Campo(555, req.getParameter("preco"), true, "", true, "preco");
-		campos[12] = new Campo(1, req.getParameter("codigodebarras"), true, "", true, "codigodebarras");
-		campos[13] = new Campo(1, req.getParameter("status"), true, "", true, "status");
+		campos[12] = new Campo(1, req.getParameter("codigoBarras"), true, "", true, "codigoBarras");
+		campos[13] = new Campo(1, req.getParameter("id"), true, "", true, "id");
+		campos[14] = new Campo(1, req.getParameter("grupoPrecificacao"), true, "", true, "grupoPrecificacao");
+		campos[15] = new Campo(0, req.getParameter("edicao"), true, "", false, "edicao");
+
+		campos[16] = new Campo(6, req.getParameter("arrIdCategoria"), true, "", false, "arrIdCategoria");
+		campos[17] = new Campo(6, req.getParameter("removerCategorias"), true, "", false, "removerCategorias");
+
+
 		return campos;
 	}
 
@@ -170,6 +178,40 @@ public class LivroViewHelper {
 		campos[2] = new Campo(0, req.getParameter("justificativa"), true, "", true, "justificativa");
 
 		return campos;
+	}
+
+	public static Categoria[] createCategoriasFromStrings(String id) throws Exception {
+		if (id.equals("")) return null;
+		String[] arrCategoriasIdsStr = id.split(",");
+
+		if (arrCategoriasIdsStr.length > 0) {
+			Categoria[] categorias = new Categoria[arrCategoriasIdsStr.length];
+
+			for (int i = 0; i < categorias.length; i++) {
+				categorias[i] = new Categoria(Long.parseLong(arrCategoriasIdsStr[i]), new Date(), "");
+			}
+
+			return categorias;
+		} else {
+			return null;
+		}
+	}
+
+	public static Categoria[] createCategoriasRemovidasFromStrings(String ids) {
+		if (ids.equals("")) return null;
+		String[] arrCategoriasIds = ids.split(",");
+
+		if (arrCategoriasIds.length > 0) {
+			Categoria[] categorias = new Categoria[arrCategoriasIds.length];
+
+			for (int i = 0; i < categorias.length; i++) {
+				categorias[i] = new Categoria(Long.parseLong(arrCategoriasIds[i]), new Date(), "");
+			}
+
+			return categorias;
+		} else {		
+			return null;
+		}
 	}
 
 	

@@ -21,7 +21,7 @@ import viewHelpers.LivroViewHelper;
 import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
-public class CadastroLivroAction extends HttpServlet {
+public class AlterarLivroAction extends HttpServlet {
 	private static final long serialVersionUID = 12;
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,13 +33,14 @@ public class CadastroLivroAction extends HttpServlet {
 			resp.setCharacterEncoding("UTF-8");
 			resp.setContentType("text/html");
 			try {
-				Campo[] campos = LivroViewHelper.getCadastroLivroActionCampos(req);
+				Campo[] campos = LivroViewHelper.getAlterarLivroActionCampos(req);
 
 				FachadaLivro fachada = new FachadaLivro();
 
 				if(fachada.validarCampos(campos)) {
-					String titulo = campos[0].getValor();
-			        int status = Integer.parseInt(campos[13].getValor());
+					long id = Long.parseLong(campos[13].getValor());
+			        String titulo = campos[0].getValor();
+			        int status = 1;
 			        Autor autor = new Autor(Long.parseLong(campos[1].getValor()), new Date(), "", "");
 			        Editora editora = new Editora(Long.parseLong(campos[2].getValor()), new Date(), "", "");
 			        Categoria[] categorias = LivroViewHelper.createCategoriasFromStrings(campos[16].getValor());
@@ -55,17 +56,24 @@ public class CadastroLivroAction extends HttpServlet {
 			        String codigoBarras = campos[12].getValor();
 			        GrupoPrecificacao grupoPrecificacao = new GrupoPrecificacao(Long.parseLong(campos[14].getValor()), new Date(), "", 1, 1);
 			        String edicao = campos[15].getValor();
-			        
-		        	Livro livro = new Livro((long)1, new Date(), titulo, autor, editora, categorias, ano, isbn, numeroPaginas, sinopse, altura, peso, profundidade, preco, codigoBarras, status, capa, grupoPrecificacao, edicao);
 
-		        	fachada.insert(livro);
-		        	resp.sendRedirect("/trabalho-les/listagemLivros");
+			        Categoria[] categoriasRemovidas = LivroViewHelper.createCategoriasRemovidasFromStrings(campos[17].getValor());
+			        
+		        	Livro livro = new Livro(id, new Date(), titulo, autor, editora, categorias, ano, isbn, numeroPaginas, sinopse, altura, peso, profundidade, preco, codigoBarras, status, capa, grupoPrecificacao, edicao);
+
+			        fachada.update(livro);
+
+		        	if (categoriasRemovidas != null) {
+		        		fachada.deleteCategorias(categoriasRemovidas, id);
+		        	}
+		        
+	        		resp.sendRedirect("/trabalho-les/listagemLivros");
 		        } else {
 		        	//retorna com os dados invalidos
 		        }
 	    	} catch(Exception e) {
 	    		e.printStackTrace();
-	    	} 
+	    	}
 	    }
 	}
 }
