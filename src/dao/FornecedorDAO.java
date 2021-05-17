@@ -506,4 +506,6 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 		pst.executeUpdate();
 	}
+
+	//valida email existente
 }

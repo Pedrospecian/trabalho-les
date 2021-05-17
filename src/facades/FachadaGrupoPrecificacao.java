@@ -69,8 +69,6 @@ public class FachadaGrupoPrecificacao implements IFachada< GrupoPrecificacao, Ca
 
 		return "Grupo de Precificação com sucesso!";
 	}
-	
-	
 
 	public String updateStatus(GrupoPrecificacao grupoprecificacao) {
 		GrupoPrecificacaoDAO dao = new GrupoPrecificacaoDAO();

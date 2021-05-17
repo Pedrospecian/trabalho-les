@@ -44,7 +44,6 @@ public class FachadaCupomDesconto implements IFachada<CupomDesconto, Campo[]> {
 
 		return rb;
 	}
-
 		
 	public String insert(CupomDesconto cupom) {
 		try {
@@ -72,7 +71,6 @@ public class FachadaCupomDesconto implements IFachada<CupomDesconto, Campo[]> {
 
 		return "Cupom alterado com sucesso!";
 	}
-	
 	
 	public String updateStatus(CupomDesconto cupom) {
 		CupomDescontoDAO dao = new CupomDescontoDAO();

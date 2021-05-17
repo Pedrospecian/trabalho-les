@@ -20,7 +20,7 @@ import model.TipoResidencia;
 import utils.ResultadosBusca;
 
 public class FornecedorViewHelper {
-	public static Campo[] getListagemClientesCampos(HttpServletRequest req) {
+	public static Campo[] getListagemFornecedorCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[6];
 
 		campos[0] = new Campo(0, req.getParameter("nome"), true, "", true, "nome");
@@ -44,31 +44,35 @@ public class FornecedorViewHelper {
 	}
 
 	public static Campo[] getCadastroFornecedorActionCampos(HttpServletRequest req) {
-		Campo[] campos = new Campo[15];
+		Campo[] campos = new Campo[20];
 
 		campos[0] = new Campo(0, req.getParameter("nome"), true, "", true, "nome");
-		campos[1] = new Campo(1, req.getParameter("email"), true, "", true, "email");
+		campos[1] = new Campo(7, req.getParameter("email"), true, "", true, "email");
 		campos[2] = new Campo(1, req.getParameter("status"), true, "", true, "status");
 
-		campos[3] = new Campo(6, req.getParameter("arrTipoDocumento"), true, "", true, "tipoDocumentos");
-		campos[4] = new Campo(6, req.getParameter("arrNumeroDocumento"), true, "", true, "numeroDocumentos");
-		campos[5] = new Campo(6, req.getParameter("arrValidadeDocumento"), true, "", true, "validadeDocumentos");
+		campos[3] = new Campo(1, req.getParameter("tipoDocumento"), true, "", true, "tipoDocumento");
+		campos[4] = new Campo(0, req.getParameter("documento"), true, "", true, "documento");
+		campos[5] = new Campo(3, req.getParameter("dataValidade"), true, "", true, "dataValidade");
 
-		campos[6] = new Campo(6, req.getParameter("arrTipoEndereco"), true, "", true, "tipoEnderecos");
-		campos[7] = new Campo(6, req.getParameter("arrCep"), true, "", true, "cepEnderecos");
-		campos[8] = new Campo(6, req.getParameter("arrLogradouro"), true, "", true, "logradouroEnderecos");
-		campos[9] = new Campo(6, req.getParameter("arrNumero"), true, "", true, "numeroEnderecos");
-		campos[10] = new Campo(6, req.getParameter("arrComplemento"), true, "", true, "complementoEnderecos");
-		campos[11] = new Campo(6, req.getParameter("arrBairro"), true, "", true, "bairroEnderecos");
-		campos[12] = new Campo(6, req.getParameter("arrCidade"), true, "", true, "cidadeEnderecos");
-		campos[13] = new Campo(6, req.getParameter("arrUf"), true, "", true, "ufEnderecos");
-		campos[14] = new Campo(6, req.getParameter("arrPais"), true, "", true, "paisEnderecos");
-		campos[15] = new Campo(6, req.getParameter("arrNomeEndereco"), true, "", true, "nomeEnderecos");
+		campos[6] = new Campo(1, req.getParameter("tipoEndereco"), true, "", false, "tipoEndereco");
+		campos[7] = new Campo(0, req.getParameter("cep"), true, "", false, "cep");
+		campos[8] = new Campo(0, req.getParameter("logradouro"), true, "", false, "logradouro");
+		campos[9] = new Campo(0, req.getParameter("numero"), true, "", false, "numero");
+		campos[10] = new Campo(0, req.getParameter("complemento"), true, "", false, "complemento");
+		campos[11] = new Campo(0, req.getParameter("bairro"), true, "", false, "bairro");
+		campos[12] = new Campo(0, req.getParameter("cidade"), true, "", false, "cidade");
+		campos[13] = new Campo(0, req.getParameter("estado"), true, "", false, "estado");
+		campos[14] = new Campo(1, req.getParameter("pais"), true, "", false, "pais");	
+		campos[15] = new Campo(0, req.getParameter("nomeEndereco"), true, "", false, "nomeEndereco");	
+		campos[16] = new Campo(1, req.getParameter("tipoResidencia"), true, "", false, "tipoResidencia");
+		campos[17] = new Campo(1, req.getParameter("funcaoEndereco"), true, "", false, "funcaoEndereco");
+		campos[18] = new Campo(1, req.getParameter("tipoLogradouro"), true, "", false, "tipoLogradouro");
+		campos[19] = new Campo(0, req.getParameter("observacoes"), true, "", false, "observacoes");
 
 		return campos;
 	}
 
-	public static Campo[] getAlterarClienteActionCampos(HttpServletRequest req) {
+	public static Campo[] getAlterarFornecedorActionCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[18]; 
 
 		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
@@ -97,7 +101,7 @@ public class FornecedorViewHelper {
 		return campos;
 	}
 
-	public static Documento[] createDocumentosFromStrings(String tipo, String codigo, String validade) throws Exception {
+	/*public static Documento[] createDocumentosFromStrings(String tipo, String codigo, String validade) throws Exception {
 		if (tipo.equals("") || codigo.equals("") || validade.equals("")) return null;
 		String[] arrDocumentosTipoStr = tipo.split(",");
 
@@ -222,5 +226,5 @@ public class FornecedorViewHelper {
 		} else {		
 			return null;
 		}
-	}
+	}*/
 }

@@ -128,7 +128,6 @@ public class FachadaLivro implements IFachada< Livro, Campo[]> {
 		LivroDAO dao = new LivroDAO();
 		return dao.contaEstoque(livro, 0);
 	}
-
 	
 	public String insert(Livro livro) {
 		try {
@@ -157,8 +156,6 @@ public class FachadaLivro implements IFachada< Livro, Campo[]> {
 		return "Livro alterado com sucesso!";
 	}
 	
-	
-
 	public String updateStatus(Livro livro) {
 		LivroDAO dao = new LivroDAO();
 		dao.updateStatus(livro);

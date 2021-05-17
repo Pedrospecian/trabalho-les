@@ -43,19 +43,20 @@ public class FachadaFornecedor implements IFachada<Fornecedor, Campo[]> {
 		return rb;
 	}
 
+	//validaemailexistente
+
 	public Fornecedor selectSingle(long id) {
 		FornecedorDAO dao = new FornecedorDAO();
 		dao.selectSingle(id);
 		return dao.selectSingleVal;
 	}
 
-	public boolean validarDocumentos(Documento[] documentos, boolean precisaValidarCpf) {
+	public boolean validarDocumentos(Documento[] documentos) {
 		ValidacaoDocumentos val = new ValidacaoDocumentos();
 		FornecedorDAO dao = new FornecedorDAO();
 		VerificarCamposCpf ver = new VerificarCamposCpf();
-		boolean cpfValido = !precisaValidarCpf || ver.processa(documentos);
 
-		return val.processa(documentos) && !dao.documentosExistem(documentos) && cpfValido;
+		return val.processa(documentos) && !dao.documentosExistem(documentos);
 	}
 
 	public boolean validarEnderecos(Endereco[] enderecos) {
@@ -64,10 +65,10 @@ public class FachadaFornecedor implements IFachada<Fornecedor, Campo[]> {
 		return val.processa(enderecos);
 	}
 
-	public String insert(Fornecedor fornecedores) {
+	public String insert(Fornecedor fornecedor) {
 		try {
 			FornecedorDAO dao = new FornecedorDAO();
-			dao.insert(fornecedores);
+			dao.insert(fornecedor);
 
 			return "Fornecedor inserido com sucesso!";
 		}catch(Exception e) {

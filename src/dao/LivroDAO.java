@@ -731,6 +731,8 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			}
 
 			connection.commit();
+
+			alteraPreco(livro.getId());
 		
 		} catch (Exception e) {
 			try {
@@ -812,7 +814,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			//Connection conn = Conexao.getConnectionMySQL();
 			connection.setAutoCommit(false);
 			StringBuilder sql = new StringBuilder();
-			sql.append("select max(livros_estoque.custo) as maiorCusto, grupos_precificacao.porcentagem from livros_estoque " +
+			sql.append("select max(livros_estoque.custo) as maiorCusto, livros.preco as precoAtual, grupos_precificacao.porcentagem from livros_estoque " +
 				"inner join livros on livros.id = livros_estoque.livroId " +
 				"inner join grupos_precificacao on grupos_precificacao.id = livros.idGrupoPrecificacao " +
 				"where livros_estoque.livroId = ? and livros_estoque.tipoMovimentacao = 1");
@@ -830,7 +832,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 				pst = connection.prepareStatement(sql2.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 
-				pst.setDouble(1, rs.getDouble("maiorCusto") * (1 + (rs.getDouble("grupos_precificacao.porcentagem") / 100 ) ) );
+				pst.setDouble(1, Math.max(rs.getDouble("precoAtual"), rs.getDouble("maiorCusto") * (1 + (rs.getDouble("grupos_precificacao.porcentagem") / 100 ) ) ));
 				pst.setLong(2, idLivro);
 				
 				pst.executeUpdate();

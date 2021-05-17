@@ -80,7 +80,7 @@
 				</div>
 
 				<div class="form-group">
-					<input type="text" name="cep" placeholder="CEP"  class="js-cep-api js-cep-mask" required data-pristine-required-message="Este campo é obrigatório" cypress-cep>
+					<input type="text" name="cep" placeholder="CEP" class="js-cep-api js-cep-mask" required data-pristine-required-message="Este campo é obrigatório" cypress-cep>
 				</div>
 				<div class="form-group">
 					<select name="tipoLogradouro" class="js-tipo-logradouro" cypress-tipoLogradouro>

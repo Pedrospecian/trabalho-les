@@ -876,6 +876,14 @@
 		<url-pattern>/cadastrarSolicitacaoAtivacao</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>servlets.actions.CadastroFornecedorAction</servlet-name>
+		<servlet-class>servlets.actions.CadastroFornecedorAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.CadastroFornecedorAction</servlet-name>
+		<url-pattern>/cadastroFornecedorAction</url-pattern>
+	</servlet-mapping>
 
 
 	
