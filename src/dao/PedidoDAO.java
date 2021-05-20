@@ -2,6 +2,7 @@ package dao;
 
 import utils.Conexao;
 import utils.DadosCalculoFrete;
+import utils.ItemGrafico;
 import strategies.CriaFiltragem;
 import strategies.CriaFiltragemUsuario;
 import strategies.CriaPaginacao;
@@ -46,6 +47,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 	public Pedido selectSingleVal;
 	public Carrinho selectCarrinhoVal;
 	public DadosCalculoFrete selectDadosCalculoFreteSingle;
+	public ArrayList<ItemGrafico> selectGerarGraficoVals;
 
 	public ArrayList select(Campo[] campos) {
 		PreparedStatement pst = null;
@@ -721,6 +723,8 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			conn = Conexao.getConnectionMySQL();
 			conn.setAutoCommit(false);
 			StringBuilder sql3 = new StringBuilder();
+
+			//checar se a conta nao utiliza apenas cupons
 
 			sql3.append("SELECT * FROM pedidos_cartoes " +
 						"INNER JOIN cartoes_credito ON cartoes_credito.id = pedidos_cartoes.idCartao " +
@@ -2201,5 +2205,68 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public ArrayList<ItemGrafico> gerarGrafico(Campo[] campos) {
+		//select count() as vendas where dataCadastro >= dataInicio and dataCadastro <= dataFim
+
+		//livro individual:
+		//
+		//>>> 
+		//where tipoMovimentacao = 2 and dataCadastro >= '2021-01-01' and dataCadastro <= '2021-12-31' group by dataCadastro
+
+		PreparedStatement pst = null;
+		try {
+			connection = Conexao.getConnectionMySQL();
+
+			String nomeTipo = "livros.titulo";
+			String joinCat = "inner join livros on livros.id = livros_estoque.livroId";
+
+			if (campos[2].getValor().equals("categoria")) {
+				nomeTipo = "categorias.nome";
+				joinCat = "inner join livros_categorias on livros_categorias.idLivro = livros_estoque.livroId";
+			}
+			//pst = connection.prepareStatement("select * from pedidos inner join carrinhos on carrinhos.id = pedidos.idCarrinho inner join usuarios on usuarios.id = usuarioId " + where + paginacaoStr + ";");
+			pst = connection.prepareStatement("SELECT " + nomeTipo + ", livros_estoque.livroId, livros_estoque.dataCadastro, sum(livros_estoque.quantidade) as total FROM livros_estoque " +
+				joinCat + 
+				" WHERE livros_estoque.tipoMovimentacao = 2 and livros_estoque.dataCadastro >= ? and livros_estoque.dataCadastro <= ? group by livros_estoque.dataCadastro;");
+
+
+			Date dataInicio = new SimpleDateFormat("yyyy-MM-dd").parse(campos[0].getValor());
+			Date dataFim = new SimpleDateFormat("yyyy-MM-dd").parse(campos[1].getValor());
+
+			pst.setDate(1, new java.sql.Date(dataInicio.getTime()));
+			pst.setDate(2, new java.sql.Date(dataFim.getTime()));
+			
+			ResultSet rs = pst.executeQuery();
+			
+			ArrayList<ItemGrafico> list = new ArrayList();
+			ResultSetMetaData rsmd = rs.getMetaData();
+			
+			while (rs.next()) {
+				ItemGrafico ig = new ItemGrafico(
+					rs.getInt("total"),
+					rs.getDate("livros_estoque.dataCadastro"),
+					campos[2].getValor().equals("categoria") ? 2 : 1,
+					rs.getString(nomeTipo)
+				);
+
+				//(int valor, Date data, int tipo, String label)
+
+				list.add(ig);
+			}
+			
+			this.selectGerarGraficoVals = list;
+			
+			pst.close();
+			connection.close();
+			
+			return this.selectGerarGraficoVals;
+		} catch (Exception e) {
+			e.printStackTrace();
+			//if(pst != null) pst.close();
+			//if(connection != null) connection.close();
+			return null;
+		}		
 	}
 }

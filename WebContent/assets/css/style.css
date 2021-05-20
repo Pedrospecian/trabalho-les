@@ -250,10 +250,6 @@ form.form-config input[type="number"] {
     height: 25px;
 }
 
-#myChart {
-	height: 250px!important;
-}
-
 .search-content {
 	display: flex;
 	flex-wrap: wrap;

@@ -103,7 +103,7 @@ public class NovaContaAction extends HttpServlet {
 		            //req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
 		            resp.sendRedirect("/trabalho-les/home");
 		        	
-		        	resp.sendRedirect("/trabalho-les/minhaConta");
+		        	//resp.sendRedirect("/trabalho-les/minhaConta");
 		        } else {
 					//resp.setAttribute("erro", "true");
 	    	        resp.sendRedirect(req.getHeader("referer") + "?erro=true");

@@ -157,4 +157,14 @@ public class PedidoViewHelper {
 
 		return campos;
 	}
+
+	public static Campo[] getGerarGraficoCampos(HttpServletRequest req) {
+		Campo[] campos = new Campo[3];
+
+		campos[0] = new Campo(3, req.getParameter("dataInicio"), true, "", true, "dataInicio");
+		campos[1] = new Campo(3, req.getParameter("dataFim"), true, "", true, "dataFim");
+		campos[2] = new Campo(0, req.getParameter("tipo"), true, "", true, "tipo");
+
+		return campos;
+	}
 }

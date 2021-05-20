@@ -885,6 +885,15 @@
 		<url-pattern>/cadastroFornecedorAction</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>servlets.GerarGrafico</servlet-name>
+		<servlet-class>servlets.GerarGrafico</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.GerarGrafico</servlet-name>
+		<url-pattern>/gerarGrafico</url-pattern>
+	</servlet-mapping>
+
 
 	
 </web-app>

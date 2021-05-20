@@ -20,6 +20,7 @@ import strategies.ValidarCampos;
 import strategies.ValidarValorCompra;
 import utils.Campo;
 import utils.DadosCalculoFrete;
+import utils.ItemGrafico;
 import utils.ResultadosBusca;
 import strategies.ValidacaoDocumentos;
 import strategies.ValidacaoEnderecos;
@@ -245,5 +246,14 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 		PedidoDAO dao = new PedidoDAO();
 
 		dao.processaPedido(pedido);
+	}
+
+	public ArrayList<ItemGrafico> gerarGrafico(Campo[] campos) {
+		PedidoDAO dao = new PedidoDAO();
+
+		dao.gerarGrafico(campos);
+		ArrayList<ItemGrafico> arr = dao.selectGerarGraficoVals;
+		
+		return arr;
 	}
 }

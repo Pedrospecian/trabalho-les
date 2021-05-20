@@ -74,28 +74,22 @@
 				<br>
 				<a href="/trabalho-les/implantarDominio" onclick="alert('Tabelas de domínio implantadas com sucesso!')" title="Insere autores, editoras etc." cypress-implantarDominio>Implantar tabelas de domínio</a>
 			</div>
-			<h1>Gráficos de vendas</h1>
-			<canvas id="myChart" width="600" height="300"></canvas>
-			<form>
-				<br><br>
-				<select class="js-change-chart-view" name="month">
-					<option value="1">Janeiro</option>
-					<option value="2">Fevereiro</option>
-					<option value="3">Março</option>
-					<option value="4">Abril</option>
-					<option value="5">Maio</option>
-					<option value="6">Junho</option>
-					<option value="7">Julho</option>
-					<option value="8">Agosto</option>
-					<option value="9">Setembro</option>
-					<option value="10">Outubro</option>
-					<option value="11">Novembro</option>
-					<option value="12">Dezembro</option>
-				</select>
-				<select class="js-change-chart-view" name="">
-					<option value="categoria">Por categoria</option>
-					<option value="livro">Por livro</option>
-				</select>
+			<h2>Gerar gráfico de vendas</h1>
+			<!-- <canvas id="myChart" width="600" height="300"></canvas> -->
+			<form  action="/trabalho-les/gerarGrafico" method="post" class="js-pristine-validation">
+				<div class="form-group">
+					<input type="date" name="dataInicio" placeholder="Data de início" required data-pristine-required-message="Este campo é obrigatório" cypress-dataInicio>
+				</div>
+				<div class="form-group">
+					<input type="date" name="dataFim" placeholder="Data de fim" required data-pristine-required-message="Este campo é obrigatório" cypress-dataFim>
+				</div>
+				<div class="form-group">
+					<select name="tipo">
+						<option value="categoria">Por categoria</option>
+						<option value="livro">Por livro</option>
+					</select>
+				</div>
+				<button type="submit" cypress-submitGrafico>Gerar</button>
 			</form>
 		</div>
 	</main>
@@ -109,9 +103,10 @@
 		</div>
 	</footer>
 	<script type="text/javascript" src="assets/js/vendor/imask.js"></script>
+	<script type="text/javascript" src="assets/js/vendor/pristine.min.js"></script>
 	<script type="text/javascript" src="assets/js/vendor/Chart.bundle.min.js"></script>
 	<script type="text/javascript" src="assets/js/main.js"></script>
-	<script type="text/javascript">
+	<!--<script type="text/javascript">
 		var ctx = document.getElementById('myChart');
 
 		var myChart = new Chart(ctx, {
@@ -137,6 +132,6 @@
 		        }
 		    }
 		});
-	</script>
+	</script>-->
 </body>
 </html>
