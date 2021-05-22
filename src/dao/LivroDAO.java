@@ -76,6 +76,8 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 					new GrupoPrecificacao(rs.getLong("livros.idGrupoPrecificacao"), null, "", 0, 0), 
 					rs.getString("livros.edicao"));
 
+				livro.setLargura(rs.getDouble("livros.largura"));
+
 				list.add(livro);
 			}
 			
@@ -139,6 +141,8 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getString("livros.capa"),				
 					new GrupoPrecificacao(rs.getLong("livros.idGrupoPrecificacao"), null, "", rs.getDouble("grupos_precificacao.porcentagem"), 0), 
 					rs.getString("livros.edicao"));
+
+				livro.setLargura(rs.getDouble("livros.largura"));
 
 				livro.setEstoque(contaEstoque(livro, 0));
 				livro.setNumeroVendas(contaVendas(livro));
@@ -391,6 +395,8 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 					new GrupoPrecificacao(rs.getLong("grupos_precificacao.id"), null, null, rs.getDouble("grupos_precificacao.porcentagem"), 0),
 					rs.getString("livros.edicao")
 				);
+
+				livro.setLargura(rs.getDouble("livros.largura"));
 
 				//public Livro(id, Date dataCadastro, String titulo, Autor autor, Editora editora, Categoria[] categorias, String ano, String isbn, int numeroPaginas, String sinopse, double altura, double peso, double profundidade, double preco, String codigoBarras, int status, String capa, GrupoPrecificacao grupoPrecificacao, String edicao) {
 
@@ -715,6 +721,9 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setDouble(10, livro.getAltura());
 			pst.setDouble(11, livro.getLargura());
 			pst.setDouble(12, livro.getPeso());
+
+			System.out.println("a largura 2  ====    ==========");
+			System.out.println(livro.getLargura());
 
 			pst.setDouble(13, livro.getProfundidade());
 			pst.setDouble(14, livro.getPreco());

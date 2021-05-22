@@ -51,6 +51,8 @@ public class AlterarLivroAction extends HttpServlet {
 			        String sinopse = campos[7].getValor();
 			        double altura = Double.parseDouble(campos[8].getValor());
 			        double peso = Double.parseDouble(campos[9].getValor());
+
+			        double largura = Double.parseDouble(campos[18].getValor());
 			        double profundidade = Double.parseDouble(campos[10].getValor());
 			        double preco = Double.parseDouble(campos[11].getValor());
 			        String codigoBarras = campos[12].getValor();
@@ -60,6 +62,11 @@ public class AlterarLivroAction extends HttpServlet {
 			        Categoria[] categoriasRemovidas = LivroViewHelper.createCategoriasRemovidasFromStrings(campos[17].getValor());
 			        
 		        	Livro livro = new Livro(id, new Date(), titulo, autor, editora, categorias, ano, isbn, numeroPaginas, sinopse, altura, peso, profundidade, preco, codigoBarras, status, capa, grupoPrecificacao, edicao);
+
+		        	livro.setLargura(largura);
+
+		        	System.out.println("a largura =============== ==============");
+		        	System.out.println(livro.getLargura());
 
 			        fachada.update(livro);
 

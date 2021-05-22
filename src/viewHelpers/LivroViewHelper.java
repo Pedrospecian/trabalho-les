@@ -66,7 +66,7 @@ public class LivroViewHelper {
 	}
 
 	public static Campo[] getCadastroLivroActionCampos(HttpServletRequest req) {
-		Campo[] campos = new Campo[17];
+		Campo[] campos = new Campo[18];
 
 		campos[0] = new Campo(0, req.getParameter("titulo"), true, "", true, "titulo");
 		campos[1] = new Campo(1, req.getParameter("autor"), true, "", true, "autor");
@@ -86,6 +86,8 @@ public class LivroViewHelper {
 		campos[15] = new Campo(0, req.getParameter("edicao"), true, "", false, "edicao");
 
 		campos[16] = new Campo(6, req.getParameter("arrIdCategoria"), true, "", false, "arrIdCategoria");
+		campos[17] = new Campo(555, req.getParameter("largura"), true, "", true, "largura");
+		
 		System.out.println("a capa VVV");
 		System.out.println(campos[3].getValor());
 
@@ -93,7 +95,7 @@ public class LivroViewHelper {
 	}
 
 	public static Campo[] getAlterarLivroActionCampos(HttpServletRequest req) {
-		Campo[] campos = new Campo[18]; 
+		Campo[] campos = new Campo[19]; 
 
 		campos[0] = new Campo(0, req.getParameter("titulo"), true, "", true, "titulo");
 		campos[1] = new Campo(0, req.getParameter("autor"), true, "", true, "autor");
@@ -114,6 +116,7 @@ public class LivroViewHelper {
 
 		campos[16] = new Campo(6, req.getParameter("arrIdCategoria"), true, "", false, "arrIdCategoria");
 		campos[17] = new Campo(6, req.getParameter("removerCategorias"), true, "", false, "removerCategorias");
+		campos[18] = new Campo(555, req.getParameter("largura"), true, "", true, "largura");
 
 
 		return campos;

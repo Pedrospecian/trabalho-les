@@ -2224,7 +2224,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 			if (campos[2].getValor().equals("categoria")) {
 				nomeTipo = "categorias.nome";
-				joinCat = "inner join livros_categorias on livros_categorias.idLivro = livros_estoque.livroId";
+				joinCat = "inner join livros_categorias on livros_categorias.idLivro = livros_estoque.livroId inner join categorias on categorias.id = livros_categorias.idCategoria";
 			}
 			//pst = connection.prepareStatement("select * from pedidos inner join carrinhos on carrinhos.id = pedidos.idCarrinho inner join usuarios on usuarios.id = usuarioId " + where + paginacaoStr + ";");
 			pst = connection.prepareStatement("SELECT " + nomeTipo + ", livros_estoque.livroId, livros_estoque.dataCadastro, sum(livros_estoque.quantidade) as total FROM livros_estoque " +

@@ -52,12 +52,14 @@ public class CadastroLivroAction extends HttpServlet {
 			        double peso = Double.parseDouble(campos[9].getValor());
 			        double profundidade = Double.parseDouble(campos[10].getValor());
 			        double preco = Double.parseDouble(campos[11].getValor());
+			        double largura = Double.parseDouble(campos[17].getValor());
 			        String codigoBarras = campos[12].getValor();
 			        GrupoPrecificacao grupoPrecificacao = new GrupoPrecificacao(Long.parseLong(campos[14].getValor()), new Date(), "", 1, 1);
 			        String edicao = campos[15].getValor();
 			        
 		        	Livro livro = new Livro((long)1, new Date(), titulo, autor, editora, categorias, ano, isbn, numeroPaginas, sinopse, altura, peso, profundidade, preco, codigoBarras, status, capa, grupoPrecificacao, edicao);
-
+		        	livro.setLargura(largura);
+		        	
 		        	fachada.insert(livro);
 		        	resp.sendRedirect("/trabalho-les/listagemLivros");
 		        } else {

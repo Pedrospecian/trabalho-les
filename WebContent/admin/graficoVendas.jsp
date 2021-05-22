@@ -24,8 +24,8 @@
 				</div>
 				<div class="form-group">
 					<select name="tipo">
-						<option value="categoria" selected='${tipo.equals("categoria") ? "selected" : ""}'>Por categoria</option>
-						<option value="livro"  selected='${tipo.equals("livro") ? "selected" : ""}'>Por livro</option>
+						<option value="categoria" '${tipo.equals("categoria") ? "selected" : ""}'>Por categoria</option>
+						<option value="livro" '${tipo.equals("livro") ? "selected" : ""}'>Por livro</option>
 					</select>
 				</div>
 				<button type="submit" cypress-submitGrafico>Gerar</button>
