@@ -34,6 +34,7 @@
 						<option value="">Tipo de usuário</option>
 						<option value="1">Funcionário</option>
 						<option value="2">Administrador</option>
+						<option value="3">Gerente de vendas</option>
 					</select>
 				</div>
 				<div class="form-group">

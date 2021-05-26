@@ -34,6 +34,7 @@
 						<option value="">Tipo de usuário</option>
 						<option value="1" ${1 == usuario.getTipoUsuario().getId() ? 'selected=\"selected\"' : ''}>Funcionário</option>
 						<option value="2" ${2 == usuario.getTipoUsuario().getId() ? 'selected=\"selected\"' : ''}>Administrador</option>
+						<option value="3" ${3 == usuario.getTipoUsuario().getId() ? 'selected=\"selected\"' : ''}>Gerente de vendas</option>
 					</select>				
 				</div>
 				<button cypress-submit>Editar</button>
