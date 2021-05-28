@@ -98,6 +98,17 @@ form.form-buscar-clientes {
 	margin-left: 0;
 }
 
+form.form-buscar-clientes.form-buscar-big {
+	flex-wrap: wrap;
+	width: 100%;
+	max-width: 100%;
+}
+
+form.form-buscar-clientes.form-buscar-big input, 
+form.form-buscar-clientes.form-buscar-big select {
+	width: 15%;
+}
+
 form.form-buscar-clientes input, form.form-buscar-clientes select, form.form-buscar-clientes button {
 	padding-top: 2px;
 	padding-bottom: 2px;

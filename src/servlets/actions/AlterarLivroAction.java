@@ -26,8 +26,9 @@ public class AlterarLivroAction extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		LoginViewHelper lvh = new LoginViewHelper();
-		if(!lvh.isAuthorized(req, resp, 1)){
+		if(!lvh.isAuthorized(req, resp, 5)){
 			resp.sendRedirect("/trabalho-les/home");
+			System.out.println("nao foi. ... . .. .");
 		}else{
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
@@ -69,6 +70,8 @@ public class AlterarLivroAction extends HttpServlet {
 		        	System.out.println(livro.getLargura());
 
 			        fachada.update(livro);
+
+			        fachada.updatePreco(livro, lvh.isAuthorized(req, resp, 4) );
 
 		        	if (categoriasRemovidas != null) {
 		        		fachada.deleteCategorias(categoriasRemovidas, id);

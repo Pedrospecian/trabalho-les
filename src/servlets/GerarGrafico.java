@@ -18,7 +18,7 @@ public class GerarGrafico extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		LoginViewHelper lvh = new LoginViewHelper();
-		if(!lvh.isAuthorized(req, resp, 1)){
+		if(!lvh.isAuthorized(req, resp, 5)){
 			resp.sendRedirect("/trabalho-les/home");
 		}else{
 			req.setCharacterEncoding("UTF-8");
@@ -35,7 +35,7 @@ public class GerarGrafico extends HttpServlet {
 				req.setAttribute("dataFim", campos[1].getValor());
 				req.setAttribute("tipo", campos[2].getValor());
 				req.setAttribute("itens", itens);
-				req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
+				req.setAttribute("headerHTML", lvh.getHeader(req, resp, 5));
 				req.getRequestDispatcher("admin/graficoVendas.jsp").forward(req, resp);
 			} else {
 				//resp.sendRedirect("/trabalho-les/home");

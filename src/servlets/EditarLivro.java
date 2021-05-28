@@ -21,7 +21,7 @@ public class EditarLivro extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		LoginViewHelper lvh = new LoginViewHelper();
-		if(!lvh.isAuthorized(req, resp, 1)){
+		if(!lvh.isAuthorized(req, resp, 5)){
 			resp.sendRedirect("/trabalho-les/home");
 		}else{
 			req.setCharacterEncoding("UTF-8");
@@ -64,7 +64,7 @@ public class EditarLivro extends HttpServlet {
 			req.setAttribute("autores", autResultados.getResultados());
 			req.setAttribute("editoras", ediResultados.getResultados());
 			req.setAttribute("gruposPrecificacao", gpResultados.getResultados());
-			req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
+			req.setAttribute("headerHTML", lvh.getHeader(req, resp, 5));
 			req.getRequestDispatcher("livro/editarLivro.jsp").forward(req, resp);
 		}
 	}

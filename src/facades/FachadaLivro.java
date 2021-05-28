@@ -155,6 +155,11 @@ public class FachadaLivro implements IFachada< Livro, Campo[]> {
 
 		return "Livro alterado com sucesso!";
 	}
+
+	public void  updatePreco(Livro livro, boolean gerenteVendas) {
+		LivroDAO dao = new LivroDAO();
+		dao.updatePreco(livro, gerenteVendas);
+	}
 	
 	public String updateStatus(Livro livro) {
 		LivroDAO dao = new LivroDAO();

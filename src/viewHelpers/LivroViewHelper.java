@@ -11,25 +11,29 @@ import model.Livro;
 import utils.ResultadosBusca;
 
 public class LivroViewHelper {
-	public static Campo[] getListagemLivrosCampos(HttpServletRequest req) {
-		Campo[] campos = new Campo[9];
+	public static Campo[] getListagemLivrosCamposHeader(HttpServletRequest req) {
+		Campo[] campos = new Campo[1];
+		campos[0] = new Campo(0, req.getParameter("term"), true, "", true, "titulo");
+		return campos;
+	}
 
-		/*campos[0] = new Campo(0, req.getParameter("titulo"), true, "", true, "titulo");
-		campos[1] = new Campo(0, req.getParameter("autor"), true, "", true, "autor");
-		campos[2] = new Campo(0, req.getParameter("editora"), true, "", true, "editora");
-		campos[3] = new Campo(0, req.getParameter("categoria"), true, "", true, "categoria");
-		campos[4] = new Campo(1, req.getParameter("ano"), true, "", true, "ano");
-		campos[5] = new Campo(1, req.getParameter("isbn"), true, "", true, "isbn");
-		campos[6] = new Campo(1, req.getParameter("numerodepaginas"), true, "", true, "numeroPaginas");
-		campos[7] = new Campo(0, req.getParameter("sinopse"), true, "", true, "sinopse");
-		campos[8] = new Campo(555, req.getParameter("altura"), true, "", true, "altura");
-		campos[9] = new Campo(555, req.getParameter("peso"), true, "", true, "peso");
-		campos[10] = new Campo(555, req.getParameter("profundidade"), true, "", true, "profundidade");
-		campos[11] = new Campo(555, req.getParameter("preco"), true, "", true, "preco");
-		campos[12] = new Campo(1, req.getParameter("codigodebarras"), true, "", true, "codigoBarras");
-		campos[13] = new Campo(1, req.getParameter("status"), true, "", true, "status");
-		campos[14] = new Campo(1, req.getParameter("status"), true, "", true, "grupoPrecificacao");
-		campos[15] = new Campo(0, req.getParameter("status"), true, "", true, "grupoPrecificacao");*/
+	public static Campo[] getListagemLivrosCampos(HttpServletRequest req) {
+		Campo[] campos = new Campo[14];
+
+		campos[0] = new Campo(0, req.getParameter("titulo"), true, "", true, "titulo");
+		campos[1] = new Campo(1, req.getParameter("autor"), true, "", true, "autor");
+		campos[2] = new Campo(1, req.getParameter("editora"), true, "", true, "editora");
+		campos[3] = new Campo(0, req.getParameter("isbn"), true, "", true, "isbn");
+		campos[4] = new Campo(0, req.getParameter("codigoBarras"), true, "", true, "codigoBarras");		
+		campos[5] = new Campo(1, req.getParameter("status"), true, "", true, "status");
+		campos[6] = new Campo(0, req.getParameter("edicao"), true, "", true, "edicao");
+		campos[7] = new Campo(1, req.getParameter("ano"), true, "", true, "ano");
+		campos[8] = new Campo(1, req.getParameter("numeroPaginas"), true, "", true, "numeroPaginas");
+		campos[9] = new Campo(555, req.getParameter("altura"), true, "", true, "altura");
+		campos[10] = new Campo(555, req.getParameter("peso"), true, "", true, "peso");
+		campos[11] = new Campo(555, req.getParameter("profundidade"), true, "", true, "profundidade");
+		campos[12] = new Campo(555, req.getParameter("preco"), true, "", true, "preco");
+		campos[13] = new Campo(1, req.getParameter("grupoPrecificacao"), true, "", true, "idGrupoPrecificacao");
 
 		return campos;
 	}

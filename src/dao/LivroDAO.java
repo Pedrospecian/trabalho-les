@@ -106,18 +106,21 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 	public ArrayList select (Campo[] campos) {
 		PreparedStatement pst = null;
 		try {
+			CriaFiltragem filtro = new CriaFiltragem();
+			
+			String where = filtro.processa(campos);
+
 			connection = Conexao.getConnectionMySQL();
 			StringBuilder sql = new StringBuilder();
 			sql.append("Select * from livros "+
 					   "inner join autores on livros.autorId = autores.id "+
 					   "inner join editoras on livros.idEditora = editoras.id "+
-					   "inner join grupos_precificacao on livros.idGrupoPrecificacao = grupos_precificacao.id");
+					   "inner join grupos_precificacao on livros.idGrupoPrecificacao = grupos_precificacao.id " + where);
 			
 			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
+					Statement.RETURN_GENERATED_KEYS);			
 
-			ResultSet rs = pst.executeQuery();
-			
+			ResultSet rs = pst.executeQuery();			
 			ArrayList<Livro> list = new ArrayList();
 			
 			while (rs.next()) {
@@ -700,7 +703,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 					   "capa = ?, idEditora = ?, ano = ?, " +
 					   "isbn = ?, numeroPaginas = ?, sinopse = ?, " +
 					   "altura = ?, largura = ?, peso = ?, " +
-					   "profundidade = ?, preco = ?, codigoBarras = ?, idGrupoPrecificacao = ? " +
+					   "profundidade = ?, codigoBarras = ?, idGrupoPrecificacao = ? " +
 					   "WHERE livros.id = ?;");
 			
 			pst = connection.prepareStatement(sql.toString(),
@@ -726,11 +729,53 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			System.out.println(livro.getLargura());
 
 			pst.setDouble(13, livro.getProfundidade());
-			pst.setDouble(14, livro.getPreco());
-			pst.setString(15, livro.getCodigoBarras());
-			pst.setLong(16, livro.getGrupoPrecificacao().getId());
+			pst.setString(14, livro.getCodigoBarras());
+			pst.setLong(15, livro.getGrupoPrecificacao().getId());
 
-			pst.setLong(17, livro.getId());
+			pst.setLong(16, livro.getId());
+			
+			pst.executeUpdate();
+
+			//alterar categorias
+			if (livro.getCategorias() != null) {
+				salvaCategorias(livro);
+			}
+
+			connection.commit();
+		
+		} catch (Exception e) {
+			try {
+				if(connection != null) connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pst != null) pst.close();
+				if(connection != null) connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void updatePreco(Livro livro, boolean gerenteVendas) {
+		PreparedStatement pst = null;
+		
+		try {
+			connection = Conexao.getConnectionMySQL();
+			connection.setAutoCommit(false);
+			
+			StringBuilder sql = new StringBuilder();
+			sql.append("UPDATE livros SET preco = ? WHERE livros.id = ?;");
+			
+			pst = connection.prepareStatement(sql.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setDouble(1, livro.getPreco());
+			pst.setLong(2, livro.getId());
 			
 			pst.executeUpdate();
 
@@ -741,7 +786,9 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 			connection.commit();
 
-			alteraPreco(livro.getId());
+			if (!gerenteVendas) {
+				alteraPreco(livro.getId());
+			}
 		
 		} catch (Exception e) {
 			try {

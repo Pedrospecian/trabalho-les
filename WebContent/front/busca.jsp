@@ -63,7 +63,16 @@
 				</div>
 				<div class="search-results">
 					<div class="books-wrapper">
-						<div class="book-single">
+						<c:forEach var="livro" items="${registros}">
+							<div class="book-single">
+								<a href="/trabalho-les/produto?id=${livro.getId()}" cypress-livro-single>
+									<img src="assets/images/produtos/livro-ficcao.jpg" alt="${livro.getTitulo()}">
+								</a>
+								<p class="book-title">${livro.getTitulo()}</p>
+								<p class="book-price"><div class="js-dinheiro">${livro.getPreco()}</div></p>
+							</div>
+						</c:forEach>
+						<!--<div class="book-single">
 							<a href="/trabalho-les/produto?id=1" cypress-livro-single>
 								<img src="assets/images/produtos/livro-ficcao.jpg" alt="Alice no país das maravilhas">
 								<p class="book-title">Alice no país das maravilhas</p>
@@ -127,7 +136,7 @@
 								<p class="book-title">Sherlock Holmes</p>
 								<p class="book-price">R$ 12,99</p>
 							</a>
-						</div>
+						</div>-->
 					</div>
 				</div>
 			</div>

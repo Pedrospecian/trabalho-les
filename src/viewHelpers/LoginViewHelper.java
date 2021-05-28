@@ -46,6 +46,14 @@ public class LoginViewHelper {
 			return false;
 		}
 
+		if (tipoLogin == 4 && !campos[3].getValor().equals("gerentevendas")) {
+			return false;
+		}
+
+		if (tipoLogin == 5 && !(campos[3].getValor().equals("funcionario") || campos[3].getValor().equals("admin") || campos[3].getValor().equals("gerentevendas")) ) {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -65,7 +73,7 @@ public class LoginViewHelper {
 			}		
 		}
 
-		if (tipo == 1) {
+		if (tipo == 1 || tipo == 5) {
 			if (auth) {
 				//admin logado
 				header = "<div class='container'><div class='d-flex'><a href='/trabalho-les/homeAdmin' cypress-homeAdmin>Home do admin</a><div class='user-nome'><p>Logado(a) como " + username + "</p><a href='/trabalho-les/logout' cypress-logout>Logout</a></div></div></div>";

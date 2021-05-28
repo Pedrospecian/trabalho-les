@@ -13,12 +13,12 @@ public class CadastroGrupoPrecificacao extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		LoginViewHelper lvh = new LoginViewHelper();
-		if(!lvh.isAuthorized(req, resp, 1)){
+		if(!lvh.isAuthorized(req, resp, 5)){
 			resp.sendRedirect("/trabalho-les/home");
 		}else{
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
-			req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
+			req.setAttribute("headerHTML", lvh.getHeader(req, resp, 5));
 			req.getRequestDispatcher("grupoprecificacao/cadastroGrupoPrecificacao.jsp").forward(req, resp);
 		}
 	}

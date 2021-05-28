@@ -114,6 +114,7 @@
 					<input type="text" name="profundidade" placeholder="Profundidade" required data-pristine-required-message="Este campo é obrigatório" min="0" step="0.01" pattern="/^[0-9]+((\.|,)[0-9]+)?$/" data-pristine-pattern-message="Este campo precisa ser um número válido" min="0" step="0.01" value="${livro.getProfundidade()}" cypress-profundidade>
 				</div>
 				<div class="form-group">
+					<label>Preço</label>
 					<input type="text" name="preco" placeholder="Preço de venda" required data-pristine-required-message="Este campo é obrigatório" min="0" step="0.01" pattern="/^[0-9]+((\.|,)[0-9]+)?$/" data-pristine-pattern-message="Este campo precisa ser um número válido" min="0" step="0.01" value="${livro.getPreco()}" cypress-preco>
 				</div>
 				<div class="form-group">

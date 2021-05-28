@@ -16,7 +16,7 @@ public class EditarCupom extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		LoginViewHelper lvh = new LoginViewHelper();
-		if(!lvh.isAuthorized(req, resp, 1)){
+		if(!lvh.isAuthorized(req, resp, 5)){
 			resp.sendRedirect("/trabalho-les/home");
 		}else{
 			req.setCharacterEncoding("UTF-8");
@@ -29,7 +29,7 @@ public class EditarCupom extends HttpServlet {
 				CupomDesconto cupom = fachada.selectSingle(Long.parseLong(campos[0].getValor()));
 
 				req.setAttribute("cupom", cupom);
-				req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
+				req.setAttribute("headerHTML", lvh.getHeader(req, resp, 5));
 				req.getRequestDispatcher("cupom/editarCupom.jsp").include(req, resp); 
 			} else {
 

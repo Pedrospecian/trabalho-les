@@ -16,22 +16,26 @@
 		<div class="container">
 			<h1>Página inicial - Admin</h1>
 			<div class="admin-options-wrapper">
-				<div class="admin-block">
-					<h2>Clientes</h2>
-					<a href="/trabalho-les/cadastroCliente" cypress-cadastroCliente>Cadastrar cliente</a>
-					<br>
-					<a href="/trabalho-les/listagemClientes" cypress-listagemClientes>Listagem de clientes</a>
-				</div>
-				<div class="admin-block">
-					<h2>Usuários do admin</h2>
-					<a href="/trabalho-les/cadastroUsuarioAdmin" cypress-cadastroUsuarioAdmin>Cadastrar usuário de admin</a>
-					<br>
-					<a href="/trabalho-les/listagemUsuariosAdmin" cypress-listagemUsuariosAdmin>Listagem de usuários de admin</a>
-				</div>
+				<c:if test='${isGerenteVendas.equals("false")}'>
+					<div class="admin-block">
+						<h2>Clientes</h2>
+						<a href="/trabalho-les/cadastroCliente" cypress-cadastroCliente>Cadastrar cliente</a>
+						<br>
+						<a href="/trabalho-les/listagemClientes" cypress-listagemClientes>Listagem de clientes</a>
+					</div>
+					<div class="admin-block">
+						<h2>Usuários do admin</h2>
+						<a href="/trabalho-les/cadastroUsuarioAdmin" cypress-cadastroUsuarioAdmin>Cadastrar usuário de admin</a>
+						<br>
+						<a href="/trabalho-les/listagemUsuariosAdmin" cypress-listagemUsuariosAdmin>Listagem de usuários de admin</a>
+					</div>
+				</c:if>
 				<div class="admin-block">
 					<h2>Livros</h2>
-					<a href="/trabalho-les/cadastroLivro" cypress-cadastroLivro>Cadastrar livros</a>
-					<br>
+					<c:if test='${isGerenteVendas.equals("false")}'>
+						<a href="/trabalho-les/cadastroLivro" cypress-cadastroLivro>Cadastrar livros</a>
+						<br>
+					</c:if>
 					<a href="/trabalho-les/listagemLivros" cypress-listagemLivros>Listagem de livros</a>
 					<c:if test='${isAdmin.equals("true")}'>
 						<br>
@@ -46,19 +50,21 @@
 					<br>
 					<a href="/trabalho-les/listagemCupons" cypress-listagemCupons>Listagem de cupons</a>
 				</div>
-				<div class="admin-block">
-					<h2>Pedidos</h2>
-					<a href="/trabalho-les/todosPedidos" cypress-todosPedidos>Ver todos os pedidos</a>
-					<br>
-					<a href="/trabalho-les/listagemSolicitacoesTroca" cypress-listagemSolicitacoesTroca>Listagem de solicitações de troca</a>
-				</div>
+				<c:if test='${isGerenteVendas.equals("false")}'>
+					<div class="admin-block">
+						<h2>Pedidos</h2>
+						<a href="/trabalho-les/todosPedidos" cypress-todosPedidos>Ver todos os pedidos</a>
+						<br>
+						<a href="/trabalho-les/listagemSolicitacoesTroca" cypress-listagemSolicitacoesTroca>Listagem de solicitações de troca</a>
+					</div>
 
-				<div class="admin-block">
-					<h2>Fornecedores</h2>
-					<a href="/trabalho-les/cadastroFornecedor" cypress-cadastroFornecedor>Cadastrar fornecedor</a>
-					<br>
-					<a href="/trabalho-les/listagemFornecedores" cypress-listagemFornecedor>Listagem de fornecedores</a>
-				</div>
+					<div class="admin-block">
+						<h2>Fornecedores</h2>
+						<a href="/trabalho-les/cadastroFornecedor" cypress-cadastroFornecedor>Cadastrar fornecedor</a>
+						<br>
+						<a href="/trabalho-les/listagemFornecedores" cypress-listagemFornecedor>Listagem de fornecedores</a>
+					</div>
+				</c:if>
 
 				<div class="admin-block">
 					<h2>Grupos de precificação</h2>
@@ -67,13 +73,16 @@
 					<a href="/trabalho-les/listagemGruposPrecificacao" cypress-listagemGruposPrecificacao>Listagem de grupos de precificação</a>
 				</div>
 			</div>
- 
-			<div>
-				<h2>Configurações</h2>
-				<a href="/trabalho-les/configuracoes" cypress-configuracoes>Editar Configurações</a>
-				<br>
-				<a href="/trabalho-les/implantarDominio" onclick="alert('Tabelas de domínio implantadas com sucesso!')" title="Insere autores, editoras etc." cypress-implantarDominio>Implantar tabelas de domínio</a>
-			</div>
+ 			<c:if test='${isGerenteVendas.equals("false")}'>
+				<div>
+					<h2>Configurações</h2>
+					<a href="/trabalho-les/configuracoes" cypress-configuracoes>Editar Configurações</a>
+					<c:if test='${isGerenteVendas.equals("false")}'>
+						<br>
+						<a href="/trabalho-les/implantarDominio" onclick="alert('Tabelas de domínio implantadas com sucesso!')" title="Insere autores, editoras etc." cypress-implantarDominio>Implantar tabelas de domínio</a>
+					</c:if>
+				</div>
+			</c:if>
 			<h2>Gerar gráfico de vendas</h1>
 			<!-- <canvas id="myChart" width="600" height="300"></canvas> -->
 			<form  action="/trabalho-les/gerarGrafico" method="post" class="js-pristine-validation">

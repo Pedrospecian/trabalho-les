@@ -18,7 +18,7 @@ public class ListagemGrupoPrecificacao extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		LoginViewHelper lvh = new LoginViewHelper();
-		if(!lvh.isAuthorized(req, resp, 1)){
+		if(!lvh.isAuthorized(req, resp, 5)){
 			resp.sendRedirect("/trabalho-les/home");
 		}else{
 			req.setCharacterEncoding("UTF-8");
@@ -32,7 +32,7 @@ public class ListagemGrupoPrecificacao extends HttpServlet {
 
             req.setAttribute("registros", resultadosBusca.getResultados());
             req.setAttribute("campos", campos);
-			req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
+			req.setAttribute("headerHTML", lvh.getHeader(req, resp, 5));
 			req.getRequestDispatcher("grupoprecificacao/listagemGruposPrecificacao.jsp").forward(req, resp);
 		}
 	}

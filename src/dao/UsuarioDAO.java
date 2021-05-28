@@ -366,6 +366,10 @@ public class UsuarioDAO implements IDAO<EntidadeDominio, Campo[]> {
 				if (tipoUsuario.getId() == 2) {
 					tipoUsuario.setNome("admin");
 				}
+
+				if (tipoUsuario.getId() == 3) {
+					tipoUsuario.setNome("gerentevendas");
+				}
 				//Usuario(long id, Date dataCadastro, String nome, String email, int status, String senha, TipoUsuario tipoUsuario)
 				this.selectSingleVal = new Usuario(
 						rs.getLong("usuarios.id"),

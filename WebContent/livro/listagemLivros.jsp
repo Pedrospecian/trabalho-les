@@ -16,8 +16,9 @@
 		<div class="container">
 			<h1>Listagem de livros</h1>
 			<h2>Buscar livros</h2>
-			<form method="get" action="#" class="form-buscar-clientes">
+			<form method="get" action="#" class="form-buscar-clientes form-buscar-big">
 				<input type="text" name="titulo" placeholder="Título" >
+				<input type="text" name="edicao" placeholder="Edição" >
 				<select name="autor">
 					<option value="">Autor</option>
 					<option value="1">Fulano</option>
@@ -47,7 +48,21 @@
 					<option value="">Status</option>
 					<option value="1">Ativo</option>
 					<option value="0">Inativo</option>
-					<option value="2">Fora de mercado</option>
+					<option value="2">Inativação pendente</option>
+					<option value="3">Ativação pendente</option>
+					<option value="4">Fora de mercado</option>
+				</select>
+				<input type="text" name="largura" placeholder="Largura" step="0.01">
+				<input type="text" name="altura" placeholder="Altura" step="0.01">
+				<input type="text" name="profundidade" placeholder="Profundidade" step="0.01">
+				<input type="text" name="peso" placeholder="Peso" step="0.01">
+				<input type="text" name="preco" placeholder="Preço de venda" step="0.01">
+				<input type="text" name="numeroPaginas" placeholder="Número de páginas">
+				<select name="grupoPrecificacao">
+					<option value="">Grupo de Precificação</option>
+					<option value="1">1</option>
+					<option value="2">Be2</option>
+					<option value="3">C23</option>
 				</select>
 				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por página" value="" >
 				<button type="submit">Buscar</button>
@@ -107,15 +122,17 @@
 									<td>${livro.getNumeroVendas()}</td>
 									<td>
 										<a href="/trabalho-les/editarLivro?id=${livro.getId()}" cypress-editarLivro>Editar</a>
-										<br>										
-										<c:if test = "${livro.getStatus() == 1}">
-											<a href="/trabalho-les/justificarInativacaoLivro?id=${livro.getId()}" cypress-justificarInativacaoLivro>Inativar</a>
+										<c:if test='${isGerenteVendas.equals("false")}'>
+											<br>
+											<c:if test = "${livro.getStatus() == 1}">
+												<a href="/trabalho-les/justificarInativacaoLivro?id=${livro.getId()}" cypress-justificarInativacaoLivro>Inativar</a>
+											</c:if>
+											<c:if test = "${livro.getStatus() == 0}">
+												<a href="/trabalho-les/justificarAtivacaoLivro?id=${livro.getId()}" cypress-justificarAtivacaoLivro>Ativar</a>
+											</c:if>
+											<br>
+											<a href="/trabalho-les/listagemEstoque?id=${livro.getId()}" cypress-listagemEstoque>Controle de estoque</a>
 										</c:if>
-										<c:if test = "${livro.getStatus() == 0}">
-											<a href="/trabalho-les/justificarAtivacaoLivro?id=${livro.getId()}" cypress-justificarAtivacaoLivro>Ativar</a>
-										</c:if>
-										<br>							
-										<a href="/trabalho-les/listagemEstoque?id=${livro.getId()}" cypress-listagemEstoque>Controle de estoque</a>
 									</td>
 								</tr>
 							</c:forEach>

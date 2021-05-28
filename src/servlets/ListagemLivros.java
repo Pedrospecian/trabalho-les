@@ -21,7 +21,7 @@ public class ListagemLivros extends HttpServlet {
                 req.setCharacterEncoding("UTF-8");
                 resp.setCharacterEncoding("UTF-8");
                 LoginViewHelper lvh = new LoginViewHelper();
-                if(!lvh.isAuthorized(req, resp, 1)){
+                if(!lvh.isAuthorized(req, resp, 5)){
                         resp.sendRedirect("/trabalho-les/home");
                 }else{
                         Campo[] campos = LivroViewHelper.getListagemLivrosCampos(req);
@@ -32,7 +32,9 @@ public class ListagemLivros extends HttpServlet {
                         req.setAttribute("registros", resultadosBusca.getResultados());
                         req.setAttribute("total", resultadosBusca.getContagemTotal());
                         req.setAttribute("campos", campos);
-                        req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
+                        req.setAttribute("headerHTML", lvh.getHeader(req, resp, 5));
+                        
+                        req.setAttribute("isGerenteVendas", String.valueOf(lvh.isAuthorized(req, resp, 4)));
 
         		req.getRequestDispatcher("livro/listagemLivros.jsp").forward(req, resp);
                 }
