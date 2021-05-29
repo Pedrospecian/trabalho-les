@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import viewHelpers.LoginViewHelper;
+import facades.FachadaConfiguracoes;
 
 public class ImplantarDominio extends HttpServlet {
 	private static final long serialVersionUID = 12;
@@ -18,6 +19,11 @@ public class ImplantarDominio extends HttpServlet {
 		}else{
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
+
+			FachadaConfiguracoes fachada = new FachadaConfiguracoes();
+
+			fachada.implantarDominio();
+
 			req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
 			resp.sendRedirect("/trabalho-les/homeAdmin");
 		}

@@ -58,4 +58,9 @@ public class FachadaConfiguracoes implements IFachada<Configuracao, Campo[]> {
 		dao.resetarConfiguracoes();
 	}
 
+	public void implantarDominio() {
+		ConfiguracoesDAO dao = new ConfiguracoesDAO();
+		dao.implantarDominio();
+	}
+
 }

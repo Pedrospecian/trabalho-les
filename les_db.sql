@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 26-Maio-2021 às 15:19
+-- Tempo de geração: 29-Maio-2021 às 06:07
 -- Versão do servidor: 10.4.13-MariaDB
 -- versão do PHP: 7.4.8
 
@@ -57,9 +57,9 @@ DELIMITER ;
 CREATE TABLE `autores` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `resumo` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `resumo` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `autores`
@@ -67,7 +67,7 @@ CREATE TABLE `autores` (
 
 INSERT INTO `autores` (`id`, `dataCadastro`, `nome`, `resumo`) VALUES
 (1, '2021-04-12', 'Autor teste', 'teste'),
-(2, '2021-05-11', 'Agatha Christie', 'autora de livros de suspense');
+(2, '2021-04-12', 'Agatha Christie', 'autora de livros de suspense');
 
 -- --------------------------------------------------------
 
@@ -78,9 +78,9 @@ INSERT INTO `autores` (`id`, `dataCadastro`, `nome`, `resumo`) VALUES
 CREATE TABLE `bairros` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `descricao` varchar(255) NOT NULL,
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `idCidade` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `bairros`
@@ -115,16 +115,16 @@ INSERT INTO `bairros` (`id`, `dataCadastro`, `descricao`, `idCidade`) VALUES
 CREATE TABLE `bandeiras` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `bandeiras`
 --
 
 INSERT INTO `bandeiras` (`id`, `dataCadastro`, `nome`) VALUES
-(1, '2021-04-13', 'Visa'),
-(2, '2021-04-13', 'MasterCard');
+(1, '2021-04-12', 'Visa'),
+(2, '2021-04-12', 'MasterCard');
 
 -- --------------------------------------------------------
 
@@ -138,7 +138,7 @@ CREATE TABLE `bloqueios_produtos` (
   `quantidade` int(11) NOT NULL,
   `idLivro` bigint(20) NOT NULL,
   `idCarrinho` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `bloqueios_produtos`
@@ -229,7 +229,7 @@ CREATE TABLE `carrinhos` (
   `idUsuario` bigint(20) NOT NULL,
   `status` smallint(6) NOT NULL,
   `dataAlteracao` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `carrinhos`
@@ -460,7 +460,7 @@ CREATE TABLE `carrinhos_produtos` (
   `quantidade` int(11) NOT NULL,
   `quantidadeItensTrocados` int(11) DEFAULT NULL,
   `precoMomentoCompra` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `carrinhos_produtos`
@@ -722,20 +722,20 @@ INSERT INTO `carrinhos_produtos` (`idCarrinhoProduto`, `idCarrinho`, `idProduto`
 
 CREATE TABLE `cartoes_aprovados` (
   `id` bigint(20) NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `numero` varchar(255) NOT NULL,
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `numero` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `dataExpiracao` date NOT NULL,
-  `cvv` varchar(255) NOT NULL,
+  `cvv` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `idBandeira` bigint(20) NOT NULL,
   `limiteDisponivel` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `cartoes_aprovados`
 --
 
 INSERT INTO `cartoes_aprovados` (`id`, `nome`, `numero`, `dataExpiracao`, `cvv`, `idBandeira`, `limiteDisponivel`) VALUES
-(1, 'teste', '1111222233334444', '2022-11-11', '111', 2, 3612.95),
+(1, 'teste', '1111222233334444', '2022-11-11', '111', 2, 4000),
 (2, 'cartao novo teste', '5206984449283106', '2022-08-26', '536', 2, 7140);
 
 -- --------------------------------------------------------
@@ -747,13 +747,13 @@ INSERT INTO `cartoes_aprovados` (`id`, `nome`, `numero`, `dataExpiracao`, `cvv`,
 CREATE TABLE `cartoes_credito` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `numero` varchar(255) NOT NULL,
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `numero` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `dataExpiracao` date NOT NULL,
-  `cvv` varchar(255) NOT NULL,
+  `cvv` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `idBandeira` bigint(20) NOT NULL,
   `idUsuario` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `cartoes_credito`
@@ -830,17 +830,17 @@ INSERT INTO `cartoes_credito` (`id`, `dataCadastro`, `nome`, `numero`, `dataExpi
 CREATE TABLE `categorias` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `categorias`
 --
 
 INSERT INTO `categorias` (`id`, `dataCadastro`, `nome`) VALUES
-(1, '2021-04-28', 'cat1'),
-(2, '2021-04-28', 'cat 2'),
-(3, '2021-04-21', 'categoria #3');
+(1, '2021-04-12', 'cat1'),
+(2, '2021-04-12', 'cat 2'),
+(3, '2021-04-12', 'categoria #3');
 
 -- --------------------------------------------------------
 
@@ -851,17 +851,17 @@ INSERT INTO `categorias` (`id`, `dataCadastro`, `nome`) VALUES
 CREATE TABLE `categorias_ativacao` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `categorias_ativacao`
 --
 
 INSERT INTO `categorias_ativacao` (`id`, `dataCadastro`, `nome`) VALUES
-(1, '2021-05-12', 'Aumento de demanda'),
-(2, '2021-05-13', 'Lançamento de adaptação'),
-(3, '2021-05-14', 'Outro');
+(1, '2021-04-12', 'Aumento de demanda'),
+(2, '2021-04-12', 'Lançamento de adaptação'),
+(3, '2021-04-12', 'Outro');
 
 -- --------------------------------------------------------
 
@@ -872,17 +872,17 @@ INSERT INTO `categorias_ativacao` (`id`, `dataCadastro`, `nome`) VALUES
 CREATE TABLE `categorias_inativacao` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `categorias_inativacao`
 --
 
 INSERT INTO `categorias_inativacao` (`id`, `dataCadastro`, `nome`) VALUES
-(1, '2021-05-11', 'Falta de demanda'),
-(2, '2021-05-12', 'Conteúdo ofensivo'),
-(3, '2021-05-13', 'Outro');
+(1, '2021-04-12', 'Falta de demanda'),
+(2, '2021-04-12', 'Conteúdo ofensivo'),
+(3, '2021-04-12', 'Outro');
 
 -- --------------------------------------------------------
 
@@ -893,9 +893,9 @@ INSERT INTO `categorias_inativacao` (`id`, `dataCadastro`, `nome`) VALUES
 CREATE TABLE `cidades` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `descricao` varchar(255) NOT NULL,
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `idEstado` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `cidades`
@@ -920,15 +920,15 @@ INSERT INTO `cidades` (`id`, `dataCadastro`, `descricao`, `idEstado`) VALUES
 CREATE TABLE `clientes` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL,
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `sexo` tinyint(4) NOT NULL,
   `dataNascimento` date NOT NULL,
   `idTipoCliente` bigint(20) NOT NULL,
   `status` tinyint(4) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `senha` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `senha` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `idCartaoPreferencial` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `clientes`
@@ -958,7 +958,7 @@ INSERT INTO `clientes` (`id`, `dataCadastro`, `nome`, `sexo`, `dataNascimento`, 
 CREATE TABLE `clientes_documentos` (
   `idCliente` bigint(20) NOT NULL,
   `idDocumento` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -969,7 +969,7 @@ CREATE TABLE `clientes_documentos` (
 CREATE TABLE `clientes_enderecos` (
   `idCliente` bigint(20) NOT NULL,
   `idEndereco` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -979,21 +979,21 @@ CREATE TABLE `clientes_enderecos` (
 
 CREATE TABLE `configuracoes` (
   `id` bigint(20) NOT NULL,
-  `descricao` varchar(255) NOT NULL,
-  `valor` varchar(255) NOT NULL,
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `valor` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `dataAlteracao` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `configuracoes`
 --
 
 INSERT INTO `configuracoes` (`id`, `descricao`, `valor`, `dataAlteracao`) VALUES
-(1, 'numerosVendaInativacaoAutomatica', '100', '2021-04-26'),
-(2, 'diasInativacaoAutomatica', '7', '2021-04-26'),
-(3, 'diasPermanenciaCarrinho', '7', '2021-04-26'),
-(4, 'diasPermanenciaBloqueioItemCarrinho', '10', '2021-04-26'),
-(5, 'cepOrigem', '08780220', '2021-04-26');
+(1, 'numerosVendaInativacaoAutomatica', '10', '2021-05-29'),
+(2, 'diasInativacaoAutomatica', '10', '2021-05-29'),
+(3, 'diasPermanenciaCarrinho', '7', '2021-05-29'),
+(4, 'diasPermanenciaBloqueioItemCarrinho', '10', '2021-05-29'),
+(5, 'cepOrigem', '08780220', '2021-05-29');
 
 -- --------------------------------------------------------
 
@@ -1004,12 +1004,12 @@ INSERT INTO `configuracoes` (`id`, `descricao`, `valor`, `dataAlteracao`) VALUES
 CREATE TABLE `cupons_desconto` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL,
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `valor` double NOT NULL,
   `status` tinyint(4) NOT NULL,
   `dataInicio` date NOT NULL,
   `dataFim` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `cupons_desconto`
@@ -1017,7 +1017,9 @@ CREATE TABLE `cupons_desconto` (
 
 INSERT INTO `cupons_desconto` (`id`, `dataCadastro`, `nome`, `valor`, `status`, `dataInicio`, `dataFim`) VALUES
 (1, '2021-04-12', 'DESCONTOEH10!!!', 10, 1, '2021-04-12', '2021-05-31'),
-(2, '2021-04-27', 'aaa9', 12, 1, '1999-11-11', '2024-12-12');
+(2, '2021-04-27', 'aaa9', 12, 1, '1999-11-11', '2024-12-12'),
+(3, '2021-05-27', 'aaasas', 1, 1, '1999-11-11', '2020-11-11'),
+(4, '2021-05-29', 'éá', 12, 1, '1999-11-11', '1999-11-11');
 
 -- --------------------------------------------------------
 
@@ -1029,11 +1031,11 @@ CREATE TABLE `cupons_troca` (
   `id` bigint(20) NOT NULL,
   `dataEntrada` date NOT NULL,
   `idUsuario` bigint(20) NOT NULL,
-  `nome` varchar(255) NOT NULL,
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `valor` double NOT NULL,
   `status` tinyint(4) NOT NULL,
   `idPedido` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `cupons_troca`
@@ -1094,11 +1096,11 @@ INSERT INTO `cupons_troca` (`id`, `dataEntrada`, `idUsuario`, `nome`, `valor`, `
 CREATE TABLE `documentos` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `codigo` varchar(255) NOT NULL,
+  `codigo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `validade` date NOT NULL,
   `idTipoDocumento` bigint(20) NOT NULL,
   `idCliente` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `documentos`
@@ -1147,9 +1149,9 @@ INSERT INTO `documentos` (`id`, `dataCadastro`, `codigo`, `validade`, `idTipoDoc
 CREATE TABLE `editoras` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `editoras`
@@ -1157,7 +1159,7 @@ CREATE TABLE `editoras` (
 
 INSERT INTO `editoras` (`id`, `dataCadastro`, `nome`, `descricao`) VALUES
 (1, '2021-04-12', 'Editora teste', 'teste'),
-(2, '2021-05-11', 'Editora Ininap', 'Editora de HQs');
+(2, '2021-04-12', 'Editora Ininap', 'Editora de HQs');
 
 -- --------------------------------------------------------
 
@@ -1168,19 +1170,19 @@ INSERT INTO `editoras` (`id`, `dataCadastro`, `nome`, `descricao`) VALUES
 CREATE TABLE `enderecos` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `logradouro` varchar(255) NOT NULL,
-  `numero` varchar(255) NOT NULL,
-  `complemento` varchar(255) NOT NULL,
-  `cep` varchar(255) NOT NULL,
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `logradouro` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `numero` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `complemento` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `cep` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `idBairro` bigint(20) NOT NULL,
   `idTipoEndereco` bigint(20) NOT NULL,
   `idCliente` bigint(20) NOT NULL,
   `idtipoResidencia` bigint(20) NOT NULL,
   `idFuncaoEndereco` bigint(20) NOT NULL,
   `idTipoLogradouro` bigint(20) NOT NULL,
-  `observacoes` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `observacoes` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `enderecos`
@@ -1243,9 +1245,9 @@ INSERT INTO `enderecos` (`id`, `dataCadastro`, `nome`, `logradouro`, `numero`, `
 CREATE TABLE `estados` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `descricao` varchar(255) NOT NULL,
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `idPais` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `estados`
@@ -1266,12 +1268,12 @@ INSERT INTO `estados` (`id`, `dataCadastro`, `descricao`, `idPais`) VALUES
 CREATE TABLE `fornecedores` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `idDocumento` bigint(20) NOT NULL,
   `idEndereco` bigint(20) NOT NULL,
   `status` tinyint(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1282,9 +1284,9 @@ CREATE TABLE `fornecedores` (
 CREATE TABLE `funcoes_enderecos` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `funcoes_enderecos`
@@ -1304,8 +1306,16 @@ INSERT INTO `funcoes_enderecos` (`id`, `dataCadastro`, `nome`, `descricao`) VALU
 CREATE TABLE `generos` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Extraindo dados da tabela `generos`
+--
+
+INSERT INTO `generos` (`id`, `dataCadastro`, `nome`) VALUES
+(1, '2021-04-12', 'Masculino'),
+(2, '2021-04-12', 'Feminino');
 
 -- --------------------------------------------------------
 
@@ -1316,10 +1326,10 @@ CREATE TABLE `generos` (
 CREATE TABLE `grupos_precificacao` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL,
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `porcentagem` double NOT NULL,
   `status` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `grupos_precificacao`
@@ -1328,7 +1338,8 @@ CREATE TABLE `grupos_precificacao` (
 INSERT INTO `grupos_precificacao` (`id`, `dataCadastro`, `nome`, `porcentagem`, `status`) VALUES
 (1, '2021-04-15', 'Basic', 15, 1),
 (2, '2021-04-15', 'Standard', 50, 1),
-(4, '2021-04-28', 'u8', 4.49, 0);
+(4, '2021-04-28', 'u8', 4.49, 0),
+(5, '2021-05-27', 'a2', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1339,25 +1350,25 @@ INSERT INTO `grupos_precificacao` (`id`, `dataCadastro`, `nome`, `porcentagem`, 
 CREATE TABLE `livros` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `titulo` varchar(255) NOT NULL,
-  `isbn` varchar(255) NOT NULL,
-  `sinopse` varchar(255) NOT NULL,
+  `titulo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `isbn` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `sinopse` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `autorId` bigint(20) NOT NULL,
-  `ano` varchar(255) NOT NULL,
+  `ano` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `idEditora` bigint(20) NOT NULL,
-  `edicao` varchar(255) NOT NULL,
+  `edicao` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `numeroPaginas` int(11) NOT NULL,
   `altura` double NOT NULL,
   `largura` double NOT NULL,
   `peso` double NOT NULL,
   `profundidade` double NOT NULL,
-  `codigoBarras` varchar(255) NOT NULL,
+  `codigoBarras` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `preco` double NOT NULL,
-  `capa` varchar(2000) DEFAULT NULL,
+  `capa` varchar(2000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `idGrupoPrecificacao` bigint(20) NOT NULL,
   `status` tinyint(4) NOT NULL,
   `dataAtivacao` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `livros`
@@ -1367,7 +1378,8 @@ INSERT INTO `livros` (`id`, `dataCadastro`, `titulo`, `isbn`, `sinopse`, `autorI
 (6, '2021-04-09', 't', '1', '1', 1, '1', 1, 'e', 1, 2, 0, 2, 15, '1', 60, '', 2, 3, '2021-05-03'),
 (7, '2021-04-09', 'teste livro 2', '1', '1', 1, '1', 1, 'ee', 1, 4, 0, 1, 8, '1', 300, '', 2, 4, '2021-05-03'),
 (8, '2021-05-02', 'a', '1', '1', 1, '1', 1, '1', 1, 40, 20, 3, 20, '1', 30, '', 2, 1, '2021-04-01'),
-(9, '2021-05-11', 'TESTE NIOV', '12', 'testesss', 1, '1999', 1, 'aa', 12, 12, 0, 12, 12, '12', 12, '', 1, 1, '2021-05-25');
+(9, '2021-05-11', 'TESTE NIOV', '12', 'testesss', 1, '1999', 1, 'aa', 12, 12, 0, 12, 12, '12', 12, '', 1, 1, '2021-05-25'),
+(10, '2021-05-27', 'asasas', '111', '111', 1, '111', 1, 'asa', 11, 111, 11, 11, 11, '11', 11, NULL, 2, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -1379,7 +1391,7 @@ CREATE TABLE `livros_categorias` (
   `id` bigint(20) NOT NULL,
   `idLivro` bigint(20) NOT NULL,
   `idCategoria` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `livros_categorias`
@@ -1390,7 +1402,8 @@ INSERT INTO `livros_categorias` (`id`, `idLivro`, `idCategoria`) VALUES
 (11, 6, 3),
 (12, 7, 2),
 (13, 7, 3),
-(14, 8, 1);
+(14, 8, 1),
+(15, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -1409,7 +1422,7 @@ CREATE TABLE `livros_estoque` (
   `tipoMovimentacao` int(11) NOT NULL,
   `idCliente` bigint(20) DEFAULT NULL,
   `idUsuarioAdmin` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `livros_estoque`
@@ -1578,7 +1591,7 @@ INSERT INTO `livros_estoque` (`id`, `dataCadastro`, `quantidade`, `custo`, `data
 CREATE TABLE `logs` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1590,9 +1603,9 @@ CREATE TABLE `notificacoes` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
   `idCliente` bigint(20) NOT NULL,
-  `descricao` varchar(255) NOT NULL,
-  `cor` varchar(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `cor` varchar(6) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1603,8 +1616,8 @@ CREATE TABLE `notificacoes` (
 CREATE TABLE `paises` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `descricao` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `paises`
@@ -1632,9 +1645,9 @@ CREATE TABLE `pedidos` (
   `valorTotal` double NOT NULL,
   `valorDescontos` double DEFAULT NULL,
   `prazo` int(11) NOT NULL,
-  `tipoServico` varchar(10) NOT NULL,
+  `tipoServico` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `dataAlteracao` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `pedidos`
@@ -1855,7 +1868,7 @@ CREATE TABLE `pedidos_cartoes` (
   `idPedido` bigint(20) NOT NULL,
   `idCartao` bigint(20) NOT NULL,
   `valor` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `pedidos_cartoes`
@@ -2111,9 +2124,9 @@ CREATE TABLE `solicitacoes_ativacao_livro` (
   `id` bigint(20) NOT NULL,
   `dataEntrada` date NOT NULL,
   `idCategoria` bigint(20) NOT NULL,
-  `justificativa` text NOT NULL,
+  `justificativa` text COLLATE utf8_unicode_ci NOT NULL,
   `idLivro` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `solicitacoes_ativacao_livro`
@@ -2133,9 +2146,9 @@ CREATE TABLE `solicitacoes_inativacao_livro` (
   `id` bigint(20) NOT NULL,
   `dataEntrada` date NOT NULL,
   `idCategoria` bigint(20) NOT NULL,
-  `justificativa` varchar(255) NOT NULL,
+  `justificativa` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `idLivro` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `solicitacoes_inativacao_livro`
@@ -2156,7 +2169,7 @@ CREATE TABLE `solicitacoes_troca` (
   `idItemCarrinho` bigint(20) NOT NULL,
   `quantidade` int(11) NOT NULL,
   `status` tinyint(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `solicitacoes_troca`
@@ -2262,9 +2275,9 @@ CREATE TABLE `telefones` (
   `dataCadastro` date NOT NULL,
   `idTipoTelefone` bigint(20) NOT NULL,
   `idUsuario` bigint(20) NOT NULL,
-  `ddd` varchar(16) NOT NULL,
-  `numero` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `ddd` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
+  `numero` varchar(20) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `telefones`
@@ -2290,9 +2303,9 @@ INSERT INTO `telefones` (`id`, `dataCadastro`, `idTipoTelefone`, `idUsuario`, `d
 CREATE TABLE `tipos_clientes` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `tipos_clientes`
@@ -2312,9 +2325,9 @@ INSERT INTO `tipos_clientes` (`id`, `dataCadastro`, `nome`, `descricao`) VALUES
 CREATE TABLE `tipos_documentos` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `tipos_documentos`
@@ -2335,9 +2348,9 @@ INSERT INTO `tipos_documentos` (`id`, `dataCadastro`, `nome`, `descricao`) VALUE
 CREATE TABLE `tipos_enderecos` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `tipos_enderecos`
@@ -2356,9 +2369,9 @@ INSERT INTO `tipos_enderecos` (`id`, `dataCadastro`, `nome`, `descricao`) VALUES
 CREATE TABLE `tipos_logradouros` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `tipos_logradouros`
@@ -2379,9 +2392,9 @@ INSERT INTO `tipos_logradouros` (`id`, `dataCadastro`, `nome`, `descricao`) VALU
 CREATE TABLE `tipos_residencias` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `tipos_residencias`
@@ -2401,9 +2414,9 @@ INSERT INTO `tipos_residencias` (`id`, `dataCadastro`, `nome`, `descricao`) VALU
 CREATE TABLE `tipos_telefones` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `tipos_telefones`
@@ -2422,9 +2435,9 @@ INSERT INTO `tipos_telefones` (`id`, `dataCadastro`, `nome`, `descricao`) VALUES
 CREATE TABLE `tipos_usuarios` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `tipos_usuarios`
@@ -2444,12 +2457,12 @@ INSERT INTO `tipos_usuarios` (`id`, `dataCadastro`, `nome`, `descricao`) VALUES
 CREATE TABLE `usuarios` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `senha` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `senha` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `status` bigint(20) NOT NULL,
-  `nome` varchar(255) NOT NULL,
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `idTipoUsuario` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `usuarios`
@@ -2459,7 +2472,8 @@ INSERT INTO `usuarios` (`id`, `dataCadastro`, `email`, `senha`, `status`, `nome`
 (1, '2021-03-16', 'teste@teste.com', 'f7421e7a9f7ae15212d967531e7216fa', 1, 'teste', 2),
 (2, '2021-03-16', 'saoraphael@globo.com', 'cd137e5443e4e970c93cee9e208da17b', 1, 'aline', 2),
 (60, '2021-04-23', 'teste@adminnovo.com', '482bbb67b697aeda87f533c21953ef24', 1, 'Teste tipo admin', 1),
-(61, '2021-04-24', 'teste@admin3novo.com', '482bbb67b697aeda87f533c21953ef24', 1, 'as', 1);
+(61, '2021-04-24', 'teste@admin3novo.com', '482bbb67b697aeda87f533c21953ef24', 1, 'as', 1),
+(62, '2021-05-27', 'gerente@vendas.com', '482bbb67b697aeda87f533c21953ef24', 1, 'gerente de vendas', 3);
 
 --
 -- Índices para tabelas despejadas
@@ -2822,7 +2836,7 @@ ALTER TABLE `configuracoes`
 -- AUTO_INCREMENT de tabela `cupons_desconto`
 --
 ALTER TABLE `cupons_desconto`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `cupons_troca`
@@ -2870,25 +2884,25 @@ ALTER TABLE `funcoes_enderecos`
 -- AUTO_INCREMENT de tabela `generos`
 --
 ALTER TABLE `generos`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `grupos_precificacao`
 --
 ALTER TABLE `grupos_precificacao`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `livros`
 --
 ALTER TABLE `livros`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `livros_categorias`
 --
 ALTER TABLE `livros_categorias`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `livros_estoque`
@@ -2996,7 +3010,7 @@ ALTER TABLE `tipos_usuarios`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 DELIMITER $$
 --

@@ -20,7 +20,7 @@ public class Conexao {
 
 	public static Connection getConnectionMariaDB() throws ClassNotFoundException, SQLException {
 		driver = "org.mariadb.jdbc.Driver";
-		url = "jdbc:mariadb://localhost:3306/les_db";
+		url = "jdbc:mariadb://localhost:3306/les_db?characterEncoding=UTF-8";
 		user = "root";
 		password = "";
 		return getConnection();
@@ -28,7 +28,7 @@ public class Conexao {
 	
 	public static Connection getConnectionMySQL() throws ClassNotFoundException, SQLException {
 		driver = "com.mysql.jdbc.Driver";
-		url = "jdbc:mysql://localhost:3306/les_db";
+		url = "jdbc:mysql://localhost:3306/les_db?characterEncoding=UTF-8";
 		user = "root";
 		password = "";
 		return getConnection();
