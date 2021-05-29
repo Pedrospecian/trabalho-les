@@ -602,6 +602,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>servlets.actions.AlterarFornecedorAction</servlet-name>
+		<servlet-class>servlets.actions.AlterarFornecedorAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.actions.AlterarFornecedorAction</servlet-name>
+		<url-pattern>/alteraFornecedorAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>servlets.actions.AlterarGrupoPrecificacaoStatusAction</servlet-name>
 		<servlet-class>servlets.actions.AlterarGrupoPrecificacaoStatusAction</servlet-class>
 	</servlet>

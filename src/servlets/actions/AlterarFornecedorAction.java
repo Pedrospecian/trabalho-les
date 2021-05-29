@@ -2,6 +2,7 @@ package servlets.actions;
 
 import java.io.IOException;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,37 +13,41 @@ import utils.Campo;
 import facades.FachadaFornecedor;
 import model.Fornecedor;
 import viewHelpers.FornecedorViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
-public class AlterarFornecedorStatusAction extends HttpServlet {
+public class AlterarFornecedorAction extends HttpServlet {
 	private static final long serialVersionUID = 12;
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		LoginViewHelper lvh = new LoginViewHelper();
-		if(!lvh.isAuthorized(req, resp, 1)){
+		if(!lvh.isAuthorized(req, resp, 5)){
 			resp.sendRedirect("/trabalho-les/home");
 		}else{
-			resp.setContentType("text/html");		    
+			req.setCharacterEncoding("UTF-8");
+			resp.setCharacterEncoding("UTF-8");
+			resp.setContentType("text/html");
 			try {
-				Campo[] campos = FornecedorViewHelper.getAlterarFornecedorStatusActionCampos(req);
+				Campo[] campos = FornecedorViewHelper.getAlterarFornecedorActionCampos(req);
 
 				FachadaFornecedor fachada = new FachadaFornecedor();
 
 				if(fachada.validarCampos(campos)) {
-			        long id = Long.parseLong(campos[0].getValor());
-					int status = Integer.parseInt(campos[1].getValor());
-		        
-		        	Fornecedor fornecedor = new Fornecedor(id, new Date(), "", "", status, null, null);
-		        	fachada.updateStatus(fornecedor);
+					long id = Long.parseLong(campos[0].getValor());
+					String nome = campos[1].getValor();
+					String email = campos[2].getValor();
+			        int status = Integer.parseInt(campos[3].getValor());
+			        
+			    	Fornecedor fornecedor = new Fornecedor(id, new Date(), nome, email, status, null, null);
 
-		        	resp.sendRedirect("/trabalho-les/listagemFornecedores");
-		        } else {
-		        	//retorna com os dados invalidos
+		        	fachada.update(fornecedor);
+		        	
+	        		resp.sendRedirect("/trabalho-les/listagemFornecedores");
+			    } else {
+	    	        //resp.sendRedirect(req.getHeader("referer") + "?erro=true");
 		        }
 	    	} catch(Exception e) {
 	    		e.printStackTrace();
 	    	}
-    	}
+	    }
 	}
 }

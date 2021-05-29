@@ -47,7 +47,7 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 			String paginacaoStr = paginacao.processa(campos);
 			connection = Conexao.getConnectionMySQL();
 			
-			pst = connection.prepareStatement("select * from fornecedores on fornecedores.id = fornecedores.id " + where + " GROUP BY fornecedores.id " + paginacaoStr + " ORDER BY fornecedores.id desc;");
+			pst = connection.prepareStatement("select * from fornecedores " + where + " ORDER BY fornecedores.id desc;");
 			
 	
 			ResultSet rs = pst.executeQuery();
@@ -67,12 +67,12 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 			
 			
 
-			pst = connection.prepareStatement("select count(fornecedores.id) as resultadosTotal from fornecedores on fornecedores.id = fornecedores.id inner join documentos on documentos.idfornecedores = fornecedores.id " + where + " GROUP BY fornecedores.id");
+			/*pst = connection.prepareStatement("select count(fornecedores.id) as resultadosTotal from fornecedores on fornecedores.id = fornecedores.id inner join documentos on documentos.idfornecedores = fornecedores.id " + where + " GROUP BY fornecedores.id");
 		    ResultSet rsc = pst.executeQuery();
 		    this.countVals = 0;
 		    while (rsc.next()) {
 		    	this.countVals++;
-		    }
+		    }*/
 			
 			this.selectVals = list;
 			
@@ -145,6 +145,9 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 					   "inner join estados on estados.id = cidades.idEstado " +
 					   "inner join paises on paises.id = estados.idPais " +
 					   "inner join tipos_enderecos on tipos_enderecos.id = enderecos.idTipoEndereco " +
+					   "inner join funcoes_enderecos on funcoes_enderecos.id = enderecos.idFuncaoEndereco " +
+					   "inner join tipos_residencias on tipos_residencias.id = enderecos.idTipoResidencia " +
+					   "inner join tipos_logradouros on tipos_logradouros.id = enderecos.idTipoLogradouro " +
 					   "where fornecedores.id = ?;");
 			
 			pst = connection.prepareStatement(sql.toString(),
@@ -243,9 +246,12 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 		try {
 			connection = Conexao.getConnectionMySQL();
 			connection.setAutoCommit(false);
+
+			salvaDocumento(fornecedor);
+			salvaEndereco(fornecedor);
 			
 			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO fornecedores (nome, email, dataCadastro, status) VALUES (?, ?, ?, ?);");
+			sql.append("INSERT INTO fornecedores (nome, email, dataCadastro, status, idDocumento, idEndereco) VALUES (?, ?, ?, ?, ?, ?);");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -254,18 +260,16 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 			pst.setString(1, fornecedor.getNome());
 			pst.setString(2, fornecedor.getEmail());
-			pst.setDate(5, new java.sql.Date(agora.getTime()));
-			pst.setInt(6, fornecedor.getStatus());
+			pst.setDate(3, new java.sql.Date(agora.getTime()));
+			pst.setInt(4, fornecedor.getStatus());
+			pst.setLong(5, fornecedor.getDocumento().getId());
+			pst.setLong(6, fornecedor.getEndereco().getId());
 			
 			pst.executeUpdate();
 			
 			ResultSet rs = pst.getGeneratedKeys();
 			if (rs.next()) {
-				fornecedor.setId(rs.getInt(1));
-				
-				salvaDocumento(fornecedor);
-				salvaEndereco(fornecedor);
-			
+				//fornecedor.setId(rs.getInt(1));
 				connection.commit();	
 			}
 		} catch (Exception e) {
@@ -327,7 +331,7 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 		PreparedStatement pst = null;
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append("INSERT INTO enderecos(dataCadastro, nome, logradouro, numero, complemento, cep, idTipoEndereco, idBairro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		sql.append("INSERT INTO enderecos(dataCadastro, nome, logradouro, numero, complemento, cep, idTipoEndereco, idBairro, idtipoResidencia, idTipoLogradouro, observacoes, idFuncaoEndereco) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 		
 		Endereco endereco = fornecedor.getEndereco();
 
@@ -343,20 +347,27 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 		pst.setString(4, endereco.getNumero());
 		pst.setString(5, endereco.getComplemento());
 		pst.setString(6, endereco.getCep());
-		pst.setLong(7, fornecedor.getId());
-		pst.setLong(8, endereco.getTipoEndereco().getId());
-		pst.setLong(9, idBairro);
+		//pst.setLong(7, fornecedor.getId());
+		pst.setLong(7, endereco.getTipoEndereco().getId());
+		pst.setLong(8, idBairro);
+		pst.setLong(9, endereco.getTipoResidencia().getId());
+		pst.setLong(10, endereco.getTipoLogradouro().getId());
+		pst.setString(11, endereco.getObservacoes());
+		pst.setLong(12, endereco.getFuncaoEndereco().getId());
 
 		pst.executeUpdate();
-		
-		//update fornecedores set idendereco 
+
+		ResultSet rs = pst.getGeneratedKeys();
+		if (rs.next()) {
+			fornecedor.getEndereco().setId(rs.getInt(1));
+		}
 	}
 	
 	private void salvaDocumento(Fornecedor fornecedor) throws SQLException, ClassNotFoundException {
 		PreparedStatement pst = null;
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append("INSERT INTO documentos(codigo, validade, idTipoDocumento, dataCadastro) VALUES (?, ?, ?, ?, ?);");
+		sql.append("INSERT INTO documentos(codigo, validade, idTipoDocumento, dataCadastro) VALUES (?, ?, ?, ?);");
 		
 		Documento documento = fornecedor.getDocumento();
 
@@ -365,12 +376,15 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 		pst.setString(1, documento.getCodigo());
 		pst.setDate(2, new java.sql.Date(documento.getValidade().getTime()));
 		pst.setLong(3, documento.getTipoDocumento().getId());
-		pst.setLong(4, fornecedor.getId());
-		pst.setDate(5, new java.sql.Date(new Date().getTime()));
+		//pst.setLong(4, fornecedor.getId());
+		pst.setDate(4, new java.sql.Date(new Date().getTime()));
 
 		pst.executeUpdate();
 		
-		//update tanana documentos do fornecedor
+		ResultSet rs = pst.getGeneratedKeys();
+		if (rs.next()) {
+			fornecedor.getDocumento().setId(rs.getInt(1));
+		}
 	}
 
 	public void update(EntidadeDominio entidade) {
@@ -393,14 +407,6 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setLong(4, fornecedor.getId());
 			
 			pst.executeUpdate();
-
-			if (fornecedor.getDocumento() != null) {
-				salvaDocumento(fornecedor);
-			}
-
-			if (fornecedor.getEndereco() != null) {
-				salvaEndereco(fornecedor);
-			}
 			
 			connection.commit();			
 		} catch (Exception e) {
@@ -430,7 +436,7 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 			connection.setAutoCommit(false);
 			
 			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE Fornecedor SET status = ? WHERE Fornecedor.id = ?;");
+			sql.append("UPDATE fornecedores SET status = ? WHERE fornecedores.id = ?;");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);

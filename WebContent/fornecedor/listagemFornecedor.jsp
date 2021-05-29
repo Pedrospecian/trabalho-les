@@ -18,7 +18,7 @@
 			<h2>Buscar fornecedores</h2>
 			<form method="get" action="#" class="form-buscar-clientes">
 				<input type="text" name="nome" placeholder="Nome">
-				<input type="email" name="email" placeholder="E-mail">
+				<input type="text" name="email" placeholder="E-mail">
 				<select name="status">
 					<option value="" ${"" == campos[4].getValor() ? 'selected=\"selected\"' : ''}>Status</option>
 					<option value="1" ${1 == campos[4].getValor() ? 'selected=\"selected\"' : ''}>Ativo</option>
@@ -28,7 +28,7 @@
 				<button type="submit">Buscar</button>
 			</form>
 			<c:if test = "${registros.size() > 0}">
-				<table cellspacing="0" cellpadding="0">
+				<table cellpadding="0" cellspacing="0" class=" js-paginated-table" data-itensPorPagina="10">
 					<thead>
 						<tr>
 							<th>Id</th>
@@ -41,30 +41,23 @@
 					<tbody>
 						<c:forEach var="registro" items="${registros}">
 							<tr>
-								<td>4</td>
+								<td>${registro.getId()}</td>
+								<td>${registro.getNome()}</td>
+								<td>${registro.getEmail()}</td>
+								<td>${1 == registro.getStatus() ? "Ativo" : "Inativo"}</td>
 								<td>
-									Teste
-								</td>
-								<td>
-									teste@teste.com
-								</td>
-								<td>Ativo</td>
-								<td>
-									<a href="/trabalho-les/editarFornecedor?id=4" cypress-editarFornecedor>Editar</a>
+									<a href="/trabalho-les/editarFornecedor?id=${registro.getId()}" cypress-editarFornecedor>Editar</a>
 									<br>
 									<a href="/trabalho-les/alterarFornecedorStatusAction?id=${registro.getId()}&status=${1 == registro.getStatus() ? '0' : '1'}" cypress-alteraStatusFornecedor>
-										Inativar
+										${1 == registro.getStatus() ? "Inativar" : "Ativar"}
 									</a>
 								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
-				<div class="pagination-wrapper">
-					<c:forEach var="link" items="${linksPaginacao}" varStatus="loop">
-						<a href="?${link}">1</a>
-					</c:forEach>
-				</div>
+				<div class="paginated-table-wrapper"></div>
+				<div class="js-pagination-links"></div>
 			</c:if>
 			<c:if test = "${registros.size() <= 0}">
 				<p>Não foi encontrado nenhum registro.</p>
@@ -82,5 +75,6 @@
 	</footer>
 	<script type="text/javascript" src="assets/js/vendor/imask.js"></script>
 	<script type="text/javascript" src="assets/js/main.js"></script>
+	<script type="text/javascript" src="assets/js/pagination.js"></script>
 </body>
 </html>
