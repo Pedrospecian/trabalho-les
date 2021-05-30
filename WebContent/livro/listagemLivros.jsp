@@ -92,7 +92,7 @@
 							<c:forEach var="livro" items="${registros}">
 								<tr data-id="${livro.getId()}">
 									<td>${livro.getId()}</td>
-									<td><img src="/trabalho-les/assets/images/produtos/livro-manual.jpg"></td>
+									<td><img src="${livro.getCapa()}"></td>
 									<td>${livro.getTitulo()}</td>
 									<td>${livro.getAutor().getNome()}</td>
 									<td>${livro.getEditora().getNome()}</td>

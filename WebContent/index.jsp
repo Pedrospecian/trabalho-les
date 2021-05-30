@@ -34,7 +34,7 @@
 				<c:forEach var="livro" items="${livros}">
 					<div class="book-single">
 						<a href="/trabalho-les/produto?id=${livro.getId()}" cypress-livro-single>
-							<img src="assets/images/produtos/livro-ficcao.jpg" alt="${livro.getTitulo()}">
+							<img src="${livro.getCapa()}" alt="${livro.getTitulo()}">
 						</a>
 						<p class="book-title">${livro.getTitulo()}</p>
 						<p class="book-price"><div class="js-dinheiro">${livro.getPreco()}</div></p>						

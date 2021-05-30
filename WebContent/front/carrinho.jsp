@@ -22,7 +22,7 @@
 							<table class="carrinho-itens" cellpadding="0" cellspacing="0">
 								<c:forEach var="item" items="${carrinho.getItensCarrinho()}">
 									<tr>
-										<td><img src="assets\images\produtos\livro-ficcao.jpg" alt="${item.getLivro().getTitulo()}"></td>
+										<td><img src="${item.getLivro().getCapa()}" alt="${item.getLivro().getTitulo()}"></td>
 										<td>${item.getLivro().getTitulo()}</td>
 										<td>
 											Preço unitário: <span class="js-dinheiro">${item.getLivro().getPreco()}</span>
@@ -49,7 +49,7 @@
 						<table class="carrinho-itens cancelado" cellpadding="0" cellspacing="0">
 							<c:forEach var="item" items="${carrinho.getItensCarrinho()}">
 								<tr>
-									<td><img src="assets\images\produtos\livro-ficcao.jpg" alt="${item.getLivro().getTitulo()}"></td>
+									<td><img src="${item.getLivro().getCapa()}" alt="${item.getLivro().getTitulo()}"></td>
 									<td>${item.getLivro().getTitulo()}</td>
 									<td>
 										Preço unitário: <span class="js-dinheiro">${item.getLivro().getPreco()}</span>

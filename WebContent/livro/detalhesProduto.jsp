@@ -17,7 +17,7 @@
 			<h1>${registro.getTitulo()}</h1>
 			<div class="product-details-wrapper">
 				<div class="product-image-wrapper">
-					<img src="assets/images/produtos/livro-ficcao.jpg" alt="${registro.getTitulo()}">
+					<img src="${registro.getCapa()}" alt="${registro.getTitulo()}">
 				</div>
 				<div class="product-text-wrapper">
 					<c:if test = '${estoque > 0}'>

@@ -54,7 +54,7 @@
 				<tbody>
 					<c:forEach var="item" items="${pedido.getCarrinho().getItensCarrinho()}">
 						<tr>
-							<td><img src="assets\images\produtos\livro-ficcao.jpg" alt="Alice no país das maravilhas"></td>
+							<td><img src="${item.getLivro().getCapa()}" alt="Alice no país das maravilhas"></td>
 							<td>
 								<a href="/trabalho-les/produto?id=${item.getLivro().getId()}">
 									${item.getLivro().getTitulo()}
@@ -87,7 +87,7 @@
 						</tr>
 					</c:forEach>
 					<!--<tr>
-						<td><img src="assets\images\produtos\livro-ficcao.jpg" alt="Alice no país das maravilhas"></td>
+						<td><img src="" alt="Alice no país das maravilhas"></td>
 						<td>Alice no país das maravilhas</td>
 						<td>R$ 40,00</td>
 						<td>4</td>

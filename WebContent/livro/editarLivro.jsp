@@ -48,14 +48,9 @@
 						</c:forEach>
 					</select>
 				</div>
-				<label for="capa">Capa do livro</label>
-				<br>
-				<div class="js-remove-capa-wrapper">
-					<img src="/trabalho-les/assets/images/produtos/livro-manual.jpg">
-					<a href="#" class="js-remove-capa">Remover capa</a>
-				</div>
-				<div class="js-muda-capa" style="display: none;">
-					<input type="file" name="capa" id="capa">
+				<div class="form-group">
+					<input type="text" name="capa" placeholder="URL da capa do livro" value="${livro.getCapa()}" cypress-capa>
+					<img src="${livro.getCapa()}">
 				</div>
 				<h3>Categorias</h3>
 				<div class="boxes-wrapper js-boxes-categorias">

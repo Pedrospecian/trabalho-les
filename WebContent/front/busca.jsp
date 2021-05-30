@@ -18,27 +18,20 @@
 			<form method="get" action="#" class="form-buscar-clientes">
 				<input type="text" name="titulo" placeholder="Título" >
 				<select name="autor">
-					<option value="">Editora</option>
-					<option value="1">Fulano</option>
-					<option value="2">Beltrano</option>
-					<option value="3">Cicrano</option>
+					<option value="">Autor</option>
+					<c:forEach var="autor" items="${autores}">
+						<option value="${autor.getId()}">
+							${autor.getNome()}
+						</option>
+					</c:forEach>
 				</select>
 				<select name="editora">
 					<option value="">Editora</option>
-					<option value="1">Companhia das Letras</option>
-					<option value="2">Aleph</option>
-					<option value="3">Suma</option>
-					<option value="4">Editora Intrínseca</option>
-					<option value="5">Grupo Editorial Record</option>
-					<option value="6">Editora Rocco</option>
-					<option value="7">Globo Livros</option>
-					<option value="8">Darkside Books</option>
-					<option value="9">Harper Collins</option>
-					<option value="10">Editora Arqueiro</option>
-					<option value="11">Somos Educação</option>
-					<option value="12">Editora FTD</option>
-					<option value="13">Saraiva</option>
-					<option value="14">Brinque Book</option>
+					<c:forEach var="editora" items="${editoras}">
+						<option value="${editora.getId()}">
+							${editora.getNome()}
+						</option>
+					</c:forEach>
 				</select>
 				<input type="text" name="isbn" placeholder="ISBN">
 				<input type="number" name="codigoBarras" placeholder="Código de barras">
@@ -53,12 +46,11 @@
 			<div class="search-content">
 				<div class="search-sidebar">
 					<ul>
-						<li><a href="">Categoria 1</a></li>
-						<li><a href="">Categoria 2</a></li>
-						<li><a href="">Categoria 3</a></li>
-						<li><a href="">Categoria 4</a></li>
-						<li><a href="">Categoria 5</a></li>
-						<li><a href="">Categoria 6</a></li>
+						<c:forEach var="categoria" items="${categorias}">
+							<option value="${categoria.getId()}">
+								${categoria.getNome()}
+							</option>
+						</c:forEach>
 					</ul>
 				</div>
 				<div class="search-results">
@@ -66,7 +58,7 @@
 						<c:forEach var="livro" items="${registros}">
 							<div class="book-single">
 								<a href="/trabalho-les/produto?id=${livro.getId()}" cypress-livro-single>
-									<img src="assets/images/produtos/livro-ficcao.jpg" alt="${livro.getTitulo()}">
+									<img src="${livro.getCapa()}" alt="${livro.getTitulo()}">
 								</a>
 								<p class="book-title">${livro.getTitulo()}</p>
 								<p class="book-price"><div class="js-dinheiro">${livro.getPreco()}</div></p>
@@ -139,11 +131,6 @@
 						</div>-->
 					</div>
 				</div>
-			</div>
-			<div class="pagination-wrapper">
-				<a href="#">1</a>
-				<a href="#">2</a>
-				<a href="#">3</a>
 			</div>
 		</div>
 	</main>

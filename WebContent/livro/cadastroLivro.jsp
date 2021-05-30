@@ -58,10 +58,8 @@
 						<option value="14">Brique Book</option>-->
 					</select>
 				</div>
-				<label for="capa">Capa do livro</label>
-				<br>
 				<div class="form-group">
-					<input type="file" name="capa" id="capa">
+					<input type="text" name="capa" placeholder="URL da capa do livro" cypress-capa>
 				</div>
 				<h3>Categorias</h3>
 				<div class="boxes-wrapper js-boxes-categorias">
