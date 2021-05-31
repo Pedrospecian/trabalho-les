@@ -2187,10 +2187,10 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				}
 
 				dadosCalculoFrete = new DadosCalculoFrete(
-					totalAlturas,
+					Math.max(1, totalAlturas),
 					totalPesos,
-					maiorLargura,
-					maiorProfundidade,
+					Math.max(10, maiorLargura),
+					Math.max(15, maiorProfundidade),
 					rs.getString("configuracoes.valor"),
 					""
 				);
