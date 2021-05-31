@@ -281,6 +281,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>servlets.BuscaDetalhada</servlet-name>
+		<servlet-class>servlets.BuscaDetalhada</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlets.BuscaDetalhada</servlet-name>
+		<url-pattern>/buscaDetalhada</url-pattern>
+	</servlet-mapping>	
+
+	<servlet>
 		<servlet-name>servlets.Checkout</servlet-name>
 		<servlet-class>servlets.Checkout</servlet-class>
 	</servlet>

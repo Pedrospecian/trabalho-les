@@ -40,6 +40,16 @@ public class FachadaLivro implements IFachada< Livro, Campo[]> {
 		return rb;
 	}
 
+	public ResultadosBusca selectDetalhado(Campo[] campos) {
+		LivroDAO dao = new LivroDAO();
+
+		dao.selectDetalhado(campos);
+		ArrayList arrl = dao.selectVals;
+		ResultadosBusca rb = new ResultadosBusca(arrl);
+
+		return rb;
+	}
+
 	public ResultadosBusca getSolicitacoesAtivacao(Campo[] campos) {
 		LivroDAO dao = new LivroDAO();
 

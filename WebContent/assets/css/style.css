@@ -271,7 +271,7 @@ form.form-config input[type="number"] {
 }
 
 .search-content .search-results {
-	width: calc(100% - 200px);
+	width: 100%;/*calc(100% - 200px);*/
 }
 
 button.btn-orange, .body-front form:not(.busca-form) button {

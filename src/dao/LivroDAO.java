@@ -175,6 +175,79 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}
 	}
 
+	public ArrayList selectDetalhado (Campo[] campos) {
+		PreparedStatement pst = null;
+		try {
+			CriaFiltragem filtro = new CriaFiltragem();
+			
+			String where = filtro.processa(campos);
+
+			connection = Conexao.getConnectionMySQL();
+			StringBuilder sql = new StringBuilder();
+			sql.append("Select * from livros "+
+					   "inner join autores on livros.autorId = autores.id "+
+					   "inner join editoras on livros.idEditora = editoras.id "+
+					   "inner join livros_categorias on livros.id = livros_categorias.idLivro " +
+					   "inner join grupos_precificacao on livros.idGrupoPrecificacao = grupos_precificacao.id " + where);
+			
+			pst = connection.prepareStatement(sql.toString(),
+					Statement.RETURN_GENERATED_KEYS);			
+
+			ResultSet rs = pst.executeQuery();			
+			ArrayList<Livro> list = new ArrayList();
+			
+			while (rs.next()) {
+				Livro livro = new Livro(
+					rs.getLong("livros.id"), 
+					rs.getDate("livros.dataCadastro"), 
+					rs.getString("livros.titulo"), 
+					new Autor(rs.getLong("livros.autorId"), null, rs.getString("autores.nome"), "" ), 
+					new Editora(rs.getLong("livros.idEditora"), null, rs.getString("editoras.nome"), "" ), 
+					null, 
+					rs.getString("livros.ano"),
+					rs.getString("livros.isbn"),
+					rs.getInt("livros.ano"),
+					rs.getString("livros.sinopse"),
+					rs.getDouble("livros.altura"), 
+					rs.getDouble("livros.peso"), 
+					rs.getDouble("livros.profundidade"), 
+					rs.getDouble("livros.preco"), 
+					rs.getString("livros.codigoBarras"), 
+					rs.getInt("livros.status"),
+					rs.getString("livros.capa"),				
+					new GrupoPrecificacao(rs.getLong("livros.idGrupoPrecificacao"), null, "", rs.getDouble("grupos_precificacao.porcentagem"), 0), 
+					rs.getString("livros.edicao"));
+
+				livro.setLargura(rs.getDouble("livros.largura"));
+
+				livro.setEstoque(contaEstoque(livro, 0));
+				livro.setNumeroVendas(contaVendas(livro));
+
+				list.add(livro);
+			}
+			
+			this.selectVals = list;
+			
+			pst.close();
+			connection.close();
+			
+			return this.selectVals;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pst != null) pst.close();
+				if(connection != null) connection.close();
+
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}			
+
+			return null;
+		}
+	}
+
 	public void getSolicitacoesAtivacao(Campo[] campos) {
 		PreparedStatement pst = null;
 		try {

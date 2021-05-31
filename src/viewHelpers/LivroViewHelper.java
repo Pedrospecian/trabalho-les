@@ -38,6 +38,21 @@ public class LivroViewHelper {
 		return campos;
 	}
 
+	public static Campo[] getListagemLivrosCamposDetalhada(HttpServletRequest req) {
+		Campo[] campos = new Campo[8];
+
+		campos[0] = new Campo(0, req.getParameter("titulo"), true, "", true, "titulo");
+		campos[1] = new Campo(1, req.getParameter("autor"), true, "", true, "autor");
+		campos[2] = new Campo(1, req.getParameter("editora"), true, "", true, "editora");
+		campos[3] = new Campo(1, req.getParameter("categoria"), true, "", true, "livros_categorias.idCategoria");
+		campos[4] = new Campo(0, req.getParameter("isbn"), true, "", true, "isbn");	
+		campos[5] = new Campo(0, req.getParameter("edicao"), true, "", true, "edicao");
+		campos[6] = new Campo(1, req.getParameter("ano"), true, "", true, "ano");
+		campos[7] = new Campo(555, req.getParameter("preco"), true, "", true, "preco");
+
+		return campos;
+	}
+
 	public static Campo[] getListagemEstoqueCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[6];
 

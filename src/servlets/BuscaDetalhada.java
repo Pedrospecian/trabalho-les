@@ -13,7 +13,7 @@ import utils.ResultadosBusca;
 import viewHelpers.LivroViewHelper;
 import viewHelpers.LoginViewHelper;
 
-public class Busca extends HttpServlet {
+public class BuscaDetalhada extends HttpServlet {
 	private static final long serialVersionUID = 12;
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
@@ -22,10 +22,10 @@ public class Busca extends HttpServlet {
 
 		LoginViewHelper lvh = new LoginViewHelper();
 
-		Campo[] campos = LivroViewHelper.getListagemLivrosCamposHeader(req);		
+		Campo[] campos = LivroViewHelper.getListagemLivrosCamposDetalhada(req);		
 		
 		FachadaLivro fachada = new FachadaLivro();
-        ResultadosBusca resultadosBusca = fachada.select(campos);
+        ResultadosBusca resultadosBusca = fachada.selectDetalhado(campos);
         ResultadosBusca catResultados = fachada.getCategorias();
         ResultadosBusca ediResultados = fachada.getEditoras();
 		ResultadosBusca autResultados = fachada.getAutores();

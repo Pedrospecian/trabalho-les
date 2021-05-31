@@ -15,7 +15,7 @@
 	<main class="main-default">
 		<div class="container">
 			<h1>Busca</h1>
-			<form method="get" action="#" class="form-buscar-clientes">
+			<form method="get" action="buscaDetalhada" class="form-buscar-clientes">
 				<input type="text" name="titulo" placeholder="Título" >
 				<select name="autor">
 					<option value="">Autor</option>
@@ -33,26 +33,22 @@
 						</option>
 					</c:forEach>
 				</select>
-				<input type="text" name="isbn" placeholder="ISBN">
-				<input type="number" name="codigoBarras" placeholder="Código de barras">
-				<select name="status">
-					<option value="">Status</option>
-					<option value="1">Ativo</option>
-					<option value="0">Inativo</option>
+				<select name="categoria">
+					<option value="">Categoria</option>
+					<c:forEach var="categoria" items="${categorias}">
+						<option value="${categoria.getId()}">
+							${categoria.getNome()}
+						</option>
+					</c:forEach>
 				</select>
+				<input type="text" name="isbn" placeholder="ISBN">
+				<input type="text" name="edicao" placeholder="Edição">
+				<input type="number" name="ano" placeholder="Ano">				
+				<input type="number" name="preco" placeholder="Preço" step="0.01">
 				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por página" value="" >
 				<button type="submit">Buscar</button>
 			</form>
 			<div class="search-content">
-				<div class="search-sidebar">
-					<ul>
-						<c:forEach var="categoria" items="${categorias}">
-							<option value="${categoria.getId()}">
-								${categoria.getNome()}
-							</option>
-						</c:forEach>
-					</ul>
-				</div>
 				<div class="search-results">
 					<div class="books-wrapper">
 						<c:forEach var="livro" items="${registros}">
@@ -64,71 +60,6 @@
 								<p class="book-price"><div class="js-dinheiro">${livro.getPreco()}</div></p>
 							</div>
 						</c:forEach>
-						<!--<div class="book-single">
-							<a href="/trabalho-les/produto?id=1" cypress-livro-single>
-								<img src="assets/images/produtos/livro-ficcao.jpg" alt="Alice no país das maravilhas">
-								<p class="book-title">Alice no país das maravilhas</p>
-								<p class="book-price">R$ 40,00</p>
-							</a>
-						</div>
-						<div class="book-single">
-							<a href="/trabalho-les/produto?id=2">
-								<img src="assets/images/produtos/livro-manual.jpg" alt="Alice no país das maravilhas">
-								<p class="book-title">Livro de receitas</p>
-								<p class="book-price">R$ 145,00</p>
-							</a>
-						</div>
-						<div class="book-single">
-							<a href="/trabalho-les/produto?id=3">
-								<img src="assets/images/produtos/livro-suspense.jpg" alt="Alice no país das maravilhas">
-								<p class="book-title">Sherlock Holmes</p>
-								<p class="book-price">R$ 12,99</p>
-							</a>
-						</div>
-
-						<div class="book-single">
-							<a href="/trabalho-les/produto?id=1">
-								<img src="assets/images/produtos/livro-ficcao.jpg" alt="Alice no país das maravilhas">
-								<p class="book-title">Alice no país das maravilhas</p>
-								<p class="book-price">R$ 40,00</p>
-							</a>
-						</div>
-						<div class="book-single">
-							<a href="/trabalho-les/produto?id=2">
-								<img src="assets/images/produtos/livro-manual.jpg" alt="Alice no país das maravilhas">
-								<p class="book-title">Livro de receitas</p>
-								<p class="book-price">R$ 145,00</p>
-							</a>
-						</div>
-						<div class="book-single">
-							<a href="/trabalho-les/produto?id=3">
-								<img src="assets/images/produtos/livro-suspense.jpg" alt="Alice no país das maravilhas">
-								<p class="book-title">Sherlock Holmes</p>
-								<p class="book-price">R$ 12,99</p>
-							</a>
-						</div>
-
-						<div class="book-single">
-							<a href="/trabalho-les/produto?id=1">
-								<img src="assets/images/produtos/livro-ficcao.jpg" alt="Alice no país das maravilhas">
-								<p class="book-title">Alice no país das maravilhas</p>
-								<p class="book-price">R$ 40,00</p>
-							</a>
-						</div>
-						<div class="book-single">
-							<a href="/trabalho-les/produto?id=2">
-								<img src="assets/images/produtos/livro-manual.jpg" alt="Alice no país das maravilhas">
-								<p class="book-title">Livro de receitas</p>
-								<p class="book-price">R$ 145,00</p>
-							</a>
-						</div>
-						<div class="book-single">
-							<a href="/trabalho-les/produto?id=3">
-								<img src="assets/images/produtos/livro-suspense.jpg" alt="Alice no país das maravilhas">
-								<p class="book-title">Sherlock Holmes</p>
-								<p class="book-price">R$ 12,99</p>
-							</a>
-						</div>-->
 					</div>
 				</div>
 			</div>
