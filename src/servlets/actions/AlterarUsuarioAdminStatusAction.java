@@ -33,7 +33,7 @@ public class AlterarUsuarioAdminStatusAction extends HttpServlet {
 					int status = Integer.parseInt(campos[1].getValor());
 		        
 		        	Usuario usuario = new Usuario(id, new Date(), "", "", status, "", null);
-		        	fachada.updateStatus(usuario);
+		        	fachada.updateStatus(usuario, LoginViewHelper.getLogInfo(req, resp));
 		        	resp.sendRedirect("/trabalho-les/listagemUsuariosAdmin");
 		        } else {
 		        	//retorna com os dados invalidos

@@ -41,7 +41,7 @@ public class AlteraGrupoPrecificacaoAction extends HttpServlet {
 
 		        	GrupoPrecificacao grupoPrecificacao = new GrupoPrecificacao(Long.parseLong(campos[0].getValor()), new Date(), nome, valor, status);
 
-		        	fachada.update(grupoPrecificacao);
+		        	fachada.update(grupoPrecificacao, LoginViewHelper.getLogInfo(req, resp));
 		        	resp.sendRedirect("/trabalho-les/listagemGruposPrecificacao");
 		        } else {
 	    	       

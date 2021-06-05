@@ -98,7 +98,7 @@ public class CadastroFornecedorAction extends HttpServlet {
 			        
 			    		Fornecedor fornecedor = new Fornecedor((long)1, new Date(), nome, email, status, documento, endereco);
 
-			        	fachada.insert(fornecedor);
+			        	fachada.insert(fornecedor, LoginViewHelper.getLogInfo(req, resp));
 			        	resp.sendRedirect("/trabalho-les/listagemFornecedores");
 			        } else {
 						//resp.setAttribute("erro", "true");

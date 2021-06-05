@@ -9,10 +9,10 @@ import model.Documento;
 import model.Endereco;
 import strategies.ValidarCampos;
 import utils.Campo;
+import utils.Log;
 import utils.ResultadosBusca;
 import strategies.ValidacaoDocumentos;
 import strategies.ValidacaoEnderecos;
-import strategies.VerificarCamposCpf;
 
 public class FachadaFornecedor implements IFachada<Fornecedor, Campo[]> {
 
@@ -54,7 +54,6 @@ public class FachadaFornecedor implements IFachada<Fornecedor, Campo[]> {
 	public boolean validarDocumentos(Documento[] documentos) {
 		ValidacaoDocumentos val = new ValidacaoDocumentos();
 		FornecedorDAO dao = new FornecedorDAO();
-		VerificarCamposCpf ver = new VerificarCamposCpf();
 
 		return val.processa(documentos) && !dao.documentosExistem(documentos);
 	}
@@ -65,60 +64,87 @@ public class FachadaFornecedor implements IFachada<Fornecedor, Campo[]> {
 		return val.processa(enderecos);
 	}
 
-	public String insert(Fornecedor fornecedor) {
+	public String insert(Fornecedor fornecedor, String usuarioResponsavel) {
 		try {
 			FornecedorDAO dao = new FornecedorDAO();
 			dao.insert(fornecedor);
 
+			String strEndereco = "id: " + fornecedor.getEndereco().getId() + 
+								", nome: '" + fornecedor.getEndereco().getNome() + "'" +
+								", cep: " + fornecedor.getEndereco().getCep() + 
+								", logradouro: '" + fornecedor.getEndereco().getLogradouro() + "'" +
+								", numero: " + fornecedor.getEndereco().getNumero() + 
+								", complemento: '" + fornecedor.getEndereco().getComplemento() + "'" +
+								", bairro: " + fornecedor.getEndereco().getBairro().getDescricao() + 
+								", cidade: " + fornecedor.getEndereco().getBairro().getCidade().getDescricao() +
+								", estado: " + fornecedor.getEndereco().getBairro().getCidade().getEstado().getDescricao() + 
+								", pais: " + fornecedor.getEndereco().getBairro().getCidade().getEstado().getPais().getId() + 
+								", tipoEndereco: " + fornecedor.getEndereco().getTipoEndereco().getId() + 
+								", tipoResidencia: " + fornecedor.getEndereco().getTipoResidencia().getId() + 
+								", funcaoEndereco: " + fornecedor.getEndereco().getFuncaoEndereco().getId() + 
+								", tipoLogradouro: " + fornecedor.getEndereco().getTipoLogradouro().getId() + 
+								", observacoes: '" + fornecedor.getEndereco().getObservacoes() + "'";
+
+			String strDocumento = "id: " + fornecedor.getDocumento().getId() + 
+								", codigo: " + fornecedor.getDocumento().getCodigo() + 
+								", validade: " + fornecedor.getDocumento().getValidade() + 
+								", tipoDocumento: " + fornecedor.getDocumento().getTipoDocumento().getId();
+
+			Log log = new Log(usuarioResponsavel + " (admin)",
+							 "Fornecedor {"+ 
+							 "id: " + fornecedor.getId() +
+							 ", nome: " + fornecedor.getNome() +
+							 ", email: " + fornecedor.getEmail() +
+							 ", status: " + fornecedor.getStatus() +
+							 ", endereco: {" + strEndereco +"}" +
+							 ", documento: {" + strDocumento +"}" +
+							 "}",
+							 "Altera√ß√£o");
+		log.registrar();
+
 			return "Fornecedor inserido com sucesso!";
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Erro de validaÁ„o. Tente novamente.";
+			return "Erro de valida√ß√£o. Tente novamente.";
 		}
 	}
 
-	public String delete(Fornecedor fornecedores) {
+	public String delete(Fornecedor fornecedor, String usuarioResponsavel) {
 		FornecedorDAO dao = new FornecedorDAO();
 
-		dao.delete(fornecedores.getId());
+		dao.delete(fornecedor.getId());
 
-		return "Fornecedor excluÌdo com sucesso!";
+		return "Fornecedor exclu√≠do com sucesso!";
 	}
 
-	public String update(Fornecedor fornecedores) {
+	public String update(Fornecedor fornecedor, String usuarioResponsavel) {
 		FornecedorDAO dao = new FornecedorDAO();
-		dao.update(fornecedores);
+		dao.update(fornecedor);
+
+		Log log = new Log(usuarioResponsavel + " (admin)",
+							 "Fornecedor {"+ 
+							 "id: " + fornecedor.getId() +
+							 ", nome: " + fornecedor.getNome() +
+							 ", email: " + fornecedor.getEmail() +
+							 ", status: " + fornecedor.getStatus() +
+							 "}",
+							 "Altera√ß√£o");
+		log.registrar();
 
 		return "Fornecedor alterado com sucesso!";
 	}
-	
-	public String deleteDocuments(Documento documento) {
-		try {	
-			FornecedorDAO dao = new FornecedorDAO();
-			dao.deleteDocument(documento);
-			
-			return "Documentos removidos com sucesso!";
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "Ocorreu um erro ao deletar os documentos!";
-		}
-	}
 
-	public String deleteEnderecos(Endereco endereco) {
-		try {	
-			FornecedorDAO dao = new FornecedorDAO();
-			dao.deleteEndereco(endereco);
-			
-			return "EndereÁos removidos com sucesso!";
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "Ocorreu um erro ao deletar os endereÁos!";
-		}
-	}
-
-	public String updateStatus(Fornecedor fornecedor) {
+	public String updateStatus(Fornecedor fornecedor, String usuarioResponsavel) {
 		FornecedorDAO dao = new FornecedorDAO();
 		dao.updateStatus(fornecedor);
+
+		Log log = new Log(usuarioResponsavel + " (admin)",
+							 "Fornecedor {"+ 
+							 "id: " + fornecedor.getId() +
+							 ", status: " + fornecedor.getStatus() +
+							 "}",
+							 "Altera√ß√£o de status");
+		log.registrar();
 
 		return "Status de fornecedor alterado com sucesso!";
 	}

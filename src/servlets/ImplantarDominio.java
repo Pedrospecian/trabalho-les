@@ -22,7 +22,7 @@ public class ImplantarDominio extends HttpServlet {
 
 			FachadaConfiguracoes fachada = new FachadaConfiguracoes();
 
-			fachada.implantarDominio();
+			fachada.implantarDominio(LoginViewHelper.getLogInfo(req, resp));
 
 			req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
 			resp.sendRedirect("/trabalho-les/homeAdmin");

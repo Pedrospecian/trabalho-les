@@ -88,7 +88,7 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			if (where == null) where = "";
 			//String paginacaoStr = paginacao.processa(campos);
 			connection = Conexao.getConnectionMySQL();
-			pst = connection.prepareStatement("select clientes.id, clientes.dataCadastro, clientes.nome, clientes.sexo, clientes.dataNascimento, clientes.status, clientes.email, clientes.idTipoCliente, tipos_clientes.dataCadastro, tipos_clientes.nome, tipos_clientes.descricao, " +
+			pst = connection.prepareStatement("select clientes.id, clientes.dataCadastro, clientes.nome, clientes.genero, clientes.dataNascimento, clientes.status, clientes.email, clientes.idTipoCliente, tipos_clientes.dataCadastro, tipos_clientes.nome, tipos_clientes.descricao, " +
 				"COUNT(pedidos.id) as totalPedidos " +
 				"from clientes inner join tipos_clientes on clientes.idTipoCliente = tipos_clientes.id inner join documentos on documentos.idCliente = clientes.id " +
 				"LEFT JOIN pedidos ON (pedidos.idUsuario = clientes.id and pedidos.status <> 1 and pedidos.status <> 8) " + where + " GROUP BY clientes.id ORDER BY clientes.id DESC ;");
@@ -110,7 +110,7 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 						rs.getDate("clientes.dataCadastro"),
 						documentos, 
 						rs.getString("clientes.nome"),
-						rs.getInt("clientes.sexo"),
+						rs.getInt("clientes.genero"),
 						rs.getDate("clientes.dataNascimento"),
 						new TipoCliente(rs.getLong("clientes.idTipoCliente"),
 								rs.getDate("tipos_clientes.dataCadastro"),
@@ -218,7 +218,7 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 						rs.getLong("clientes.id"),
 						rs.getDate("clientes.dataCadastro"),
 						documentos, rs.getString("clientes.nome"),
-						rs.getInt("clientes.sexo"),
+						rs.getInt("clientes.genero"),
 						rs.getDate("clientes.dataNascimento"),
 						new TipoCliente(rs.getLong("clientes.idTipoCliente"), new Date(), "", ""),
 						enderecos,
@@ -266,7 +266,7 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			Telefone[] telefones = new Telefone[1];
 
 			while (rs.next()) {
-				//Cliente(long id, Date dataCadastro, Documento[] documentos, String nome, int sexo, Date dataNascimento, TipoCliente tipoCliente, Endereco[] enderecos, int status, CartaoCredito[] cartoesCredito, String email, String senha, Telefone[] telefones)
+				//Cliente(long id, Date dataCadastro, Documento[] documentos, String nome, int genero, Date dataNascimento, TipoCliente tipoCliente, Endereco[] enderecos, int status, CartaoCredito[] cartoesCredito, String email, String senha, Telefone[] telefones)
 				this.selectSingleVal = new Cliente(
 						rs.getLong("clientes.id"),
 						null,
@@ -529,7 +529,7 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			connection.setAutoCommit(false);
 			
 			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO clientes(nome, sexo, dataNascimento, idTipoCliente, dataCadastro, status, email, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+			sql.append("INSERT INTO clientes(nome, genero, dataNascimento, idTipoCliente, dataCadastro, status, email, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -537,7 +537,7 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			Date agora = new Date(); 
 
 			pst.setString(1, cliente.getNome());
-			pst.setInt(2, cliente.getSexo());
+			pst.setInt(2, cliente.getGenero());
 			pst.setDate(3, new java.sql.Date(cliente.getDataNascimento().getTime()));
 			pst.setLong(4, cliente.getTipoCliente().getId());
 			pst.setDate(5, new java.sql.Date(agora.getTime()));
@@ -645,6 +645,9 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setString(13, endereco.getObservacoes());
 
 			pst.executeUpdate();
+
+			ResultSet rsInsert = pst.getGeneratedKeys();
+			if (rsInsert.next()) endereco.setId(rsInsert.getLong(1));
 		}
 	}
 	
@@ -665,6 +668,9 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setDate(5, new java.sql.Date(new Date().getTime()));
 
 			pst.executeUpdate();
+
+			ResultSet rsInsert = pst.getGeneratedKeys();
+			if (rsInsert.next()) documento.setId(rsInsert.getLong(1));
 		}
 	}
 
@@ -713,6 +719,9 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setLong(5, cliente.getId());
 
 			pst.executeUpdate();
+
+			ResultSet rsInsert = pst.getGeneratedKeys();
+			if (rsInsert.next()) telefone.setId(rsInsert.getLong(1));
 		}
 	}
 
@@ -725,13 +734,13 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			connection.setAutoCommit(false);
 			
 			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE clientes SET nome = ?, sexo = ?, dataNascimento = ?, idTipoCliente = ?, status = ?, email = ? WHERE clientes.id = ?;");
+			sql.append("UPDATE clientes SET nome = ?, genero = ?, dataNascimento = ?, idTipoCliente = ?, status = ?, email = ? WHERE clientes.id = ?;");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 
 			pst.setString(1, cliente.getNome());
-			pst.setInt(2, cliente.getSexo());
+			pst.setInt(2, cliente.getGenero());
 			pst.setDate(3, new java.sql.Date(cliente.getDataNascimento().getTime()));
 			pst.setLong(4, cliente.getTipoCliente().getId());
 			pst.setInt(5, cliente.getStatus());

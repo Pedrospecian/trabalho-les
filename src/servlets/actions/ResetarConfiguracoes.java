@@ -35,7 +35,7 @@ public class ResetarConfiguracoes extends HttpServlet {
 			resp.setContentType("text/html");
 			try {
 				FachadaConfiguracoes fachada = new FachadaConfiguracoes();
-	    		fachada.resetarConfiguracoes();
+	    		fachada.resetarConfiguracoes(LoginViewHelper.getLogInfo(req, resp));
 	        
 	    		resp.sendRedirect("/trabalho-les/configuracoes");
 	    	} catch(Exception e) {

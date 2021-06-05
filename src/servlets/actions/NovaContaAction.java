@@ -41,7 +41,7 @@ public class NovaContaAction extends HttpServlet {
 
 			if(fachada.validarCampos(campos) && fachada.validaEmailExistente(email)) {
 				String nome = campos[0].getValor();
-		        int sexo = Integer.parseInt(campos[1].getValor());
+		        int genero = Integer.parseInt(campos[1].getValor());
 		        Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(campos[2].getValor());
 		        long tipoCliente = Long.parseLong(campos[3].getValor());
 		        int status = Integer.parseInt(campos[4].getValor());
@@ -81,13 +81,13 @@ public class NovaContaAction extends HttpServlet {
 
 		    	if (documentos != null && fachada.validarDocumentos(documentos, true) && enderecos != null && fachada.validarEnderecos(enderecos, true)) {
 		        
-		        	Cliente cliente = new Cliente((long)1, new Date(), documentos, nome, sexo, dataNascimento, new TipoCliente(tipoCliente, new Date(), "", ""), enderecos, status, cartoesCredito, email, senha, telefones);
+		        	Cliente cliente = new Cliente((long)1, new Date(), documentos, nome, genero, dataNascimento, new TipoCliente(tipoCliente, new Date(), "", ""), enderecos, status, cartoesCredito, email, senha, telefones);
 
-		        	fachada.insert(cliente);
+		        	fachada.insert(cliente, "cliente novo");
 
 		        	for (int i = 0; i < cartoesCredito.length; i++) {
 		        		if (cartoesCredito[i].getNumero().equals(campos[33].getValor())) {
-			        		fachada.setCartaoPreferencial(cliente, cartoesCredito[i]);
+			        		fachada.setCartaoPreferencial(cliente, cartoesCredito[i], "cliente novo");
 			        		break;
 			        	}
 		        	}

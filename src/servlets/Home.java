@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import facades.FachadaLivro;
 import model.Livro;
 import viewHelpers.LoginViewHelper;
+import utils.Log;
 
 public class Home extends HttpServlet {
 	private static final long serialVersionUID = 12;

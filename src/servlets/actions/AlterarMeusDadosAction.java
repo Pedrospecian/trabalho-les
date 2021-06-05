@@ -43,7 +43,7 @@ public class AlterarMeusDadosAction extends HttpServlet {
 				if(fachada.validarCampos(campos)) {
 			        long id = lvh.getUsuarioLogadoId(req, resp);
 					String nome = campos[1].getValor();
-			        int sexo = Integer.parseInt(campos[2].getValor());
+			        int genero = Integer.parseInt(campos[2].getValor());
 			        Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(campos[3].getValor());
 			        long tipoCliente = Long.parseLong(campos[4].getValor());
 			        int status = Integer.parseInt(campos[5].getValor());
@@ -85,7 +85,7 @@ public class AlterarMeusDadosAction extends HttpServlet {
 			        CartaoCredito[] cartoesCreditoRemovidos = ClienteViewHelper.createCartoesCreditoRemovidosFromStrings(campos[33].getValor());
 			        Telefone[] telefonesRemovidos = ClienteViewHelper.createTelefonesRemovidosFromStrings(campos[34].getValor());	
 		        
-		        	Cliente cliente = new Cliente(id, new Date(), documentos, nome, sexo, dataNascimento, new TipoCliente(tipoCliente, new Date(), "", ""), enderecos, status, cartoesCredito, email, "", telefones);
+		        	Cliente cliente = new Cliente(id, new Date(), documentos, nome, genero, dataNascimento, new TipoCliente(tipoCliente, new Date(), "", ""), enderecos, status, cartoesCredito, email, "", telefones);
 		        	
 		        	boolean documentosInvalidos = false;
 		        	boolean enderecosInvalidos = false;
@@ -109,29 +109,29 @@ public class AlterarMeusDadosAction extends HttpServlet {
 		        	}
 
 		        	if (!enderecosInvalidos && !documentosInvalidos && !cartoesCreditoInvalidos && !telefonesInvalidos) {
-			        	fachada.update(cliente);
+			        	fachada.update(cliente, LoginViewHelper.getLogInfo(req, resp));
 
 			        	if (enderecosRemovidos != null) {
-			        		fachada.deleteEnderecos(enderecosRemovidos);
+			        		fachada.deleteEnderecos(enderecosRemovidos, LoginViewHelper.getLogInfo(req, resp));
 			        	}
 
 			        	if (cartoesCreditoRemovidos != null) {
-			        		fachada.deleteCartoesCredito(cartoesCreditoRemovidos);
+			        		fachada.deleteCartoesCredito(cartoesCreditoRemovidos, LoginViewHelper.getLogInfo(req, resp));
 			        	}
 
 			        	if (telefonesRemovidos != null) {
-			        		fachada.deleteTelefones(telefonesRemovidos);
+			        		fachada.deleteTelefones(telefonesRemovidos, LoginViewHelper.getLogInfo(req, resp));
 			        	}
 
 			        	if (cartoesCredito != null && campos[36].getValor().length() == 16) {
 			        		for (int i = 0; i < cartoesCredito.length; i++) {
 				        		if (cartoesCredito[i].getNumero().equals(campos[36].getValor())) {
-					        		fachada.setCartaoPreferencial(cliente, cartoesCredito[i]);
+					        		fachada.setCartaoPreferencial(cliente, cartoesCredito[i], LoginViewHelper.getLogInfo(req, resp));
 					        		break;
 					        	}
 				        	}
 			        	} else {
-			        		fachada.setCartaoPreferencial(cliente, new CartaoCredito(Long.parseLong(campos[36].getValor()), null, null, null, null, null, null ));
+			        		fachada.setCartaoPreferencial(cliente, new CartaoCredito(Long.parseLong(campos[36].getValor()), null, null, null, null, null, null ), LoginViewHelper.getLogInfo(req, resp));
 			        	}
 			        
 		        		resp.sendRedirect("/trabalho-les/minhaConta");

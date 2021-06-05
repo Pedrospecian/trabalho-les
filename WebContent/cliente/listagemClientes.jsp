@@ -19,8 +19,8 @@
 			<h2>Buscar clientes</h2>
 			<form method="get" action="#" class="form-buscar-clientes">
 				<input type="text" name="nome" placeholder="Nome" value="${campos[0].getValor()}" >
-				<select name="sexo" >
-					<option value="">Sexo</option>
+				<select name="genero" >
+					<option value="">Gênero</option>
 					<option value="1" ${1 == campos[1].getValor() ? 'selected=\"selected\"' : ''}>Masculino</option>
 					<option value="2" ${2 == campos[1].getValor() ? 'selected=\"selected\"' : ''}>Feminino</option>
 				</select>
@@ -56,7 +56,7 @@
 							<th>Código único</th>
 							<th>Nome</th>
 							<th>E-mail</th>
-							<th>Sexo</th>
+							<th>Gênero</th>
 							<th>Data de nascimento</th>
 							<th>Tipo de cliente</th>
 							<th>Perfil de compra</th>
@@ -86,7 +86,7 @@
 										${registro.getEmail()}
 									</span>
 								</td>
-								<td>${1 == registro.getSexo() ? 'Masculino' : 'Feminino'}</td>
+								<td>${1 == registro.getGenero() ? 'Masculino' : 'Feminino'}</td>
 								<td>
 									<span class="js-date-value">
 										${registro.getDataNascimento()}

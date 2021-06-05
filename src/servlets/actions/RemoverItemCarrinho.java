@@ -33,7 +33,7 @@ public class RemoverItemCarrinho extends HttpServlet {
 				FachadaPedido fachada = new FachadaPedido();
 
 				if(req.getParameter("id").matches("^[0-9]+$")) {
-		        	fachada.removerItemCarrinho(Long.parseLong(req.getParameter("id")));
+		        	fachada.removerItemCarrinho(Long.parseLong(req.getParameter("id")), LoginViewHelper.getLogInfo(req, resp));
 		        
 	        		resp.sendRedirect("/trabalho-les/carrinho");
 		        } else {

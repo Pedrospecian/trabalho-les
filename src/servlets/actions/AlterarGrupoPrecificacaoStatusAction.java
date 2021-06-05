@@ -36,7 +36,7 @@ public class AlterarGrupoPrecificacaoStatusAction extends HttpServlet {
 					int status = Integer.parseInt(campos[1].getValor());
 		        
 		        	GrupoPrecificacao grupoPrecificacao = new GrupoPrecificacao(id, new Date(), "", 0, status);
-		        	fachada.updateStatus(grupoPrecificacao);
+		        	fachada.updateStatus(grupoPrecificacao, LoginViewHelper.getLogInfo(req, resp));
 		        } else {
 		        	//retorna com os dados invalidos
 		        }

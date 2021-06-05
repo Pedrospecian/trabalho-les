@@ -174,21 +174,29 @@ public class ConfiguracoesDAO implements IDAO<EntidadeDominio, Campo[]> {
 			//autores
 			StringBuilder sql1 = new StringBuilder();
 			sql1.append("INSERT IGNORE INTO autores (id, dataCadastro, nome, resumo) VALUES " +
-			"(1, '2021-04-12', 'Autor teste', 'teste'), " +
-			"(2, '2021-04-12', 'Agatha Christie', 'autora de livros de suspense');");
-			
+			"(1, ?, 'Autor teste', 'teste'), " +
+			"(2, ?, 'Agatha Christie', 'autora de livros de suspense');");
+
 			pst = connection.prepareStatement(sql1.toString(),
 					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setDate(1, agora );
+			pst.setDate(2, agora );
+
 			pst.executeUpdate();
 
 			//bandeiras
 			StringBuilder sql2 = new StringBuilder();
 			sql2.append("INSERT IGNORE INTO bandeiras (id, dataCadastro, nome) VALUES " +
-			"(1, '2021-04-12', 'Visa'), " +
-			"(2, '2021-04-12', 'MasterCard');");
+			"(1, ?, 'Visa'), " +
+			"(2, ?, 'MasterCard');");
 			
 			pst = connection.prepareStatement(sql2.toString(),
 					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setDate(1, agora );
+			pst.setDate(2, agora );
+
 			pst.executeUpdate();
 
 			//cartoes_aprovados
@@ -204,34 +212,49 @@ public class ConfiguracoesDAO implements IDAO<EntidadeDominio, Campo[]> {
 			//categorias
 			StringBuilder sql4 = new StringBuilder();
 			sql4.append("INSERT IGNORE INTO categorias (id, dataCadastro, nome) VALUES " +
-			"(1, '2021-04-12', 'cat1'), " +
-			"(2, '2021-04-12', 'cat 2'), " +
-			"(3, '2021-04-12', 'categoria #3');");
+			"(1, ?, 'cat1'), " +
+			"(2, ?, 'cat 2'), " +
+			"(3, ?, 'categoria #3');");
 			
 			pst = connection.prepareStatement(sql4.toString(),
 					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setDate(1, agora );
+			pst.setDate(2, agora );
+			pst.setDate(3, agora );
+
 			pst.executeUpdate();
 
 			//categorias_ativacao
 			StringBuilder sql5 = new StringBuilder();
 			sql5.append("INSERT IGNORE INTO categorias_ativacao (id, dataCadastro, nome) VALUES " +
-			"(1, '2021-04-12', 'Aumento de demanda'), " +
-			"(2, '2021-04-12', 'Lançamento de adaptação'), " +
-			"(3, '2021-04-12', 'Outro');");
+			"(1, ?, 'Aumento de demanda'), " +
+			"(2, ?, 'Lançamento de adaptação'), " +
+			"(3, ?, 'Outro');");
 			
 			pst = connection.prepareStatement(sql5.toString(),
 					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setDate(1, agora );
+			pst.setDate(2, agora );
+			pst.setDate(3, agora );
+
 			pst.executeUpdate();
 
 			//categorias_inativacao
 			StringBuilder sql6 = new StringBuilder();
 			sql6.append("INSERT IGNORE INTO categorias_inativacao (id, dataCadastro, nome) VALUES " +
-			"(1, '2021-04-12', 'Falta de demanda'), " +
-			"(2, '2021-04-12', 'Conteúdo ofensivo'), " +
-			"(3, '2021-04-12', 'Outro');");
+			"(1, ?, 'Falta de demanda'), " +
+			"(2, ?, 'Conteúdo ofensivo'), " +
+			"(3, ?, 'Outro');");
 			
 			pst = connection.prepareStatement(sql6.toString(),
 					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setDate(1, agora );
+			pst.setDate(2, agora );
+			pst.setDate(3, agora );
+
 			pst.executeUpdate();
 
 			//configuracoes
@@ -249,85 +272,133 @@ public class ConfiguracoesDAO implements IDAO<EntidadeDominio, Campo[]> {
 			//editoras
 			StringBuilder sql8 = new StringBuilder();
 			sql8.append("INSERT IGNORE INTO editoras (id, dataCadastro, nome, descricao) VALUES " +
-			"(1, '2021-04-12', 'Editora teste', 'teste'), " +
-			"(2, '2021-04-12', 'Editora Ininap', 'Editora de HQs');");
+			"(1, ?, 'Editora teste', 'teste'), " +
+			"(2, ?, 'Editora Ininap', 'Editora de HQs');");
 			
 			pst = connection.prepareStatement(sql8.toString(),
 					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setDate(1, agora );
+			pst.setDate(2, agora );
+
 			pst.executeUpdate();
 
 			//generos
 			StringBuilder sql9 = new StringBuilder();
 			sql9.append("INSERT IGNORE INTO generos (id, dataCadastro, nome) VALUES " +
-			"(1, '2021-04-12', 'Masculino'), " +
-			"(2, '2021-04-12', 'Feminino');");
+			"(1, ?, 'Masculino'), " +
+			"(2, ?, 'Feminino');");
 			
 			pst = connection.prepareStatement(sql9.toString(),
 					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setDate(1, agora );
+			pst.setDate(2, agora );
+
 			pst.executeUpdate();
 
 			//tipos_clientes
 			StringBuilder sql10 = new StringBuilder();
-			sql10.append("INSERT IGNORE INTO tipos_clientes (id, dataCadastro, nome, descricao) VALUES (1, '2021-02-23', 'Comprador', 'Clientes convencionais.'), (2, '2021-02-23', 'Revendedor', 'Clientes que compram para revender. Eles podem ter algum desconto.'), (3, '2021-02-23', 'Parceiro', 'Clientes que possuem parceria com a loja. Eles podem ter algum desconto.');");
+			sql10.append("INSERT IGNORE INTO tipos_clientes (id, dataCadastro, nome, descricao) VALUES (1, ?, 'Comprador', 'Clientes convencionais.'), (2, ?, 'Revendedor', 'Clientes que compram para revender. Eles podem ter algum desconto.'), (3, ?, 'Parceiro', 'Clientes que possuem parceria com a loja. Eles podem ter algum desconto.');");
 			
 			pst = connection.prepareStatement(sql10.toString(),
 					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setDate(1, agora );
+			pst.setDate(2, agora );
+			pst.setDate(3, agora );
+
 			pst.executeUpdate();
 
 			//tipos_documentos
 			StringBuilder sql11 = new StringBuilder();
-			sql11.append("INSERT IGNORE INTO tipos_documentos (id, dataCadastro, nome, descricao) VALUES (1, '2021-02-23', 'CPF', 'Cadastro de Pessoa Física'), (2, '2021-02-23', 'CNPJ', 'Cadastro Nacional de Pessoa Jurídica'), (3, '2021-02-23', 'RG', 'Registro Geral'), (4, '2021-02-23', 'SSN', 'Social Security Number');");
+			sql11.append("INSERT IGNORE INTO tipos_documentos (id, dataCadastro, nome, descricao) VALUES (1, ?, 'CPF', 'Cadastro de Pessoa Física'), (2, ?, 'CNPJ', 'Cadastro Nacional de Pessoa Jurídica'), (3, ?, 'RG', 'Registro Geral'), (4, ?, 'SSN', 'Social Security Number');");
 			
 			pst = connection.prepareStatement(sql11.toString(),
 					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setDate(1, agora );
+			pst.setDate(2, agora );
+			pst.setDate(3, agora );
+			pst.setDate(4, agora );
+
 			pst.executeUpdate();
 
 			//tipos_enderecos
 			StringBuilder sql12 = new StringBuilder();
-			sql12.append("INSERT IGNORE INTO tipos_enderecos (id, dataCadastro, nome, descricao) VALUES (1, '2021-02-23', 'Residencial', 'Casa, apartamento etc.'), (2, '2021-02-23', 'Comercial', 'Empresa');");
+			sql12.append("INSERT IGNORE INTO tipos_enderecos (id, dataCadastro, nome, descricao) VALUES (1, ?, 'Residencial', 'Casa, apartamento etc.'), (2, ?, 'Comercial', 'Empresa');");
 			
 			pst = connection.prepareStatement(sql12.toString(),
 					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setDate(1, agora );
+			pst.setDate(2, agora );
+
 			pst.executeUpdate();
 
 			//tipos_logradouros
 			StringBuilder sql13 = new StringBuilder();
-			sql13.append("INSERT IGNORE INTO tipos_logradouros (id, dataCadastro, nome, descricao) VALUES (1, '2021-04-23', 'Rua', 'Rua'), (2, '2021-04-23', 'Avenida', 'Avenida'), (3, '2021-04-23', 'Viela', 'Viela'), (4, '2021-04-23', 'Outro...', 'Outro tipo de logradouro');");
+			sql13.append("INSERT IGNORE INTO tipos_logradouros (id, dataCadastro, nome, descricao) VALUES (1, ?, 'Rua', 'Rua'), (2, ?, 'Avenida', 'Avenida'), (3, ?, 'Viela', 'Viela'), (4, ?, 'Outro...', 'Outro tipo de logradouro');");
 			
 			pst = connection.prepareStatement(sql13.toString(),
 					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setDate(1, agora );
+			pst.setDate(2, agora );
+			pst.setDate(3, agora );
+			pst.setDate(4, agora );
+
 			pst.executeUpdate();
 
 			//tipos_residencias
 			StringBuilder sql14 = new StringBuilder();
-			sql14.append("INSERT IGNORE INTO tipos_residencias (id, dataCadastro, nome, descricao) VALUES (1, '2021-04-23', 'Casa', 'Casa'), (2, '2021-04-23', 'Apartamento', 'Apartamento'), (3, '2021-04-23', 'Outro...', 'Outro tipo de endereço');");
+			sql14.append("INSERT IGNORE INTO tipos_residencias (id, dataCadastro, nome, descricao) VALUES (1, ?, 'Casa', 'Casa'), (2, ?, 'Apartamento', 'Apartamento'), (3, ?, 'Outro...', 'Outro tipo de endereço');");
 			
 			pst = connection.prepareStatement(sql14.toString(),
 					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setDate(1, agora );
+			pst.setDate(2, agora );
+			pst.setDate(3, agora );
+
 			pst.executeUpdate();
 
 			//tipos_telefones
 			StringBuilder sql15 = new StringBuilder();
-			sql15.append("INSERT IGNORE INTO tipos_telefones (id, dataCadastro, nome, descricao) VALUES (1, '2021-04-23', 'Residencial', 'Telefone residencial'), (2, '2021-04-23', 'Celular', 'Telefone celular');");
+			sql15.append("INSERT IGNORE INTO tipos_telefones (id, dataCadastro, nome, descricao) VALUES (1, ?, 'Residencial', 'Telefone residencial'), (2, ?, 'Celular', 'Telefone celular');");
 			
 			pst = connection.prepareStatement(sql15.toString(),
 					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setDate(1, agora );
+			pst.setDate(2, agora );
+
 			pst.executeUpdate();
 
 			//tipos_usuarios
 			StringBuilder sql16 = new StringBuilder();
-			sql16.append("INSERT IGNORE INTO tipos_usuarios (id, dataCadastro, nome, descricao) VALUES (1, '2021-04-23', 'Funcionário', 'Tem acesso limitado às funções do admin'), (2, '2021-04-23', 'Administrador', 'Tem acesso total às funções do admin'), (3, '2021-05-24', 'Gerente de vendas', 'Pode alterar o valor dos produtos abaixo da margem de lucro');");
+			sql16.append("INSERT IGNORE INTO tipos_usuarios (id, dataCadastro, nome, descricao) VALUES (1, ?, 'Funcionário', 'Tem acesso limitado às funções do admin'), (2, ?, 'Administrador', 'Tem acesso total às funções do admin'), (3, ?, 'Gerente de vendas', 'Pode alterar o valor dos produtos abaixo da margem de lucro');");
 			
 			pst = connection.prepareStatement(sql16.toString(),
 					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setDate(1, agora );
+			pst.setDate(2, agora );
+			pst.setDate(3, agora );
+
 			pst.executeUpdate();
 
 			//funcoes_enderecos
 			StringBuilder sql17 = new StringBuilder();
-			sql17.append("INSERT IGNORE INTO funcoes_enderecos (id, dataCadastro, nome, descricao) VALUES (1, '2021-04-21', 'Endereço de Cobrança', 'Endereço de Cobrança'), (2, '2021-04-23', 'Endereço de Entrega', 'Endereço de Entrega'), (3, '2021-04-23', 'Endereço de Cobrança e Entrega', 'Endereço de Cobrança e Entrega');");
+			sql17.append("INSERT IGNORE INTO funcoes_enderecos (id, dataCadastro, nome, descricao) VALUES (1, ?, 'Endereço de Cobrança', 'Endereço de Cobrança'), (2, ?, 'Endereço de Entrega', 'Endereço de Entrega'), (3, ?, 'Endereço de Cobrança e Entrega', 'Endereço de Cobrança e Entrega');");
 			
 			pst = connection.prepareStatement(sql17.toString(),
 					Statement.RETURN_GENERATED_KEYS);
+
+			pst.setDate(1, agora );
+			pst.setDate(2, agora );
+			pst.setDate(3, agora );
+
 			pst.executeUpdate();
 			
 			connection.commit();			

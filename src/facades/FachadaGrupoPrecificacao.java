@@ -6,6 +6,7 @@ import model.EntidadeDominio;
 import model.GrupoPrecificacao;
 import strategies.ValidarCampos;
 import utils.Campo;
+import utils.Log;
 import utils.ResultadosBusca;
 import java.util.ArrayList;
 
@@ -43,37 +44,62 @@ public class FachadaGrupoPrecificacao implements IFachada< GrupoPrecificacao, Ca
 	}
 
 	
-	public String insert(GrupoPrecificacao grupoprecificacao) {
+	public String insert(GrupoPrecificacao grupoprecificacao, String usuarioResponsavel) {
 		try {
 			GrupoPrecificacaoDAO dao = new GrupoPrecificacaoDAO();
 			dao.insert(grupoprecificacao);
 
-			return "Grupo de Precificação inserido com sucesso!";
+			Log log = new Log(usuarioResponsavel + " (admin)",
+							 "GrupoPrecificacao {id: " + grupoprecificacao.getId() +
+							 			  ", nome: " + grupoprecificacao.getNome() + 
+							 			  ", porcentagem: " + grupoprecificacao.getPorcentagem() + 
+							 			  ", status: " + grupoprecificacao.getStatus() + 
+							 "}",
+							 "InserÃ§Ã£o");
+        	log.registrar();
+
+			return "Grupo de PrecificaÃ§Ã£o inserido com sucesso!";
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Erro de validação. Tente novamente.";
+			return "Erro de validaÃ§Ã£o. Tente novamente.";
 		}
 	}
 
-	public String delete(GrupoPrecificacao grupoprecificacao) {
+	public String delete(GrupoPrecificacao grupoprecificacao, String usuarioResponsavel) {
 		GrupoPrecificacaoDAO dao = new GrupoPrecificacaoDAO();
 
 		dao.delete(grupoprecificacao.getId());
 
-		return "Grupo de Precificação com sucesso!";
+		return "Grupo de PrecificaÃ§Ã£o com sucesso!";
 	}
 
-	public String update(GrupoPrecificacao grupoprecificacao) {
+	public String update(GrupoPrecificacao grupoprecificacao, String usuarioResponsavel) {
 		GrupoPrecificacaoDAO dao = new GrupoPrecificacaoDAO();
 		dao.update(grupoprecificacao);
 
-		return "Grupo de Precificação com sucesso!";
+		Log log = new Log(usuarioResponsavel + " (admin)",
+							 "GrupoPrecificacao {id: " + grupoprecificacao.getId() +
+							 			  ", nome: " + grupoprecificacao.getNome() + 
+							 			  ", porcentagem: " + grupoprecificacao.getPorcentagem() + 
+							 			  ", status: " + grupoprecificacao.getStatus() + 
+							 "}",
+							 "AlteraÃ§Ã£o");
+		log.registrar();
+
+		return "Grupo de PrecificaÃ§Ã£o com sucesso!";
 	}
 
-	public String updateStatus(GrupoPrecificacao grupoprecificacao) {
+	public String updateStatus(GrupoPrecificacao grupoprecificacao, String usuarioResponsavel) {
 		GrupoPrecificacaoDAO dao = new GrupoPrecificacaoDAO();
 		dao.updateStatus(grupoprecificacao);
 
-		return "Status de Grupo de Precificação alterado com sucesso!";
+		Log log = new Log(usuarioResponsavel + " (admin)",
+							 "GrupoPrecificacao {id: " + grupoprecificacao.getId() +
+							 			  ", status: " + grupoprecificacao.getStatus() + 
+							 "}",
+							 "AlteraÃ§Ã£o de status");
+		log.registrar();
+
+		return "Status de Grupo de PrecificaÃ§Ã£o alterado com sucesso!";
 	}
 }

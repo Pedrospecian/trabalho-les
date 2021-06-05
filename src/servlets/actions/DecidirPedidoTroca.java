@@ -31,7 +31,7 @@ public class DecidirPedidoTroca extends HttpServlet {
 			FachadaPedido fachada = new FachadaPedido();
 
 			if (req.getParameter("id").matches("^[0-9]+$") && req.getParameter("autorizar").matches("^[0-9]$")) {
-				fachada.decidirPedidoTroca(Long.parseLong(req.getParameter("id")), Integer.parseInt(req.getParameter("autorizar")));
+				fachada.decidirPedidoTroca(Long.parseLong(req.getParameter("id")), Integer.parseInt(req.getParameter("autorizar")), LoginViewHelper.getLogInfo(req, resp));
 
 		   		resp.sendRedirect("/trabalho-les/listagemSolicitacoesTroca");
 			}		

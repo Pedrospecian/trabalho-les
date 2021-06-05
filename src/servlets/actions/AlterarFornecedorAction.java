@@ -39,7 +39,7 @@ public class AlterarFornecedorAction extends HttpServlet {
 			        
 			    	Fornecedor fornecedor = new Fornecedor(id, new Date(), nome, email, status, null, null);
 
-		        	fachada.update(fornecedor);
+		        	fachada.update(fornecedor, LoginViewHelper.getLogInfo(req, resp));
 		        	
 	        		resp.sendRedirect("/trabalho-les/listagemFornecedores");
 			    } else {

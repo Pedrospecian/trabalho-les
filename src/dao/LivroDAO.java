@@ -551,7 +551,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			connection.setAutoCommit(false);
 			
 			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO livros (titulo, autorId, idEditora, ano, isbn, numeroPaginas, sinopse, altura, largura, peso, profundidade, preco, codigoBarras, status, dataCadastro, edicao, idGrupoPrecificacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+			sql.append("INSERT INTO livros (titulo, autorId, idEditora, ano, isbn, numeroPaginas, sinopse, altura, largura, peso, profundidade, preco, codigoBarras, status, dataCadastro, edicao, idGrupoPrecificacao, capa) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -575,6 +575,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setDate(15, new java.sql.Date(livro.getDataCadastro().getTime()));
 			pst.setString(16, livro.getEdicao());
 			pst.setLong(17, livro.getGrupoPrecificacao().getId());
+			pst.setString(18, livro.getCapa());
 			pst.executeUpdate();
 			
 			ResultSet rs = pst.getGeneratedKeys();
@@ -635,12 +636,10 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 			pst.executeUpdate();
 			
-			/*ResultSet rs = pst.getGeneratedKeys();
-			int idLivro = 0;
+			ResultSet rs = pst.getGeneratedKeys();
 			if (rs.next()) {
-				idLivro = rs.getInt(1);
-			}
-			livro.setId(idLivro);*/			
+				livroEstoque.setId(rs.getInt(1));
+			}	
 			
 			connection.commit();
 
@@ -937,8 +936,10 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}
 	}
 
-	public void alteraPreco(long idLivro) {
+	public double alteraPreco(long idLivro) {
 		PreparedStatement pst = null;
+
+		double precoNovo = 0;
 		try {
 			//Connection conn = Conexao.getConnectionMySQL();
 			connection.setAutoCommit(false);
@@ -961,15 +962,20 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 				pst = connection.prepareStatement(sql2.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 
-				pst.setDouble(1, Math.max(rs.getDouble("precoAtual"), rs.getDouble("maiorCusto") * (1 + (rs.getDouble("grupos_precificacao.porcentagem") / 100 ) ) ));
+				precoNovo = Math.max(rs.getDouble("precoAtual"), rs.getDouble("maiorCusto") * (1 + (rs.getDouble("grupos_precificacao.porcentagem") / 100 ) ) );
+
+				pst.setDouble(1, precoNovo);
 				pst.setLong(2, idLivro);
 				
 				pst.executeUpdate();
 
 				connection.commit();
 			}
+
+			return precoNovo;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return 0;
 		}
 	}
 

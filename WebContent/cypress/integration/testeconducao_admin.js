@@ -10,7 +10,7 @@ describe('Teste de condução de CRUD de clientes', () => {
 
     cy.get('[cypress-nome]').parent().should('have.class', 'has-danger')
     cy.get('[cypress-email]').parent().should('have.class', 'has-danger')
-    cy.get('[cypress-sexo]').parent().should('have.class', 'has-danger')
+    cy.get('[cypress-genero]').parent().should('have.class', 'has-danger')
     cy.get('[cypress-tipoCliente]').parent().should('have.class', 'has-danger')
     cy.get('[cypress-dataNascimento]').parent().should('have.class', 'has-danger')
     cy.get('[cypress-status]').parent().should('have.class', 'has-danger')
@@ -18,7 +18,7 @@ describe('Teste de condução de CRUD de clientes', () => {
     cy.get('[cypress-senhaConfirmar]').parent().should('have.class', 'has-danger')
 
     cy.get('[cypress-nome]').type('teste').parent().should('have.class', 'has-success')
-    cy.get('[cypress-sexo').select('1').parent().should('have.class', 'has-success')
+    cy.get('[cypress-genero').select('1').parent().should('have.class', 'has-success')
     cy.get('[cypress-tipoCliente').select('1').parent().should('have.class', 'has-success')
     cy.get('[cypress-status').select('1').parent().should('have.class', 'has-success')
     cy.get('[cypress-dataNascimento').type('1988-03-12').parent().should('have.class', 'has-success')
@@ -40,7 +40,7 @@ describe('Teste de condução de CRUD de clientes', () => {
     cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/cadastroCliente')
 
     cy.get('[cypress-nome]').type('teste').parent().should('have.class', 'has-success')
-    cy.get('[cypress-sexo').select('1').parent().should('have.class', 'has-success')
+    cy.get('[cypress-genero').select('1').parent().should('have.class', 'has-success')
     cy.get('[cypress-tipoCliente').select('1').parent().should('have.class', 'has-success')
     cy.get('[cypress-status').select('1').parent().should('have.class', 'has-success')
     cy.get('[cypress-dataNascimento').type('1988-03-12').parent().should('have.class', 'has-success')
@@ -105,7 +105,7 @@ describe('Teste de condução de CRUD de clientes', () => {
 
     cy.get('[cypress-nome]').clear()
     cy.get('[cypress-email]').clear()
-    cy.get('[cypress-sexo]').select('')
+    cy.get('[cypress-genero]').select('')
     cy.get('[cypress-tipoCliente]').select('')
     cy.get('[cypress-dataNascimento]').clear()
     cy.get('[cypress-status]').select('')
@@ -114,13 +114,13 @@ describe('Teste de condução de CRUD de clientes', () => {
 
     cy.get('[cypress-nome]').parent().should('have.class', 'has-danger')
     cy.get('[cypress-email]').parent().should('have.class', 'has-danger')
-    cy.get('[cypress-sexo]').parent().should('have.class', 'has-danger')
+    cy.get('[cypress-genero]').parent().should('have.class', 'has-danger')
     cy.get('[cypress-tipoCliente]').parent().should('have.class', 'has-danger')
     cy.get('[cypress-dataNascimento]').parent().should('have.class', 'has-danger')
     cy.get('[cypress-status]').parent().should('have.class', 'has-danger')
 
     cy.get('[cypress-nome]').type('teste').parent().should('have.class', 'has-success')
-    cy.get('[cypress-sexo').select('1').parent().should('have.class', 'has-success')
+    cy.get('[cypress-genero').select('1').parent().should('have.class', 'has-success')
     cy.get('[cypress-tipoCliente').select('1').parent().should('have.class', 'has-success')
     cy.get('[cypress-status').select('1').parent().should('have.class', 'has-success')
     cy.get('[cypress-dataNascimento').type('1988-03-12').parent().should('have.class', 'has-success')

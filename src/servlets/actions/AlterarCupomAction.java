@@ -43,7 +43,7 @@ public class AlterarCupomAction extends HttpServlet {
 
 		        	CupomDesconto cupom = new CupomDesconto(Long.parseLong(campos[0].getValor()), new Date(), nome, valor, dataInicio, dataFim, status);
 
-		        	fachada.update(cupom);
+		        	fachada.update(cupom, LoginViewHelper.getLogInfo(req, resp));
 		        	resp.sendRedirect("/trabalho-les/listagemCupons");
 		        } else {
 	    	       

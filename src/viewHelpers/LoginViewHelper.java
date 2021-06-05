@@ -120,4 +120,26 @@ public class LoginViewHelper {
 
 		return nome;
 	}
+
+	public static String getLogInfo(HttpServletRequest req, HttpServletResponse resp) {
+		String[] loginfo = new String[3];
+		Cookie[] cookies = req.getCookies();
+
+		if (cookies != null) {
+
+			for (int i = 0; i < cookies.length; i++) {
+				if (cookies[i].getName().equals("nome")) {
+					loginfo[0] = cookies[i].getValue();
+				}
+				if (cookies[i].getName().equals("login_id")) {
+					loginfo[1] = cookies[i].getValue();
+				}
+				if (cookies[i].getName().equals("tipo")) {
+					loginfo[2] = cookies[i].getValue();
+				}
+			}
+		}
+
+		return loginfo[0] + " (id: " + loginfo[1] + ", tipo: " + loginfo[2] + ")";
+	}
 }

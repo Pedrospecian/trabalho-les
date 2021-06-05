@@ -34,7 +34,7 @@ public class AlterarFornecedorStatusAction extends HttpServlet {
 					int status = Integer.parseInt(campos[1].getValor());
 		        
 		        	Fornecedor fornecedor = new Fornecedor(id, new Date(), "", "", status, null, null);
-		        	fachada.updateStatus(fornecedor);
+		        	fachada.updateStatus(fornecedor, LoginViewHelper.getLogInfo(req, resp));
 
 		        	resp.sendRedirect("/trabalho-les/listagemFornecedores");
 		        } else {

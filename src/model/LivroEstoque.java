@@ -11,6 +11,7 @@ public class LivroEstoque extends EntidadeDominio {
 	private Livro livro;
 	private int tipoMovimentacao;
 	private Usuario usuarioResponsavel;
+	private Cliente cliente;
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
@@ -51,6 +52,15 @@ public class LivroEstoque extends EntidadeDominio {
 	public Date getDataEntrada() {
 		return this.dataEntrada;
 	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
+	public Cliente getCliente() {
+		return this.cliente;
+	}
+
 
 	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;

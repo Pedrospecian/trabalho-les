@@ -36,7 +36,7 @@ public class AlterarCupomStatusAction extends HttpServlet {
 					int status = Integer.parseInt(campos[1].getValor());
 		        
 		        	CupomDesconto cupomDesconto = new CupomDesconto(id, new Date(), "", 0, null, null, status);
-		        	fachada.updateStatus(cupomDesconto);
+		        	fachada.updateStatus(cupomDesconto, LoginViewHelper.getLogInfo(req, resp));
 		        } else {
 		        	//retorna com os dados invalidos
 		        }

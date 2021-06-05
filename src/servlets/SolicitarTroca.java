@@ -41,7 +41,7 @@ public class SolicitarTroca extends HttpServlet {
 			itemCarrinho.setQuantidadeItensTrocados(Integer.parseInt(campos[1].getValor()));
 			//long id, Date dataCadastro, Livro livro, int quantidade, Cliente cliente
 
-			fachada.solicitarTroca(itemCarrinho);
+			fachada.solicitarTroca(itemCarrinho, LoginViewHelper.getLogInfo(req, resp));
 
         	req.setAttribute("headerHTML", lvh.getHeader(req, resp, 2));
 			req.getRequestDispatcher("pedido/trocaSolicitada.jsp").forward(req, resp);

@@ -80,7 +80,7 @@
 									<a href="/trabalho-les/editarCupom?id=${registro.getId()}" cypress-editarCupom>Editar</a>
 									<br>
 									<a href="/trabalho-les/alterarCupomStatusAction?id=${registro.getId()}&status=${1 == registro.getStatus() ? '0' : '1'}" cypress-alterarStatusCupom>
-										Inativar
+										${1 == registro.getStatus() ? 'Inativar' : 'Ativar'}
 									</a>
 								</td>
 							</tr>

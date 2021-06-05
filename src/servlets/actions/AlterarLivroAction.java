@@ -69,12 +69,12 @@ public class AlterarLivroAction extends HttpServlet {
 		        	System.out.println("a largura =============== ==============");
 		        	System.out.println(livro.getLargura());
 
-			        fachada.update(livro);
+			        fachada.update(livro, LoginViewHelper.getLogInfo(req, resp));
 
-			        fachada.updatePreco(livro, lvh.isAuthorized(req, resp, 4) );
+			        fachada.updatePreco(livro, lvh.isAuthorized(req, resp, 4), LoginViewHelper.getLogInfo(req, resp) );
 
 		        	if (categoriasRemovidas != null) {
-		        		fachada.deleteCategorias(categoriasRemovidas, id);
+		        		fachada.deleteCategorias(categoriasRemovidas, id, LoginViewHelper.getLogInfo(req, resp));
 		        	}
 		        
 	        		resp.sendRedirect("/trabalho-les/listagemLivros");

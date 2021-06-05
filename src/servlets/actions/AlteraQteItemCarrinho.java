@@ -35,7 +35,8 @@ public class AlteraQteItemCarrinho extends HttpServlet {
 				if(req.getParameter("id").matches("^[0-9]+$") && req.getParameter("quantidade").matches("^[0-9]+$")) {
 		        	fachada.alteraQteItemCarrinho(
 		        		Long.parseLong(req.getParameter("id")),
-		        		Integer.parseInt(req.getParameter("quantidade"))
+		        		Integer.parseInt(req.getParameter("quantidade")),
+		        		LoginViewHelper.getLogInfo(req, resp)
 		        	);
 		        
 	        		resp.sendRedirect("/trabalho-les/carrinho");

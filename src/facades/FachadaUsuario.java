@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import strategies.ValidarCampos;
 import strategies.CriptografarSenha;
 import utils.Campo;
+import utils.Log;
 import utils.ResultadosBusca;
 
 public class FachadaUsuario implements IFachada<Usuario, Campo[]> {
@@ -61,47 +62,82 @@ public class FachadaUsuario implements IFachada<Usuario, Campo[]> {
 		return dao.selectSingleVal;
 	}
 
-	public String insert(Usuario usuario) {
+	public String insert(Usuario usuario, String usuarioResponsavel) {
 		try {
 			UsuarioDAO dao = new UsuarioDAO();
 			CriptografarSenha cript = new CriptografarSenha();
 			usuario.setSenha(cript.processa(usuario.getSenha()));
 			dao.insert(usuario);
 
+			Log log = new Log(usuarioResponsavel + " (admin)",
+							 "Usuario {id: " + usuario.getId() +
+							 			  ", nome: " + usuario.getNome() + 
+							 			  ", email: " + usuario.getEmail() + 
+							 			  ", status: " + usuario.getStatus() + 
+							 			  ", senha: " + usuario.getSenha() + 
+							 			  ", tipoUsuario: " + usuario.getTipoUsuario().getId() + 
+							 "}",
+							 "Inserção");
+        	log.registrar();
+
 			return "Usuario inserido com sucesso!";
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Erro de valida��o. Tente novamente.";
+			return "Erro de validação. Tente novamente.";
 		}
 	}
 
-	public String delete(Usuario usuario) {
+	public String delete(Usuario usuario, String usuarioResponsavel) {
 		UsuarioDAO dao = new UsuarioDAO();
 
 		dao.delete(usuario.getId());
 
-		return "Usuario exclu�do com sucesso!";
+		return "Usuario excluído com sucesso!";
 	}
 
-	public String update(Usuario usuario) {
+	public String update(Usuario usuario, String usuarioResponsavel) {
 		UsuarioDAO dao = new UsuarioDAO();
 		dao.update(usuario);
+
+		Log log = new Log(usuarioResponsavel + " (admin)",
+							 "Usuario {id: " + usuario.getId() +
+							 			  ", nome: " + usuario.getNome() + 
+							 			  ", email: " + usuario.getEmail() + 
+							 			  ", status: " + usuario.getStatus() + 
+							 			  ", tipoUsuario: " + usuario.getTipoUsuario().getId() + 
+							 "}",
+							 "Alteração");
+        log.registrar();
 
 		return "Usuario alterado com sucesso!";
 	}
 
-	public String updateStatus(Usuario usuario) {
+	public String updateStatus(Usuario usuario, String usuarioResponsavel) {
 		UsuarioDAO dao = new UsuarioDAO();
 		dao.updateStatus(usuario);
+
+		Log log = new Log(usuarioResponsavel + " (admin)",
+							 "Usuario {id: " + usuario.getId() +
+							 			  ", status: " + usuario.getStatus() +
+							 "}",
+							 "Alteração de status");
+        log.registrar();
 
 		return "Status de usuario alterado com sucesso!";
 	}
 	
-	public String updateSenha(Usuario usuario) {
+	public String updateSenha(Usuario usuario, String usuarioResponsavel) {
 		UsuarioDAO dao = new UsuarioDAO();
 		CriptografarSenha cript = new CriptografarSenha();
 		usuario.setSenha(cript.processa(usuario.getSenha()));
 		dao.updateSenha(usuario);
+
+		Log log = new Log(usuarioResponsavel + " (admin)",
+							 "Usuario {id: " + usuario.getId() +
+							 			  ", senha: " + usuario.getSenha() + 
+							 "}",
+							 "Alteração de senha");
+        log.registrar();
 
 		return "Senha de usuario alterada com sucesso!";
 	}

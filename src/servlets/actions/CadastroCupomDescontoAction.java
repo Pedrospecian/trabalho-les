@@ -43,7 +43,7 @@ public class CadastroCupomDescontoAction extends HttpServlet {
 
 		        	CupomDesconto cupom = new CupomDesconto((long)1, new Date(), nome, valor, dataInicio, dataFim, status);
 
-		        	fachada.insert(cupom);
+		        	fachada.insert(cupom, LoginViewHelper.getLogInfo(req, resp));
 		        	resp.sendRedirect("/trabalho-les/listagemCupons");
 		        } else {
 	    	       

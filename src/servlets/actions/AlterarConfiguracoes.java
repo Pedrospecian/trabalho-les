@@ -45,7 +45,7 @@ public class AlterarConfiguracoes extends HttpServlet {
 						configuracoes[i] = new Configuracao((long)1, campos[i].getNome(), campos[i].getValor(), null);
 					}
 
-	        		fachada.updateConfiguracoes(configuracoes);
+	        		fachada.updateConfiguracoes(configuracoes, LoginViewHelper.getLogInfo(req, resp));
 		        
 	        		resp.sendRedirect("/trabalho-les/configuracoes");
 		        } else {

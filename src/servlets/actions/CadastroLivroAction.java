@@ -60,7 +60,7 @@ public class CadastroLivroAction extends HttpServlet {
 		        	Livro livro = new Livro((long)1, new Date(), titulo, autor, editora, categorias, ano, isbn, numeroPaginas, sinopse, altura, peso, profundidade, preco, codigoBarras, status, capa, grupoPrecificacao, edicao);
 		        	livro.setLargura(largura);
 		        	
-		        	fachada.insert(livro);
+		        	fachada.insert(livro, LoginViewHelper.getLogInfo(req, resp));
 		        	resp.sendRedirect("/trabalho-les/listagemLivros");
 		        } else {
 		        	//retorna com os dados invalidos

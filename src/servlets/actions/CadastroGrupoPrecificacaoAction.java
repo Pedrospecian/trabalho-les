@@ -41,7 +41,7 @@ public class CadastroGrupoPrecificacaoAction extends HttpServlet {
 
 		        	GrupoPrecificacao cupom = new GrupoPrecificacao((long)1, new Date(), nome, valor, status);
 
-		        	fachada.insert(cupom);
+		        	fachada.insert(cupom, LoginViewHelper.getLogInfo(req, resp));
 		        	resp.sendRedirect("/trabalho-les/listagemGruposPrecificacao");
 		        } else {
 	    	       

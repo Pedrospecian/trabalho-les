@@ -30,7 +30,7 @@ public class ConfirmarRecebimentoTroca extends HttpServlet {
 
 			FachadaPedido fachada = new FachadaPedido();
 
-			fachada.confirmarRecebimentoTroca(Long.parseLong(req.getParameter("id")), req.getParameter("retornarEstoque") != null );
+			fachada.confirmarRecebimentoTroca(Long.parseLong(req.getParameter("id")), req.getParameter("retornarEstoque") != null, LoginViewHelper.getLogInfo(req, resp));
 
 		    resp.sendRedirect("/trabalho-les/listagemSolicitacoesTroca");
 			/*try {

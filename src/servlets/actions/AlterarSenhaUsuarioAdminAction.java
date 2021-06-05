@@ -36,7 +36,7 @@ public class AlterarSenhaUsuarioAdminAction extends HttpServlet {
 			        
 		        	Usuario usuario = new Usuario(id, new Date(), "", "", 1, senha, null);
 
-		        	fachada.updateSenha(usuario);
+		        	fachada.updateSenha(usuario, LoginViewHelper.getLogInfo(req, resp));
 		        
 	        		resp.sendRedirect("/trabalho-les/listagemUsuariosAdmin");
 		        } else {

@@ -37,7 +37,7 @@ public class AlterarStatusPedido extends HttpServlet {
 			        long id = Long.parseLong(campos[0].getValor());
 		        
 		        	Pedido pedido = new Pedido(id, new Date(), null, 1, null, 0, null, null, null, null, 0, 0, "");
-		        	fachada.updateStatus(pedido);
+		        	fachada.updateStatus(pedido, LoginViewHelper.getLogInfo(req, resp));
 		        } else {
 		        	//retorna com os dados invalidos
 		        }

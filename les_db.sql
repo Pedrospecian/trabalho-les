@@ -921,7 +921,7 @@ CREATE TABLE `clientes` (
   `id` bigint(20) NOT NULL,
   `dataCadastro` date NOT NULL,
   `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `sexo` tinyint(4) NOT NULL,
+  `genero` tinyint(4) NOT NULL,
   `dataNascimento` date NOT NULL,
   `idTipoCliente` bigint(20) NOT NULL,
   `status` tinyint(4) NOT NULL,
@@ -934,7 +934,7 @@ CREATE TABLE `clientes` (
 -- Extraindo dados da tabela `clientes`
 --
 
-INSERT INTO `clientes` (`id`, `dataCadastro`, `nome`, `sexo`, `dataNascimento`, `idTipoCliente`, `status`, `email`, `senha`, `idCartaoPreferencial`) VALUES
+INSERT INTO `clientes` (`id`, `dataCadastro`, `nome`, `genero`, `dataNascimento`, `idTipoCliente`, `status`, `email`, `senha`, `idCartaoPreferencial`) VALUES
 (34, '2021-03-02', 'teste', 1, '1988-03-12', 1, 1, 'teste@teste.com.br', 'aca34ae0387518017fa5ff1990ed288e', 0),
 (35, '2021-03-02', 'Téstândö', 1, '1999-11-11', 1, 1, '', '', 0),
 (36, '2021-03-02', 'as', 1, '1999-11-11', 2, 1, '', '', 0),

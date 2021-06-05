@@ -44,7 +44,7 @@ public class CadastroUsuarioAction extends HttpServlet {
 
 		        	Usuario usuario = new Usuario((long)1, new Date(), nome, email, status, senha, tipoUsuario);
 
-		        	fachada.insert(usuario);
+		        	fachada.insert(usuario, LoginViewHelper.getLogInfo(req, resp));
 		        	resp.sendRedirect("/trabalho-les/listagemUsuariosAdmin");
 		        } else {
 		        	//retorna com os dados invalidos

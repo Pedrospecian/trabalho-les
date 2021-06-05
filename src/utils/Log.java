@@ -3,6 +3,7 @@ package utils;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,6 +13,8 @@ public class Log {
 	private String usuarioResponsavel;
 	private String dados;
 	private String tipo;
+
+	private final String URLLOG = "C:\\Users\\Administrador\\eclipse-workspace\\trabalho-les\\logs\\logAtividades.txt";
 
 	public Date getDataHora() {
 		return this.dataHora;
@@ -57,13 +60,14 @@ public class Log {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		    String dataFormatada = dateFormat.format(this.dataHora);
 
-		    FileWriter writer = new FileWriter("../../logs/logAtividades.txt");
-			writer.write(dataFormatada + 
+		    BufferedWriter bw = new BufferedWriter(new FileWriter(URLLOG, true));
+			bw.write(dataFormatada + 
 						  " - Usuário responsável: " + this.usuarioResponsavel +
-						  " Operação: " + this.tipo +
-						  " Dados: " + this.dados +
+						  " - Operação: " + this.tipo +
+						  " - Dados: " + this.dados +
 						  System.getProperty( "line.separator" ));
-			writer.close();
+			bw.flush();
+			bw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -41,7 +41,7 @@ public class AlterarUsuarioAdminAction extends HttpServlet {
 
 		        	Usuario usuario = new Usuario(id, new Date(), nome, email, status, "", tipoUsuario);
 
-		        	fachada.update(usuario);
+		        	fachada.update(usuario, LoginViewHelper.getLogInfo(req, resp));
 		        
 	        		resp.sendRedirect("/trabalho-les/listagemUsuariosAdmin");
 		        } else {

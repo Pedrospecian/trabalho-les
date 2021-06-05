@@ -34,7 +34,7 @@ public class AlterarClienteStatusAction extends HttpServlet {
 					int status = Integer.parseInt(campos[1].getValor());
 		        
 		        	Cliente cliente = new Cliente(id, new Date(), null, "", 1, new Date(), null, null, status, null, null, null, null);
-		        	fachada.updateStatus(cliente);
+		        	fachada.updateStatus(cliente, LoginViewHelper.getLogInfo(req, resp));
 		        	resp.sendRedirect("/trabalho-les/listagemClientes");
 		        } else {
 		        	//retorna com os dados invalidos

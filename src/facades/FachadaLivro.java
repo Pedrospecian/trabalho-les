@@ -12,6 +12,7 @@ import strategies.ValidarCampos;
 import utils.Campo;
 import utils.ResultadosBusca;
 import java.util.ArrayList;
+import utils.Log;
 
 public class FachadaLivro implements IFachada< Livro, Campo[]> {
 
@@ -139,87 +140,244 @@ public class FachadaLivro implements IFachada< Livro, Campo[]> {
 		return dao.contaEstoque(livro, 0);
 	}
 	
-	public String insert(Livro livro) {
+	public String insert(Livro livro, String usuarioResponsavel) {
 		try {
 			LivroDAO dao = new LivroDAO();
 			dao.insert(livro);
 
+			String categoriasIds = "";
+
+			for (int i = 0; i < livro.getCategorias().length; i++) {
+				categoriasIds += livro.getCategorias()[i].getId() + ", ";
+			}
+
+			categoriasIds = categoriasIds.substring(0, categoriasIds.length() - 2);
+
+			Log log = new Log(usuarioResponsavel + " (admin)",
+							 "Livro {"+ 
+							 "id: " + livro.getId() +
+							 ", titulo: " + livro.getTitulo() +
+							 ", autor: " + livro.getAutor().getId() +
+							 ", editora: " + livro.getEditora().getId() +
+							 ", categorias: [" + categoriasIds + "]" +
+							 ", ano: " + livro.getAno() +
+							 ", numeroPaginas: " + livro.getNumeroPaginas() +
+							 ", sinopse: '" + livro.getSinopse() + "'" +
+							 ", altura: " + livro.getAltura() + 
+							 ", largura: " + livro.getLargura() + 
+							 ", peso: " + livro.getPeso() + 
+							 ", profundidade: " + livro.getProfundidade() + 
+							 ", preco: " + livro.getPreco() + 
+							 ", codigoBarras: " + livro.getCodigoBarras() + 
+							 ", status: " + livro.getStatus() +
+							 ", capa: " + livro.getCapa() +
+							 ", edicao: " + livro.getEdicao() +
+							 ", grupoPrecificacao: " + livro.getGrupoPrecificacao().getId() +
+							 "}",
+							 "Inserção");
+			log.registrar();
+
+			//Livro(double preco, String codigoBarras, int status, String capa, GrupoPrecificacao grupoPrecificacao, String edicao)
+
 			return "Livro inserido com sucesso!";
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Erro de valida��o. Tente novamente.";
+			return "Erro de validação. Tente novamente.";
 		}
 	}
 
-	public String delete(Livro livro) {
+	public String delete(Livro livro, String usuarioResponsavel) {
 		LivroDAO dao = new LivroDAO();
 
 		dao.delete(livro.getId());
 
-		return "Livro exclu�do com sucesso!";
+		return "Livro excluído com sucesso!";
 	}
 
-	public String update(Livro livro) {
+	public String update(Livro livro, String usuarioResponsavel) {
 		LivroDAO dao = new LivroDAO();
 		dao.update(livro);
+
+		String categoriasIds = "";
+
+			for (int i = 0; i < livro.getCategorias().length; i++) {
+				categoriasIds += livro.getCategorias()[i].getId() + ", ";
+			}
+
+			categoriasIds = categoriasIds.substring(0, categoriasIds.length() - 2);
+
+			Log log = new Log(usuarioResponsavel + " (admin)",
+							 "Livro {"+ 
+							 "id: " + livro.getId() +
+							 ", titulo: " + livro.getTitulo() +
+							 ", autor: " + livro.getAutor().getId() +
+							 ", editora: " + livro.getEditora().getId() +
+							 ", categoriasNovas: [" + categoriasIds + "]" +
+							 ", ano: " + livro.getAno() +
+							 ", numeroPaginas: " + livro.getNumeroPaginas() +
+							 ", sinopse: '" + livro.getSinopse() + "'" +
+							 ", altura: " + livro.getAltura() + 
+							 ", largura: " + livro.getLargura() + 
+							 ", peso: " + livro.getPeso() + 
+							 ", profundidade: " + livro.getProfundidade() + 
+							 ", preco: " + livro.getPreco() + 
+							 ", codigoBarras: " + livro.getCodigoBarras() + 
+							 ", status: " + livro.getStatus() +
+							 ", capa: " + livro.getCapa() +
+							 ", edicao: " + livro.getEdicao() +
+							 ", grupoPrecificacao: " + livro.getGrupoPrecificacao().getId() +
+							 "}",
+							 "Alteração");
+			log.registrar();
 
 		return "Livro alterado com sucesso!";
 	}
 
-	public void  updatePreco(Livro livro, boolean gerenteVendas) {
+	public void  updatePreco(Livro livro, boolean gerenteVendas, String usuarioResponsavel) {
 		LivroDAO dao = new LivroDAO();
 		dao.updatePreco(livro, gerenteVendas);
+
+		Log log = new Log(usuarioResponsavel + " (admin)",
+							 "Livro {"+ 
+							 "id: " + livro.getId() +
+							 ", preco: " + livro.getPreco() +
+							 "}",
+							 "Alteração de preço");
+		log.registrar();
 	}
 	
-	public String updateStatus(Livro livro) {
+	public String updateStatus(Livro livro, String usuarioResponsavel) {
 		LivroDAO dao = new LivroDAO();
 		dao.updateStatus(livro);
+
+		Log log = new Log(usuarioResponsavel + " (admin)",
+							 "Livro {"+ 
+							 "id: " + livro.getId() +
+							 ", status: " + livro.getStatus() +
+							 "}",
+							 "Alteração de status");
+		log.registrar();
 
 		return "Status de livro alterado com sucesso!";
 	}
 
-	public void insertEstoque(LivroEstoque livroEstoque) {
+	public void insertEstoque(LivroEstoque le, String usuarioResponsavel) {
 		try {
 			LivroDAO dao = new LivroDAO();
-			dao.insertEstoque(livroEstoque);
+			dao.insertEstoque(le);
 
-			dao.alteraPreco( livroEstoque.getLivro().getId() );
+			Log log = new Log(usuarioResponsavel + " (admin)",
+							 "LivroEstoque {"+ 
+							 "id: " + le.getId() +
+							 ", quantidade: " + le.getQuantidade() +
+							 ", custo: " + le.getCusto() +
+							 ", dataEntrada: " + le.getDataEntrada() +
+							 ", fornecedor: " + le.getFornecedor().getId() +
+							 ", idLivro: " + le.getLivro().getId() +
+							 ", tipoMovimentacao: " + le.getTipoMovimentacao() +
+							 "}",
+							 "Inserção");
+			log.registrar();
+
+			//int quantidade, double custo, Date dataEntrada, Fornecedor fornecedor, Livro livro, int tipoMovimentacao
+
+			double precoNovo = dao.alteraPreco( le.getLivro().getId() );
+
+			Log log2 = new Log(usuarioResponsavel + " (admin)",
+							 "Livro {"+ 
+							 "id: " + le.getLivro().getId() +
+							 ", preco: " + precoNovo +
+							 "}",
+							 "Alteração de preço via mudança de estoque");
+			log2.registrar();
 
 			//return "Entrada de estoque no livro inserida com sucesso!";
 		}catch(Exception e) {
 			e.printStackTrace();
-			//return "Erro de valida��o. Tente novamente.";
+			//return "Erro de validação. Tente novamente.";
 		}		
 	}
 
-	public void inserirSolicitacaoInativacaoLivro(SolicitacaoInativacaoLivro sol) {
+	public void inserirSolicitacaoInativacaoLivro(SolicitacaoInativacaoLivro sol, String usuarioResponsavel) {
 		LivroDAO dao = new LivroDAO();
 		
-		dao.inserirSolicitacaoInativacaoLivro(sol);		
+		dao.inserirSolicitacaoInativacaoLivro(sol);	
+
+		Log log = new Log(usuarioResponsavel + " (admin)",
+							 "SolicitacaoInativacaoLivro {"+ 
+							 "id: " + sol.getId() +
+							 ", CategoriaAtivacao: " + sol.getCategoria() +
+							 ", justificativa: " + sol.getJustificativa() +
+							 ", idLivro: " + sol.getLivro().getId()
+							 +"}",
+							 "Inserção");
+		log.registrar();	
 	}
 	
-	public void inserirSolicitacaoAtivacaoLivro(SolicitacaoAtivacaoLivro sol) {
+	public void inserirSolicitacaoAtivacaoLivro(SolicitacaoAtivacaoLivro sol, String usuarioResponsavel) {
 		LivroDAO dao = new LivroDAO();
 		
-		dao.inserirSolicitacaoAtivacaoLivro(sol);		
+		dao.inserirSolicitacaoAtivacaoLivro(sol);
+
+		Log log = new Log(usuarioResponsavel + " (admin)",
+							 "SolicitacaoAtivacaoLivro {"+ 
+							 "id: " + sol.getId() +
+							 ", CategoriaAtivacao: " + sol.getCategoria() +
+							 ", justificativa: " + sol.getJustificativa() +
+							 ", idLivro: " + sol.getLivro().getId()
+							 +"}",
+							 "Inserção");
+		log.registrar();
 	}
 
-	public void concluirInativacao(long idLivro, int aceite) {
+	public void concluirInativacao(long idLivro, int aceite, String usuarioResponsavel) {
 		LivroDAO dao = new LivroDAO();
 		
 		dao.concluirInativacao(idLivro, aceite);
+
+		Log log = new Log(usuarioResponsavel + " (admin)",
+							 "ConclusaoInativacao {"+ 
+							 "idLivro: " + idLivro +
+							 ", aceite: " + aceite
+							 +"}",
+							 "Conclusão de inativação");
+		log.registrar();
 	}
 	
-	public void concluirAtivacao(long idLivro, int aceite) {
+	public void concluirAtivacao(long idLivro, int aceite, String usuarioResponsavel) {
 		LivroDAO dao = new LivroDAO();
 		
 		dao.concluirAtivacao(idLivro, aceite);
+
+		Log log = new Log(usuarioResponsavel + " (admin)",
+							 "ConclusaoInativacao {"+ 
+							 "idLivro: " + idLivro +
+							 ", aceite: " + aceite
+							 +"}",
+							 "Conclusão de ativação");
+		log.registrar();
 	}
 
-	public void deleteCategorias(Categoria[] categorias, long idLivro) {
+	public void deleteCategorias(Categoria[] categorias, long idLivro, String usuarioResponsavel) {
 		try {	
 			LivroDAO dao = new LivroDAO();
 			dao.deleteCategorias(categorias, idLivro);
+
+			String categoriasIds = "";
+
+			for (int i = 0; i < categorias.length; i++) {
+				categoriasIds += categorias[i].getId() + ", ";
+			}
+
+			categoriasIds = categoriasIds.substring(0, categoriasIds.length() - 2);
+
+			Log log = new Log(usuarioResponsavel + " (admin)",
+							 "Livro {"+ 
+							 "id: " + idLivro +
+							 ", categoriasRemovidas: [" + categoriasIds + "]" +
+							 "}",
+							 "Remoção de associação com categorias");
+			log.registrar();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

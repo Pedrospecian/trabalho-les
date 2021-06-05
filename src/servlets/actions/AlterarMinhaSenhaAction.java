@@ -40,7 +40,7 @@ public class AlterarMinhaSenhaAction extends HttpServlet {
 			        
 		        	Cliente cliente = new Cliente(id, new Date(), null, "", senha);
 
-		        	fachada.updateSenha(cliente);
+		        	fachada.updateSenha(cliente, LoginViewHelper.getLogInfo(req, resp));
 		        
 	        		resp.sendRedirect("/trabalho-les/minhaConta");
 		        } else {

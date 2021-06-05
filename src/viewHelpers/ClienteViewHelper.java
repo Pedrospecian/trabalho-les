@@ -28,7 +28,7 @@ public class ClienteViewHelper {
 		Campo[] campos = new Campo[9];
 
 		campos[0] = new Campo(0, req.getParameter("nome"), true, "", true, "clientes.nome");
-		campos[1] = new Campo(1, req.getParameter("sexo"), true, "", true, "clientes.sexo");
+		campos[1] = new Campo(1, req.getParameter("genero"), true, "", true, "clientes.genero");
 		campos[2] = new Campo(3, req.getParameter("dataNascimento"), true, "", true, "clientes.dataNascimento");
 		campos[3] = new Campo(1, req.getParameter("tipoCliente"), true, "", true, "clientes.idTipoCliente");
 		campos[4] = new Campo(1, req.getParameter("status"), true, "", true, "clientes.status");
@@ -53,7 +53,7 @@ public class ClienteViewHelper {
 		Campo[] campos = new Campo[34];
 
 		campos[0] = new Campo(0, req.getParameter("nome"), true, "", true, "nome");
-		campos[1] = new Campo(1, req.getParameter("sexo"), true, "", true, "sexo");
+		campos[1] = new Campo(1, req.getParameter("genero"), true, "", true, "genero");
 		campos[2] = new Campo(3, req.getParameter("dataNascimento"), true, "", true, "dataNascimento");
 		campos[3] = new Campo(1, req.getParameter("tipoCliente"), true, "", true, "tipoCliente");
 		campos[4] = new Campo(1, req.getParameter("status"), true, "", true, "status");
@@ -95,6 +95,11 @@ public class ClienteViewHelper {
 		campos[28] = new Campo(6, req.getParameter("arrDDDTelefone"), true, "", true, "dddTelefones");
 		campos[29] = new Campo(6, req.getParameter("arrNumeroTelefone"), true, "", true, "numeroTelefones");
 
+		/*System.out.println("=============== os campos ===================");
+		for (int i = 0; i < campos.length; i++) {
+			System.out.println(campos[i].getNome() + ": " + campos[i].getValor());
+		}*/
+
 		return campos;
 	}
 
@@ -103,7 +108,7 @@ public class ClienteViewHelper {
 
 		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
 		campos[1] = new Campo(0, req.getParameter("nome"), true, "", true, "nome");
-		campos[2] = new Campo(1, req.getParameter("sexo"), true, "", true, "sexo");
+		campos[2] = new Campo(1, req.getParameter("genero"), true, "", true, "genero");
 		campos[3] = new Campo(3, req.getParameter("dataNascimento"), true, "", true, "dataNascimento");
 		campos[4] = new Campo(1, req.getParameter("tipoCliente"), true, "", true, "tipoCliente");
 		campos[5] = new Campo(1, req.getParameter("status"), true, "", true, "status");

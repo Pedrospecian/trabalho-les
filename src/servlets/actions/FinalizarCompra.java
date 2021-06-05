@@ -112,7 +112,7 @@ public class FinalizarCompra extends HttpServlet {
 
 					pedido.setCuponsTroca(cuponsTroca);
 
-					if(valorFrete[0] > 0 && valorFrete[1] > 0 && fachada.validarValorCompra(pedido) && fachada.efetuaCompra(pedido, cartoesCredito, cuponsTroca)) {
+					if(valorFrete[0] > 0 && valorFrete[1] > 0 && fachada.validarValorCompra(pedido) && fachada.efetuaCompra(pedido, cartoesCredito, cuponsTroca, LoginViewHelper.getLogInfo(req, resp))) {
 
 						resp.sendRedirect("/trabalho-les/meusPedidos");
 					} else {

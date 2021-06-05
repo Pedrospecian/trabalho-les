@@ -43,9 +43,9 @@ public class CadastrarSolicitacaoAtivacao extends HttpServlet {
 					CategoriaAtivacao categoria = new CategoriaAtivacao(Long.parseLong(campos[1].getValor()), null, "");
 			        SolicitacaoAtivacaoLivro sol = new SolicitacaoAtivacaoLivro((long)1, null, categoria, campos[2].getValor(), livro);
 					
-		        	fachada.inserirSolicitacaoAtivacaoLivro(sol);
+		        	fachada.inserirSolicitacaoAtivacaoLivro(sol, LoginViewHelper.getLogInfo(req, resp));
 
-		        	System.out.println(sol.getJustificativa());
+		        	//System.out.println(sol.getJustificativa());
 		        
 	        		resp.sendRedirect("/trabalho-les/listagemLivros");
 		        } else {

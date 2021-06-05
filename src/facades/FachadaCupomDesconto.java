@@ -1,20 +1,14 @@
 package facades;
 
-import facades.IFachada;
-
 import dao.CupomDescontoDAO;
 import model.CupomDesconto;
 
 import java.util.ArrayList;
 
-import model.Documento;
-import model.Endereco;
 import strategies.ValidarCampos;
 import utils.Campo;
+import utils.Log;
 import utils.ResultadosBusca;
-import strategies.ValidacaoDocumentos;
-import strategies.ValidacaoEnderecos;
-import strategies.VerificarCamposCpf;
 
 public class FachadaCupomDesconto implements IFachada<CupomDesconto, Campo[]> {
 
@@ -45,36 +39,64 @@ public class FachadaCupomDesconto implements IFachada<CupomDesconto, Campo[]> {
 		return rb;
 	}
 		
-	public String insert(CupomDesconto cupom) {
+	public String insert(CupomDesconto cupom, String usuarioResponsavel) {
 		try {
 			CupomDescontoDAO dao = new CupomDescontoDAO();
 			dao.insert(cupom);
 
+			Log log = new Log(usuarioResponsavel + " (admin)",
+							 "CupomDesconto {id: " + cupom.getId() +
+							 			  ", nome: " + cupom.getNome() + 
+							 			  ", valor: " + cupom.getValor() + 
+							 			  ", status: " + cupom.getStatus() + 
+							 			  ", dataInicio: " + cupom.getDataInicio() + 
+							 			  ", dataFim: " + cupom.getDataFim() + 
+							 "}",
+							 "Inserção");
+        	log.registrar();
+
 			return "Cupom inserido com sucesso!";
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Erro de valida��o. Tente novamente.";
+			return "Erro de validação. Tente novamente.";
 		}
 	}
 
-	public String delete(CupomDesconto cupom) {
+	public String delete(CupomDesconto cupom, String usuarioResponsavel) {
 		CupomDescontoDAO dao = new CupomDescontoDAO();
 
 		dao.delete(cupom.getId());
 
-		return "Cupom exclu�do com sucesso!";
+		return "Cupom excluído com sucesso!";
 	}
 
-	public String update(CupomDesconto cupom) {
+	public String update(CupomDesconto cupom, String usuarioResponsavel) {
 		CupomDescontoDAO dao = new CupomDescontoDAO();
 		dao.update(cupom);
+
+		Log log = new Log(usuarioResponsavel + " (admin)",
+						 "CupomDesconto {id: " + cupom.getId() +
+							 			  ", nome: " + cupom.getNome() + 
+							 			  ", valor: " + cupom.getValor() + 
+							 			  ", status: " + cupom.getStatus() + 
+							 			  ", dataInicio: " + cupom.getDataInicio() + 
+							 			  ", dataFim: " + cupom.getDataFim() + 
+						 "}",
+						 "Alteração");
+    	log.registrar();
 
 		return "Cupom alterado com sucesso!";
 	}
 	
-	public String updateStatus(CupomDesconto cupom) {
+	public String updateStatus(CupomDesconto cupom, String usuarioResponsavel) {
 		CupomDescontoDAO dao = new CupomDescontoDAO();
 		dao.updateStatus(cupom);
+		Log log = new Log(usuarioResponsavel + " (admin)",
+						 "CupomDesconto {id: " + cupom.getId() +
+						 			  ", status: " + cupom.getStatus() +
+						 "}",
+						 "Alteração de status");
+    	log.registrar();
 
 		return "Status de cupom alterado com sucesso!";
 	}

@@ -36,7 +36,7 @@
 				<br>
 				Documento: ${fornecedor.getDocumento().getCodigo()}
 				<br>
-				Documento: ${fornecedor.getDocumento().getValidade()}
+				Data de validade: <span class="js-date-value">${fornecedor.getDocumento().getValidade()}</span>
 				<br>
 				<h3>Endereço</h3>
 				Nome: ${fornecedor.getEndereco().getNome()}

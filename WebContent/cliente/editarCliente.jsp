@@ -23,10 +23,10 @@
 					<input type="email" name="email" placeholder="E-mail" required data-pristine-required-message="Este campo é obrigatório" data-pristine-email-message="Este campo precisa ser um e-mail válido" cypress-email value="${cliente.getEmail()}">
 				</div>
 				<div class="form-group">
-					<select name="sexo" required data-pristine-required-message="Este campo é obrigatório" cypress-sexo>
-						<option value="">Sexo</option>
-						<option value="1" ${1 == cliente.getSexo() ? 'selected=\"selected\"' : ''}>Masculino</option>
-						<option value="2" ${2 == cliente.getSexo() ? 'selected=\"selected\"' : ''}>Feminino</option>
+					<select name="genero" required data-pristine-required-message="Este campo é obrigatório" cypress-genero>
+						<option value="">Gênero</option>
+						<option value="1" ${1 == cliente.getGenero() ? 'selected=\"selected\"' : ''}>Masculino</option>
+						<option value="2" ${2 == cliente.getGenero() ? 'selected=\"selected\"' : ''}>Feminino</option>
 					</select>
 				</div>
 				<div class="form-group">

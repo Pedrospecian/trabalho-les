@@ -28,7 +28,7 @@ public class ConcluirInativacao extends HttpServlet {
 
 			FachadaLivro fachada = new FachadaLivro();
 
-			fachada.concluirInativacao(Long.parseLong(req.getParameter("id")), Integer.parseInt(req.getParameter("aceite")) );
+			fachada.concluirInativacao(Long.parseLong(req.getParameter("id")), Integer.parseInt(req.getParameter("aceite")), LoginViewHelper.getLogInfo(req, resp));
 
 		    resp.sendRedirect("/trabalho-les/livrosPendentesInativacao");
 

@@ -33,6 +33,7 @@ import model.Carrinho;
 import model.CartaoCredito;
 import model.Cidade;
 import model.Livro;
+import model.LivroEstoque;
 import model.Pais;
 import model.CupomTroca;
 import model.Endereco;
@@ -75,7 +76,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 						rs.getDate("clientes.dataCadastro"),
 						null,
 						rs.getString("clientes.nome"),
-						rs.getInt("clientes.sexo"),
+						rs.getInt("clientes.genero"),
 						rs.getDate("clientes.dataNascimento"),
 						null,
 						null,
@@ -97,7 +98,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getString("pedidos.tipoServico")
 					);
 
-				//public Cliente(long id, Date dataCadastro, Documento[] documentos, String nome, int sexo, Date dataNascimento, TipoCliente tipoCliente, Endereco[] enderecos, int status) {
+				//public Cliente(long id, Date dataCadastro, Documento[] documentos, String nome, int genero, Date dataNascimento, TipoCliente tipoCliente, Endereco[] enderecos, int status) {
 
 
 				list.add(pedido);
@@ -152,7 +153,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 						rs.getDate("clientes.dataCadastro"),
 						null,
 						rs.getString("clientes.nome"),
-						rs.getInt("clientes.sexo"),
+						rs.getInt("clientes.genero"),
 						rs.getDate("clientes.dataNascimento"),
 						null,
 						null,
@@ -174,7 +175,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getString("pedidos.tipoServico")
 					);
 
-				//public Cliente(long id, Date dataCadastro, Documento[] documentos, String nome, int sexo, Date dataNascimento, TipoCliente tipoCliente, Endereco[] enderecos, int status) {
+				//public Cliente(long id, Date dataCadastro, Documento[] documentos, String nome, int genero, Date dataNascimento, TipoCliente tipoCliente, Endereco[] enderecos, int status) {
 
 
 				list.add(pedido);
@@ -589,7 +590,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}*/
 	}
 
-	public void updateStatus(Pedido pedido) {
+	public ArrayList updateStatus(Pedido pedido) {
 		PreparedStatement pst = null;
 		
 		try {
@@ -620,7 +621,9 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				
 				pst.executeUpdate();
 
+				pedido.setStatus(rs.getInt("pedidos.status") + 1);
 
+				ArrayList<ItemCarrinho> arr = new ArrayList();
 
 				if (rs.getInt("pedidos.status") + 1 == 2) {
 					//faz a baixa no estoque de cada livro comprado
@@ -645,6 +648,8 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 							null
 						);
 
+						arr.add(itemCarrinho);
+
 						livrodao.baixaEstoque(itemCarrinho);
 
 						removeBloqueioCarrinhoInteiro(rs.getLong("pedidos.idCarrinho"));
@@ -652,24 +657,30 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				}
 
 				connection.commit();
-			}
-						
-		} catch (Exception e) {
-			try {
-				if(connection != null) connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
+
+				return arr;
 			}
 
+			return null;
+						
+		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+			try {
+				if(connection != null) connection.rollback();
+				return null;
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				return null;
+			}
+
+		}/* finally {
 			try {
 				if(pst != null) pst.close();
 				if(connection != null) connection.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 	}
 
 	public void reprovaPedido(Pedido pedido) {
@@ -689,6 +700,8 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setLong(1, pedido.getId());
 			
 			pst.executeUpdate();
+
+			pedido.setStatus(8);
 
 			StringBuilder sql3 = new StringBuilder();
 
@@ -715,7 +728,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}
 	}
 
-	public void processaPedido(Pedido pedido) {
+	public ArrayList processaPedido(Pedido pedido) {
 		PreparedStatement pst = null;
 		Connection conn = null;
 		
@@ -778,23 +791,31 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					break;
 				}
 			}
+			
+			ArrayList<ItemCarrinho> arr = new ArrayList();
 
 			if (pedidoAprovado) {
-				updateStatus(pedido);
+				arr = updateStatus(pedido);
+
 			} else {
 				conn.rollback();		
 				reprovaPedido(pedido);
 			}
 
-			conn.commit();						
+			conn.commit();
+			
+			return arr;
 		} catch (Exception e) {
+			e.printStackTrace();
+
 			try {
 				if(conn != null) conn.rollback();
+				return null;
 			} catch (SQLException e1) {
 				e1.printStackTrace();
+				return null;
 			}
 
-			e.printStackTrace();
 		}
 	}
 
@@ -1709,7 +1730,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 						rs.getDate("clientes.dataCadastro"),
 						null,
 						rs.getString("clientes.nome"),
-						rs.getInt("clientes.sexo"),
+						rs.getInt("clientes.genero"),
 						rs.getDate("clientes.dataNascimento"),
 						null,
 						null,
@@ -1726,7 +1747,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getDouble("pedidos.valorTotal")*/
 				);
 
-				//public Cliente(long id, Date dataCadastro, Documento[] documentos, String nome, int sexo, Date dataNascimento, TipoCliente tipoCliente, Endereco[] enderecos, int status) {
+				//public Cliente(long id, Date dataCadastro, Documento[] documentos, String nome, int genero, Date dataNascimento, TipoCliente tipoCliente, Endereco[] enderecos, int status) {
 
 				list.add(solicitacaoTroca);
 			}
@@ -1866,8 +1887,9 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}	
 	}
 
-	public void confirmarRecebimentoTroca(long id, boolean retornarEstoque) {
+	public EntidadeDominio[] confirmarRecebimentoTroca(long id, boolean retornarEstoque) {
 		PreparedStatement pst = null;
+		EntidadeDominio[] retorno = new EntidadeDominio[2];
 		
 		try {
 			connection = Conexao.getConnectionMySQL();
@@ -1889,7 +1911,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.executeUpdate();
 
 			if (retornarEstoque) {
-				retornaItensEstoque(id);
+				retorno[1] = retornaItensEstoque(id);
 			}
 
 			//altera status do pedido
@@ -1921,23 +1943,27 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				pst.executeUpdate();
 			}
 
-			geraCupomTroca(id);
+			retorno[0] = geraCupomTroca(id);
 
 			connection.commit();
+
+			return retorno;
 						
 		} catch (Exception e) {
+			e.printStackTrace();
 			try {
 				if(connection != null) connection.rollback();
+				return null;
 			} catch (SQLException e1) {
 				e1.printStackTrace();
+				return null;
 			}
 
-			e.printStackTrace();
 		}
 		
 	}
 	
-	public void geraCupomTroca(long id) {
+	public CupomTroca geraCupomTroca(long id) {
 		PreparedStatement pst = null;
 
 		try {
@@ -1957,20 +1983,32 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				double valor = 0;
 				
 				StringBuilder sql = new StringBuilder();
-				sql.append("INSERT INTO cupons_troca (dataEntrada, idUsuario, nome, valor, status) VALUES (?, ?, ?, ?, ?);");
+				sql.append("INSERT INTO cupons_troca (dataEntrada, idUsuario, nome, valor, status) VALUES (?, ?, ?, ?, 1);");
 
 				pst = connection.prepareStatement(sql.toString(),
 						Statement.RETURN_GENERATED_KEYS);
 				
 				DateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");  
+
+				String nome = rs.getString("clientes.nome").replaceAll(" ", "").toUpperCase() + dateFormat.format(new Date()) + String.valueOf(rs.getInt("solicitacoes_troca.quantidade") * rs.getDouble("carrinhos_produtos.precoMomentoCompra")).replaceAll(".", "");
+				double valorCT = rs.getInt("solicitacoes_troca.quantidade") * rs.getDouble("carrinhos_produtos.precoMomentoCompra");
+				Pedido pedido = new Pedido(rs.getLong("pedidos.id"), null, null, 0, null, 0, null, null, null, null, 0, 0, "");
 				
 				pst.setDate(1, new java.sql.Date(new Date().getTime()));
 				pst.setLong(2, rs.getLong("clientes.id"));
-				pst.setString(3, rs.getString("clientes.nome").replaceAll(" ", "").toUpperCase() + dateFormat.format(new Date()) + String.valueOf(rs.getInt("solicitacoes_troca.quantidade") * rs.getDouble("carrinhos_produtos.precoMomentoCompra")).replaceAll(".", "") );
-				pst.setDouble(4, rs.getInt("solicitacoes_troca.quantidade") * rs.getDouble("carrinhos_produtos.precoMomentoCompra") );
-				pst.setInt(5, 1);
+				pst.setString(3, nome );
+				pst.setDouble(4, valorCT );
 
 				pst.executeUpdate();
+
+				ResultSet rs2 = pst.getGeneratedKeys();
+				
+				CupomTroca ct = null;
+
+				if(rs2.next()) {
+					ct = new CupomTroca(rs2.getLong(1), new Date(), nome, valorCT, pedido);
+					System.out.println("LOS CUPOINS DE DTROCA");
+				}
 
 				System.out.println("====== ====== deveria alterar o status do pedido para trocado");
 
@@ -1981,10 +2019,14 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 						Statement.RETURN_GENERATED_KEYS);				
 				pst.setLong(1, rs.getLong("pedidos.id"));
 
-				pst.executeUpdate();
+				pst.executeUpdate();				
+
+				return ct;
 			}
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}	
 	}
 
@@ -2012,7 +2054,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}	
 	}
 
-	public void retornaItensEstoque(long idSolicitacaoTroca) {
+	public LivroEstoque retornaItensEstoque(long idSolicitacaoTroca) {
 		PreparedStatement pst = null;
 
 		try {
@@ -2043,9 +2085,20 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				pst.setLong(5, rs.getLong("clientes.id"));
 
 				pst.executeUpdate();
+
+				ResultSet rs2 = pst.getGeneratedKeys();
+
+				if (rs2.next()) {
+					LivroEstoque le = new LivroEstoque(rs2.getLong(1), new Date(), rs.getInt("solicitacoes_troca.quantidade"), 0, new Date(), null, new Livro(rs.getLong("livros.id"), null), 3);
+					le.setCliente(new Cliente(rs.getLong("clientes.id"), null, null));
+					return le;
+				}
 			}
+
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
 	}
 

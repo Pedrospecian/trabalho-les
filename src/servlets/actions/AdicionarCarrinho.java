@@ -44,7 +44,7 @@ public class AdicionarCarrinho extends HttpServlet {
 
 			        //Carrinho carrinho = fachada.selectCarrinho(lvh.getUsuarioLogadoId(req, resp));
 
-		        	fachada.adicionarCarrinho(itemCarrinho, 0);
+		        	fachada.adicionarCarrinho(itemCarrinho, 0, LoginViewHelper.getLogInfo(req, resp));
 		        
 	        		resp.sendRedirect("/trabalho-les/carrinho");
 		        } else {

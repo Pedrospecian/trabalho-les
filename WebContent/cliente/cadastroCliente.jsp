@@ -27,8 +27,8 @@
 					<input type="email" name="email" placeholder="E-mail" required data-pristine-required-message="Este campo é obrigatório" data-pristine-email-message="Este campo precisa ser um e-mail válido" cypress-email>
 				</div>
 				<div class="form-group">
-					<select name="sexo" required data-pristine-required-message="Este campo é obrigatório" cypress-sexo>
-						<option value="">Sexo</option>
+					<select name="genero" required data-pristine-required-message="Este campo é obrigatório" cypress-genero>
+						<option value="">Gênero</option>
 						<option value="1">Masculino</option>
 						<option value="2">Feminino</option>
 					</select>
