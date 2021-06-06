@@ -199,12 +199,14 @@ public class FachadaLivro implements IFachada< Livro, Campo[]> {
 		dao.update(livro);
 
 		String categoriasIds = "";
+		
+			if (livro.getCategorias() != null) {	
+				for (int i = 0; i < livro.getCategorias().length; i++) {
+					categoriasIds += livro.getCategorias()[i].getId() + ", ";
+				}
 
-			for (int i = 0; i < livro.getCategorias().length; i++) {
-				categoriasIds += livro.getCategorias()[i].getId() + ", ";
+				categoriasIds = categoriasIds.substring(0, categoriasIds.length() - 2);
 			}
-
-			categoriasIds = categoriasIds.substring(0, categoriasIds.length() - 2);
 
 			Log log = new Log(usuarioResponsavel + " (admin)",
 							 "Livro {"+ 

@@ -24,6 +24,7 @@ public class Livro extends EntidadeDominio {
 	private String edicao;
 	private int estoque;
 	private int numeroVendas;
+	private double precoCusto;
 	
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
@@ -134,6 +135,14 @@ public class Livro extends EntidadeDominio {
 	
 	public double getPreco() {
 		return this.preco;
+	}
+
+	public void setPrecoCusto (double precoCusto) {
+		this.precoCusto = precoCusto;
+	}
+	
+	public double getPrecoCusto() {
+		return this.precoCusto;
 	}
 	
 	public void setCodigoBarras (String codigoBarras) {

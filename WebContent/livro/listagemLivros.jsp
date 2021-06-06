@@ -21,13 +21,23 @@
 				<input type="text" name="edicao" placeholder="Edição" >
 				<select name="autor">
 					<option value="">Autor</option>
-					<option value="1">Fulano</option>
+					<c:forEach var="opt" items="${autores}">
+						<option value="${opt.getId()}">
+							${opt.getNome()}
+						</option>
+					</c:forEach>
+					<!-- <option value="1">Fulano</option>
 					<option value="2">Beltrano</option>
-					<option value="3">Cicrano</option>
+					<option value="3">Cicrano</option> -->
 				</select>
 				<select name="editora">
 					<option value="">Editora</option>
-					<option value="1">Companhia das Letras</option>
+					<c:forEach var="opt" items="${editoras}">
+						<option value="${opt.getId()}">
+							${opt.getNome()}
+						</option>
+					</c:forEach>
+					<!--<option value="1">Companhia das Letras</option>
 					<option value="2">Aleph</option>
 					<option value="3">Suma</option>
 					<option value="4">Editora Intrínseca</option>
@@ -40,7 +50,7 @@
 					<option value="11">Somos Educação</option>
 					<option value="12">Editora FTD</option>
 					<option value="13">Saraiva</option>
-					<option value="14">Brinque Book</option>
+					<option value="14">Brinque Book</option>-->
 				</select>
 				<input type="text" name="isbn" placeholder="ISBN">
 				<input type="number" name="codigoBarras" placeholder="Código de barras">
@@ -60,9 +70,14 @@
 				<input type="text" name="numeroPaginas" placeholder="Número de páginas">
 				<select name="grupoPrecificacao">
 					<option value="">Grupo de Precificação</option>
-					<option value="1">1</option>
+					<c:forEach var="opt" items="${gruposPrecificacao}">
+						<option value="${opt.getId()}">
+							${opt.getNome()}
+						</option>
+					</c:forEach>
+					<!--<option value="1">1</option>
 					<option value="2">Be2</option>
-					<option value="3">C23</option>
+					<option value="3">C23</option>-->
 				</select>
 				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por página" value="" >
 				<button type="submit">Buscar</button>
@@ -82,7 +97,7 @@
 								<th>Status</th>
 								<th>Preço venda</th>
 								<th>Preço custo</th>
-								<th>Lucro</th>
+								<th>Preço ideal mínimo</th>
 								<th>Itens no estoque</th>
 								<th>Itens já vendidos</th>
 								<th>Ações</th>
@@ -116,8 +131,12 @@
 										</c:if>
 									</td>
 									<td><span class="js-dinheiro">${livro.getPreco()}</span></td>
-									<td>R$ 15,00</td>
-									<td>${livro.getGrupoPrecificacao().getPorcentagem()}%</td>
+									<td><span class="js-dinheiro">${livro.getPrecoCusto()}</span></td>
+									<td>
+										<span class='js-dinheiro ${livro.getPreco() < livro.getPrecoCusto() * (1 + (livro.getGrupoPrecificacao().getPorcentagem() / 100)) ? "precoAbaixo" : ""}'>
+											${livro.getPrecoCusto() * (1 + (livro.getGrupoPrecificacao().getPorcentagem() / 100))}
+										</span>
+									</td>
 									<td data-estoque>${livro.getEstoque()}</td>
 									<td>${livro.getNumeroVendas()}</td>
 									<td>

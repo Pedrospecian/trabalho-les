@@ -21,8 +21,8 @@ public class LivroViewHelper {
 		Campo[] campos = new Campo[14];
 
 		campos[0] = new Campo(0, req.getParameter("titulo"), true, "", true, "titulo");
-		campos[1] = new Campo(1, req.getParameter("autor"), true, "", true, "autor");
-		campos[2] = new Campo(1, req.getParameter("editora"), true, "", true, "editora");
+		campos[1] = new Campo(1, req.getParameter("autor"), true, "", true, "autorId");
+		campos[2] = new Campo(1, req.getParameter("editora"), true, "", true, "idEditora");
 		campos[3] = new Campo(0, req.getParameter("isbn"), true, "", true, "isbn");
 		campos[4] = new Campo(0, req.getParameter("codigoBarras"), true, "", true, "codigoBarras");		
 		campos[5] = new Campo(1, req.getParameter("status"), true, "", true, "status");

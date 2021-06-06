@@ -392,3 +392,8 @@ form.form-cart {
 	background-color: #aaaaaa;
 	border: solid 1px black;
 }
+
+.precoAbaixo {
+	font-weight: 900;
+	color: red;
+}

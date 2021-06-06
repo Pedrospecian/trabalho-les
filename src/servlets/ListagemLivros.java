@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import facades.FachadaLivro;
+import facades.FachadaGrupoPrecificacao;
 import utils.Campo;
 import utils.ResultadosBusca;
 import viewHelpers.LivroViewHelper;
@@ -27,11 +28,22 @@ public class ListagemLivros extends HttpServlet {
                         Campo[] campos = LivroViewHelper.getListagemLivrosCampos(req);
 
                         FachadaLivro fachada = new FachadaLivro();
+                        FachadaGrupoPrecificacao fachadaGrupoPrecificacao = new FachadaGrupoPrecificacao();
                         ResultadosBusca resultadosBusca = fachada.select(campos);
+
+                        ResultadosBusca catResultados = fachada.getCategorias();
+                        ResultadosBusca ediResultados = fachada.getEditoras();
+                        ResultadosBusca autResultados = fachada.getAutores();
+                        ResultadosBusca gpResultados = fachadaGrupoPrecificacao.select(null);
 
                         req.setAttribute("registros", resultadosBusca.getResultados());
                         req.setAttribute("total", resultadosBusca.getContagemTotal());
                         req.setAttribute("campos", campos);
+
+                        req.setAttribute("autores", autResultados.getResultados());
+                        req.setAttribute("editoras", ediResultados.getResultados());
+                        req.setAttribute("gruposPrecificacao", gpResultados.getResultados());
+
                         req.setAttribute("headerHTML", lvh.getHeader(req, resp, 5));
                         
                         req.setAttribute("isGerenteVendas", String.valueOf(lvh.isAuthorized(req, resp, 4)));

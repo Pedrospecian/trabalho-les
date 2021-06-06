@@ -21,22 +21,37 @@
 				<input type="text" name="nome" placeholder="Nome" value="${campos[0].getValor()}" >
 				<select name="genero" >
 					<option value="">Gênero</option>
-					<option value="1" ${1 == campos[1].getValor() ? 'selected=\"selected\"' : ''}>Masculino</option>
-					<option value="2" ${2 == campos[1].getValor() ? 'selected=\"selected\"' : ''}>Feminino</option>
+					<c:forEach var="opt" items="${generos}">
+						<option value="${opt.getId()}">
+							${opt.getNome()}
+						</option>
+					</c:forEach>
+					<!--<option value="1" ${1 == campos[1].getValor() ? 'selected=\"selected\"' : ''}>Masculino</option>
+					<option value="2" ${2 == campos[1].getValor() ? 'selected=\"selected\"' : ''}>Feminino</option>-->
 				</select>
 				<select name="tipoCliente">
 					<option value="">Tipo de Cliente</option>
-					<option value="1" ${1 == campos[3].getValor() ? 'selected=\"selected\"' : ''}>Comprador</option>
+					<c:forEach var="opt" items="${tiposcliente}">
+						<option value="${opt.getId()}">
+							${opt.getNome()}
+						</option>
+					</c:forEach>
+					<!--<option value="1" ${1 == campos[3].getValor() ? 'selected=\"selected\"' : ''}>Comprador</option>
 					<option value="2" ${2 == campos[3].getValor() ? 'selected=\"selected\"' : ''}>Revendedor</option>
-					<option value="3" ${3 == campos[3].getValor() ? 'selected=\"selected\"' : ''}>Parceiro</option>
+					<option value="3" ${3 == campos[3].getValor() ? 'selected=\"selected\"' : ''}>Parceiro</option>-->
 				</select>
 				<input type="date" name="dataNascimento" placeholder="Data de nascimento" value="${campos[2].getValor()}" >
 				<select name="tipoDocumento">
 					<option value="">Tipo de Documento</option>
-					<option value="1" ${1 == campos[5].getValor() ? 'selected=\"selected\"' : ''}>CPF</option>
+					<c:forEach var="opt" items="${tiposdocumento}">
+						<option value="${opt.getId()}">
+							${opt.getNome()}
+						</option>
+					</c:forEach>
+					<!--<option value="1" ${1 == campos[5].getValor() ? 'selected=\"selected\"' : ''}>CPF</option>
 					<option value="2" ${2 == campos[5].getValor() ? 'selected=\"selected\"' : ''}>CNPJ</option>
 					<option value="3" ${3 == campos[5].getValor() ? 'selected=\"selected\"' : ''}>RG</option>
-					<option value="4" ${4 == campos[5].getValor() ? 'selected=\"selected\"' : ''}>Social Security Card</option>
+					<option value="4" ${4 == campos[5].getValor() ? 'selected=\"selected\"' : ''}>Social Security Card</option>-->
 				</select>
 				<input type="text" name="documento" placeholder="Documento" value="${campos[6].getValor()}" >
 				<select name="status">

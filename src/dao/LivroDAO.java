@@ -149,6 +149,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 				livro.setEstoque(contaEstoque(livro, 0));
 				livro.setNumeroVendas(contaVendas(livro));
+				livro.setPrecoCusto(getMaiorPrecoCusto(livro));
 
 				list.add(livro);
 			}
@@ -697,6 +698,31 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			}
 
 			e.printStackTrace();
+		}
+	}
+
+	public double getMaiorPrecoCusto(Livro livro) {
+		PreparedStatement pst = null;
+		try {
+			connection = Conexao.getConnectionMySQL();
+			StringBuilder sql = new StringBuilder();
+
+			sql.append("SELECT MAX(custo) FROM livros_estoque WHERE tipoMovimentacao = 1 AND livroId = ?");
+			
+			pst = connection.prepareStatement(sql.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+			pst.setLong(1, livro.getId());
+
+			ResultSet rs = pst.executeQuery();
+
+			if (rs.next()) {
+				return rs.getDouble(1);
+			} else {
+				return 0;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
 		}
 	}
 
