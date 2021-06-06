@@ -16,53 +16,6 @@
 		<div class="container">
 			<h1>Meus Pedidos</h1>
 			<table cellspacing="0" cellpadding="0" class="js-paginated-table" data-itensPorPagina="10">
-				<!--<thead>
-					<tr>
-						<th>Id</th>
-						<th>Data do pedido</th>
-						<th>Valor total</th>
-						<th>Valor frete</th>
-						<th>Endereço de entrega</th>
-						<th>Status</th>
-						<th>Ações</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>04/02/2021</td>
-						<td>R$ 40,00</td>
-						<td>R$ 2,50</td>
-						<td>Rua teste, nº 60</td>
-						<td>Em trânsito (atualizado em 05/02/2021)</td>
-						<td>
-							<a href="/trabalho-les/pedido?id=33" cypress-detalhesPedido>Ver detalhes</a>
-						</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>04/02/2021</td>
-						<td>R$ 40,00</td>
-						<td>R$ 2,50</td>
-						<td>Rua teste, nº 60</td>
-						<td>Em trânsito (atualizado em 05/02/2021)</td>
-						<td>
-							<a href="/trabalho-les/pedido?id=33">Ver detalhes</a>
-						</td>
-					</tr>
-
-					<tr>
-						<td>1</td>
-						<td>04/02/2021</td>
-						<td>R$ 40,00</td>
-						<td>R$ 2,50</td>
-						<td>Rua teste, nº 60</td>
-						<td>Entregue (atualizado em 05/02/2021)</td>
-						<td>
-							<a href="/trabalho-les/pedido?id=33">Ver detalhes</a>
-						</td>
-					</tr>
-				</tbody>-->
 				<thead>
 					<tr>
 						<th>Id</th>

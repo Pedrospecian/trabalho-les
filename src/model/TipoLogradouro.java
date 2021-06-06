@@ -2,31 +2,9 @@ package model;
 
 import java.util.Date;
 
-public class TipoLogradouro extends EntidadeDominio {
-
-	private String nome;
-	private String descricao;
-	
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	
-	public String getNome() {
-		return this.nome;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-	
-	public String getDescricao() {
-		return this.descricao;
-	}
-	
+public class TipoLogradouro extends Tipo {
 	public TipoLogradouro(long id, Date dataCadastro, String nome, String descricao) {
-		super(id, dataCadastro);
-		this.nome = nome;
-		this.descricao = descricao;
+		super(id, dataCadastro, nome, descricao);
 	}
 
 }

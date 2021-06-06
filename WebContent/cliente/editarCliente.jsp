@@ -25,16 +25,26 @@
 				<div class="form-group">
 					<select name="genero" required data-pristine-required-message="Este campo é obrigatório" cypress-genero>
 						<option value="">Gênero</option>
-						<option value="1" ${1 == cliente.getGenero() ? 'selected=\"selected\"' : ''}>Masculino</option>
-						<option value="2" ${2 == cliente.getGenero() ? 'selected=\"selected\"' : ''}>Feminino</option>
+						<c:forEach var="opt" items="${generos}">
+							<option value="${opt.getId()}" ${opt.getId() == cliente.getGenero() ? 'selected=\"selected\"' : ''}>
+								${opt.getNome()}
+							</option>
+						</c:forEach>
+						<!--<option value="1" ${1 == cliente.getGenero() ? 'selected=\"selected\"' : ''}>Masculino</option>
+						<option value="2" ${2 == cliente.getGenero() ? 'selected=\"selected\"' : ''}>Feminino</option>-->
 					</select>
 				</div>
 				<div class="form-group">
 					<select name="tipoCliente" required data-pristine-required-message="Este campo é obrigatório"="" cypress-tipoCliente>
 						<option value="">Tipo de Cliente</option>
-						<option value="1" ${1 == cliente.getTipoCliente().getId() ? 'selected=\"selected\"' : ''}>Comprador</option>
+						<c:forEach var="opt" items="${tiposcliente}">
+							<option value="${opt.getId()}" ${opt.getId() == cliente.getTipoCliente().getId() ? 'selected=\"selected\"' : ''}>
+								${opt.getNome()}
+							</option>
+						</c:forEach>
+						<!--<option value="1" ${1 == cliente.getTipoCliente().getId() ? 'selected=\"selected\"' : ''}>Comprador</option>
 						<option value="2" ${2 == cliente.getTipoCliente().getId() ? 'selected=\"selected\"' : ''}>Revendedor</option>
-						<option value="3" ${3 == cliente.getTipoCliente().getId() ? 'selected=\"selected\"' : ''}>Parceiro</option>
+						<option value="3" ${3 == cliente.getTipoCliente().getId() ? 'selected=\"selected\"' : ''}>Parceiro</option>-->
 					</select>
 				</div>
 				<div class="form-group">
@@ -72,9 +82,16 @@
 				<div class="form-add js-form-add-document">
 					<select name="tipoDocumento" class="js-tipo-documento">
 						<option value="">Tipo de Documento</option>
-						<option value="2">CNPJ</option>
+						<c:forEach var="opt" items="${tiposdocumento}">
+							<c:if test="${opt.getId() != 1}">
+								<option value="${opt.getId()}">
+									${opt.getNome()}
+								</option>
+							</c:if>
+						</c:forEach>
+						<!--<option value="2">CNPJ</option>
 						<option value="3">RG</option>
-						<option value="4">Social Security Card</option>
+						<option value="4">Social Security Card</option>-->
 					</select>
 					<input type="text" name="documento" placeholder="Documento (sem caracteres especiais)" class="js-numero-documento">
 					<input type="date" name="dataValidade" placeholder="Data de validade" class="js-validade-documento">
@@ -132,20 +149,35 @@
 					<input type="text" name="nomeEndereco" placeholder="Nome do Endereço" class="js-nome-endereco">
 					<select name="tipoEndereco" class="js-tipo-endereco">
 						<option value="">Tipo de endereço</option>
-						<option value="1">Residencial</option>
-						<option value="2">Comercial</option>
+						<c:forEach var="opt" items="${tiposendereco}">
+							<option value="${opt.getId()}">
+								${opt.getNome()}
+							</option>
+						</c:forEach>
+						<!--<option value="1">Residencial</option>
+						<option value="2">Comercial</option>-->
 					</select>
 					<select name="tipoResidencia" class="js-tipo-residencia">
 						<option value="">Tipo de residência</option>
-						<option value="1">Casa</option>
+						<c:forEach var="opt" items="${tiposresidencia}">
+							<option value="${opt.getId()}">
+								${opt.getNome()}
+							</option>
+						</c:forEach>
+						<!--<option value="1">Casa</option>
 						<option value="2">Apartamento</option>
-						<option value="3">Outro...</option>
+						<option value="3">Outro...</option>-->
 					</select>
 					<select name="funcaoEndereco" class="js-funcao-endereco">
 						<option value="">Função do endereço</option>
-						<option value="1">Endereço de Cobrança</option>
+						<c:forEach var="opt" items="${funcoesendereco}">
+							<option value="${opt.getId()}">
+								${opt.getNome()}
+							</option>
+						</c:forEach>
+						<!--<option value="1">Endereço de Cobrança</option>
 						<option value="2">Endereço de Entrega</option>
-						<option value="3">Endereço de Cobrança e Entrega</option>
+						<option value="3">Endereço de Cobrança e Entrega</option>-->
 					</select>
 					<select name="pais" class="js-pais">
 						<option value="">País</option>
@@ -156,10 +188,15 @@
 					<input type="text" name="cep" placeholder="CEP"  class="js-cep-api js-cep-mask js-cep">
 					<select name="tipoLogradouro" class="js-tipo-logradouro">
 						<option value="">Tipo de logradouro</option>
-						<option value="1">Rua</option>
+						<c:forEach var="opt" items="${tiposlogradouro}">
+							<option value="${opt.getId()}">
+								${opt.getNome()}
+							</option>
+						</c:forEach>
+						<!--<option value="1">Rua</option>
 						<option value="2">Avenida</option>
 						<option value="3">Viela</option>
-						<option value="4">Outro...</option>
+						<option value="4">Outro...</option>-->
 					</select>
 					<input type="text" name="logradouro" placeholder="Logradouro" class="js-logradouro">
 					<input type="text" name="numero" placeholder="Número" class="js-numero">
@@ -221,8 +258,13 @@
 					<input type="text" name="cartaoNome" placeholder="Nome impresso no cartão" class="js-nome-cartao">
 					<select name="cartaoBandeira" class="js-bandeira-cartao">
 						<option value="">Bandeira do Cartão</option>
-						<option value="1">Visa</option>
-						<option value="2">MasterCard</option>
+						<c:forEach var="opt" items="${bandeiras}">
+							<option value="${opt.getId()}">
+								${opt.getNome()}
+							</option>
+						</c:forEach>
+						<!--<option value="1">Visa</option>
+						<option value="2">MasterCard</option>-->
 					</select>
 					<input type="text" name="cartaoCodigo" placeholder="Código de segurança" class="js-cvv-cartao">
 					<input type="date" name="cartaoValidade" placeholder="Data de validade do cartão" class="js-validade-cartao">
@@ -261,8 +303,13 @@
 				<div class="form-add js-form-add-phone">				
 					<select name="tipoTelefone" class="js-tipo-telefone">
 						<option value="">Tipo do telefone</option>
-						<option value="1">Residencial</option>
-						<option value="2">Celular</option>
+						<c:forEach var="opt" items="${tipostelefone}">
+							<option value="${opt.getId()}">
+								${opt.getNome()}
+							</option>
+						</c:forEach>
+						<!--<option value="1">Residencial</option>
+						<option value="2">Celular</option>-->
 					</select>
 					<input type="text" name="dddTelefone" placeholder="DDD" class="js-ddd-telefone">
 					<input type="text" name="numeroTelefone" placeholder="Número" class="js-numero-telefone">

@@ -33,9 +33,15 @@
 				<div class="form-group">
 					<select name="tipoDocumento" required data-pristine-required-message="Este campo é obrigatório" cypress-tipoDocumento>
 						<option value="">Tipo de Documento</option>
+						<c:forEach var="opt" items="${tiposdocumento}">
+							<option value="${opt.getId()}">
+								${opt.getNome()}
+							</option>
+						</c:forEach>
+						<!--<option value="">Tipo de Documento</option>
 						<option value="2">CNPJ</option>
 						<option value="3">RG</option>
-						<option value="4">Social Security Card</option>
+						<option value="4">Social Security Card</option>-->
 					</select>
 				</div>
 				<div class="form-group">
@@ -51,24 +57,31 @@
 				<div class="form-group">
 					<select name="tipoEndereco" required data-pristine-required-message="Este campo é obrigatório" cypress-tipoEndereco>
 						<option value="">Tipo de endereço</option>
-						<option value="1">Residencial</option>
-						<option value="2">Comercial</option>
+						<c:forEach var="opt" items="${tiposendereco}">
+							<option value="${opt.getId()}">
+								${opt.getNome()}
+							</option>
+						</c:forEach>
 					</select>
 				</div>
 				<div class="form-group">
 					<select name="tipoResidencia" required data-pristine-required-message="Este campo é obrigatório" cypress-tipoResidencia>
 						<option value="">Tipo de residência</option>
-						<option value="1">Casa</option>
-						<option value="2">Apartamento</option>
-						<option value="3">Outro...</option>
+						<c:forEach var="opt" items="${tiposresidencia}">
+							<option value="${opt.getId()}">
+								${opt.getNome()}
+							</option>
+						</c:forEach>
 					</select>
 				</div>
 				<div class="form-group">
 					<select name="funcaoEndereco" required data-pristine-required-message="Este campo é obrigatório" cypress-funcaoEndereco>
 						<option value="">Função do endereço</option>
-						<option value="1">Endereço de Cobrança</option>
-						<option value="2">Endereço de Entrega</option>
-						<option value="3">Endereço de Cobrança e Entrega</option>
+						<c:forEach var="opt" items="${funcoesendereco}">
+							<option value="${opt.getId()}">
+								${opt.getNome()}
+							</option>
+						</c:forEach>
 					</select>
 				</div>
 				<div class="form-group">
@@ -85,10 +98,11 @@
 				<div class="form-group">
 					<select name="tipoLogradouro" class="js-tipo-logradouro" cypress-tipoLogradouro>
 						<option value="">Tipo de logradouro</option>
-						<option value="1">Rua</option>
-						<option value="2">Avenida</option>
-						<option value="3">Viela</option>
-						<option value="4">Outro...</option>
+						<c:forEach var="opt" items="${tiposlogradouro}">
+							<option value="${opt.getId()}">
+								${opt.getNome()}
+							</option>
+						</c:forEach>
 					</select>
 				</div>
 				<div class="form-group">

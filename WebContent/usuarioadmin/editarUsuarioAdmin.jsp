@@ -32,9 +32,14 @@
 				<div class="form-group">
 					<select name="tipoUsuario" required data-pristine-required-message="Este campo é obrigatório" cypress-tipoUsuario>
 						<option value="">Tipo de usuário</option>
-						<option value="1" ${1 == usuario.getTipoUsuario().getId() ? 'selected=\"selected\"' : ''}>Funcionário</option>
+						<c:forEach var="opt" items="${tiposusuario}">
+							<option value="${opt.getId()}" ${opt.getId() == usuario.getTipoUsuario().getId() ? 'selected=\"selected\"' : ''}>
+								${opt.getNome()}
+							</option>
+						</c:forEach>
+						<!--<option value="1" ${1 == usuario.getTipoUsuario().getId() ? 'selected=\"selected\"' : ''}>Funcionário</option>
 						<option value="2" ${2 == usuario.getTipoUsuario().getId() ? 'selected=\"selected\"' : ''}>Administrador</option>
-						<option value="3" ${3 == usuario.getTipoUsuario().getId() ? 'selected=\"selected\"' : ''}>Gerente de vendas</option>
+						<option value="3" ${3 == usuario.getTipoUsuario().getId() ? 'selected=\"selected\"' : ''}>Gerente de vendas</option>-->
 					</select>				
 				</div>
 				<button cypress-submit>Editar</button>

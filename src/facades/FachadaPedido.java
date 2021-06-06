@@ -82,32 +82,14 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 	}
 
 	public String insert(Cliente cliente, String usuarioResponsavel) {
-		/*try {
-			ClienteDAO dao = new ClienteDAO();
-			dao.insert(cliente);
-
-			return "Cliente inserido com sucesso!";
-		}catch(Exception e) {
-			e.printStackTrace();
-			return "Erro de validação. Tente novamente.";
-		}*/
 		return "";
 	}
 
 	public String delete(Cliente cliente, String usuarioResponsavel) {
-		/*ClienteDAO dao = new ClienteDAO();
-
-		dao.delete(cliente.getId());
-
-		return "Cliente excluído com sucesso!";*/
 		return "";
 	}
 
 	public String update(Cliente cliente, String usuarioResponsavel) {
-		/*ClienteDAO dao = new ClienteDAO();
-		dao.update(cliente);
-
-		return "Cliente alterado com sucesso!";*/
 		return "";
 	}
 
@@ -198,17 +180,6 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 		
 		return arr;
 	}
-
-
-
-
-
-
-
-
-
-
-
 
 	public void removerItemCarrinho(long id, String usuarioResponsavel) {
 		PedidoDAO dao = new PedidoDAO();
@@ -429,8 +400,8 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 						   ", livro: " + le.getLivro().getId() + 
 						 "}, ";
         	}
-
-        	les = les.substring(0, les.length() - 2);
+        	
+        	if (les.length() >= 2) les = les.substring(0, les.length() - 2);
         	/*Log log3 = new Log(usuarioResponsavel,
 							 "LivroEstoque {id: " + le.getId() +
 						   ", quantidade: " + le.getQuantidade() +

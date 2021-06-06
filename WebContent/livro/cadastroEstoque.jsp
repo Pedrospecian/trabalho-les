@@ -26,9 +26,14 @@
 				<div class="form-group">
 					<select name="fornecedor" required data-pristine-required-message="Este campo é obrigatório" cypress-fornecedor>
 						<option value="">Fornecedor</option>
-						<option value="1">Fornecedor Exemplo LTDA</option>
+						<c:forEach var="opt" items="${fornecedores}">
+							<option value="${opt.getId()}">
+								${opt.getNome()}
+							</option>
+						</c:forEach>
+						<!--<option value="1">Fornecedor Exemplo LTDA</option>
 						<option value="2">Livros e Revistas Teste</option>
-						<option value="3">Editora Ininap</option>
+						<option value="3">Editora Ininap</option>-->
 					</select>
 				</div>
 				<div class="form-group">

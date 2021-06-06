@@ -5,6 +5,8 @@ import utils.Campo;
 
 public class CriaFiltragemUsuario implements IStrategy<String, Campo[]> {
 	public String processa(Campo[] campos) {
+		if (campos == null) return "";
+		
 		try {
 			String filtro = "";
 			ValidaCamposContraSQLInjection v0 = new ValidaCamposContraSQLInjection();

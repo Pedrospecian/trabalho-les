@@ -54,19 +54,34 @@
 						<input type="text" name="nomeEndereco" placeholder="Nome do Endereço" class="js-nome-endereco">
 						<select name="tipoEndereco" class="js-tipo-endereco">
 							<option value="">Tipo de endereço</option>
-							<option value="1">Residencial</option>
-							<option value="2">Comercial</option>
+							<c:forEach var="opt" items="${tiposendereco}">
+								<option value="${opt.getId()}">
+									${opt.getNome()}
+								</option>
+							</c:forEach>
 						</select>
 						<select name="tipoResidencia" class="js-tipo-residencia">
 							<option value="">Tipo de residência</option>
-							<option value="1">Casa</option>
+							<c:forEach var="opt" items="${tiposresidencia}">
+								<option value="${opt.getId()}">
+									${opt.getNome()}
+								</option>
+							</c:forEach>
+							<!--<option value="1">Casa</option>
 							<option value="2">Apartamento</option>
-							<option value="3">Outro...</option>
+							<option value="3">Outro...</option>-->
 						</select>
 						<select name="funcaoEndereco" class="js-funcao-endereco">
 							<option value="">Função do endereço</option>
-							<option value="2">Endereço de Entrega</option>
-							<option value="3">Endereço de Cobrança e Entrega</option>
+							<c:forEach var="opt" items="${funcoesendereco}">
+								<c:if test="${opt.getId() != 1}">
+									<option value="${opt.getId()}">
+										${opt.getNome()}
+									</option>
+								</c:if>
+							</c:forEach>
+							<!-- <option value="2">Endereço de Entrega</option>
+							<option value="3">Endereço de Cobrança e Entrega</option> -->
 						</select>
 						<select name="pais" class="js-pais">
 							<option value="">País</option>
@@ -78,10 +93,11 @@
 						<br>
 						<select name="tipoLogradouro" class="js-tipo-logradouro">
 							<option value="">Tipo de logradouro</option>
-							<option value="1">Rua</option>
-							<option value="2">Avenida</option>
-							<option value="3">Viela</option>
-							<option value="4">Outro...</option>
+							<c:forEach var="opt" items="${tiposlogradouro}">
+								<option value="${opt.getId()}">
+									${opt.getNome()}
+								</option>
+							</c:forEach>
 						</select>
 						<input type="text" name="logradouro" placeholder="Logradouro" class="js-logradouro">
 						<input type="text" name="numero" placeholder="Número" class="js-numero">

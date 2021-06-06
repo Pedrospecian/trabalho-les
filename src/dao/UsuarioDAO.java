@@ -30,9 +30,7 @@ public class UsuarioDAO implements IDAO<EntidadeDominio, Campo[]> {
 		try {
 			connection = Conexao.getConnectionMySQL();
 			CriaFiltragemUsuario filtro = new CriaFiltragemUsuario();
-			CriaPaginacao paginacao = new CriaPaginacao();
 			String where = filtro.processa(campos);
-			String paginacaoStr = paginacao.processa(campos);
 			connection = Conexao.getConnectionMySQL();
 			pst = connection.prepareStatement("select * from usuarios inner join tipos_usuarios on tipos_usuarios.id = usuarios.idTipoUsuario " + where + ";");
 	

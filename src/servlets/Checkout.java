@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,9 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.Carrinho;
 import model.Cliente;
+import model.TipoEndereco;
+import model.TipoResidencia;
+import model.FuncaoEndereco;
+import model.TipoLogradouro;
+import model.Bandeira;
 import viewHelpers.PedidoViewHelper;
 import facades.FachadaPedido;
 import facades.FachadaCliente;
+import facades.FachadaSelect;
 import viewHelpers.LoginViewHelper;
 
 public class Checkout extends HttpServlet {
@@ -37,11 +44,26 @@ public class Checkout extends HttpServlet {
 
 				Cliente cliente = fachadaCliente.selectSingle(lvh.getUsuarioLogadoId(req, resp), true);
 
+				FachadaSelect fachadaSel = new FachadaSelect();
+
+				ArrayList<TipoEndereco> tiposendereco = fachadaSel.getOpcoesSelect(4);
+				ArrayList<TipoResidencia> tiposresidencia = fachadaSel.getOpcoesSelect(5);
+				ArrayList<FuncaoEndereco> funcoesendereco = fachadaSel.getOpcoesSelect(6);
+				ArrayList<TipoLogradouro> tiposlogradouro = fachadaSel.getOpcoesSelect(7);
+				ArrayList<Bandeira> bandeiras = fachadaSel.getOpcoesSelect(8);
+
 				req.setAttribute("carrinho", carrinho);
 				req.setAttribute("cliente", cliente);
 				req.setAttribute("valorTotal", valorTotal);
 
         		req.setAttribute("headerHTML", lvh.getHeader(req, resp, 2));
+
+				req.setAttribute("tiposendereco", tiposendereco);
+				req.setAttribute("tiposresidencia", tiposresidencia);
+				req.setAttribute("funcoesendereco", funcoesendereco);
+				req.setAttribute("tiposlogradouro", tiposlogradouro);
+				req.setAttribute("bandeiras", bandeiras);
+
 				req.getRequestDispatcher("front/checkout.jsp").forward(req, resp);
 			}
 		}

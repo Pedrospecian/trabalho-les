@@ -22,15 +22,25 @@
 				<input type="text" name="dataEntrada" placeholder="Data de Entrada" value="${campos[2].getValor()}">
 				<select name="usuarioResponsavel">
 					<option value="">Usuário Responsável</option>
-					<option value="1" ${1 == campos[1].getValor() ? 'selected=\"selected\"' : ''}>Fulano</option>
+					<c:forEach var="opt" items="${usuarios}">
+						<option value="${opt.getId()}">
+							${opt.getNome()}
+						</option>
+					</c:forEach>
+					<!--<option value="1" ${1 == campos[1].getValor() ? 'selected=\"selected\"' : ''}>Fulano</option>
 					<option value="2" ${2 == campos[1].getValor() ? 'selected=\"selected\"' : ''}>Beltrano</option>
-					<option value="3" ${3 == campos[1].getValor() ? 'selected=\"selected\"' : ''}>Cicrano</option>
+					<option value="3" ${3 == campos[1].getValor() ? 'selected=\"selected\"' : ''}>Cicrano</option>-->
 				</select>
 				<select name="fornecedor">
 					<option value="">Fornecedor</option>
-					<option value="1" ${1 == campos[0].getValor() ? 'selected=\"selected\"' : ''}>Fornecedor Exemplo LTDA</option>
+					<c:forEach var="opt" items="${fornecedores}">
+						<option value="${opt.getId()}">
+							${opt.getNome()}
+						</option>
+					</c:forEach>
+					<!--<option value="1" ${1 == campos[0].getValor() ? 'selected=\"selected\"' : ''}>Fornecedor Exemplo LTDA</option>
 					<option value="2" ${2 == campos[0].getValor() ? 'selected=\"selected\"' : ''}>Livros e Revistas Teste</option>
-					<option value="3" ${3 == campos[0].getValor() ? 'selected=\"selected\"' : ''}>Editora Ininap</option>
+					<option value="3" ${3 == campos[0].getValor() ? 'selected=\"selected\"' : ''}>Editora Ininap</option>-->
 				</select>
 				<select name="tipoMovimentacao">
 					<option value="">Tipo</option>

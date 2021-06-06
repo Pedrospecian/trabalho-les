@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import facades.FachadaFornecedor;
 import facades.FachadaLivro;
+import facades.FachadaUsuario;
 import model.Livro;
 import utils.Campo;
 import utils.ResultadosBusca;
@@ -41,6 +43,12 @@ public class ListagemEstoque extends HttpServlet {
                 resultadosPorPagina = Integer.parseInt(req.getParameter("resultadosPorPagina"));
             }
 
+            FachadaFornecedor fachadaf = new FachadaFornecedor();
+            ResultadosBusca fornecedores = fachadaf.select(null);
+
+            FachadaUsuario fachadau = new FachadaUsuario();
+            ResultadosBusca usuarios = fachadau.select(null);
+
             req.setAttribute("registros", resultadosBusca.getResultados());
             req.setAttribute("resultadosPorPagina", resultadosPorPagina);
             //req.setAttribute("total", resultadosBusca.getContagemTotal());
@@ -48,6 +56,8 @@ public class ListagemEstoque extends HttpServlet {
             req.setAttribute("campos", campos);
             req.setAttribute("livro", livro);
             req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
+            req.setAttribute("fornecedores", fornecedores.getResultados());
+            req.setAttribute("usuarios", usuarios.getResultados());
             req.getRequestDispatcher("livro/listagemEstoque.jsp").forward(req, resp);
         }
 	}

@@ -42,9 +42,7 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 		try {
 			connection = Conexao.getConnectionMySQL();
 			CriaFiltragem filtro = new CriaFiltragem();
-			CriaPaginacao paginacao = new CriaPaginacao();
 			String where = filtro.processa(campos);
-			String paginacaoStr = paginacao.processa(campos);
 			connection = Conexao.getConnectionMySQL();
 			
 			pst = connection.prepareStatement("select * from fornecedores " + where + " ORDER BY fornecedores.id desc;");
@@ -53,8 +51,6 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 			ResultSet rs = pst.executeQuery();
 			
 			ArrayList<Fornecedor> list = new ArrayList();
-
-			ResultSetMetaData rsmd = rs.getMetaData();
 			
 			while (rs.next()) {
 				Documento documento = null;
@@ -64,15 +60,6 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 				list.add(fornecedor);
 			}
-			
-			
-
-			/*pst = connection.prepareStatement("select count(fornecedores.id) as resultadosTotal from fornecedores on fornecedores.id = fornecedores.id inner join documentos on documentos.idfornecedores = fornecedores.id " + where + " GROUP BY fornecedores.id");
-		    ResultSet rsc = pst.executeQuery();
-		    this.countVals = 0;
-		    while (rsc.next()) {
-		    	this.countVals++;
-		    }*/
 			
 			this.selectVals = list;
 			

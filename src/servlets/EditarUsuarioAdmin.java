@@ -1,14 +1,17 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Usuario;
+import model.TipoUsuario;
 import utils.Campo;
 import facades.FachadaUsuario;
+import facades.FachadaSelect;
 import viewHelpers.LoginViewHelper;
 
 public class EditarUsuarioAdmin extends HttpServlet {
@@ -28,8 +31,12 @@ public class EditarUsuarioAdmin extends HttpServlet {
 			if(fachada.validarCampos(campos, false)) {
 				Usuario usuario = fachada.selectSingle(Long.parseLong(campos[0].getValor()));
 
+				FachadaSelect fachadaSel = new FachadaSelect();
+				ArrayList<TipoUsuario> tiposusuario = fachadaSel.getOpcoesSelect(10);
+
 				req.setAttribute("usuario", usuario);
 				req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
+				req.setAttribute("tiposusuario", tiposusuario);
 				req.getRequestDispatcher("usuarioadmin/editarUsuarioAdmin.jsp").include(req, resp); 
 			} else {
 

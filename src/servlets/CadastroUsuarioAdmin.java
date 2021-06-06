@@ -1,12 +1,15 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import viewHelpers.LoginViewHelper;
+import facades.FachadaSelect;
+import model.TipoUsuario;
 
 public class CadastroUsuarioAdmin extends HttpServlet {
 	private static final long serialVersionUID = 12;
@@ -18,7 +21,12 @@ public class CadastroUsuarioAdmin extends HttpServlet {
 		}else{
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
+
+			FachadaSelect fachadaSel = new FachadaSelect();
+			ArrayList<TipoUsuario> tiposusuario = fachadaSel.getOpcoesSelect(10);
+
 			req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
+			req.setAttribute("tiposusuario", tiposusuario);
 			req.getRequestDispatcher("usuarioadmin/cadastroUsuarioAdmin.jsp").forward(req, resp);
 		}
 	}

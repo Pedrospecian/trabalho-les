@@ -20,14 +20,25 @@
 				<input type="text" name="titulo" placeholder="Título" >
 				<select name="idUsuario">
 					<option>Usuário responsável</option>
-					<option value="1">Fulano</option>
+					<c:forEach var="opt" items="${usuarios}">
+						<option value="${opt.getId()}">
+							${opt.getNome()}
+						</option>
+					</c:forEach>
+					<!--<option value="1">Fulano</option>
 					<option value="2">Cicrano</option>
-					<option value="3">Beltrano</option>
+					<option value="3">Beltrano</option>-->
 				</select>
 				<select name="categoriaInativacao">
 					<option>Categoria de ativação</option>
+					<c:forEach var="opt" items="${categorias}">
+						<option value="${opt.getId()}">
+							${opt.getNome()}
+						</option>
+					</c:forEach>
+					<!--
 					<option value="1">Categoria 1</option>
-					<option value="2">Categoria 2</option>
+					<option value="2">Categoria 2</option>-->
 				</select>
 				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por página" value="" >
 				<button type="submit">Buscar</button>

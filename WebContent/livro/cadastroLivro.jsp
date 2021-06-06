@@ -29,9 +29,6 @@
 								${autor.getNome()}
 							</option>
 						</c:forEach>
-						<!--<option value="1">Fulano</option>
-						<option value="2">Beltrano</option>
-						<option value="3">Cicrano</option>-->
 					</select>
 				</div>
 				<div class="form-group">
@@ -42,20 +39,6 @@
 								${editora.getNome()}
 							</option>
 						</c:forEach>
-						<!--<option value="1">Companhia das Letras</option>
-						<option value="2">Aleph</option>
-						<option value="3">Suma</option>
-						<option value="4">Editora Intrínseca</option>
-						<option value="5">Grupo Editorial Record</option>
-						<option value="6">Editora Rocco</option>
-						<option value="7">Globo Livros</option>
-						<option value="8">Darkside Books</option>
-						<option value="9">Harper Collins</option>
-						<option value="10">Editora Arqueiro</option>
-						<option value="11">Somos Educação</option>
-						<option value="12">Editora FTD</option>
-						<option value="13">Saraiva</option>
-						<option value="14">Brique Book</option>-->
 					</select>
 				</div>
 				<div class="form-group">
@@ -118,7 +101,7 @@
 						<option value="">Grupo de precificação</option>
 						<c:forEach var="grupoPrecificacao" items="${gruposPrecificacao}">
 							<option value="${grupoPrecificacao.getId()}">
-								${grupoPrecificacao.getNome()} (${grupoPrecificacao.getPorcentagem()}%)
+								${grupoPrecificacao.getNome()} (${grupoPrecificacao.getPorcentagem()}% de lucro)
 							</option>
 						</c:forEach>
 					</select>
