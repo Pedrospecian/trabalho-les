@@ -57,9 +57,6 @@
 					<input type="hidden" name="arrIdCategoria" class="js-arrIdCategoria">
 					<input type="hidden" name="removerCategorias" class="js-removerCategorias">
 					
-
-
-
 					<c:forEach var="categoria" items="${livro.getCategorias()}">
 						<div class="box-single">
 							<a href="#" class="button-close js-remove-existing-categoria" data-id="${categoria.getId()}">X</a>
@@ -68,9 +65,6 @@
 							</div>
 						</div>
 					</c:forEach>
-
-
-
 
 				</div>
 				<select name="categoria" class="js-id-categoria">

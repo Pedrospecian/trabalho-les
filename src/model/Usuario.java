@@ -50,6 +50,10 @@ public class Usuario extends EntidadeDominio {
 		return this.tipoUsuario;
 	}
 
+	public Usuario(long id, Date dataCadastro) {
+		super(id, dataCadastro);
+	}
+
 	public Usuario(long id, Date dataCadastro, String nome) {
 		super(id, dataCadastro);
 		this.nome = nome;

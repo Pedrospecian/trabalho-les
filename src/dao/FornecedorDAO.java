@@ -2,7 +2,6 @@ package dao;
 
 import utils.Conexao;
 import strategies.CriaFiltragem;
-import strategies.CriaPaginacao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,7 +42,6 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 			connection = Conexao.getConnectionMySQL();
 			CriaFiltragem filtro = new CriaFiltragem();
 			String where = filtro.processa(campos);
-			connection = Conexao.getConnectionMySQL();
 			
 			pst = connection.prepareStatement("select * from fornecedores " + where + " ORDER BY fornecedores.id desc;");
 			

@@ -37,7 +37,6 @@ public class ListagemLivros extends HttpServlet {
                         ResultadosBusca gpResultados = fachadaGrupoPrecificacao.select(null);
 
                         req.setAttribute("registros", resultadosBusca.getResultados());
-                        req.setAttribute("total", resultadosBusca.getContagemTotal());
                         req.setAttribute("campos", campos);
 
                         req.setAttribute("autores", autResultados.getResultados());

@@ -25,7 +25,13 @@ import utils.ResultadosBusca;
 
 public class ClienteViewHelper {
 	public static Campo[] getListagemClientesCampos(HttpServletRequest req) {
-		Campo[] campos = new Campo[9];
+		Campo[] campos = new Campo[8];
+
+		String resultadosPorPagina = "10";
+
+		if (req.getParameter("resultadosPorPagina") != null && req.getParameter("resultadosPorPagina").matches("^[0-9]+$")) {
+			resultadosPorPagina = req.getParameter("resultadosPorPagina");
+		}
 
 		campos[0] = new Campo(0, req.getParameter("nome"), true, "", true, "clientes.nome");
 		campos[1] = new Campo(1, req.getParameter("genero"), true, "", true, "clientes.genero");
@@ -34,8 +40,7 @@ public class ClienteViewHelper {
 		campos[4] = new Campo(1, req.getParameter("status"), true, "", true, "clientes.status");
 		campos[5] = new Campo(1, req.getParameter("tipoDocumento"), true, "", true, "documentos.idTipoDocumento");
 		campos[6] = new Campo(0, req.getParameter("documento"), true, "", true, "documentos.codigo");
-		campos[7] = new Campo(999, req.getParameter("paginaAtual"), true, "", true, "paginaAtual");
-		campos[8] = new Campo(999, req.getParameter("resultadosPorPagina"), true, "", true, "resultadosPorPagina");
+		campos[7] = new Campo(999, resultadosPorPagina, true, "", true, "resultadosPorPagina");
 
 		return campos;
 	}

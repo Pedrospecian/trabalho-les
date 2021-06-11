@@ -13,6 +13,8 @@ import facades.FachadaUsuario;
 import utils.ResultadosBusca;
 import viewHelpers.LoginViewHelper;
 import model.CategoriaInativacao;
+import utils.Campo;
+import viewHelpers.LivroViewHelper;
 
 public class LivrosPendentesInativacao extends HttpServlet {
 	private static final long serialVersionUID = 12;
@@ -25,8 +27,10 @@ public class LivrosPendentesInativacao extends HttpServlet {
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
 
+			Campo[] campos = LivroViewHelper.getSolicitacoesAtivacaoCampos(req);
+
 			FachadaLivro fachada = new FachadaLivro();
-			ResultadosBusca registros = fachada.getSolicitacoesInativacao(null);
+			ResultadosBusca registros = fachada.getSolicitacoesInativacao(campos);
 			ArrayList<CategoriaInativacao> categorias = fachada.getCategoriasInativacao();
 
 			FachadaUsuario fachadau = new FachadaUsuario();
@@ -36,6 +40,7 @@ public class LivrosPendentesInativacao extends HttpServlet {
 			req.setAttribute("registros", registros.getResultados());
 			req.setAttribute("categorias", categorias);
 			req.setAttribute("usuarios", usuarios.getResultados());
+			req.setAttribute("campos", campos);
 			req.getRequestDispatcher("livro/listagemLivrosPendentesInativacao.jsp").forward(req, resp);
 		}
 	}

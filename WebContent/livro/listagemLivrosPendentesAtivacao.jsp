@@ -15,37 +15,31 @@
 	<main>
 		<div class="container">
 			<h1>Listagem de livros pendentes para ativação</h1>
-			<h2>Buscar livros</h2>
+			<h2>Buscar solicitações de ativação</h2>
 			<form method="get" action="#" class="form-buscar-clientes">
-				<input type="text" name="titulo" placeholder="Título" >
+				<input type="text" name="titulo" placeholder="Título" value="${campos[0].getValor()}">
 				<select name="idUsuario">
-					<option>Usuário responsável</option>
+					<option value="">Usuário responsável</option>
 					<c:forEach var="opt" items="${usuarios}">
-						<option value="${opt.getId()}">
+						<option value="${opt.getId()}" ${opt.getId() == campos[2].getValor() ? 'selected=\"selected\"' : ''}>
 							${opt.getNome()}
 						</option>
 					</c:forEach>
-					<!--<option value="1">Fulano</option>
-					<option value="2">Cicrano</option>
-					<option value="3">Beltrano</option>-->
 				</select>
-				<select name="categoriaInativacao">
-					<option>Categoria de ativação</option>
+				<select name="categoria">
+					<option value="">Categoria de ativação</option>
 					<c:forEach var="opt" items="${categorias}">
-						<option value="${opt.getId()}">
+						<option value="${opt.getId()}" ${opt.getId() == campos[1].getValor() ? 'selected=\"selected\"' : ''}>
 							${opt.getNome()}
 						</option>
 					</c:forEach>
-					<!--
-					<option value="1">Categoria 1</option>
-					<option value="2">Categoria 2</option>-->
 				</select>
-				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por página" value="" >
+				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por página" value="${campos[3].getValor()}">
 				<button type="submit">Buscar</button>
 			</form>
 			<c:if test = "${registros.size() > 0}">
 				<div class="listagem-livros">
-					<table cellpadding="0" cellspacing="0" class="listagem-livros js-paginated-table" data-itensPorPagina="10">
+					<table cellpadding="0" cellspacing="0" class="listagem-livros js-paginated-table" data-itensPorPagina="${campos[3].getValor()}">
 						<thead>
 							<tr>
 								<th>Id</th>
@@ -62,12 +56,12 @@
 							<c:forEach var="solicitacao" items="${registros}">
 								<tr>
 									<td>${solicitacao.getId()}</td>
-									<td><img src="/trabalho-les/assets/images/produtos/livro-manual.jpg"></td>
+									<td><img src="${solicitacao.getLivro().getCapa()}"></td>
 									<td>${solicitacao.getLivro().getTitulo()}</td>
-									<td>${solicitacao.getLivro().getAutor()}</td>
+									<td>${solicitacao.getLivro().getAutor().getNome()}</td>
 									<td>${solicitacao.getCategoria().getNome()}</td>
 									<td>${solicitacao.getJustificativa()}</td>
-									<td>Fulano</td>
+									<td>${solicitacao.getUsuario().getNome()}</td>
 									<td>
 										<a href="/trabalho-les/concluirAtivacao?id=${solicitacao.getLivro().getId()}&aceite=1" cypress-aceitarAtivacao>Aceitar ativação</a>
 										<br>

@@ -397,3 +397,7 @@ form.form-cart {
 	font-weight: 900;
 	color: red;
 }
+
+.detalhes-produto-categorias-wrapper span:not(:last-child):after {
+	content: ", ";
+}

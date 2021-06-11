@@ -53,7 +53,14 @@
 								${registro.getProfundidade()}cm (profundidade),
 								${registro.getPeso()}g (peso)
 							</li>
-							<li><strong>Categorias:</strong> x, y e z</li>
+							<li>
+								<strong>Categorias:</strong> 
+								<span class="detalhes-produto-categorias-wrapper">
+									<c:forEach var="categoria" items="${registro.getCategorias()}">
+										<span>${categoria.getNome()}</span>
+									</c:forEach>
+								</span>
+							</li>
 						</ul>
 					</div>
 					<h2>Sinopse</h2>

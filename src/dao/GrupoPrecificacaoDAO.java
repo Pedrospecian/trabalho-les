@@ -5,7 +5,6 @@ import model.EntidadeDominio;
 import model.GrupoPrecificacao;
 import utils.ResultadosBusca;
 import strategies.CriaFiltragem;
-import strategies.CriaPaginacao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,8 +36,6 @@ public class GrupoPrecificacaoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			connection = Conexao.getConnectionMySQL();
 			StringBuilder sql = new StringBuilder();
 			sql.append("Select * from grupos_precificacao " + where + " order by grupos_precificacao.id desc;");
-
-			System.out.println("Select * from grupos_precificacao " + where + " order by grupos_precificacao.id desc;");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);	
@@ -53,8 +50,6 @@ public class GrupoPrecificacaoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getDouble("grupos_precificacao.porcentagem"),
 					rs.getInt("grupos_precificacao.status")
 				));
-
-				System.out.println("FUNCIONE...");
 			}
 
 			this.selectVals = lista;
@@ -76,7 +71,7 @@ public class GrupoPrecificacaoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}
 	}
 	
-	//Select Single lista um livro só mais os detalhes dele
+	//Select Single lista um livro sï¿½ mais os detalhes dele
 	
 	public GrupoPrecificacao selectSingle(long id) {
 		PreparedStatement pst = null;

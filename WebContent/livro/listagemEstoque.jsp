@@ -19,28 +19,30 @@
 			<br><br>
 			<form method="get" action="#" class="form-buscar-clientes">
 				<input type="hidden" name="id" value="${livro.getId()}">
-				<input type="text" name="dataEntrada" placeholder="Data de Entrada" value="${campos[2].getValor()}">
+				<input type="date" name="dataEntrada" placeholder="Data de Entrada" value="${campos[2].getValor()}">
 				<select name="usuarioResponsavel">
 					<option value="">Usuário Responsável</option>
 					<c:forEach var="opt" items="${usuarios}">
-						<option value="${opt.getId()}">
+						<option value="${opt.getId()}" ${opt.getId() == campos[1].getValor() ? 'selected=\"selected\"' : ''}>
 							${opt.getNome()}
 						</option>
 					</c:forEach>
-					<!--<option value="1" ${1 == campos[1].getValor() ? 'selected=\"selected\"' : ''}>Fulano</option>
-					<option value="2" ${2 == campos[1].getValor() ? 'selected=\"selected\"' : ''}>Beltrano</option>
-					<option value="3" ${3 == campos[1].getValor() ? 'selected=\"selected\"' : ''}>Cicrano</option>-->
+				</select>
+				<select name="clienteResponsavel">
+					<option value="">Cliente</option>
+					<c:forEach var="opt" items="${clientes}">
+						<option value="${opt.getId()}" ${opt.getId() == campos[6].getValor() ? 'selected=\"selected\"' : ''}>
+							${opt.getNome()}
+						</option>
+					</c:forEach>
 				</select>
 				<select name="fornecedor">
 					<option value="">Fornecedor</option>
 					<c:forEach var="opt" items="${fornecedores}">
-						<option value="${opt.getId()}">
+						<option value="${opt.getId()}" ${opt.getId() == campos[0].getValor() ? 'selected=\"selected\"' : ''}>
 							${opt.getNome()}
 						</option>
 					</c:forEach>
-					<!--<option value="1" ${1 == campos[0].getValor() ? 'selected=\"selected\"' : ''}>Fornecedor Exemplo LTDA</option>
-					<option value="2" ${2 == campos[0].getValor() ? 'selected=\"selected\"' : ''}>Livros e Revistas Teste</option>
-					<option value="3" ${3 == campos[0].getValor() ? 'selected=\"selected\"' : ''}>Editora Ininap</option>-->
 				</select>
 				<select name="tipoMovimentacao">
 					<option value="">Tipo</option>
@@ -60,6 +62,7 @@
 						<th>Data de Entrada</th>
 						<th>Quantidade</th>
 						<th>Usuário Responsável</th>
+						<th>Cliente Responsável</th>
 						<th>Fornecedor</th>
 						<th>Tipo</th>
 						<th>Valor custo (unidade)</th>
@@ -72,6 +75,7 @@
 							<td><span class="js-date-value">${entrada.getDataEntrada()}</span></td>
 							<td>${entrada.getQuantidade()}</td>
 							<td>${entrada.getUsuarioResponsavel().getNome()}</td>
+							<td>${entrada.getCliente().getNome()}</td>
 							<td>${entrada.getFornecedor().getNome()}</td>
 							<td>
 								<c:if test = '${entrada.getTipoMovimentacao() == 1}'>
@@ -86,45 +90,7 @@
 							</td>
 							<td><span class="js-dinheiro">${entrada.getCusto()}</span></td>
 						</tr>
-					</c:forEach>
-					<!--<tr>
-						<td>2</td>
-						<td>20/02/2020</td>
-						<td>20</td>
-						<td>Administrador</td>
-						<td>Livros e Revistas Teste</td>
-						<td>Entrada (cadastro no admin)</td>
-						<td>R$ 12,00</td>
-					</tr>
-					<tr>
-						<td>3</td>
-						<td>21/02/2020</td>
-						<td>2</td>
-						<td>Cliente Teste</td>
-						<td></td>
-						<td>Saída (venda)</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>4</td>
-						<td>23/02/2020</td>
-						<td>1</td>
-						<td>Cliente Teste</td>
-						<td></td>
-						<td>Entrada (troca)</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>5</td>
-						<td>27/02/2020</td>
-						<td>1</td>
-						<td>Outro Cliente</td>
-						<td></td>
-						<td>Saída (troca)</td>
-						<td></td>
-					</tr>-->
-
-					
+					</c:forEach>					
 				</tbody>
 			</table>
 			<div class="paginated-table-wrapper"></div>

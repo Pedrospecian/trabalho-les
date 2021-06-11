@@ -17,74 +17,54 @@
 			<h1>Listagem de livros</h1>
 			<h2>Buscar livros</h2>
 			<form method="get" action="#" class="form-buscar-clientes form-buscar-big">
-				<input type="text" name="titulo" placeholder="Título" >
-				<input type="text" name="edicao" placeholder="Edição" >
+				<input type="text" name="titulo" placeholder="Título" value="${campos[0].getValor()}">
+				<input type="text" name="edicao" placeholder="Edição" value="${campos[6].getValor()}">
 				<select name="autor">
 					<option value="">Autor</option>
 					<c:forEach var="opt" items="${autores}">
-						<option value="${opt.getId()}">
+						<option value="${opt.getId()}" ${opt.getId() == campos[1].getValor() ? 'selected=\"selected\"' : ''}>
 							${opt.getNome()}
 						</option>
 					</c:forEach>
-					<!-- <option value="1">Fulano</option>
-					<option value="2">Beltrano</option>
-					<option value="3">Cicrano</option> -->
 				</select>
 				<select name="editora">
 					<option value="">Editora</option>
 					<c:forEach var="opt" items="${editoras}">
-						<option value="${opt.getId()}">
+						<option value="${opt.getId()}" ${opt.getId() == campos[2].getValor() ? 'selected=\"selected\"' : ''}>
 							${opt.getNome()}
 						</option>
 					</c:forEach>
-					<!--<option value="1">Companhia das Letras</option>
-					<option value="2">Aleph</option>
-					<option value="3">Suma</option>
-					<option value="4">Editora Intrínseca</option>
-					<option value="5">Grupo Editorial Record</option>
-					<option value="6">Editora Rocco</option>
-					<option value="7">Globo Livros</option>
-					<option value="8">Darkside Books</option>
-					<option value="9">Harper Collins</option>
-					<option value="10">Editora Arqueiro</option>
-					<option value="11">Somos Educação</option>
-					<option value="12">Editora FTD</option>
-					<option value="13">Saraiva</option>
-					<option value="14">Brinque Book</option>-->
 				</select>
-				<input type="text" name="isbn" placeholder="ISBN">
-				<input type="number" name="codigoBarras" placeholder="Código de barras">
+				<input type="text" name="isbn" placeholder="ISBN" value="${campos[3].getValor()}">
+				<input type="number" name="codigoBarras" placeholder="Código de barras" value="${campos[4].getValor()}">
 				<select name="status">
 					<option value="">Status</option>
-					<option value="1">Ativo</option>
-					<option value="0">Inativo</option>
-					<option value="2">Inativação pendente</option>
-					<option value="3">Ativação pendente</option>
-					<option value="4">Fora de mercado</option>
+					<option value="1" ${1 == campos[5].getValor() ? 'selected=\"selected\"' : ''}>Ativo</option>
+					<option value="0" ${campos[5].getValor().equals("0") ? 'selected=\"selected\"' : ''}>Inativo</option>
+					<option value="2" ${2 == campos[5].getValor() ? 'selected=\"selected\"' : ''}>Inativação pendente</option>
+					<option value="3" ${3 == campos[5].getValor() ? 'selected=\"selected\"' : ''}>Ativação pendente</option>
+					<option value="4" ${4 == campos[5].getValor() ? 'selected=\"selected\"' : ''}>Fora de mercado</option>
 				</select>
-				<input type="text" name="largura" placeholder="Largura" step="0.01">
-				<input type="text" name="altura" placeholder="Altura" step="0.01">
-				<input type="text" name="profundidade" placeholder="Profundidade" step="0.01">
-				<input type="text" name="peso" placeholder="Peso" step="0.01">
-				<input type="text" name="preco" placeholder="Preço de venda" step="0.01">
-				<input type="text" name="numeroPaginas" placeholder="Número de páginas">
+				<input type="text" name="largura" placeholder="Largura" step="0.01" value="${campos[14].getValor()}">
+				<input type="text" name="altura" placeholder="Altura" step="0.01" value="${campos[9].getValor()}">
+				<input type="text" name="profundidade" placeholder="Profundidade" step="0.01" value="${campos[11].getValor()}">
+				<input type="text" name="peso" placeholder="Peso" step="0.01" value="${campos[10].getValor()}">
+				<input type="text" name="preco" placeholder="Preço de venda" step="0.01" value="${campos[12].getValor()}">
+				<input type="text" name="numeroPaginas" placeholder="Número de páginas" value="${campos[8].getValor()}">
 				<select name="grupoPrecificacao">
 					<option value="">Grupo de Precificação</option>
 					<c:forEach var="opt" items="${gruposPrecificacao}">
-						<option value="${opt.getId()}">
+						<option value="${opt.getId()}" ${opt.getId() == campos[13].getValor() ? 'selected=\"selected\"' : ''}>
 							${opt.getNome()}
 						</option>
 					</c:forEach>
-					<!--<option value="1">1</option>
-					<option value="2">Be2</option>
-					<option value="3">C23</option>-->
 				</select>
-				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por página" value="" >
+				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por página" value="${campos[15].getValor()}" >
 				<button type="submit">Buscar</button>
 			</form>
 			<c:if test = "${registros.size() > 0}">
 				<div class="listagem-livros">
-					<table cellpadding="0" cellspacing="0" class=" js-paginated-table" data-itensPorPagina="10">
+					<table cellpadding="0" cellspacing="0" class=" js-paginated-table" data-itensPorPagina="${campos[15].getValor()}">
 						<thead>
 							<tr>
 								<th>Id</th>

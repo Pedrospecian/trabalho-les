@@ -17,28 +17,28 @@
 			<h1>Pedido #${pedido.getId()}</h1>
 			Status do pedido: 
 			<c:if test = '${pedido.getStatus() == 1}'>
-				Em processamento (atualizado em 05/02/2021)
+				Em processamento (atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
 			</c:if>							
 			<c:if test = '${pedido.getStatus() == 2}'>
-				Aceito (atualizado em 05/02/2021)
+				Aceito (atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
 			</c:if>
 			<c:if test = '${pedido.getStatus() == 3}'>
-				Em trânsito (atualizado em 05/02/2021)
+				Em trânsito (atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
 			</c:if>
 			<c:if test = '${pedido.getStatus() == 4}'>
-				Entregue (atualizado em 05/02/2021)
+				Entregue (atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
 			</c:if>
 			<c:if test = '${pedido.getStatus() == 5}'>
-				Em troca (atualizado em 05/02/2021)
+				Em troca (atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
 			</c:if>
 			<c:if test = '${pedido.getStatus() == 6}'>
-				Troca autorizada (atualizado em 05/02/2021)
+				Troca autorizada (atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
 			</c:if>
 			<c:if test = '${pedido.getStatus() == 7}'>
-				Trocado (atualizado em 05/02/2021)
+				Trocado (atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
 			</c:if>
 			<c:if test = '${pedido.getStatus() == 8}'>
-				Reprovado (atualizado em 05/02/2021)
+				Reprovado (atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
 			</c:if>
 			<h2>Produtos</h2>
 			<table class="carrinho-itens" cellpadding="0" cellspacing="0">
@@ -48,7 +48,9 @@
 						<th>Título</th>
 						<th>Preço</th>
 						<th>Quantidade</th>
-						<th>Trocar</th>
+						<c:if test = "${cliente}">
+							<th>Trocar</th>
+						</c:if>
 					</tr>
 				</thead>
 				<tbody>
@@ -73,17 +75,19 @@
 									<strong>(${item.getQuantidadeItensTrocados()} -> troca solicitada)</strong>
 								</c:if>
 							</td>
-							<td>
-								<c:if test = '${cliente && pedido.getStatus() > 3 && pedido.getStatus() != 8 && item.getQuantidadeItensTrocados() < item.getQuantidade()}'>
-									<form method="post" action="/trabalho-les/solicitarTroca">
-										<input type="hidden" name="id" value="${item.getId()}">
-										<div class="form-group">
-											<input type="number" name="trocaQtde" placeholder="Qt. Troca" min="1" max="${item.getQuantidade()}" required data-pristine-required-message="Este campo é obrigatório" data-pristine-number-message="Esse campo precisa ser um número válido" pattern="/^[0-9]+$/" data-pristine-pattern-message="Este campo precisa ser um número válido" cypress-trocaQtde>
-										</div>
-										<button type="submit" cypress-submit>Solicitar Troca</button>
-									</form>
-								</c:if>
-							</td>
+							<c:if test = "${cliente}">
+								<td>
+									<c:if test = '${pedido.getStatus() > 3 && pedido.getStatus() != 8 && item.getQuantidade() > item.getQuantidadeItensTrocados()}'>
+										<form method="post" action="/trabalho-les/solicitarTroca">
+											<input type="hidden" name="id" value="${item.getId()}">
+											<div class="form-group">
+												<input type="number" name="trocaQtde" placeholder="Qt. Troca" min="1" max="${item.getQuantidade()}" required data-pristine-required-message="Este campo é obrigatório" data-pristine-number-message="Esse campo precisa ser um número válido" pattern="/^[0-9]+$/" data-pristine-pattern-message="Este campo precisa ser um número válido" cypress-trocaQtde>
+											</div>
+											<button type="submit" cypress-submit>Solicitar Troca</button>
+										</form>
+									</c:if>
+								</td>
+							</c:if>
 						</tr>
 					</c:forEach>
 					<!--<tr>

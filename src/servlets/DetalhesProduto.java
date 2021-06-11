@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import facades.FachadaLivro;
 import model.Livro;
+import model.Categoria;
 import viewHelpers.LoginViewHelper;
 
 public class DetalhesProduto extends HttpServlet {

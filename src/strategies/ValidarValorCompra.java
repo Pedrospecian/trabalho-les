@@ -66,6 +66,10 @@ public class ValidarValorCompra implements IStrategy<Boolean, Pedido> {
         System.out.println(pedido.getValorTotal() + pedido.getValorFrete());
         System.out.println(pedido.getValorTotal() + pedido.getValorFrete() - totalCuponsTroca - valorCupomDesconto);
 
+        if (valorCupomDesconto > 0 && (totalCartoes - (Math.floor(( pedido.getValorTotal() + pedido.getValorFrete()) * 100) / 100)) <= 0) {
+            System.out.println("CUPOM DE DESCONTO DESNECESSARIO");
+            return false;
+        }
         
         //compara com o valor total - descontos oriundos dos cupons
         return (Math.floor(totalCartoes * 100) / 100) == (Math.floor(( pedido.getValorTotal() + pedido.getValorFrete()) * 100) / 100)

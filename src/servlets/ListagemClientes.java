@@ -14,7 +14,6 @@ import utils.Campo;
 import utils.ResultadosBusca;
 import viewHelpers.ClienteViewHelper;
 import viewHelpers.UsuarioViewHelper;
-import viewHelpers.PaginacaoViewHelper;
 import viewHelpers.LoginViewHelper;
 import model.Genero;
 import model.TipoCliente;
@@ -40,13 +39,7 @@ public class ListagemClientes extends HttpServlet {
             ArrayList<TipoCliente> tiposcliente = fachadaS.getOpcoesSelect(2);
             ArrayList<TipoDocumento> tiposdocumento = fachadaS.getOpcoesSelect(3);
 
-            System.out.println(campos[8]);                
-            System.out.println(campos[8].getValor());
-            String[] linksPaginacao = PaginacaoViewHelper.createLinksPaginacao(campos[8], resultadosBusca);
-
             req.setAttribute("registros", resultadosBusca.getResultados());
-            req.setAttribute("total", resultadosBusca.getContagemTotal());
-            req.setAttribute("linksPaginacao", linksPaginacao);
             req.setAttribute("campos", campos);
 
             req.setAttribute("generos", generos);

@@ -18,13 +18,38 @@ import utils.ResultadosBusca;
 
 public class CupomDescontoViewHelper {
 	public static Campo[] getListagemCuponsCampos(HttpServletRequest req) {
-		Campo[] campos = new Campo[5];
+		Campo[] campos = new Campo[6];
+
+		String resultadosPorPagina = "10";
+
+		if (req.getParameter("resultadosPorPagina") != null && req.getParameter("resultadosPorPagina").matches("^[0-9]+$")) {
+			resultadosPorPagina = req.getParameter("resultadosPorPagina");
+		}
 
 		campos[0] = new Campo(0, req.getParameter("nome"), true, "", false, "nome");
 		campos[1] = new Campo(1, req.getParameter("valor"), true, "", false, "valor");
 		campos[2] = new Campo(1, req.getParameter("status"), true, "", false, "status");
 		campos[3] = new Campo(3, req.getParameter("dataInicio"), true, "", false, "dataInicio");
 		campos[4] = new Campo(3, req.getParameter("dataFim"), true, "", false, "dataFim");
+		campos[5] = new Campo(999, resultadosPorPagina, true, "", true, "resultadosPorPagina");
+
+		return campos;
+	}
+
+	public static Campo[] getListagemCuponsTrocaCampos(HttpServletRequest req) {
+		Campo[] campos = new Campo[5];
+
+		String resultadosPorPagina = "10";
+
+		if (req.getParameter("resultadosPorPagina") != null && req.getParameter("resultadosPorPagina").matches("^[0-9]+$")) {
+			resultadosPorPagina = req.getParameter("resultadosPorPagina");
+		}
+
+		campos[0] = new Campo(0, req.getParameter("nome"), true, "", false, "nome");
+		campos[1] = new Campo(1, req.getParameter("valor"), true, "", false, "valor");
+		campos[2] = new Campo(1, req.getParameter("status"), true, "", false, "status");
+		campos[3] = new Campo(999, resultadosPorPagina, true, "", true, "resultadosPorPagina");
+		campos[4] = new Campo(1, req.getParameter("id"), true, "", false, "idUsuario");
 
 		return campos;
 	}

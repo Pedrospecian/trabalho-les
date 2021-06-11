@@ -27,6 +27,7 @@ public class ListagemFornecedor extends HttpServlet {
 			ResultadosBusca resultados = fachada.select(campos);
 			req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
 			req.setAttribute("registros", resultados.getResultados());
+			req.setAttribute("campos", campos);
 			req.getRequestDispatcher("fornecedor/listagemFornecedor.jsp").forward(req, resp);
 		}
 	}

@@ -5,7 +5,6 @@ import utils.DadosCalculoFrete;
 import utils.ItemGrafico;
 import strategies.CriaFiltragem;
 import strategies.CriaFiltragemUsuario;
-import strategies.CriaPaginacao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -55,9 +54,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		try {
 			connection = Conexao.getConnectionMySQL();
 			CriaFiltragem filtro = new CriaFiltragem();
-			CriaPaginacao paginacao = new CriaPaginacao();
 			String where = filtro.processa(campos);
-			String paginacaoStr = "";//paginacao.processa(campos);
 			connection = Conexao.getConnectionMySQL();
 			//pst = connection.prepareStatement("select * from pedidos inner join carrinhos on carrinhos.id = pedidos.idCarrinho inner join usuarios on usuarios.id = usuarioId " + where + paginacaoStr + ";");
 			pst = connection.prepareStatement("select * from pedidos inner join carrinhos on carrinhos.id = pedidos.idCarrinho inner join clientes on clientes.id = pedidos.idUsuario " + where + " order by pedidos.id desc;");
@@ -97,6 +94,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getInt("pedidos.prazo"),
 					rs.getString("pedidos.tipoServico")
 					);
+				pedido.setDataAlteracao(rs.getDate("pedidos.dataAlteracao"));
 
 				//public Cliente(long id, Date dataCadastro, Documento[] documentos, String nome, int genero, Date dataNascimento, TipoCliente tipoCliente, Endereco[] enderecos, int status) {
 
@@ -131,9 +129,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		try {
 			connection = Conexao.getConnectionMySQL();
 			CriaFiltragemUsuario filtro = new CriaFiltragemUsuario();
-			CriaPaginacao paginacao = new CriaPaginacao();
 			String where = filtro.processa(campos);
-			String paginacaoStr = "";//paginacao.processa(campos);
 			connection = Conexao.getConnectionMySQL();
 			//pst = connection.prepareStatement("select * from pedidos inner join carrinhos on carrinhos.id = pedidos.idCarrinho inner join usuarios on usuarios.id = usuarioId " + where + paginacaoStr + ";");
 			pst = connection.prepareStatement("select * from pedidos inner join carrinhos on carrinhos.id = pedidos.idCarrinho inner join clientes on clientes.id = pedidos.idUsuario where pedidos.idUsuario = ? "+ where +" order by pedidos.id desc;");
@@ -174,6 +170,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getInt("pedidos.prazo"),
 					rs.getString("pedidos.tipoServico")
 					);
+				pedido.setDataAlteracao(rs.getDate("pedidos.dataAlteracao"));
 
 				//public Cliente(long id, Date dataCadastro, Documento[] documentos, String nome, int genero, Date dataNascimento, TipoCliente tipoCliente, Endereco[] enderecos, int status) {
 
@@ -283,7 +280,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				CupomTroca[] cuponsTroca = null; //fazer
 				getCarrinhoPorId(rs.getLong("pedidos.idCarrinho"), true);
 				Carrinho carrinho = this.selectCarrinhoVal;
-				this.selectSingleVal = new Pedido(
+				Pedido pedido = new Pedido(
 					rs.getLong("pedidos.id"),
 					rs.getDate("pedidos.dataCadastro"),
 					cliente, //cliente
@@ -297,6 +294,10 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getDouble("pedidos.valorTotal"),
 					rs.getInt("pedidos.prazo"),
 					rs.getString("pedidos.tipoServico"));
+
+				pedido.setDataAlteracao(rs.getDate("pedidos.dataAlteracao"));
+
+				this.selectSingleVal = pedido;
 
 				//Pedido(long id, Date dataCadastro, Cliente cliente, int status,
 				//		 Endereco endereco, double valorFrete, CupomDesconto cupomDesconto,
@@ -503,91 +504,11 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 	}
 
 	public void insert(EntidadeDominio entidade) {
-		/*Usuario usuario = (Usuario) entidade;
-		PreparedStatement pst = null;
-		
-		try {
-			connection = Conexao.getConnectionMySQL();
-			connection.setAutoCommit(false);
-			
-			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO usuarios(nome, email, senha, status, dataCadastro) VALUES (?, ?, ?, ?, ?);");
-			
-			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
 
-			Date agora = new Date(); 
-
-			pst.setString(1, usuario.getNome());
-			pst.setString(2, usuario.getEmail());
-			pst.setString(3, usuario.getSenha());
-			pst.setInt(4, usuario.getStatus());
-			pst.setDate(5, new java.sql.Date(agora.getTime()));
-			
-			pst.executeUpdate();
-			
-			ResultSet rs = pst.getGeneratedKeys();
-			int idUsuario = 0;
-			if (rs.next()) idUsuario = rs.getInt(1);
-			usuario.setId(idUsuario);
-			
-			connection.commit();			
-		} catch (Exception e) {
-			try {
-				if(connection != null) connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-
-			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}*/
 	}
 
 	public void update(EntidadeDominio entidade) {
-		/*Usuario usuario = (Usuario) entidade;
-		PreparedStatement pst = null;
-		
-		try {
-			connection = Conexao.getConnectionMySQL();
-			connection.setAutoCommit(false);
-			
-			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE usuarios SET nome = ?, email = ?, status = ? WHERE usuarios.id = ?;");
-			
-			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
 
-			pst.setString(1, usuario.getNome());
-			pst.setString(2, usuario.getEmail());
-			pst.setInt(3, usuario.getStatus());
-			pst.setLong(4, usuario.getId());
-			
-			pst.executeUpdate();
-			
-			connection.commit();			
-		} catch (Exception e) {
-			try {
-				if(connection != null) connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-
-			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}*/
 	}
 
 	public ArrayList updateStatus(Pedido pedido) {
@@ -611,13 +532,16 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				connection.setAutoCommit(false);
 			
 				StringBuilder sql2 = new StringBuilder();
-				sql2.append("UPDATE pedidos SET status = ? WHERE pedidos.id = ?;");
+				sql2.append("UPDATE pedidos SET status = ?, dataAlteracao = ? WHERE pedidos.id = ?;");
 				
 				pst = connection.prepareStatement(sql2.toString(),
 						Statement.RETURN_GENERATED_KEYS);
 
+				Date agora = new Date();
+
 				pst.setInt(1, rs.getInt("pedidos.status") + 1);
-				pst.setLong(2, pedido.getId());
+				pst.setDate(2, new java.sql.Date(agora.getTime()));
+				pst.setLong(3, pedido.getId());
 				
 				pst.executeUpdate();
 
@@ -1568,7 +1492,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		PreparedStatement pst = null;
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append("UPDATE cupons_troca SET idPedido = ? WHERE id = ?;");
+		sql.append("UPDATE cupons_troca SET idPedido = ?, status = 0 WHERE id = ?;");
 		
 		for (CupomTroca cupomTroca : pedido.getCuponsTroca()) {
 			System.out.println("estou usando o cupom de troca");
@@ -1618,14 +1542,17 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				pst.executeUpdate();
 
 				StringBuilder sql3 = new StringBuilder();
-				sql3.append("UPDATE carrinhos_produtos SET quantidade = ?, quantidadeItensTrocados = ? WHERE carrinhos_produtos.idCarrinhoProduto = ?;");
+				// sql3.append("UPDATE carrinhos_produtos SET quantidade = ?, quantidadeItensTrocados = ? WHERE carrinhos_produtos.idCarrinhoProduto = ?;");
+				sql3.append("UPDATE carrinhos_produtos quantidadeItensTrocados = quantidadeItensTrocados + ? WHERE carrinhos_produtos.idCarrinhoProduto = ?;");
 
 				pst = connection.prepareStatement(sql3.toString(),
 						Statement.RETURN_GENERATED_KEYS);
 
-				pst.setInt(1, quantidadeAtual - itemCarrinho.getQuantidadeItensTrocados() );
+				/*pst.setInt(1, quantidadeAtual - itemCarrinho.getQuantidadeItensTrocados() );
 				pst.setInt(2, itemCarrinho.getQuantidadeItensTrocados() );
-				pst.setLong(3, itemCarrinho.getId());
+				pst.setLong(3, itemCarrinho.getId());*/
+				pst.setInt(1, itemCarrinho.getQuantidadeItensTrocados() );
+				pst.setLong(2, itemCarrinho.getId());
 
 				pst.executeUpdate();
 
@@ -1674,11 +1601,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 	public void selectSolicitacoesTroca() {
 		PreparedStatement pst = null;
 		try {
-			connection = Conexao.getConnectionMySQL();
-			CriaFiltragemUsuario filtro = new CriaFiltragemUsuario();
-			CriaPaginacao paginacao = new CriaPaginacao();
-			String where = "";//filtro.processa(campos);
-			String paginacaoStr = "";//paginacao.processa(campos);
 			connection = Conexao.getConnectionMySQL();
 			//pst = connection.prepareStatement("select * from pedidos inner join carrinhos on carrinhos.id = pedidos.idCarrinho inner join usuarios on usuarios.id = usuarioId " + where + paginacaoStr + ";");
 			pst = connection.prepareStatement(
@@ -1813,7 +1735,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				long idPedido = rs3.getLong("pedidos.id");
 
 				StringBuilder sql5 = new StringBuilder();
-				sql5.append("UPDATE pedidos SET status = ? WHERE id = ?;");
+				sql5.append("UPDATE pedidos SET status = ?, dataAlteracao = ? WHERE id = ?;");
 
 				pst = connection.prepareStatement(sql5.toString(),
 						Statement.RETURN_GENERATED_KEYS);
@@ -1824,7 +1746,10 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					pst.setInt(1, 4);
 				}
 
-				pst.setLong(2, idPedido);
+				Date agora = new Date();
+				pst.setDate(2, new java.sql.Date(agora.getTime()));
+
+				pst.setLong(3, idPedido);
 
 				pst.executeUpdate();
 
@@ -2165,19 +2090,15 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		
 	}
 
-	public ArrayList listagemCuponsTroca(long id) {
+	public ArrayList listagemCuponsTroca(Campo[] campos) {
 		PreparedStatement pst = null;
 		try {
-			connection = Conexao.getConnectionMySQL();
-			CriaFiltragemUsuario filtro = new CriaFiltragemUsuario();
-			CriaPaginacao paginacao = new CriaPaginacao();
-			String where = "";
-			String paginacaoStr = "";
-			connection = Conexao.getConnectionMySQL();
-			pst = connection.prepareStatement("select * from cupons_troca where idUsuario = ?;");
+			CriaFiltragem filtro = new CriaFiltragem();
+			String where = filtro.processa(campos);
 
-			pst.setLong(1, id);
-			
+			connection = Conexao.getConnectionMySQL();
+			pst = connection.prepareStatement("select * from cupons_troca " + where + " order by id desc;");
+		
 			ResultSet rs = pst.executeQuery();
 			
 			ArrayList<CupomTroca> list = new ArrayList();

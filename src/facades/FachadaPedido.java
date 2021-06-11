@@ -147,10 +147,10 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 		return dao.encontraCuponsTroca(cuponsTroca);
 	}
 
-	public ResultadosBusca listagemCuponsTroca(long id) {
+	public ResultadosBusca listagemCuponsTroca(Campo[] campos) {
 		PedidoDAO dao = new PedidoDAO();
 
-		dao.listagemCuponsTroca(id);
+		dao.listagemCuponsTroca(campos);
 		ArrayList arrl = dao.selectVals;
 		ResultadosBusca rb = new ResultadosBusca(arrl);
 		

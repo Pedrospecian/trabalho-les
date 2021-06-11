@@ -2,7 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+ 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +13,8 @@ import facades.FachadaUsuario;
 import utils.ResultadosBusca;
 import viewHelpers.LoginViewHelper;
 import model.CategoriaAtivacao;
+import utils.Campo;
+import viewHelpers.LivroViewHelper;
 
 public class LivrosPendentesAtivacao extends HttpServlet {
 	private static final long serialVersionUID = 12;
@@ -25,8 +27,10 @@ public class LivrosPendentesAtivacao extends HttpServlet {
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
 
+			Campo[] campos = LivroViewHelper.getSolicitacoesAtivacaoCampos(req);
+
 			FachadaLivro fachada = new FachadaLivro();
-			ResultadosBusca registros = fachada.getSolicitacoesAtivacao(null);
+			ResultadosBusca registros = fachada.getSolicitacoesAtivacao(campos);
 			ArrayList<CategoriaAtivacao> categorias = fachada.getCategoriasAtivacao();
 
 			FachadaUsuario fachadau = new FachadaUsuario();
@@ -36,6 +40,7 @@ public class LivrosPendentesAtivacao extends HttpServlet {
 			req.setAttribute("registros", registros.getResultados());
 			req.setAttribute("categorias", categorias);
 			req.setAttribute("usuarios", usuarios.getResultados());
+			req.setAttribute("campos", campos);
 			req.getRequestDispatcher("livro/listagemLivrosPendentesAtivacao.jsp").forward(req, resp);
 		}
 	}

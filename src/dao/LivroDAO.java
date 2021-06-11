@@ -2,7 +2,6 @@ package dao;
 
 import utils.Conexao;
 import strategies.CriaFiltragem;
-import strategies.CriaPaginacao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import dao.IDAO;
-
 
 import model.Livro;
 import model.LivroEstoque;
@@ -31,6 +29,7 @@ import model.Categoria;
 import utils.Campo;
 
 import model.CategoriaInativacao;
+import model.Cliente;
 import model.CategoriaAtivacao;
 
 public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
@@ -107,7 +106,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 		PreparedStatement pst = null;
 		try {
 			CriaFiltragem filtro = new CriaFiltragem();
-			
 			String where = filtro.processa(campos);
 
 			connection = Conexao.getConnectionMySQL();
@@ -115,7 +113,8 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			sql.append("Select * from livros "+
 					   "inner join autores on livros.autorId = autores.id "+
 					   "inner join editoras on livros.idEditora = editoras.id "+
-					   "inner join grupos_precificacao on livros.idGrupoPrecificacao = grupos_precificacao.id " + where);
+					   "inner join grupos_precificacao on livros.idGrupoPrecificacao = grupos_precificacao.id " + where +
+					   " order by livros.id desc;");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);			
@@ -188,8 +187,8 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			sql.append("Select * from livros "+
 					   "inner join autores on livros.autorId = autores.id "+
 					   "inner join editoras on livros.idEditora = editoras.id "+
-					   "inner join livros_categorias on livros.id = livros_categorias.idLivro " +
-					   "inner join grupos_precificacao on livros.idGrupoPrecificacao = grupos_precificacao.id " + where);
+					   "left join livros_categorias on livros.id = livros_categorias.idLivro " +
+					   "inner join grupos_precificacao on livros.idGrupoPrecificacao = grupos_precificacao.id " + where + " group by livros.id");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);			
@@ -198,6 +197,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			ArrayList<Livro> list = new ArrayList();
 			
 			while (rs.next()) {
+				System.out.println(where);
 				Livro livro = new Livro(
 					rs.getLong("livros.id"), 
 					rs.getDate("livros.dataCadastro"), 
@@ -252,11 +252,20 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 	public void getSolicitacoesAtivacao(Campo[] campos) {
 		PreparedStatement pst = null;
 		try {
+			CriaFiltragem filtro = new CriaFiltragem();
+			String where = filtro.processa(campos);
+
 			connection = Conexao.getConnectionMySQL();
 			StringBuilder sql = new StringBuilder();
 			sql.append("Select * from solicitacoes_ativacao_livro " +
 				       "inner join livros on livros.id = solicitacoes_ativacao_livro.idLivro " +
-				       "inner join categorias_ativacao on categorias_ativacao.id = solicitacoes_ativacao_livro.idCategoria");
+				       "inner join autores on autores.id = livros.autorId " +
+				       "inner join categorias_ativacao on categorias_ativacao.id = solicitacoes_ativacao_livro.idCategoria " +
+				       "inner join usuarios on solicitacoes_ativacao_livro.idUsuario = usuarios.id " +
+				       where +
+				       " order by solicitacoes_ativacao_livro.id desc");
+
+			System.out.println( where);
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -272,6 +281,12 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 				);
 				livro.setCapa(rs.getString("livros.capa"));
 				livro.setTitulo(rs.getString("livros.titulo"));
+				livro.setAutor(new Autor(
+					rs.getLong("autores.id"),
+					rs.getDate("autores.dataCadastro"),
+					rs.getString("autores.nome"),
+					rs.getString("autores.resumo")
+				));
 				CategoriaAtivacao categoria = new CategoriaAtivacao(
 					rs.getLong("categorias_ativacao.id"),
 					rs.getDate("categorias_ativacao.dataCadastro"),
@@ -282,7 +297,12 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getDate("solicitacoes_ativacao_livro.dataEntrada"),
 					categoria,
 					rs.getString("solicitacoes_ativacao_livro.justificativa"),
-					livro
+					livro,
+					new Usuario(
+						rs.getLong("usuarios.id"),
+						rs.getDate("usuarios.dataCadastro"),
+						rs.getString("usuarios.nome")
+					)
 				);
 				list.add(sol);
 			}
@@ -309,11 +329,18 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 	public void getSolicitacoesInativacao(Campo[] campos) {
 		PreparedStatement pst = null;
 		try {
+			CriaFiltragem filtro = new CriaFiltragem();
+			String where = filtro.processa(campos);
+
 			connection = Conexao.getConnectionMySQL();
 			StringBuilder sql = new StringBuilder();
 			sql.append("Select * from solicitacoes_inativacao_livro " +
 				       "inner join livros on livros.id = solicitacoes_inativacao_livro.idLivro " +
-				       "inner join categorias_inativacao on categorias_inativacao.id = solicitacoes_inativacao_livro.idCategoria");
+				       "inner join autores on autores.id = livros.autorId " +
+				       "inner join categorias_inativacao on categorias_inativacao.id = solicitacoes_inativacao_livro.idCategoria " +
+				       "inner join usuarios on solicitacoes_inativacao_livro.idUsuario = usuarios.id " +
+				       where +
+				       " order by solicitacoes_inativacao_livro.id desc");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -329,6 +356,12 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 				);
 				livro.setCapa(rs.getString("livros.capa"));
 				livro.setTitulo(rs.getString("livros.titulo"));
+				livro.setAutor(new Autor(
+					rs.getLong("autores.id"),
+					rs.getDate("autores.dataCadastro"),
+					rs.getString("autores.nome"),
+					rs.getString("autores.resumo")
+				));
 				CategoriaInativacao categoria = new CategoriaInativacao(
 					rs.getLong("categorias_inativacao.id"),
 					rs.getDate("categorias_inativacao.dataCadastro"),
@@ -339,7 +372,12 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getDate("solicitacoes_inativacao_livro.dataEntrada"),
 					categoria,
 					rs.getString("solicitacoes_inativacao_livro.justificativa"),
-					livro
+					livro,
+					new Usuario(
+						rs.getLong("usuarios.id"),
+						rs.getDate("usuarios.dataCadastro"),
+						rs.getString("usuarios.nome")
+					)
 				);
 				list.add(sol);
 			}
@@ -371,7 +409,10 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 			connection = Conexao.getConnectionMySQL();
 			StringBuilder sql = new StringBuilder();
-			sql.append("Select * from livros_estoque left join fornecedores on livros_estoque.fornecedorId = fornecedores.id left join usuarios on usuarios.id = livros_estoque.idUsuarioAdmin " + where);
+			sql.append("Select * from livros_estoque "+
+				       "left join fornecedores on livros_estoque.fornecedorId = fornecedores.id "+
+				       "left join usuarios on usuarios.id = livros_estoque.idUsuarioAdmin "+
+				       "left join clientes on clientes.id = livros_estoque.idCliente " + where + " order by livros_estoque.id desc;");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -400,6 +441,13 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getString("usuarios.nome")
 				));
 
+				estoque.setCliente(new Cliente(
+					rs.getLong("clientes.id"), 
+					rs.getDate("clientes.dataCadastro"), 
+					null,
+					rs.getString("clientes.nome")
+				));
+
 				list.add(estoque);
 			}
 			
@@ -425,7 +473,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}
 	}
 	
-	//Select Single lista um livro só mais os detalhes dele
+	//Select Single lista um livro sï¿½ mais os detalhes dele
 	
 	public Livro selectSingle(long id) {
 		PreparedStatement pst = null;
@@ -552,7 +600,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			connection.setAutoCommit(false);
 			
 			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO livros (titulo, autorId, idEditora, ano, isbn, numeroPaginas, sinopse, altura, largura, peso, profundidade, preco, codigoBarras, status, dataCadastro, edicao, idGrupoPrecificacao, capa) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+			sql.append("INSERT INTO livros (titulo, autorId, idEditora, ano, isbn, numeroPaginas, sinopse, altura, largura, peso, profundidade, preco, codigoBarras, status, dataCadastro, edicao, idGrupoPrecificacao, capa, dataAtivacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -577,6 +625,12 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setString(16, livro.getEdicao());
 			pst.setLong(17, livro.getGrupoPrecificacao().getId());
 			pst.setString(18, livro.getCapa());
+
+			if (livro.getStatus() == 1) {
+				pst.setDate(19, new java.sql.Date(agora.getTime()));
+			} else {
+				pst.setDate(19, null);
+			}
 			pst.executeUpdate();
 			
 			ResultSet rs = pst.getGeneratedKeys();
@@ -631,9 +685,9 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setInt(7, 1);
 			pst.setLong(8, livroEstoque.getUsuarioResponsavel().getId());
 			// 1 = Entrada (cadastro no admin)
-			// 2 = Saída (venda)
+			// 2 = Saï¿½da (venda)
 			// 3 = Entrada (troca)
-			// 4 = Saída (troca)
+			// 4 = Saï¿½da (troca)
 
 			pst.executeUpdate();
 			
@@ -685,9 +739,9 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setInt(7, 2);
 			//ItemCarrinho(long id, Date dataCadastro, Livro livro, int quantidade, Cliente cliente)
 			// 1 = Entrada (cadastro no admin)
-			// 2 = Saída (venda)
+			// 2 = Saï¿½da (venda)
 			// 3 = Entrada (troca)
-			// 4 = Saída (troca)
+			// 4 = Saï¿½da (troca)
 
 			pst.executeUpdate();
 		}catch (Exception e) {

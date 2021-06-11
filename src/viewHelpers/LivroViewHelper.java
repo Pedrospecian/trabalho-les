@@ -18,14 +18,20 @@ public class LivroViewHelper {
 	}
 
 	public static Campo[] getListagemLivrosCampos(HttpServletRequest req) {
-		Campo[] campos = new Campo[14];
+		Campo[] campos = new Campo[16];
+
+		String resultadosPorPagina = "10";
+
+		if (req.getParameter("resultadosPorPagina") != null && req.getParameter("resultadosPorPagina").matches("^[0-9]+$")) {
+			resultadosPorPagina = req.getParameter("resultadosPorPagina");
+		}
 
 		campos[0] = new Campo(0, req.getParameter("titulo"), true, "", true, "titulo");
 		campos[1] = new Campo(1, req.getParameter("autor"), true, "", true, "autorId");
 		campos[2] = new Campo(1, req.getParameter("editora"), true, "", true, "idEditora");
 		campos[3] = new Campo(0, req.getParameter("isbn"), true, "", true, "isbn");
 		campos[4] = new Campo(0, req.getParameter("codigoBarras"), true, "", true, "codigoBarras");		
-		campos[5] = new Campo(1, req.getParameter("status"), true, "", true, "status");
+		campos[5] = new Campo(1, req.getParameter("status"), true, "", true, "livros.status");
 		campos[6] = new Campo(0, req.getParameter("edicao"), true, "", true, "edicao");
 		campos[7] = new Campo(1, req.getParameter("ano"), true, "", true, "ano");
 		campos[8] = new Campo(1, req.getParameter("numeroPaginas"), true, "", true, "numeroPaginas");
@@ -34,6 +40,8 @@ public class LivroViewHelper {
 		campos[11] = new Campo(555, req.getParameter("profundidade"), true, "", true, "profundidade");
 		campos[12] = new Campo(555, req.getParameter("preco"), true, "", true, "preco");
 		campos[13] = new Campo(1, req.getParameter("grupoPrecificacao"), true, "", true, "idGrupoPrecificacao");
+		campos[14] = new Campo(555, req.getParameter("largura"), true, "", true, "largura");
+		campos[15] = new Campo(999, resultadosPorPagina, true, "", true, "resultadosPorPagina");
 
 		return campos;
 	}
@@ -42,8 +50,8 @@ public class LivroViewHelper {
 		Campo[] campos = new Campo[8];
 
 		campos[0] = new Campo(0, req.getParameter("titulo"), true, "", true, "titulo");
-		campos[1] = new Campo(1, req.getParameter("autor"), true, "", true, "autor");
-		campos[2] = new Campo(1, req.getParameter("editora"), true, "", true, "editora");
+		campos[1] = new Campo(1, req.getParameter("autor"), true, "", true, "autorId");
+		campos[2] = new Campo(1, req.getParameter("editora"), true, "", true, "idEditora");
 		campos[3] = new Campo(1, req.getParameter("categoria"), true, "", true, "livros_categorias.idCategoria");
 		campos[4] = new Campo(0, req.getParameter("isbn"), true, "", true, "isbn");	
 		campos[5] = new Campo(0, req.getParameter("edicao"), true, "", true, "edicao");
@@ -54,14 +62,15 @@ public class LivroViewHelper {
 	}
 
 	public static Campo[] getListagemEstoqueCampos(HttpServletRequest req) {
-		Campo[] campos = new Campo[6];
+		Campo[] campos = new Campo[7];
 
 		campos[0] = new Campo(1, req.getParameter("fornecedor"), true, "", true, "fornecedores.id");
-		campos[1] = new Campo(1, req.getParameter("usuarioResponsavel"), true, "", true, "livros_estoque.usuarioResponsavel");
+		campos[1] = new Campo(1, req.getParameter("usuarioResponsavel"), true, "", true, "livros_estoque.idUsuarioAdmin");
 		campos[2] = new Campo(3, req.getParameter("dataEntrada"), true, "", true, "livros_estoque.dataEntrada");
 		campos[3] = new Campo(1, req.getParameter("tipoMovimentacao"), true, "", true, "livros_estoque.tipoMovimentacao");
 		campos[4] = new Campo(1, req.getParameter("custo"), true, "", true, "livros_estoque.custo");
 		campos[5] = new Campo(1, req.getParameter("id"), true, "", true, "livros_estoque.livroId");
+		campos[6] = new Campo(1, req.getParameter("clienteResponsavel"), true, "", true, "livros_estoque.idCliente");
 
 		return campos;
 	}
@@ -141,23 +150,12 @@ public class LivroViewHelper {
 		return campos;
 	}
 
-	public static String[] createLinksPaginacao(Campo campo, ResultadosBusca resultadosBusca) {
-        int resultadosPorPagina = LivroViewHelper.getResultadosPorPagina(campo);
-        int linksPaginacaoCount = LivroViewHelper.linksPaginacaoCount(resultadosBusca, resultadosPorPagina);
-
-        return LivroViewHelper.getLinksPaginacao(linksPaginacaoCount, resultadosPorPagina);
-    }
-
 	public static int getResultadosPorPagina(Campo campo) {
 		if (campo == null || campo.getValor() == null || campo.getValor().equals("") || campo.getValor().matches("^[0-9]+$") == false) {
             return 10;
         } else {
         	return Integer.parseInt(campo.getValor());
         }
-	}
-
-	public static int linksPaginacaoCount(ResultadosBusca resultadosBusca, int resultadosPorPagina) {
-		return (int)Math.ceil((double)resultadosBusca.getContagemTotal() / (double)resultadosPorPagina);
 	}
 
 	public static String[] getLinksPaginacao(int linksPaginacaoCount, int resultadosPorPagina) {
@@ -198,6 +196,23 @@ public class LivroViewHelper {
 		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
 		campos[1] = new Campo(1, req.getParameter("categoriaAtivacao"), true, "", true, "categoriaAtivacao");
 		campos[2] = new Campo(0, req.getParameter("justificativa"), true, "", true, "justificativa");
+
+		return campos;
+	}
+
+	public static Campo[] getSolicitacoesAtivacaoCampos(HttpServletRequest req) {
+		Campo[] campos = new Campo[4];
+
+		String resultadosPorPagina = "10";
+
+		if (req.getParameter("resultadosPorPagina") != null && req.getParameter("resultadosPorPagina").matches("^[0-9]+$")) {
+			resultadosPorPagina = req.getParameter("resultadosPorPagina");
+		}
+
+		campos[0] = new Campo(0, req.getParameter("titulo"), true, "", true, "titulo");
+		campos[1] = new Campo(1, req.getParameter("categoria"), true, "", true, "idCategoria");
+		campos[2] = new Campo(1, req.getParameter("idUsuario"), true, "", true, "idUsuario");
+		campos[3] = new Campo(999, resultadosPorPagina, true, "", true, "resultadosPorPagina");
 
 		return campos;
 	}

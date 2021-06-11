@@ -2,7 +2,6 @@ package dao;
 
 import utils.Conexao;
 import strategies.CriaFiltragemUsuario;
-import strategies.CriaPaginacao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,8 +30,8 @@ public class UsuarioDAO implements IDAO<EntidadeDominio, Campo[]> {
 			connection = Conexao.getConnectionMySQL();
 			CriaFiltragemUsuario filtro = new CriaFiltragemUsuario();
 			String where = filtro.processa(campos);
-			connection = Conexao.getConnectionMySQL();
-			pst = connection.prepareStatement("select * from usuarios inner join tipos_usuarios on tipos_usuarios.id = usuarios.idTipoUsuario " + where + ";");
+			
+			pst = connection.prepareStatement("select * from usuarios inner join tipos_usuarios on tipos_usuarios.id = usuarios.idTipoUsuario " + where + " order by usuarios.id desc;");
 	
 			ResultSet rs = pst.executeQuery();
 			
@@ -57,13 +56,6 @@ public class UsuarioDAO implements IDAO<EntidadeDominio, Campo[]> {
 				list.add(usuario);
 			}
 
-			pst = connection.prepareStatement("select count(usuarios.id) as resultadosTotal from usuarios " + where + ";");
-		    ResultSet rsc = pst.executeQuery();
-		    this.countVals = 0;
-		    while (rsc.next()) {
-		    	this.countVals = rsc.getInt("resultadosTotal");
-		    }
-			
 			this.selectVals = list;
 			
 			pst.close();

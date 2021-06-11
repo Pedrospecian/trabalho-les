@@ -21,13 +21,18 @@ import utils.ResultadosBusca;
 
 public class FornecedorViewHelper {
 	public static Campo[] getListagemFornecedorCampos(HttpServletRequest req) {
-		Campo[] campos = new Campo[5];
+		Campo[] campos = new Campo[4];
+
+		String resultadosPorPagina = "10";
+
+		if (req.getParameter("resultadosPorPagina") != null && req.getParameter("resultadosPorPagina").matches("^[0-9]+$")) {
+			resultadosPorPagina = req.getParameter("resultadosPorPagina");
+		}
 
 		campos[0] = new Campo(0, req.getParameter("nome"), true, "", true, "nome");
 		campos[1] = new Campo(0, req.getParameter("email"), true, "", true, "email");
 		campos[2] = new Campo(1, req.getParameter("status"), true, "", true, "status");
-		campos[3] = new Campo(999, req.getParameter("paginaAtual"), true, "", true, "paginaAtual");
-		campos[4] = new Campo(999, req.getParameter("resultadosPorPagina"), true, "", true, "resultadosPorPagina");
+		campos[3] = new Campo(999, resultadosPorPagina, true, "", true, "resultadosPorPagina");
 
 		return campos;
 	}

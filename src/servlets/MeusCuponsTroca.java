@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import facades.FachadaPedido;
 import model.CupomTroca;
+import utils.Campo;
 import utils.ResultadosBusca;
+import viewHelpers.CupomDescontoViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class MeusCuponsTroca extends HttpServlet {
@@ -22,14 +24,22 @@ public class MeusCuponsTroca extends HttpServlet {
 		}else{
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
+			
+			Campo[] campos = CupomDescontoViewHelper.getListagemCuponsTrocaCampos(req);
+			
+			campos[4].setValor(String.valueOf(lvh.getUsuarioLogadoId(req, resp)));
+			System.out.println("IDE=================== =  ============");
+			System.out.println(campos[4].getValor());
 
 			FachadaPedido fachada = new FachadaPedido();
 
-			ResultadosBusca registros = fachada.listagemCuponsTroca(lvh.getUsuarioLogadoId(req, resp));
+			ResultadosBusca registros = fachada.listagemCuponsTroca(campos);
 			req.setAttribute("registros", registros.getResultados());
 
 			System.out.println(registros.getResultados().size());
 			req.setAttribute("cliente", "cliente");
+			req.setAttribute("campos", campos);
+			req.setAttribute("linkPedido", "pedido");
 
         	req.setAttribute("headerHTML", lvh.getHeader(req, resp, 2));
 			req.getRequestDispatcher("cupom/listagemCuponsTroca.jsp").forward(req, resp);

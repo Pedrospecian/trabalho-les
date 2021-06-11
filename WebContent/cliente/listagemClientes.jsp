@@ -22,53 +22,43 @@
 				<select name="genero" >
 					<option value="">Gênero</option>
 					<c:forEach var="opt" items="${generos}">
-						<option value="${opt.getId()}">
+						<option value="${opt.getId()}" ${opt.getId() == campos[1].getValor() ? 'selected=\"selected\"' : ''}>
 							${opt.getNome()}
 						</option>
 					</c:forEach>
-					<!--<option value="1" ${1 == campos[1].getValor() ? 'selected=\"selected\"' : ''}>Masculino</option>
-					<option value="2" ${2 == campos[1].getValor() ? 'selected=\"selected\"' : ''}>Feminino</option>-->
 				</select>
 				<select name="tipoCliente">
 					<option value="">Tipo de Cliente</option>
 					<c:forEach var="opt" items="${tiposcliente}">
-						<option value="${opt.getId()}">
+						<option value="${opt.getId()}" ${opt.getId() == campos[3].getValor() ? 'selected=\"selected\"' : ''}>
 							${opt.getNome()}
 						</option>
 					</c:forEach>
-					<!--<option value="1" ${1 == campos[3].getValor() ? 'selected=\"selected\"' : ''}>Comprador</option>
-					<option value="2" ${2 == campos[3].getValor() ? 'selected=\"selected\"' : ''}>Revendedor</option>
-					<option value="3" ${3 == campos[3].getValor() ? 'selected=\"selected\"' : ''}>Parceiro</option>-->
 				</select>
 				<input type="date" name="dataNascimento" placeholder="Data de nascimento" value="${campos[2].getValor()}" >
 				<select name="tipoDocumento">
 					<option value="">Tipo de Documento</option>
 					<c:forEach var="opt" items="${tiposdocumento}">
-						<option value="${opt.getId()}">
+						<option value="${opt.getId()}" ${opt.getId() == campos[5].getValor() ? 'selected=\"selected\"' : ''}>
 							${opt.getNome()}
 						</option>
 					</c:forEach>
-					<!--<option value="1" ${1 == campos[5].getValor() ? 'selected=\"selected\"' : ''}>CPF</option>
-					<option value="2" ${2 == campos[5].getValor() ? 'selected=\"selected\"' : ''}>CNPJ</option>
-					<option value="3" ${3 == campos[5].getValor() ? 'selected=\"selected\"' : ''}>RG</option>
-					<option value="4" ${4 == campos[5].getValor() ? 'selected=\"selected\"' : ''}>Social Security Card</option>-->
 				</select>
 				<input type="text" name="documento" placeholder="Documento" value="${campos[6].getValor()}" >
 				<select name="status">
-					<option value="" ${"" == campos[4].getValor() ? 'selected=\"selected\"' : ''}>Status</option>
+					<option value="">Status</option>
 					<option value="1" ${1 == campos[4].getValor() ? 'selected=\"selected\"' : ''}>Ativo</option>
 					<option value="0" ${campos[4].getValor().equals("0") ? 'selected=\"selected\"' : ''}>Inativo</option>
 				</select>
-				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por página" value="${campos[8].getValor()}" >
+				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por página" value="${campos[7].getValor()}" >
 				<button type="submit">Buscar</button>
 			</form>
 			<c:if test = "${registros.size() > 0}">
-				<table cellspacing="0" cellpadding="0">
+				<table cellspacing="0" cellpadding="0" class="js-paginated-table" data-itensPorPagina="${campos[7].getValor()}">
 					<thead>
 						<tr>
 							<th>Id</th>
 							<th>Data de cadastro</th>
-							<th>Código único</th>
 							<th>Nome</th>
 							<th>E-mail</th>
 							<th>Gênero</th>
@@ -87,9 +77,6 @@
 									<span class="js-date-value">
 										${registro.getDataCadastro()}
 									</span>
-								</td>
-								<td>
-									124576
 								</td>
 								<td>
 									<span class="js-string-value">
@@ -128,7 +115,7 @@
 								</td>
 								<td>${1 == registro.getStatus() ? 'Ativo' : 'Inativo'}</td>
 								<td>
-									<a href="/trabalho-les/todosPedidos?cliente=${registro.getId()}" cypress-listagemPedidosAdmin>Consultar transações</a>
+									<a href="/trabalho-les/todosPedidos?idCliente=${registro.getId()}" cypress-listagemPedidosAdmin>Consultar transações</a>
 									<br>
 									<a href="/trabalho-les/listagemCuponsTroca?id=${registro.getId()}" cypress-listagemCuponsTroca>Cupons de troca</a>
 									<br>
@@ -144,11 +131,8 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<div class="pagination-wrapper">
-					<c:forEach var="link" items="${linksPaginacao}" varStatus="loop">
-						<a href="?${link}">${loop.index + 1}</a>
-					</c:forEach>
-				</div>
+				<div class="paginated-table-wrapper"></div>
+				<div class="js-pagination-links"></div>
 			</c:if>
 			<c:if test = "${registros.size() <= 0}">
 				<p>Não foi encontrado nenhum registro.</p>
@@ -166,5 +150,6 @@
 	</footer>	
 	<script type="text/javascript" src="assets/js/vendor/imask.js"></script>
 	<script type="text/javascript" src="assets/js/main.js"></script>
+	<script type="text/javascript" src="assets/js/pagination.js"></script>
 </body>
 </html>

@@ -2,7 +2,6 @@ package dao;
 
 import utils.Conexao;
 import strategies.CriaFiltragem;
-import strategies.CriaPaginacao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -81,12 +80,10 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 	public ArrayList select(Campo[] campos) {
 		PreparedStatement pst = null;
 		try {
-			//connection = Conexao.getConnectionMySQL();
 			CriaFiltragem filtro = new CriaFiltragem();
-			//CriaPaginacao paginacao = new CriaPaginacao();
 			String where = filtro.processa(campos);
 			if (where == null) where = "";
-			//String paginacaoStr = paginacao.processa(campos);
+
 			connection = Conexao.getConnectionMySQL();
 			pst = connection.prepareStatement("select clientes.id, clientes.dataCadastro, clientes.nome, clientes.genero, clientes.dataNascimento, clientes.status, clientes.email, clientes.idTipoCliente, tipos_clientes.dataCadastro, tipos_clientes.nome, tipos_clientes.descricao, " +
 				"COUNT(pedidos.id) as totalPedidos " +

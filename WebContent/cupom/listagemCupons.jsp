@@ -26,11 +26,11 @@
 				</select>
 				<input type="date" name="dataInicio" placeholder="Data de início" value="${campos[3].getValor()}" >
 				<input type="date" name="dataFim" placeholder="Data de fim" value="${campos[4].getValor()}" >
-				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por página" value="" >
+				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por página" value="${campos[5].getValor()}" >
 				<button type="submit">Buscar</button>
 			</form>
 			<c:if test = "${registros.size() > 0}">
-				<table cellspacing="0" cellpadding="0" class="js-paginated-table" data-itensPorPagina="10">
+				<table cellspacing="0" cellpadding="0" class="js-paginated-table" data-itensPorPagina="${campos[5].getValor()}">
 					<thead>
 						<tr>
 							<th>Id</th>

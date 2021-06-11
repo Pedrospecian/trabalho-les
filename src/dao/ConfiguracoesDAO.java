@@ -2,7 +2,6 @@ package dao;
 
 import utils.Conexao;
 import strategies.CriaFiltragemUsuario;
-import strategies.CriaPaginacao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

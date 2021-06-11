@@ -31,7 +31,6 @@ public class BuscaDetalhada extends HttpServlet {
 		ResultadosBusca autResultados = fachada.getAutores();
 
         req.setAttribute("registros", resultadosBusca.getResultados());
-        req.setAttribute("total", resultadosBusca.getContagemTotal());
         req.setAttribute("campos", campos);
 		req.setAttribute("autores", autResultados.getResultados());
 		req.setAttribute("editoras", ediResultados.getResultados());

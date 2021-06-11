@@ -149,11 +149,18 @@ public class PedidoViewHelper {
 	}
 
 	public static Campo[] getListagemPedidosCampos(HttpServletRequest req) {
-		Campo[] campos = new Campo[3];
+		Campo[] campos = new Campo[4];
+
+		String resultadosPorPagina = "10";
+
+		if (req.getParameter("resultadosPorPagina") != null && req.getParameter("resultadosPorPagina").matches("^[0-9]+$")) {
+			resultadosPorPagina = req.getParameter("resultadosPorPagina");
+		}
 
 		campos[0] = new Campo(0, req.getParameter("idCliente"), true, "", true, "pedidos.idUsuario");
-		campos[1] = new Campo(3, req.getParameter("dataEntrada"), true, "", true, "pedidos.dataCadastro");
+		campos[1] = new Campo(3, req.getParameter("dataCadastro"), true, "", true, "pedidos.dataCadastro");
 		campos[2] = new Campo(1, req.getParameter("status"), true, "", true, "pedidos.status");
+		campos[3] = new Campo(999, resultadosPorPagina, true, "", true, "resultadosPorPagina");
 
 		return campos;
 	}

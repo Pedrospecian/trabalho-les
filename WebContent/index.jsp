@@ -35,9 +35,10 @@
 					<div class="book-single">
 						<a href="/trabalho-les/produto?id=${livro.getId()}" cypress-livro-single>
 							<img src="${livro.getCapa()}" alt="${livro.getTitulo()}">
-						</a>
-						<p class="book-title">${livro.getTitulo()}</p>
-						<p class="book-price"><div class="js-dinheiro">${livro.getPreco()}</div></p>						
+						
+							<p class="book-title">${livro.getTitulo()}</p>
+							<p class="book-price"><div class="js-dinheiro">${livro.getPreco()}</div></p>
+						</a>						
 					</div>
 				</c:forEach>
 			</div>

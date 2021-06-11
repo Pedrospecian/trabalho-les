@@ -26,7 +26,7 @@
 					<select name="idCliente">
 						<option value="">Cliente</option>
 						<c:forEach var="cliSel" items="${clientes}">
-							<option value="${cliSel.getId()}" ${campos[0].getValor().equals(cliSel.getId()) ? 'selected=\"selected\"' : ''}>${cliSel.getNome()}</option>
+							<option value="${cliSel.getId()}" ${cliSel.getId() == campos[0].getValor() ? 'selected=\"selected\"' : ''}>${cliSel.getNome()}</option>
 						</c:forEach>
 					</select>
 				</c:if>
@@ -42,145 +42,101 @@
 					<option value="6" ${campos[2].getValor().equals("6") ? 'selected=\"selected\"' : ''}>Troca autorizada</option>
 					<option value="7" ${campos[2].getValor().equals("7") ? 'selected=\"selected\"' : ''}>Trocado</option>
 				</select>
-				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por página" value="" >
+				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por página" value="${campos[3].getValor()}" >
 				<button type="submit">Buscar</button>
 			</form>
-			<table cellspacing="0" cellpadding="0" class="js-paginated-table" data-itensPorPagina="10">
-				<thead>
-					<tr>
-						<th>Id</th>
-						<c:if test = '${cliente == null}'>
-							<th>Cliente</th>
-						</c:if>
-						<th>Data do pedido</th>
-						<th>Valor total</th>
-						<th>Valor frete</th>
-						<th>Endereço de entrega</th>
-						<th>Prazo estimado</th>
-						<th>Status</th>
-						<th>Ações</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="registro" items="${registros}">
-					<tr>
-						<td>${registro.getId()}</td>
-						<c:if test = '${cliente == null}'>
-							<td>${registro.getCliente().getNome()}</td>
-						</c:if>
-						<td>
-							<span class="js-date-value">
-								${registro.getDataCadastro()}
-							</span>
-						</td>
-						<td><span class="js-dinheiro">${registro.getValorTotal()}</span></td>
-						<td><span class="js-dinheiro">${registro.getValorFrete()}</span></td>
-						<td>Rua teste, nº 60</td>
-						<td>
-							${registro.getPrazo()} dias úteis
-							(Entrega via 
-								<c:if test = '${registro.getTipoServico().equals("04014")}'>
-									SEDEX)
+			<c:if test = "${registros.size() > 0}">
+				<table cellspacing="0" cellpadding="0" class="js-paginated-table" data-itensPorPagina="${campos[3].getValor()}">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<c:if test = '${cliente == null}'>
+								<th>Cliente</th>
+							</c:if>
+							<th>Data do pedido</th>
+							<th>Valor total</th>
+							<th>Valor frete</th>
+							<th>Endereço de entrega</th>
+							<th>Prazo estimado</th>
+							<th>Status</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="registro" items="${registros}">
+						<tr>
+							<td>${registro.getId()}</td>
+							<c:if test = '${cliente == null}'>
+								<td>${registro.getCliente().getNome()}</td>
+							</c:if>
+							<td>
+								<span class="js-date-value">
+									${registro.getDataCadastro()}
+								</span>
+							</td>
+							<td><span class="js-dinheiro">${registro.getValorTotal()}</span></td>
+							<td><span class="js-dinheiro">${registro.getValorFrete()}</span></td>
+							<td>Rua teste, nº 60</td>
+							<td>
+								${registro.getPrazo()} dias úteis
+								(Entrega via 
+									<c:if test = '${registro.getTipoServico().equals("04014")}'>
+										SEDEX)
+									</c:if>							
+									<c:if test = '${registro.getTipoServico().equals("04510")}'>
+										PAC)
+									</c:if>
+							</td>
+							<td cypress-statusPedido>
+								<c:if test = '${registro.getStatus() == 1}'>
+									Em processamento 
 								</c:if>							
-								<c:if test = '${registro.getTipoServico().equals("04510")}'>
-									PAC)
+								<c:if test = '${registro.getStatus() == 2}'>
+									Aceito
 								</c:if>
-						</td>
-						<td cypress-statusPedido>
-							<c:if test = '${registro.getStatus() == 1}'>
-								Em processamento (atualizado em 05/02/2021)
-							</c:if>							
-							<c:if test = '${registro.getStatus() == 2}'>
-								Aceito (atualizado em 05/02/2021)
-							</c:if>
-							<c:if test = '${registro.getStatus() == 3}'>
-								Em trânsito (atualizado em 05/02/2021)
-							</c:if>
-							<c:if test = '${registro.getStatus() == 4}'>
-								Entregue (atualizado em 05/02/2021)
-							</c:if>
-							<c:if test = '${registro.getStatus() == 5}'>
-								Em troca (atualizado em 05/02/2021)
-							</c:if>
-							<c:if test = '${registro.getStatus() == 6}'>
-								Troca autorizada (atualizado em 05/02/2021)
-							</c:if>
-							<c:if test = '${registro.getStatus() == 7}'>
-								Trocado (atualizado em 05/02/2021)
-							</c:if>
-							<c:if test = '${registro.getStatus() == 8}'>
-								Reprovado (atualizado em 05/02/2021)
-							</c:if>
-						</td>
-						<td cypress-acoesPedido>
-							<a href="/trabalho-les/pedidoAdmin?id=${registro.getId()}&admin" cypress-detalhes-pedido>Ver detalhes</a>
-							<br>
-							<c:if test = '${registro.getStatus() == 1}'>
-								<a href="/trabalho-les/processarPedido?id=${registro.getId()}" cypress-aceite>Processar pedido</a>
-							</c:if>
-							<c:if test = '${registro.getStatus() == 2}'>
-								<a href="/trabalho-les/alterarStatusPedido?id=${registro.getId()}" cypress-despacho>Despachar para entrega</a>
-							</c:if>
-							<c:if test = '${registro.getStatus() == 3}'>
-								<a href="/trabalho-les/alterarStatusPedido?id=${registro.getId()}" cypress-entregaEfetuada>Entrega efetuada</a>
-							</c:if>						
-						</td>
-					</tr>
-					</c:forEach>
-<!--					<tr>
-						<td>1</td>
-						<td>04/02/2021</td>
-						<td>R$ 40,00</td>
-						<td>R$ 2,50</td>
-						<td>Rua teste, nº 60</td>
-						<td>Em trânsito (atualizado em 05/02/2021)</td>
-						<td>
-							<a href="/trabalho-les/pedido?id=33&admin">Ver detalhes</a>
-							<br>
-							
-						</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>04/02/2021</td>
-						<td>R$ 40,00</td>
-						<td>R$ 2,50</td>
-						<td>Rua teste, nº 60</td>
-						<td>Entregue (atualizado em 05/02/2021)</td>
-						<td>
-							<a href="/trabalho-les/pedido?id=33&admin">Ver detalhes</a>
-						</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>04/02/2021</td>
-						<td>R$ 40,00</td>
-						<td>R$ 2,50</td>
-						<td>Rua teste, nº 60</td>
-						<td>Em troca (atualizado em 05/02/2021)</td>
-						<td>
-							<a href="/trabalho-les/pedido?id=33&admin">Ver detalhes</a>
-							<br>
-							
-						</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>04/02/2021</td>
-						<td>R$ 40,00</td>
-						<td>R$ 2,50</td>
-						<td>Rua teste, nº 60</td>
-						<td>Troca autorizada (atualizado em 05/02/2021)</td>
-						<td>
-							<a href="/trabalho-les/pedido?id=33&admin">Ver detalhes</a>
-							<br>
-							
-						</td>
-					</tr>-->
-				</tbody>
-			</table>
-			<div class="paginated-table-wrapper"></div>
-			<div class="js-pagination-links"></div>
+								<c:if test = '${registro.getStatus() == 3}'>
+									Em trânsito
+								</c:if>
+								<c:if test = '${registro.getStatus() == 4}'>
+									Entregue
+								</c:if>
+								<c:if test = '${registro.getStatus() == 5}'>
+									Em troca
+								</c:if>
+								<c:if test = '${registro.getStatus() == 6}'>
+									Troca autorizada
+								</c:if>
+								<c:if test = '${registro.getStatus() == 7}'>
+									Trocado
+								</c:if>
+								<c:if test = '${registro.getStatus() == 8}'>
+									Reprovado
+								</c:if>
+								(atualizado em <span class="js-date-value">${registro.getDataAlteracao()}</span>)
+							</td>
+							<td cypress-acoesPedido>
+								<a href="/trabalho-les/pedidoAdmin?id=${registro.getId()}&admin" cypress-detalhes-pedido>Ver detalhes</a>
+								<br>
+								<c:if test = '${registro.getStatus() == 1}'>
+									<a href="/trabalho-les/processarPedido?id=${registro.getId()}" cypress-aceite>Processar pedido</a>
+								</c:if>
+								<c:if test = '${registro.getStatus() == 2}'>
+									<a href="/trabalho-les/alterarStatusPedido?id=${registro.getId()}" cypress-despacho>Despachar para entrega</a>
+								</c:if>
+								<c:if test = '${registro.getStatus() == 3}'>
+									<a href="/trabalho-les/alterarStatusPedido?id=${registro.getId()}" cypress-entregaEfetuada>Entrega efetuada</a>
+								</c:if>						
+							</td>
+						</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				<div class="paginated-table-wrapper"></div>
+				<div class="js-pagination-links"></div>
+			</c:if>
+			<c:if test = "${registros.size() <= 0}">
+				<p>Não foi encontrado nenhum registro.</p>
+			</c:if>
 		</div>
 	</main>
 	<footer>

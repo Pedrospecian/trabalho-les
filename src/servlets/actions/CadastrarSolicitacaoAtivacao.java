@@ -21,6 +21,7 @@ import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 import model.CategoriaAtivacao;
 import model.SolicitacaoAtivacaoLivro;
+import model.Usuario;
 
 public class CadastrarSolicitacaoAtivacao extends HttpServlet {
 	private static final long serialVersionUID = 12;
@@ -41,7 +42,7 @@ public class CadastrarSolicitacaoAtivacao extends HttpServlet {
 				if(fachada.validarCampos(campos)) {
 					Livro livro = new Livro(Long.parseLong(campos[0].getValor()), null);
 					CategoriaAtivacao categoria = new CategoriaAtivacao(Long.parseLong(campos[1].getValor()), null, "");
-			        SolicitacaoAtivacaoLivro sol = new SolicitacaoAtivacaoLivro((long)1, null, categoria, campos[2].getValor(), livro);
+			        SolicitacaoAtivacaoLivro sol = new SolicitacaoAtivacaoLivro((long)1, null, categoria, campos[2].getValor(), livro, new Usuario(lvh.getUsuarioLogadoId(req, resp), null));
 					
 		        	fachada.inserirSolicitacaoAtivacaoLivro(sol, LoginViewHelper.getLogInfo(req, resp));
 

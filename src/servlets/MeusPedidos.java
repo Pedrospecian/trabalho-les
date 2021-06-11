@@ -32,7 +32,6 @@ public class MeusPedidos extends HttpServlet {
 			String linksPaginacao = "";
 			
 			req.setAttribute("registros", resultadosBusca.getResultados());
-	        req.setAttribute("total", resultadosBusca.getContagemTotal());
 	        req.setAttribute("linksPaginacao", linksPaginacao);
 
         	req.setAttribute("headerHTML", lvh.getHeader(req, resp, 2));

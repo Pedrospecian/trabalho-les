@@ -2,39 +2,24 @@ package dao;
 
 import utils.Conexao;
 import strategies.CriaFiltragem;
-import strategies.CriaPaginacao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 
-import model.Pais;
-import model.Telefone;
-import model.Estado;
-import model.Cidade;
-import model.Bairro;
 import model.Bandeira;
-import model.CartaoCredito;
-import model.Endereco;
-import model.Cliente;
-import model.Documento;
 import model.TipoCliente;
 import model.TipoDocumento;
 import model.TipoEndereco;
 import model.TipoTelefone;
-import model.EntidadeDominio;
 import model.TipoResidencia;
 import model.TipoLogradouro;
 import model.FuncaoEndereco;
 import model.TipoUsuario;
 import model.Genero;
-import model.Notificacao;
-import utils.Campo;
 
 public class SelectDAO {
 	private Connection connection = null;

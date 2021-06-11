@@ -15,6 +15,7 @@ public class Pedido extends EntidadeDominio {
 	private double valorTotal;
 	private int prazo;
 	private String tipoServico;
+	private Date dataAlteracao;
 	
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
@@ -22,6 +23,14 @@ public class Pedido extends EntidadeDominio {
 	
 	public Cliente getCliente() {
 		return this.cliente;
+	}
+
+	public void setDataAlteracao(Date dataAlteracao) {
+		this.dataAlteracao = dataAlteracao;
+	}
+	
+	public Date getDataAlteracao() {
+		return this.dataAlteracao;
 	}
 	
 	public void setStatus(int status) {

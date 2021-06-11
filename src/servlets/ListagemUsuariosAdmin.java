@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import viewHelpers.UsuarioViewHelper;
-import viewHelpers.PaginacaoViewHelper;
 import facades.FachadaUsuario;
 import utils.Campo;
 import utils.ResultadosBusca;
@@ -29,11 +28,8 @@ public class ListagemUsuariosAdmin extends HttpServlet {
 
 	        FachadaUsuario fachada = new FachadaUsuario();
 	        ResultadosBusca resultadosBusca = fachada.select(campos);
-	        String[] linksPaginacao = PaginacaoViewHelper.createLinksPaginacao(campos[4], resultadosBusca);
 
 	        req.setAttribute("registros", resultadosBusca.getResultados());
-	        req.setAttribute("total", resultadosBusca.getContagemTotal());
-	        req.setAttribute("linksPaginacao", linksPaginacao);
 	        req.setAttribute("campos", campos);
 	        req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
 			req.getRequestDispatcher("usuarioadmin/listagemUsuariosAdmin.jsp").forward(req, resp); 

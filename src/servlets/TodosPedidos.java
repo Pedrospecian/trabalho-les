@@ -46,7 +46,6 @@ public class TodosPedidos extends HttpServlet {
 			// req.setAttribute("pedidos", pedidos);
 			req.setAttribute("cliente", cliente);
 			req.setAttribute("registros", resultadosBusca.getResultados());
-	        req.setAttribute("total", resultadosBusca.getContagemTotal());
 	        req.setAttribute("linksPaginacao", linksPaginacao);
 	        req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
 	        req.setAttribute("clientes", todosClientes.getResultados());

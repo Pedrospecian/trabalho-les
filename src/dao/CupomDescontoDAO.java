@@ -2,7 +2,6 @@ package dao;
 
 import utils.Conexao;
 import strategies.CriaFiltragem;
-import strategies.CriaPaginacao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,8 +40,8 @@ public class CupomDescontoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			connection = Conexao.getConnectionMySQL();
 			CriaFiltragem filtro = new CriaFiltragem();
 			String where = filtro.processa(campos);
-			connection = Conexao.getConnectionMySQL();
-			pst = connection.prepareStatement("select * from cupons_desconto " + where);
+			
+			pst = connection.prepareStatement("select * from cupons_desconto " + where + " order by cupons_desconto.id desc;");
 					
 			ResultSet rs = pst.executeQuery();
 			
