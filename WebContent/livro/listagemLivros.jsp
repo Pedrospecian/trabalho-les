@@ -126,7 +126,7 @@
 											<c:if test = "${livro.getStatus() == 1}">
 												<a href="/trabalho-les/justificarInativacaoLivro?id=${livro.getId()}" cypress-justificarInativacaoLivro>Inativar</a>
 											</c:if>
-											<c:if test = "${livro.getStatus() == 0}">
+											<c:if test = "${livro.getStatus() == 0 || livro.getStatus() == 4}">
 												<a href="/trabalho-les/justificarAtivacaoLivro?id=${livro.getId()}" cypress-justificarAtivacaoLivro>Ativar</a>
 											</c:if>
 											<br>

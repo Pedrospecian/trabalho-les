@@ -31,7 +31,6 @@ import utils.Campo;
 public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 	private Connection connection = null;
 	public ArrayList selectVals;
-	public int countVals;
 	public Fornecedor selectSingleVal;
 	public Documento selectDocumentoVal;
 	public Endereco selectEnderecoVal;
@@ -196,8 +195,7 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 					tipoLogradouro,
 					rs.getString("enderecos.observacoes")
 				);
-				//Endereco(x x x x x x x x x TipoResidencia tipoResidencia, FuncaoEndereco funcaoEndereco, TipoLogradouro tipoLogradouro, String observacoes)
-
+				
 				this.selectSingleVal = new Fornecedor(
 						rs.getLong("fornecedores.id"),
 						rs.getDate("fornecedores.dataCadastro"),
@@ -254,7 +252,7 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 			
 			ResultSet rs = pst.getGeneratedKeys();
 			if (rs.next()) {
-				//fornecedor.setId(rs.getInt(1));
+				fornecedor.setId(rs.getInt(1));
 				connection.commit();	
 			}
 		} catch (Exception e) {
@@ -332,7 +330,6 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 		pst.setString(4, endereco.getNumero());
 		pst.setString(5, endereco.getComplemento());
 		pst.setString(6, endereco.getCep());
-		//pst.setLong(7, fornecedor.getId());
 		pst.setLong(7, endereco.getTipoEndereco().getId());
 		pst.setLong(8, idBairro);
 		pst.setLong(9, endereco.getTipoResidencia().getId());
@@ -361,7 +358,6 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 		pst.setString(1, documento.getCodigo());
 		pst.setDate(2, new java.sql.Date(documento.getValidade().getTime()));
 		pst.setLong(3, documento.getTipoDocumento().getId());
-		//pst.setLong(4, fornecedor.getId());
 		pst.setDate(4, new java.sql.Date(new Date().getTime()));
 
 		pst.executeUpdate();
@@ -467,36 +463,4 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 			e.printStackTrace();
 		}
 	}
-	
-	public void deleteDocument(Documento documento) throws SQLException, ClassNotFoundException {
-		PreparedStatement pst = null;
-		connection = Conexao.getConnectionMySQL();
-		
-		StringBuilder sql = new StringBuilder();
-		sql.append("DELETE FROM documentos WHERE documentos.id = ?;");	
-
-		pst = connection.prepareStatement(
-				sql.toString(),
-				Statement.RETURN_GENERATED_KEYS);
-		pst.setLong(1, documento.getId());
-
-		pst.executeUpdate();
-	}
-
-	public void deleteEndereco(Endereco endereco) throws SQLException, ClassNotFoundException {
-		PreparedStatement pst = null;
-		connection = Conexao.getConnectionMySQL();
-		
-		StringBuilder sql = new StringBuilder();
-		sql.append("DELETE FROM enderecos WHERE enderecos.id = ?;");
-
-		pst = connection.prepareStatement(
-				sql.toString(),
-				Statement.RETURN_GENERATED_KEYS);
-		pst.setLong(1, endereco.getId());
-
-		pst.executeUpdate();
-	}
-
-	//valida email existente
 }

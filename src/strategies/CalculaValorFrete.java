@@ -29,12 +29,12 @@ public class CalculaValorFrete implements IStrategy<Double[], DadosCalculoFrete>
 	public Double[] processa(DadosCalculoFrete obj) {
         double valorFrete = 0;
 
-        double totalAlturas = obj.getTotalAlturas(); //2.0;
-        double totalPesos = obj.getTotalPesos(); //2.0;
-        double maiorLargura = obj.getMaiorLargura(); //30.0;
-        double maiorProfundidade = obj.getMaiorProfundidade(); // 20.0;
-        String cepOrigem = obj.getCepOrigem(); //"08780220";
-        String cepDestino = obj.getCepDestino(); //"29211360";
+        double totalAlturas = obj.getTotalAlturas();
+        double totalPesos = obj.getTotalPesos();
+        double maiorLargura = obj.getMaiorLargura();
+        double maiorProfundidade = obj.getMaiorProfundidade();
+        String cepOrigem = obj.getCepOrigem();
+        String cepDestino = obj.getCepDestino();
         String cdServico = obj.getTipoServico(); //04014 => sedex; //04510 => pac
         
         try {

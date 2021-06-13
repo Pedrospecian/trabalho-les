@@ -382,13 +382,6 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 							 "Processamento");
         log.registrar();
 
-        /*for(ItemCarrinho le : lessCompra ) {
-    		System.out.println( "{id: " + le.getId() +
-					   ", quantidade: " + le.getQuantidade() +
-					   ", livro: " + le.getLivro().getId() + 
-					 "}, ");
-    	}*/
-
         //registra as baixas de estoque
         if (lessCompra != null) {
 
@@ -402,20 +395,11 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
         	}
         	
         	if (les.length() >= 2) les = les.substring(0, les.length() - 2);
-        	/*Log log3 = new Log(usuarioResponsavel,
-							 "LivroEstoque {id: " + le.getId() +
-						   ", quantidade: " + le.getQuantidade() +
-						   ", dataEntrada: " + le.getDataEntrada() + 
-						   ", livro: " + le.getLivro().getId() + 
-							 "}",
-							 "Entrada no estoque via devolução");
-       		log3.registrar();*/
+
        		Log log3 = new Log(usuarioResponsavel,
 							 "LivroEstoque: [" + les + "]}",
 							 "Baixas de estoque via aceite de compra");
        		log3.registrar();
-        	//long id, Date dataCadastro, int quantidade, double custo, Date dataEntrada, Fornecedor fornecedor, Livro livro, int tipoMovimentacao
-        
         }
 	}	
 }

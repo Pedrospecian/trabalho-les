@@ -25,10 +25,6 @@ public class CriaFiltragem implements IStrategy<String, Campo[]> {
 		  				if (campos[i].getValor() != null && !campos[i].getValor().trim().equals("") && campos[i].getTipo() != 999) {
 		  					String nomeTabela = "";
 
-		  					/*if (!campos[i].getNome().contains("clientes.")) {
-		  						nomeTabela = "";
-		  					}*/
-
 				  			switch(campos[i].getTipo()) {
 				  				//int e long
 					            case 1:  

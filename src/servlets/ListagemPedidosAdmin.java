@@ -33,7 +33,6 @@ public class ListagemPedidosAdmin extends HttpServlet {
 
 			ResultadosBusca todosClientes = fachadaCliente.select(null);
 
-			// req.setAttribute("pedidos", pedidos);
 			req.setAttribute("cliente", cliente);
 			req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
 

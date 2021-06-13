@@ -22,11 +22,6 @@ let telefonesArray = [];
 let categoriasArray = [];
 let cuponsTrocaArray = [];
 
-/*const removeFromHiddenArray = function(arrayString, index) {
-  if (!arrayString.match(/(.*,)+/)) return arrayString;
-  return arrayString.split(',').splice(index, 1).join;
-}*/
-
 const formatarData = function(dateString) {
   if (!dateString.match(/[0-9]{4}\-[0-9]{2}-[0-9]{2}/)) return dateString;
   var dateArr = dateString.split('-');
@@ -69,17 +64,6 @@ if (elementCepApi) {
     }
   });
 }
-
-/*var elementZipApi = document.querySelector('.js-zip-api');
-elementZipApi.addEventListener('change', function() {
-  var zipval = elementZipApi.value;
-  xhttp_zip.open("GET", 'https://service.zipapi.us/zipcode/' + zipval + '?X-API-KEY=0509ff3ea2372bdf28f8727b66ffb09f&fields=geolocation,population', true);
-  xhttp_zip.setRequestHeader('Access-Control-Allow-Origin', 'http://localhost');
-  xhttp_zip.setRequestHeader('Allow', '*');
-  xhttp_zip.setRequestHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
-  xhttp_zip.setRequestHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Referer, User-Agent');
-  xhttp_zip.send();
-});*/
 
 var btnAdicionarCartao = document.querySelector('.js-adicionar-cartao');
 if (btnAdicionarCartao) {
@@ -386,7 +370,6 @@ if (btnAdicionarDocumento) {
            }
         }
 
-        //alert(indexRemoved);
         console.log(documentosArray);
         documentosArray.splice(indexRemoved, 1);
         console.log(documentosArray);
@@ -456,7 +439,6 @@ if (btnAdicionarTelefone) {
            }
         }
 
-        //alert(indexRemoved);
         console.log(telefonesArray);
         telefonesArray.splice(indexRemoved, 1);
         console.log(telefonesArray);
@@ -509,7 +491,6 @@ if (btnAdicionarCategoria) {
            }
         }
 
-        //alert(indexRemoved);
         console.log(categoriasArray);
         categoriasArray.splice(indexRemoved, 1);
         console.log(categoriasArray);
@@ -607,11 +588,6 @@ for(let i = 0; i < spanDatas.length; i++) {
 }
 
 var spanTextos = document.querySelectorAll('.js-string-value');
-
-/*for(let i = 0; i < spanTextos.length; i++) {
-  spanTextos[i].innerHTML = decodeURIComponent(escape(spanTextos[i].innerHTML));
-}*/
-
 
 var removeCapa = document.querySelector('.js-remove-capa');
 var removeCapaWrapper = document.querySelector('.js-remove-capa-wrapper');

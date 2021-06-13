@@ -27,10 +27,6 @@ public class Logout extends HttpServlet {
         resp.addCookie(cookieId);
         resp.addCookie(cookieNome); 
         resp.addCookie(cookieTipo);
-
-
-        //boolean teste = LoginViewHelper.isAuthorized(req, resp, 1);
-
         
         resp.sendRedirect("/trabalho-les/logoutRedirect"); 
 	}

@@ -101,12 +101,10 @@ public class CadastroFornecedorAction extends HttpServlet {
 			        	fachada.insert(fornecedor, LoginViewHelper.getLogInfo(req, resp));
 			        	resp.sendRedirect("/trabalho-les/listagemFornecedores");
 			        } else {
-						//resp.setAttribute("erro", "true");
-		    	        /*resp.sendRedirect(req.getHeader("referer") + "?erro=true");
-	    	        	resp.sendRedirect(req.getHeader("referer"));*/
+
 			        }
 		        } else {
-	    	        //resp.sendRedirect(req.getHeader("referer") + "?erro=true");
+
 		        }
 	    	} catch(Exception e) {
 	    		e.printStackTrace();

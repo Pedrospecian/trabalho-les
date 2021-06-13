@@ -25,7 +25,6 @@ import utils.Conexao;
 public class GrupoPrecificacaoDAO implements IDAO<EntidadeDominio, Campo[]> {
 	private Connection connection = null;
 	public ArrayList selectVals;
-	public int countVals;
 	public GrupoPrecificacao selectSingleVal;
 	
 	public ArrayList select (Campo[] campos) {
@@ -71,8 +70,6 @@ public class GrupoPrecificacaoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}
 	}
 	
-	//Select Single lista um livro s� mais os detalhes dele
-	
 	public GrupoPrecificacao selectSingle(long id) {
 		PreparedStatement pst = null;
 		try {
@@ -112,7 +109,6 @@ public class GrupoPrecificacaoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return null;
 		}
 	}
-
 
 	public void insert(EntidadeDominio entidade) {
 		GrupoPrecificacao grupoprecificacao = (GrupoPrecificacao) entidade;
@@ -181,8 +177,7 @@ public class GrupoPrecificacaoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setString(1, grupoprecificacao.getNome());
 			pst.setDouble(2, grupoprecificacao.getPorcentagem());
 			pst.setInt(3, grupoprecificacao.getStatus());
-			pst.setLong(4, grupoprecificacao.getId());
-			
+			pst.setLong(4, grupoprecificacao.getId());			
 			
 			pst.executeUpdate();
 
@@ -309,11 +304,5 @@ public class GrupoPrecificacaoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			System.out.println("Ocorreu um erro ao excluir o registro!");
 			e.printStackTrace();
 		}
-	}
-
-
-	
+	}	
 }
-
-	
-

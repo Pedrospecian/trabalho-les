@@ -43,8 +43,6 @@ public class FachadaFornecedor implements IFachada<Fornecedor, Campo[]> {
 		return rb;
 	}
 
-	//validaemailexistente
-
 	public Fornecedor selectSingle(long id) {
 		FornecedorDAO dao = new FornecedorDAO();
 		dao.selectSingle(id);

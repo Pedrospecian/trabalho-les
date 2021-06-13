@@ -99,15 +99,10 @@ public class NovaContaAction extends HttpServlet {
 
 		            resp.addCookie(cookieId);
 		            resp.addCookie(cookieNome); 
-		            resp.addCookie(cookieTipo); 
-		            //req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
+		            resp.addCookie(cookieTipo);
 		            resp.sendRedirect("/trabalho-les/home");
-		        	
-		        	//resp.sendRedirect("/trabalho-les/minhaConta");
 		        } else {
-					//resp.setAttribute("erro", "true");
-	    	        resp.sendRedirect(req.getHeader("referer") + "?erro=true");
-    	        	//resp.sendRedirect(req.getHeader("referer"));
+					
 		        }
 	        } else {
     	        resp.sendRedirect(req.getHeader("referer") + "?erro=true");

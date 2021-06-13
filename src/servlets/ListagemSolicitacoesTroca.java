@@ -24,7 +24,6 @@ public class ListagemSolicitacoesTroca extends HttpServlet {
 
 			FachadaPedido fachada = new FachadaPedido();
 
-			//TODO: BUSCA DE ITENS
 			ResultadosBusca resultadosBusca = fachada.selectSolicitacoesTroca();
 			req.setAttribute("registros", resultadosBusca.getResultados());
 			req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));

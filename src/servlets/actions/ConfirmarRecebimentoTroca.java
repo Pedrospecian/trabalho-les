@@ -33,23 +33,6 @@ public class ConfirmarRecebimentoTroca extends HttpServlet {
 			fachada.confirmarRecebimentoTroca(Long.parseLong(req.getParameter("id")), req.getParameter("retornarEstoque") != null, LoginViewHelper.getLogInfo(req, resp));
 
 		    resp.sendRedirect("/trabalho-les/listagemSolicitacoesTroca");
-			/*try {
-				Campo[] campos = ClienteViewHelper.getAlterarClienteStatusActionCampos(req);
-
-				FachadaCliente fachada = new FachadaCliente();
-
-				if(fachada.validarCampos(campos)) {
-			        long id = Long.parseLong(campos[0].getValor());
-					int status = Integer.parseInt(campos[1].getValor());
-		        
-		        	Cliente cliente = new Cliente(id, new Date(), null, "", 1, new Date(), null, null, status);
-		        	fachada.updateStatus(cliente);
-		        } else {
-		        	//retorna com os dados invalidos
-		        }
-	    	} catch(Exception e) {
-	    		e.printStackTrace();
-	    	}*/
 	    }
 	}
 }

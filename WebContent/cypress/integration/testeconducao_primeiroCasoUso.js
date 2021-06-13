@@ -147,7 +147,6 @@ describe('Teste de condução de processo de compra', () => {
     cy.wait(600);
     cy.get('tr:first-child [cypress-quantidade]').clear().type(5)
     cy.wait(600);
-    //cy.get('tr:last-child [cypress-remover]').click()
     cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/carrinho')
     cy.wait(600);
 
@@ -220,8 +219,6 @@ describe('Teste de condução de processo de compra', () => {
     cy.wait(600);
     cy.get('.enderecos-wrapper .box-single:first-child [cypress-enderecoEntrega]').click()
     cy.wait(600);
-    /*cy.get('[cypress-submit]').click()
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusPedidos')*/
 
     //cadastra um novo endereço
     cy.get('[cypress-enderecoEntregaNovo]').click()
@@ -258,8 +255,6 @@ describe('Teste de condução de processo de compra', () => {
     cy.wait(600);
     
     //cadastra um novo cartao
-    //cy.visit('http://localhost:' + port + '/trabalho-les/checkout')
-    //cy.get('.enderecos-wrapper .box-single:first-child [cypress-enderecoEntrega]').click()
     cy.get('.js-checkout-new-card').click()
     cy.wait(600);
     cy.get('[cypress-submit]').click()
@@ -282,41 +277,6 @@ describe('Teste de condução de processo de compra', () => {
     cy.wait(600);
     cy.get('.js-cartoes-novos-wrapper .box-single:first-child .js-valorPagamento').type(20)
     cy.wait(600);
-
-    /*cy.get('[cypress-submit]').click()
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusPedidos')*/
-
-    //cadastra dois novos cartoes, associando um deles à conta
-    /*cy.visit('http://localhost:' + port + '/trabalho-les/checkout')
-    cy.get('.enderecos-wrapper .box-single:first-child [cypress-enderecoEntrega]').click()
-    cy.get('.js-checkout-new-card').click()
-    cy.get('[cypress-submit]').click()
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/checkout')
-
-    cy.get('.js-cartoes-novos-wrapper .box-single:first-child .js-numero-cartao').type("2323454567678989")
-    cy.get('.js-cartoes-novos-wrapper .box-single:first-child .js-nome-cartao').type("Teste")
-    cy.get('.js-cartoes-novos-wrapper .box-single:first-child .js-bandeira-cartao').select("1")
-    cy.get('.js-cartoes-novos-wrapper .box-single:first-child .js-cvv-cartao').type("123")
-    cy.get('.js-cartoes-novos-wrapper .box-single:first-child .js-validade-cartao').type("2025-04-01")
-    cy.get('.js-cartoes-novos-wrapper .box-single:first-child .js-valorPagamento').type("300")
-
-    cy.get('.js-checkout-new-card').click()
-
-    cy.get('[cypress-submit]').click()
-
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/checkout')
-
-    cy.get('.js-cartoes-novos-wrapper .box-single:nth-child(2) .js-numero-cartao').type("2323454567678989")
-    cy.get('.js-cartoes-novos-wrapper .box-single:nth-child(2) .js-nome-cartao').type("Teste")
-    cy.get('.js-cartoes-novos-wrapper .box-single:nth-child(2) .js-bandeira-cartao').select("1")
-    cy.get('.js-cartoes-novos-wrapper .box-single:nth-child(2) .js-cvv-cartao').type("123")
-    cy.get('.js-cartoes-novos-wrapper .box-single:nth-child(2) .js-validade-cartao').type("2025-04-01")
-    cy.get('.js-cartoes-novos-wrapper .box-single:nth-child(2) .js-valorPagamento').type("700")
-    cy.get('.js-cartoes-novos-wrapper .box-single:nth-child(2) input[name="cadastrarCartao"]').click()
-
-    cy.get('[cypress-submit]').click()
-
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/meusPedidos')*/
 
     //insere um cupom de desconto
     cy.get('[cypress-cupomDesconto]').type("DESCONTOEH10!!!")
@@ -1056,9 +1016,6 @@ describe('Teste de troca', () => {
         cy.wait(600);
         //6=>troca autorizada
         //7=>troca concluida
-        /*cy.get('.tabela-pagina-single.active tr[data-status=7] a[cypress-detalhes-pedido]').should(($lis) => {
-            expect($lis.eq(0)).to.contain('Trocado')
-        })*/
         cy.get('.tabela-pagina-single.active tr[data-status=7] a[cypress-detalhes-pedido]').first().click()
         cy.wait(600);
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/pedido?')
@@ -1148,22 +1105,6 @@ describe('Teste de troca', () => {
             })
             cy.wait(600);
         })
-
-        /*cy.get('[cypress-logout]').click()
-        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/home')
-
-        cy.visit('http://localhost:' + port + '/trabalho-les/loginAdmin')
-        cy.get('[cypress-email]').type("teste@adminnovo.com")
-        cy.get('[cypress-senha]').type("123Mudar!")
-        cy.get('[cypress-submit]').click()
-        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/homeAdmin')
-
-        cy.get('[cypress-listagemsolicitacoestroca]').click()
-        cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemSolicitacoesTroca')
-
-        cy.get('.tabela-pagina-single.active tr:first-child a[cypress-autorizartroca]').click()
-        cy.get('.tabela-pagina-single.active tr:first-child td[cypress-solicitacoestrocastatus]').should('include', 'Troca aceita. Aguardando confirmação de recebimento')*/
-
     });
 
 });

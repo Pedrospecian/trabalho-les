@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -35,7 +37,6 @@ import model.CategoriaAtivacao;
 public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 	private Connection connection = null;
 	public ArrayList selectVals;
-	public int countVals;
 	public Livro selectSingleVal;	
 	public Categoria[] selectCategoriasVal;
 
@@ -49,8 +50,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 
-			ResultSet rs = pst.executeQuery();
-			
+			ResultSet rs = pst.executeQuery();			
 			ArrayList<Livro> list = new ArrayList();
 			
 			while (rs.next()) {
@@ -164,13 +164,10 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 		} finally {
 			try {
 				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
+				if(connection != null) connection.close();				
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}			
-
+			}
 			return null;
 		}
 	}
@@ -318,7 +315,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			try {
 				if(pst != null) pst.close();
 				if(connection != null) connection.close();
-
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -392,9 +388,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 		} finally {
 			try {
 				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
+				if(connection != null) connection.close();				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -416,8 +410,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
-
-			//pst.setLong(1, id);
 
 			ResultSet rs = pst.executeQuery();
 			
@@ -473,8 +465,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}
 	}
 	
-	//Select Single lista um livro s� mais os detalhes dele
-	
 	public Livro selectSingle(long id) {
 		PreparedStatement pst = null;
 		try {
@@ -523,8 +513,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 				livro.setLargura(rs.getDouble("livros.largura"));
 
-				//public Livro(id, Date dataCadastro, String titulo, Autor autor, Editora editora, Categoria[] categorias, String ano, String isbn, int numeroPaginas, String sinopse, double altura, double peso, double profundidade, double preco, String codigoBarras, int status, String capa, GrupoPrecificacao grupoPrecificacao, String edicao) {
-
 				this.selectSingleVal = livro;
 				return this.selectSingleVal;
 			}
@@ -534,9 +522,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 		} finally {
 			try {
 				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
+				if(connection != null) connection.close();				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}			
@@ -579,9 +565,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 		} finally {
 			try {
 				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
+				if(connection != null) connection.close();				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}			
@@ -684,10 +668,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setLong(6, livroEstoque.getLivro().getId());
 			pst.setInt(7, 1);
 			pst.setLong(8, livroEstoque.getUsuarioResponsavel().getId());
-			// 1 = Entrada (cadastro no admin)
-			// 2 = Sa�da (venda)
-			// 3 = Entrada (troca)
-			// 4 = Sa�da (troca)
 
 			pst.executeUpdate();
 			
@@ -706,14 +686,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			}
 
 			e.printStackTrace();
-		} /*finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}*/
+		}
 	}
 
 	public void baixaEstoque(ItemCarrinho itemCarrinho) {
@@ -737,11 +710,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setLong(5, 0);
 			pst.setLong(6, itemCarrinho.getLivro().getId());
 			pst.setInt(7, 2);
-			//ItemCarrinho(long id, Date dataCadastro, Livro livro, int quantidade, Cliente cliente)
-			// 1 = Entrada (cadastro no admin)
-			// 2 = Sa�da (venda)
-			// 3 = Entrada (troca)
-			// 4 = Sa�da (troca)
 
 			pst.executeUpdate();
 		}catch (Exception e) {
@@ -750,7 +718,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-
 			e.printStackTrace();
 		}
 	}
@@ -790,7 +757,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			if (idCarrinho > 0) {
 				bloq = "- (SELECT IFNULL(sum(bloqueios.quantidade),0) as z FROM bloqueios_produtos as bloqueios where bloqueios.idLivro = ? and bloqueios.idCarrinho <> ?)";
 			}
-
 			sql.append("SELECT (SELECT sum(entradas.quantidade) as x FROM livros_estoque as entradas where entradas.livroId = ? and (entradas.tipoMovimentacao = 1 or entradas.tipoMovimentacao = 3)) - (SELECT IFNULL(sum(baixas.quantidade),0) as y FROM livros_estoque as baixas where baixas.livroId = ? and (baixas.tipoMovimentacao = 2 or baixas.tipoMovimentacao = 4)) " + bloq);
 			
 			pst = connection.prepareStatement(sql.toString(),
@@ -967,14 +933,26 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 		try {
 			connection = Conexao.getConnectionMySQL();
 			connection.setAutoCommit(false);
+
+			String dataAtivacao = "";
+
+			if (livro.getStatus() == 1) {
+				Date agora = new Date();
+
+				DateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
+
+				dataAtivacao = ", dataAtivacao = '" + dtf.format(agora) + "'";
+			}
 			
 			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE livros SET status = ? WHERE livro.id = ?;");
+			sql.append("UPDATE livros SET status = ?" + dataAtivacao + " WHERE livro.id = ?;");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 
-			pst.setInt(1, livro.getStatus());
+			
+
+			pst.setInt(1, livro.getStatus()); 
 			pst.setLong(2, livro.getId());
 			
 			pst.executeUpdate();
@@ -1021,7 +999,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 		double precoNovo = 0;
 		try {
-			//Connection conn = Conexao.getConnectionMySQL();
 			connection.setAutoCommit(false);
 			StringBuilder sql = new StringBuilder();
 			sql.append("select max(livros_estoque.custo) as maiorCusto, livros.preco as precoAtual, grupos_precificacao.porcentagem from livros_estoque " +
@@ -1240,7 +1217,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			connection.setAutoCommit(false);
 			
 			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO solicitacoes_inativacao_livro (dataEntrada, idCategoria, justificativa, idLivro) VALUES (?, ?, ?, ?);");
+			sql.append("INSERT INTO solicitacoes_inativacao_livro (dataEntrada, idCategoria, justificativa, idLivro, idUsuario) VALUES (?, ?, ?, ?, ?);");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -1251,6 +1228,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setLong(2, sol.getCategoria().getId());
 			pst.setString(3, sol.getJustificativa());
 			pst.setLong(4, sol.getLivro().getId());
+			pst.setLong(5, sol.getUsuario().getId());
 			pst.executeUpdate();
 
 			StringBuilder sql2 = new StringBuilder();
@@ -1291,7 +1269,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			connection.setAutoCommit(false);
 			
 			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO solicitacoes_ativacao_livro (dataEntrada, idCategoria, justificativa, idLivro) VALUES (?, ?, ?, ?);");
+			sql.append("INSERT INTO solicitacoes_ativacao_livro (dataEntrada, idCategoria, justificativa, idLivro, idUsuario) VALUES (?, ?, ?, ?, ?);");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -1302,6 +1280,7 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setLong(2, sol.getCategoria().getId());
 			pst.setString(3, sol.getJustificativa());
 			pst.setLong(4, sol.getLivro().getId());
+			pst.setLong(5, sol.getUsuario().getId());
 			pst.executeUpdate();
 
 			StringBuilder sql2 = new StringBuilder();
@@ -1374,10 +1353,8 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-
 			e.printStackTrace();
-		}
-		
+		}		
 	}
 
 	public void concluirAtivacao(long idLivro, int aceite) {
@@ -1387,8 +1364,18 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			connection = Conexao.getConnectionMySQL();
 			connection.setAutoCommit(false);
 
+			String dataAtivacao = "";
+
+			if (aceite == 1) {
+				Date agora = new Date();
+
+				DateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
+
+				dataAtivacao = ", dataAtivacao = '" + dtf.format(agora) + "'";
+			}
+
 			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE livros SET status = ? WHERE id = ?;");
+			sql.append("UPDATE livros SET status = ?" + dataAtivacao + " WHERE id = ?;");
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -1467,10 +1454,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 			pst.executeUpdate();
 		}
-	}
-
-	
+	}	
 }
-
-	
 

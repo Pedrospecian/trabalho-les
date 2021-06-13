@@ -26,14 +26,11 @@ public class DetalhesPedidoAdmin extends HttpServlet {
 
 				FachadaPedido fachada = new FachadaPedido();
 				Pedido pedido = fachada.selectSingle(Long.parseLong(req.getParameter("id")));
-				/*if (req.getParameter("admin") != null) {
-			    	req.getRequestDispatcher("pedido/detalhesPedidoAdmin.jsp").forward(req, resp);
-				} else {*/
+
 				req.setAttribute("pedido", pedido);
 				req.setAttribute("cliente", false);
 				req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
 				req.getRequestDispatcher("pedido/detalhesPedido.jsp").forward(req, resp);
-				//}
 			}
 		}
 	}

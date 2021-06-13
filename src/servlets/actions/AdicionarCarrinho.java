@@ -42,10 +42,7 @@ public class AdicionarCarrinho extends HttpServlet {
 
 			        ItemCarrinho itemCarrinho = new ItemCarrinho((long)1, new Date(), livro, quantidade, cliente);
 
-			        //Carrinho carrinho = fachada.selectCarrinho(lvh.getUsuarioLogadoId(req, resp));
-
-		        	fachada.adicionarCarrinho(itemCarrinho, 0, LoginViewHelper.getLogInfo(req, resp));
-		        
+		        	fachada.adicionarCarrinho(itemCarrinho, 0, LoginViewHelper.getLogInfo(req, resp));		        
 	        		resp.sendRedirect("/trabalho-les/carrinho");
 		        } else {
 		        	//retorna com os dados invalidos

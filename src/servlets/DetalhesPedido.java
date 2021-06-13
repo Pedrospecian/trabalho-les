@@ -38,10 +38,6 @@ public class DetalhesPedido extends HttpServlet {
 				} else {
 					resp.sendRedirect("/trabalho-les/home");
 				}
-				/*if (req.getParameter("admin") != null) {
-			    	req.getRequestDispatcher("pedido/detalhesPedidoAdmin.jsp").forward(req, resp);
-				} else {*/
-				//}
 			}
 		}
 	}

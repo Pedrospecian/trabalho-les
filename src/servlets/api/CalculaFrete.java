@@ -2,18 +2,6 @@ package servlets.api;
 
 import java.io.BufferedReader;
 
-/*import java.io.*;
-import java.net.*;
-import javax.xml.xpath.*;
-import org.apache.http.*;
-import org.apache.http.client.*;
-import org.apache.http.client.methods.*;
-import org.apache.http.client.utils.*;
-import org.apache.http.entity.*;
-import org.apache.http.impl.client.*;
-import org.apache.http.util.*;
-import org.xml.sax.*;*/
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

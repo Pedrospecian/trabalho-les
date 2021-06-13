@@ -203,8 +203,6 @@ public class FachadaCliente implements IFachada<Cliente, Campo[]> {
 							 "Alteração de status");
         	log.registrar();
 
-        	//Documento[] documentos, Endereco[] enderecos, CartaoCredito[] cartoesCredito, Telefone[] telefones
-
 			return "Cliente inserido com sucesso!";
 		}catch(Exception e) {
 			e.printStackTrace();

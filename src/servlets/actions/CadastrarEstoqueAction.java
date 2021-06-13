@@ -50,7 +50,6 @@ public class CadastrarEstoqueAction extends HttpServlet {
 			        
 		        	LivroEstoque livroEstoque = new LivroEstoque((long)1, new Date(), quantidade, custo, dataEntrada, fornecedor, livro, 1);
 		        	livroEstoque.setUsuarioResponsavel(new Usuario(lvh.getUsuarioLogadoId(req, resp), null, "") );
-		        	//id, dataCadastro, quantidade, custo, dataEntrada, fornecedor, livro, tipomovimentacao
 		        	fachada.insertEstoque(livroEstoque, LoginViewHelper.getLogInfo(req, resp));
 		        	resp.sendRedirect("/trabalho-les/listagemEstoque?id=" + campos[0].getValor());
 		        } else {

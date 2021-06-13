@@ -189,6 +189,7 @@
 	<script type="text/javascript" src="assets/js/vendor/imask.js"></script>
 	<script type="text/javascript" src="assets/js/main.js"></script>
 	<script type="text/javascript">
+		const portApi = "8080";
 		var pagamentoTotalCupons = 0;
 		var pagamentoTotalCuponsTroca = 0;
 		var pagamentoTotalCartoes = 0;
@@ -232,7 +233,7 @@
 				}
 
 				const tipoFreteValor = document.querySelector('input[name="tipoFrete"]:checked').attributes['value'].value;
-				xhttp_valorFrete.open("GET", 'http://localhost:8080/trabalho-les/api/calculaFrete?idCarrinho=' + document.querySelector('.js-idCarrinho').value + '&cepDestino=' + valorDoFrete + "&tipoFrete=" + tipoFreteValor, true);
+				xhttp_valorFrete.open("GET", 'http://localhost:' + portApi + '/trabalho-les/api/calculaFrete?idCarrinho=' + document.querySelector('.js-idCarrinho').value + '&cepDestino=' + valorDoFrete + "&tipoFrete=" + tipoFreteValor, true);
 		  		xhttp_valorFrete.send();
 			});
 		}
@@ -241,7 +242,7 @@
 			console.log(document.querySelector('input[name="enderecoEntrega"]:checked').attributes['value'].value);
 			if (document.querySelector('input[name="enderecoEntrega"]:checked').attributes['value'].value === '0') {
 				const tipoFreteValor = document.querySelector('input[name="tipoFrete"]:checked').attributes['value'].value;
-				xhttp_valorFrete.open("GET", 'http://localhost:8080/trabalho-les/api/calculaFrete?idCarrinho=' + document.querySelector('.js-idCarrinho').value + '&cepDestino=' + e.target.value + "&tipoFrete=" + tipoFreteValor , true);
+				xhttp_valorFrete.open("GET", 'http://localhost:' + portApi + '/trabalho-les/api/calculaFrete?idCarrinho=' + document.querySelector('.js-idCarrinho').value + '&cepDestino=' + e.target.value + "&tipoFrete=" + tipoFreteValor , true);
 		  		xhttp_valorFrete.send();
 			}
 		});
@@ -315,18 +316,13 @@
 			        novoCupomTroca.remove();
 			      });
 			} else {
-				//pagamentoTotalCupons = 0;
+
 			}
 		   }
 		};
 
 		cupomDesconto.addEventListener('change', function(e) {
-			/*if (e.target.value === "100CONTOEH10") {
-				pagamentoTotalCupons = 100;
-			} else {
-				pagamentoTotalCupons = 0;
-			}*/	
-		  	xhttp_cupomDesconto.open("GET", 'http://localhost:8080/trabalho-les/api/cupomDesconto?cupomDesconto=' + e.target.value , true);
+		  	xhttp_cupomDesconto.open("GET", 'http://localhost:' + portApi + '/trabalho-les/api/cupomDesconto?cupomDesconto=' + e.target.value , true);
 		  	xhttp_cupomDesconto.send();
 		});
 
@@ -336,7 +332,7 @@
 			    if (document.querySelector('.js-cupom-troca').value === '') {
 			      alert('Por favor, insira um cupom de troca!');
 			    } else {
-			      xhttp_cupomTroca.open("GET", 'http://localhost:8080/trabalho-les/api/cupomTroca?cupomTroca=' + document.querySelector('.js-cupom-troca').value, true);
+			      xhttp_cupomTroca.open("GET", 'http://localhost:' + portApi + '/trabalho-les/api/cupomTroca?cupomTroca=' + document.querySelector('.js-cupom-troca').value, true);
 	  			  xhttp_cupomTroca.send();
 			    }
 			  });
@@ -406,6 +402,14 @@
 		  	return false;
 		  }
 
+		  if (pagamentoTotalCupons > 0 && (pagamentoTotalCartoes - (valorTotalCompra + valorFrete) === 0)) {
+		  	alert("Você não pode usar um cupom promocional desnecessariamente!");
+		  	alert(pagamentoTotalCupons);
+		    alert(pagamentoTotalCartoes);
+		    alert(valorTotalCompra + valorFrete);
+		  	return false;
+		  }
+
 		  return true;
 		}
 
@@ -414,6 +418,7 @@
 		    e.preventDefault();
 		    if (validateCheckout()) {
 		      alert('Compra efetuada com sucesso!');
+
 		      checkoutForm.submit();
 		    }
 		  });

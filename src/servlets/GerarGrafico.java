@@ -38,7 +38,7 @@ public class GerarGrafico extends HttpServlet {
 				req.setAttribute("headerHTML", lvh.getHeader(req, resp, 5));
 				req.getRequestDispatcher("admin/graficoVendas.jsp").forward(req, resp);
 			} else {
-				//resp.sendRedirect("/trabalho-les/home");
+
 			}
 		}
 	}

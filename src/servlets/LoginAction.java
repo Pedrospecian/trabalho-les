@@ -33,8 +33,7 @@ public class LoginAction extends HttpServlet {
 
             resp.addCookie(cookieId);
             resp.addCookie(cookieNome); 
-            resp.addCookie(cookieTipo); 
-            //req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
+            resp.addCookie(cookieTipo);
             resp.sendRedirect("/trabalho-les/home");
 		}
 	}

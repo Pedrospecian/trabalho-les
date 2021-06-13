@@ -100,11 +100,6 @@ public class ClienteViewHelper {
 		campos[28] = new Campo(6, req.getParameter("arrDDDTelefone"), true, "", true, "dddTelefones");
 		campos[29] = new Campo(6, req.getParameter("arrNumeroTelefone"), true, "", true, "numeroTelefones");
 
-		/*System.out.println("=============== os campos ===================");
-		for (int i = 0; i < campos.length; i++) {
-			System.out.println(campos[i].getNome() + ": " + campos[i].getValor());
-		}*/
-
 		return campos;
 	}
 

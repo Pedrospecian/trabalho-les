@@ -43,7 +43,7 @@ public class AlterarFornecedorAction extends HttpServlet {
 		        	
 	        		resp.sendRedirect("/trabalho-les/listagemFornecedores");
 			    } else {
-	    	        //resp.sendRedirect(req.getHeader("referer") + "?erro=true");
+			    	
 		        }
 	    	} catch(Exception e) {
 	    		e.printStackTrace();

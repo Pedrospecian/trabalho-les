@@ -43,7 +43,6 @@ import utils.Campo;
 public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 	private Connection connection = null;
 	public ArrayList selectVals;
-	public int countVals;
 	public Pedido selectSingleVal;
 	public Carrinho selectCarrinhoVal;
 	public DadosCalculoFrete selectDadosCalculoFreteSingle;
@@ -56,7 +55,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			CriaFiltragem filtro = new CriaFiltragem();
 			String where = filtro.processa(campos);
 			connection = Conexao.getConnectionMySQL();
-			//pst = connection.prepareStatement("select * from pedidos inner join carrinhos on carrinhos.id = pedidos.idCarrinho inner join usuarios on usuarios.id = usuarioId " + where + paginacaoStr + ";");
 			pst = connection.prepareStatement("select * from pedidos inner join carrinhos on carrinhos.id = pedidos.idCarrinho inner join clientes on clientes.id = pedidos.idUsuario " + where + " order by pedidos.id desc;");
 			
 			ResultSet rs = pst.executeQuery();
@@ -96,20 +94,9 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					);
 				pedido.setDataAlteracao(rs.getDate("pedidos.dataAlteracao"));
 
-				//public Cliente(long id, Date dataCadastro, Documento[] documentos, String nome, int genero, Date dataNascimento, TipoCliente tipoCliente, Endereco[] enderecos, int status) {
-
-
 				list.add(pedido);
 			}
-
-			//pst = connection.prepareStatement("select count(pedidos.id) as resultadosTotal from pedidos " + where + ";");
-			pst = connection.prepareStatement("select count(pedidos.id) as resultadosTotal from pedidos;");
-			ResultSet rsc = pst.executeQuery();
-		    this.countVals = 0;
-		    while (rsc.next()) {
-		    	this.countVals = rsc.getInt("resultadosTotal");
-		    }
-			
+		
 			this.selectVals = list;
 			
 			pst.close();
@@ -118,8 +105,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return this.selectVals;
 		} catch (Exception e) {
 			e.printStackTrace();
-			//if(pst != null) pst.close();
-			//if(connection != null) connection.close();
 			return null;
 		}
 	}
@@ -131,7 +116,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			CriaFiltragemUsuario filtro = new CriaFiltragemUsuario();
 			String where = filtro.processa(campos);
 			connection = Conexao.getConnectionMySQL();
-			//pst = connection.prepareStatement("select * from pedidos inner join carrinhos on carrinhos.id = pedidos.idCarrinho inner join usuarios on usuarios.id = usuarioId " + where + paginacaoStr + ";");
 			pst = connection.prepareStatement("select * from pedidos inner join carrinhos on carrinhos.id = pedidos.idCarrinho inner join clientes on clientes.id = pedidos.idUsuario where pedidos.idUsuario = ? "+ where +" order by pedidos.id desc;");
 			
 			pst.setLong(1, id);
@@ -172,19 +156,8 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					);
 				pedido.setDataAlteracao(rs.getDate("pedidos.dataAlteracao"));
 
-				//public Cliente(long id, Date dataCadastro, Documento[] documentos, String nome, int genero, Date dataNascimento, TipoCliente tipoCliente, Endereco[] enderecos, int status) {
-
-
 				list.add(pedido);
 			}
-
-			//pst = connection.prepareStatement("select count(pedidos.id) as resultadosTotal from pedidos " + where + ";");
-			pst = connection.prepareStatement("select count(pedidos.id) as resultadosTotal from pedidos;");
-			ResultSet rsc = pst.executeQuery();
-		    this.countVals = 0;
-		    while (rsc.next()) {
-		    	this.countVals = rsc.getInt("resultadosTotal");
-		    }
 			
 			this.selectVals = list;
 			
@@ -194,8 +167,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return this.selectVals;
 		} catch (Exception e) {
 			e.printStackTrace();
-			//if(pst != null) pst.close();
-			//if(connection != null) connection.close();
 			return null;
 		}
 	}
@@ -234,9 +205,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				);
 				
 				TipoResidencia tipoResidencia = new TipoResidencia(rs.getLong("enderecos.idTipoResidencia"), rs.getDate("tipos_residencias.dataCadastro"), rs.getString("tipos_residencias.nome"), rs.getString("tipos_residencias.descricao"));
-
 				FuncaoEndereco funcaoEndereco = new FuncaoEndereco(rs.getLong("enderecos.idFuncaoEndereco"), rs.getDate("funcoes_enderecos.dataCadastro"), rs.getString("funcoes_enderecos.nome"), rs.getString("funcoes_enderecos.descricao"));
-
 				TipoLogradouro tipoLogradouro = new TipoLogradouro(rs.getLong("enderecos.idTipoLogradouro"), rs.getDate("tipos_logradouros.dataCadastro"), rs.getString("tipos_logradouros.nome"), rs.getString("tipos_logradouros.descricao"));
 				Endereco endereco = new Endereco(
 					rs.getLong("enderecos.id"), rs.getDate("enderecos.dataCadastro"),
@@ -276,8 +245,8 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					tipoLogradouro,
 					rs.getString("enderecos.observacoes"));
 				CupomDesconto cupomDesconto = null;
-				CartaoCredito[] cartoesCredito = null; //fazer
-				CupomTroca[] cuponsTroca = null; //fazer
+				CartaoCredito[] cartoesCredito = null;
+				CupomTroca[] cuponsTroca = null;
 				getCarrinhoPorId(rs.getLong("pedidos.idCarrinho"), true);
 				Carrinho carrinho = this.selectCarrinhoVal;
 				Pedido pedido = new Pedido(
@@ -299,9 +268,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 				this.selectSingleVal = pedido;
 
-				//Pedido(long id, Date dataCadastro, Cliente cliente, int status,
-				//		 Endereco endereco, double valorFrete, CupomDesconto cupomDesconto,
-				//		 CartaoCredito[] cartoesCredito, CupomTroca[] cuponsTroca, Carrinho carrinho, double valorTotal)
 				return this.selectSingleVal;
 			}
 		} catch (Exception e) {
@@ -427,8 +393,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					"carrinhos_produtos.idCarrinhoProduto, carrinhos_produtos.quantidadeItensTrocados, "+
 					"carrinhos_produtos.quantidade, livros.id, livros.titulo, livros.preco, livros.capa "+
 					"from carrinhos_produtos inner join livros on carrinhos_produtos.idProduto = livros.id where carrinhos_produtos.idCarrinho = ?;");
-				//sql2.append("select * from carrinhos_produtos inner join livros on carrinhos_produtos.idProduto = livros.id where carrinhos_produtos.idCarrinho = ?;");
-
+				
 				pst = connection.prepareStatement(sql2.toString(),
 						Statement.RETURN_GENERATED_KEYS);
 				pst.setLong(1, id);
@@ -527,8 +492,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
-				//rs.getInt("pedidos.status");
-
 				connection.setAutoCommit(false);
 			
 				StringBuilder sql2 = new StringBuilder();
@@ -597,14 +560,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				return null;
 			}
 
-		}/* finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}*/
+		}
 	}
 
 	public void reprovaPedido(Pedido pedido) {
@@ -665,11 +621,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 			sql3.append("SELECT * FROM pedidos_cartoes " +
 						"INNER JOIN cartoes_credito ON cartoes_credito.id = pedidos_cartoes.idCartao " +
-						//"INNER JOIN cartoes_aprovados a ON a.nome = cartoes_credito.nome " +
 						"LEFT JOIN cartoes_aprovados b ON b.numero = cartoes_credito.numero and b.limiteDisponivel >= pedidos_cartoes.valor and b.dataExpiracao >= CURDATE()" +
-						/*"INNER JOIN cartoes_aprovados c ON c.dataExpiracao = cartoes_credito.dataExpiracao " +
-						"INNER JOIN cartoes_aprovados d ON d.cvv = cartoes_credito.cvv " +
-						"INNER JOIN cartoes_aprovados e ON e.idBandeira = cartoes_credito.idBandeira " +*/
 						"WHERE pedidos_cartoes.idPedido = ?;");
 			
 			pst = conn.prepareStatement(sql3.toString(),
@@ -1194,7 +1146,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getDouble("cupons_troca.valor"),
 					null
 				);
-				//CupomTroca(long id, Date dataCadastro, String nome, double valor, Pedido pedido)
 				con.commit();
 				return cupomTroca;
 			} else {
@@ -1340,13 +1291,10 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			}
 
 			pst.setLong(7, pedido.getCarrinho().getId());
-
 			pst.setDouble(8, pedido.getValorTotal());
-
 			pst.setInt(10, pedido.getPrazo());
-
 			pst.setString(11, pedido.getTipoServico());
-			
+
 			pst.executeUpdate();
 			
 			ResultSet rs = pst.getGeneratedKeys();
@@ -1542,20 +1490,15 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				pst.executeUpdate();
 
 				StringBuilder sql3 = new StringBuilder();
-				// sql3.append("UPDATE carrinhos_produtos SET quantidade = ?, quantidadeItensTrocados = ? WHERE carrinhos_produtos.idCarrinhoProduto = ?;");
 				sql3.append("UPDATE carrinhos_produtos quantidadeItensTrocados = quantidadeItensTrocados + ? WHERE carrinhos_produtos.idCarrinhoProduto = ?;");
 
 				pst = connection.prepareStatement(sql3.toString(),
 						Statement.RETURN_GENERATED_KEYS);
 
-				/*pst.setInt(1, quantidadeAtual - itemCarrinho.getQuantidadeItensTrocados() );
-				pst.setInt(2, itemCarrinho.getQuantidadeItensTrocados() );
-				pst.setLong(3, itemCarrinho.getId());*/
 				pst.setInt(1, itemCarrinho.getQuantidadeItensTrocados() );
 				pst.setLong(2, itemCarrinho.getId());
 
 				pst.executeUpdate();
-
 
 				//altera status do pedido
 				StringBuilder sql4 = new StringBuilder();
@@ -1585,7 +1528,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					pst.executeUpdate();
 				}
 
-
 				connection.commit();
 			}
 		} catch (Exception e) {
@@ -1602,7 +1544,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		PreparedStatement pst = null;
 		try {
 			connection = Conexao.getConnectionMySQL();
-			//pst = connection.prepareStatement("select * from pedidos inner join carrinhos on carrinhos.id = pedidos.idCarrinho inner join usuarios on usuarios.id = usuarioId " + where + paginacaoStr + ";");
 			pst = connection.prepareStatement(
 		    "select solicitacoes_troca.id, solicitacoes_troca.dataCadastro, solicitacoes_troca.quantidade, solicitacoes_troca.status, " +
 		    "       livros.id, livros.capa, livros.titulo, carrinhos_produtos.precoMomentoCompra, " +
@@ -1641,51 +1582,19 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 							rs.getString("clientes.nome")
 						)
 					), //itemCarrinho
-					//(long id, Date dataCadastro, Livro livro, int quantidade, Cliente cliente)
 					rs.getInt("solicitacoes_troca.quantidade"),
 					rs.getInt("solicitacoes_troca.status")
-					//(long id, Date dataCadastro, ItemCarrinho itemCarrinho, int quantidade, int status)
-					/*rs.getLong("pedidos.id"),
-					rs.getDate("pedidos.dataCadastro"),
-					new Cliente(
-						rs.getLong("clientes.id"),
-						rs.getDate("clientes.dataCadastro"),
-						null,
-						rs.getString("clientes.nome"),
-						rs.getInt("clientes.genero"),
-						rs.getDate("clientes.dataNascimento"),
-						null,
-						null,
-						rs.getInt("clientes.status"),
-						null
-					),
-					rs.getInt("pedidos.status"),
-					null, //endereco
-					rs.getDouble("pedidos.valorFrete"),
-					null, //cupomDesconto
-					null, //cartoesCredito
-					null, //cuponsTroca
-					null, //carrinho
-					rs.getDouble("pedidos.valorTotal")*/
 				);
-
-				//public Cliente(long id, Date dataCadastro, Documento[] documentos, String nome, int genero, Date dataNascimento, TipoCliente tipoCliente, Endereco[] enderecos, int status) {
 
 				list.add(solicitacaoTroca);
 			}
 
-			//pst = connection.prepareStatement("select count(pedidos.id) as resultadosTotal from pedidos " + where + ";");			
 			this.selectVals = list;
 			
 			pst.close();
 			connection.close();
-			
-			//return this.selectVals;
 		} catch (Exception e) {
 			e.printStackTrace();
-			//if(pst != null) pst.close();
-			//if(connection != null) connection.close();
-			//return null;
 		}		
 	}
 
@@ -1774,8 +1683,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 				pst.executeUpdate();
 			}
-
-
 
 			connection.commit();
 						
@@ -1883,9 +1790,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				e1.printStackTrace();
 				return null;
 			}
-
-		}
-		
+		}		
 	}
 	
 	public CupomTroca geraCupomTroca(long id) {
@@ -2182,13 +2087,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 	}
 
 	public ArrayList<ItemGrafico> gerarGrafico(Campo[] campos) {
-		//select count() as vendas where dataCadastro >= dataInicio and dataCadastro <= dataFim
-
-		//livro individual:
-		//
-		//>>> 
-		//where tipoMovimentacao = 2 and dataCadastro >= '2021-01-01' and dataCadastro <= '2021-12-31' group by dataCadastro
-
 		PreparedStatement pst = null;
 		try {
 			connection = Conexao.getConnectionMySQL();
@@ -2200,7 +2098,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				nomeTipo = "categorias.nome";
 				joinCat = "inner join livros_categorias on livros_categorias.idLivro = livros_estoque.livroId inner join categorias on categorias.id = livros_categorias.idCategoria";
 			}
-			//pst = connection.prepareStatement("select * from pedidos inner join carrinhos on carrinhos.id = pedidos.idCarrinho inner join usuarios on usuarios.id = usuarioId " + where + paginacaoStr + ";");
 			pst = connection.prepareStatement("SELECT " + nomeTipo + ", livros_estoque.livroId, livros_estoque.dataCadastro, sum(livros_estoque.quantidade) as total FROM livros_estoque " +
 				joinCat + 
 				" WHERE livros_estoque.tipoMovimentacao = 2 and livros_estoque.dataCadastro >= ? and livros_estoque.dataCadastro <= ? group by livros_estoque.dataCadastro;");
@@ -2225,8 +2122,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getString(nomeTipo)
 				);
 
-				//(int valor, Date data, int tipo, String label)
-
 				list.add(ig);
 			}
 			
@@ -2238,8 +2133,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return this.selectGerarGraficoVals;
 		} catch (Exception e) {
 			e.printStackTrace();
-			//if(pst != null) pst.close();
-			//if(connection != null) connection.close();
 			return null;
 		}		
 	}

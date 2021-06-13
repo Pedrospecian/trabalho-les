@@ -21,7 +21,6 @@ import utils.Campo;
 public class UsuarioDAO implements IDAO<EntidadeDominio, Campo[]> {
 	private Connection connection = null;
 	public ArrayList selectVals;
-	public int countVals;
 	public Usuario selectSingleVal;
 
 	public ArrayList select(Campo[] campos) {
@@ -360,7 +359,6 @@ public class UsuarioDAO implements IDAO<EntidadeDominio, Campo[]> {
 				if (tipoUsuario.getId() == 3) {
 					tipoUsuario.setNome("gerentevendas");
 				}
-				//Usuario(long id, Date dataCadastro, String nome, String email, int status, String senha, TipoUsuario tipoUsuario)
 				this.selectSingleVal = new Usuario(
 						rs.getLong("usuarios.id"),
 						null,

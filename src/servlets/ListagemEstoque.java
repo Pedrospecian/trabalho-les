@@ -34,9 +34,6 @@ public class ListagemEstoque extends HttpServlet {
             FachadaLivro fachada = new FachadaLivro();
             ResultadosBusca resultadosBusca = fachada.selectEstoque(Long.parseLong(req.getParameter("id")), campos);
             Livro livro = fachada.selectSingle(Long.parseLong(req.getParameter("id")));
-            /*System.out.println(campos[6]);
-            System.out.println(campos[6].getValor());
-            String[] linksPaginacao = LivroViewHelper.createLinksPaginacao(campos[6], resultadosBusca);*/
 
             int resultadosPorPagina = 10;
 
@@ -55,8 +52,6 @@ public class ListagemEstoque extends HttpServlet {
 
             req.setAttribute("registros", resultadosBusca.getResultados());
             req.setAttribute("resultadosPorPagina", resultadosPorPagina);
-            //req.setAttribute("total", resultadosBusca.getContagemTotal());
-            //req.setAttribute("linksPaginacao", linksPaginacao);
             req.setAttribute("campos", campos);
             req.setAttribute("livro", livro);
             req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));

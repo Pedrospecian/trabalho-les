@@ -113,8 +113,6 @@ public class PedidoViewHelper {
 				cartoesCredito[i].setValorPago(Double.parseDouble(req.getParameter("valorPagoCartao_" + cartoesCredito[i].getId())));
 			}
 			cartoesCredito[i].setJaExistente(true);
-			//	(long id, Date dataCadastro, String nome, String numero, String cvv, Date dataExpiracao, Bandeira bandeira) {
-
 		}
 
 		for (int i = 0; i < numeroCartoesNovos; i++) {

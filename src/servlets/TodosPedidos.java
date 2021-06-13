@@ -41,9 +41,8 @@ public class TodosPedidos extends HttpServlet {
 				resultadosBusca = fachadaPedido.select(camposBusca);
 			}
 
-			String[] linksPaginacao = null;//PaginacaoViewHelper.createLinksPaginacao(campos[8], resultadosBusca);
+			String[] linksPaginacao = null;
 
-			// req.setAttribute("pedidos", pedidos);
 			req.setAttribute("cliente", cliente);
 			req.setAttribute("registros", resultadosBusca.getResultados());
 	        req.setAttribute("linksPaginacao", linksPaginacao);

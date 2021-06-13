@@ -45,8 +45,6 @@ public class CadastrarSolicitacaoInativacao extends HttpServlet {
 			        SolicitacaoInativacaoLivro sol = new SolicitacaoInativacaoLivro((long)1, null, categoria, campos[2].getValor(), livro, new Usuario(lvh.getUsuarioLogadoId(req, resp), null));
 					
 		        	fachada.inserirSolicitacaoInativacaoLivro(sol, LoginViewHelper.getLogInfo(req, resp));
-
-		        	//System.out.println(sol.getJustificativa());
 		        
 	        		resp.sendRedirect("/trabalho-les/listagemLivros");
 		        } else {

@@ -102,12 +102,9 @@ public class CadastroClienteAction extends HttpServlet {
 			        	System.out.println(enderecos == null);
 			        	System.out.println(cartoesCredito == null);
 			        	System.out.println(telefones == null);
-						//resp.setAttribute("erro", "true");
-		    	        /*resp.sendRedirect(req.getHeader("referer") + "?erro=true");
-	    	        	resp.sendRedirect(req.getHeader("referer"));*/
 			        }
 		        } else {
-	    	        //resp.sendRedirect(req.getHeader("referer") + "?erro=true");
+
 		        }
 	    	} catch(Exception e) {
 	    		e.printStackTrace();

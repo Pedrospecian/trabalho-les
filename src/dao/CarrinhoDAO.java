@@ -20,7 +20,6 @@ import utils.Campo;
 public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 	private Connection connection = null;
 	public ArrayList selectVals;
-	public int countVals;
 	public Usuario selectSingleVal;
 
 	public ArrayList select(Campo[] campos) {

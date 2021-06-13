@@ -116,7 +116,7 @@ public class FinalizarCompra extends HttpServlet {
 
 						resp.sendRedirect("/trabalho-les/meusPedidos");
 					} else {
-						//resp.sendRedirect("/trabalho-les/checkout");
+
 					}
 				}
 			} catch(Exception e) {

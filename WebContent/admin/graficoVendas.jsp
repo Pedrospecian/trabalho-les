@@ -54,6 +54,8 @@
 	<script type="text/javascript" src="assets/js/vendor/Chart.bundle.min.js"></script>
 	<script type="text/javascript" src="assets/js/main.js"></script>
 	<script type="text/javascript">
+		const cores = ['#ee1000', '#22ccff', '#3440e9', '#73ff32', '#e220fe', '#eac221', '#28cf90'];
+		const coresBg = ['#ee100040', '#22ccff40', '#3440e940', '#73ff3240', '#e220fe40', '#eac22140', '#28cf9040'];
 		var ctx = document.getElementById('myChart');
 
 		var itensGraficos = document.querySelectorAll('.js-itensGraficos');
@@ -89,7 +91,9 @@
 			cjtoItens.push({
 				label: labels[i],
 				data: [],
-				borderWidth: 1
+				borderWidth: 1,
+				borderColor: cores[i % cores.length],
+				backgroundColor: coresBg[i % coresBg.length]
 			});
 		}
 
@@ -139,13 +143,7 @@
 		    type: 'line',
 		    data: {
 		        labels: dates,
-		        datasets: cjtoItens /*[{
-			        label: 'Vendas',
-			        data: [42.4, 43.0, 43.0, 50.3, 49.4, 48.4, 51.2, 51.8],
-			        borderColor: 'rgb(124, 181, 236)',
-			        borderWidth: 1
-			      }
-			    ]*/
+		        datasets: cjtoItens
 		    },
 		    options: {
 		        scales: {

@@ -177,8 +177,6 @@ public class FachadaLivro implements IFachada< Livro, Campo[]> {
 							 "Inserção");
 			log.registrar();
 
-			//Livro(double preco, String codigoBarras, int status, String capa, GrupoPrecificacao grupoPrecificacao, String edicao)
-
 			return "Livro inserido com sucesso!";
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -281,8 +279,6 @@ public class FachadaLivro implements IFachada< Livro, Campo[]> {
 							 "Inserção");
 			log.registrar();
 
-			//int quantidade, double custo, Date dataEntrada, Fornecedor fornecedor, Livro livro, int tipoMovimentacao
-
 			double precoNovo = dao.alteraPreco( le.getLivro().getId() );
 
 			Log log2 = new Log(usuarioResponsavel + " (admin)",
@@ -292,11 +288,8 @@ public class FachadaLivro implements IFachada< Livro, Campo[]> {
 							 "}",
 							 "Alteração de preço via mudança de estoque");
 			log2.registrar();
-
-			//return "Entrada de estoque no livro inserida com sucesso!";
 		}catch(Exception e) {
 			e.printStackTrace();
-			//return "Erro de validação. Tente novamente.";
 		}		
 	}
 

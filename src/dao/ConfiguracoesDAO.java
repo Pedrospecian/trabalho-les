@@ -20,7 +20,6 @@ import utils.Campo;
 public class ConfiguracoesDAO implements IDAO<EntidadeDominio, Campo[]> {
 	private Connection connection = null;
 	public ArrayList selectVals;
-	public int countVals;
 	public Configuracao selectSingleVal;
 
 	public ArrayList select(Campo[] campos) {

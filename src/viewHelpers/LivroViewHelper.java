@@ -75,15 +75,6 @@ public class LivroViewHelper {
 		return campos;
 	}
 
-	/*
-	data entrada
-	usuario responsavel
-	fornecedor
-	tipomovimentacao
-	custo
-	id
-	*/
-
 	public static Campo[] getAlterarLivroStatusActionCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[2];
 

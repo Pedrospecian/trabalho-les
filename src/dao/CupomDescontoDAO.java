@@ -31,8 +31,6 @@ public class CupomDescontoDAO implements IDAO<EntidadeDominio, Campo[]> {
 	private Connection connection = null;
 	public ArrayList selectVals;
 	public CupomDesconto selectSingleVal;
-	public int countVals;
-
 
 	public ArrayList select(Campo[] campos) {
 		PreparedStatement pst = null;

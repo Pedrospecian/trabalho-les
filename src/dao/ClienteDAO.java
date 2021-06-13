@@ -36,7 +36,6 @@ import utils.Campo;
 public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 	private Connection connection = null;
 	public ArrayList selectVals;
-	//public int countVals;
 	public Cliente selectSingleVal;
 	public Endereco selectSingleEnderecoVal;
 	public Documento[] selectDocumentosVal;
@@ -263,7 +262,6 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			Telefone[] telefones = new Telefone[1];
 
 			while (rs.next()) {
-				//Cliente(long id, Date dataCadastro, Documento[] documentos, String nome, int genero, Date dataNascimento, TipoCliente tipoCliente, Endereco[] enderecos, int status, CartaoCredito[] cartoesCredito, String email, String senha, Telefone[] telefones)
 				this.selectSingleVal = new Cliente(
 						rs.getLong("clientes.id"),
 						null,
@@ -388,7 +386,6 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 						funcaoEndereco,
 						tipoLogradouro,
 						rs.getString("enderecos.observacoes")));
-				//(long id, Date dataCadastro, String logradouro, String numero, String cep, String complemento, Bairro bairro, TipoEndereco tipoEndereco, String nome, TipoResidencia tipoResidencia, FuncaoEndereco funcaoEndereco, TipoLogradouro tipoLogradouro, String observacoes)
 			}
 
 			Endereco[] enderecos = new Endereco[lista.size()];
@@ -439,8 +436,6 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 						rs.getString("bandeiras.nome")
 					))
 				);
-
-				// String nome, String numero, String cvv, Date dataExpiracao, Bandeira bandeira)
 			}
 
 			CartaoCredito[] cartoesCredito = new CartaoCredito[lista.size()];
@@ -490,9 +485,6 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getString("telefones.ddd"),
 					rs.getString("telefones.numero")
 				));
-
-				//Telefone(long id, Date dataCadastro, TipoTelefone tipoTelefone, String ddd, String numero)
-				//(long id, Date dataCadastro, String nome, String descricao)
 			}
 
 			Telefone[] telefones = new Telefone[lista.size()];
@@ -1103,5 +1095,4 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			e.printStackTrace();
 		}
 	}
-
 }

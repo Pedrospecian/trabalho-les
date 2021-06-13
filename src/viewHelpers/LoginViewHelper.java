@@ -9,8 +9,6 @@ import utils.Campo;
 public class LoginViewHelper {
 	public boolean isAuthorized(HttpServletRequest req, HttpServletResponse resp, int tipoLogin) {
 		//redireciona o usuario caso ele nao esteja logado
-		//return true;
-
 		Cookie[] cookies = req.getCookies();
 
 		Campo[] campos = new Campo[4];
