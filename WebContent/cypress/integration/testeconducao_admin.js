@@ -1,4 +1,7 @@
 let port = "8080";
+let cpf = "10567168271"; //alterar o cpf a cada teste novo
+let emailCliente = "teste1q123@teste.com.br" //alterar o email a cada teste novo
+let emailAdmin = "teadmin3@teste.com.br" //alterar o email a cada teste novo
 
 describe('Teste de condução de CRUD de clientes', () => {
   it('Cadastra um cliente', () => {
@@ -337,69 +340,6 @@ describe('Teste de condução de CRUD de usuários de admin', () => {
     cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemUsuariosAdmin')
     cy.get('table tr:first-child [cypress-alterarStatusUsuarioAdmin]')
     cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemUsuariosAdmin')
-  });
-});
-
-describe('Teste de condução de gerenciamento de pedidos', () => {
-  it('Lista todos os pedidos feitos', () => {
-    cy.visit('http://localhost:' + port + '/trabalho-les/homeAdmin')
-    cy.get('[cypress-todosPedidos]').click()
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/todosPedidos')
-  });
-
-  it('Lista todos os pedidos de um cliente em específico', () => {
-    cy.visit('http://localhost:' + port + '/trabalho-les/homeAdmin')
-    cy.get('[cypress-listagemClientes]').click()
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemClientes')
-
-
-    cy.get('[cypress-clienteSingle]:first-child [cypress-listagemPedidosAdmin]').click()
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/todosPedidos')
-  });
-
-  it('Visualiza os detalhes de um pedido', () => {
-    cy.visit('http://localhost:' + port + '/trabalho-les/homeAdmin')
-    cy.get('[cypress-todosPedidos]').click()
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/todosPedidos')
-    cy.get('[cypress-detalhesPedido]').click()
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/pedido')
-  });
-
-  it('Altera o status de um pedido', () => {
-    cy.visit('http://localhost:' + port + '/trabalho-les/homeAdmin')
-    cy.get('[cypress-todosPedidos]').click()
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/todosPedidos')
-    cy.get('[cypress-despacho]').click().wait(100)
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/todosPedidos')
-    cy.get('[cypress-entregaEfetuada]').click().wait(100)
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/todosPedidos')
-  });
-
-  it('Autoriza uma troca', () => {
-    cy.visit('http://localhost:' + port + '/trabalho-les/homeAdmin')
-    cy.get('[cypress-todosPedidos]').click()
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/todosPedidos')
-    cy.get('[cypress-autorizarTroca]').click().wait(100)
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/todosPedidos')
-  });
-
-  it('Recusa uma troca', () => {
-    cy.visit('http://localhost:' + port + '/trabalho-les/homeAdmin')
-    cy.get('[cypress-todosPedidos]').click()
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/todosPedidos')
-    cy.get('[cypress-recusarTroca]').click().wait(100)
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/todosPedidos')
-  });
-
-  it('Confirma o recebimento de uma troca', () => {
-    cy.visit('http://localhost:' + port + '/trabalho-les/homeAdmin')
-    cy.get('[cypress-todosPedidos]').click()
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/todosPedidos')
-    cy.get('[cypress-confirmarRecebimento]').click().wait(100)
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/todosPedidos')
-    cy.get('[cypress-retornarEstoque]').click()
-    cy.get('[cypress-confirmarRecebimento]').click().wait(100)
-    cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/todosPedidos')
   });
 });
 

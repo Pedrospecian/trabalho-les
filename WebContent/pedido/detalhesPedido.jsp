@@ -81,7 +81,7 @@
 										<form method="post" action="/trabalho-les/solicitarTroca">
 											<input type="hidden" name="id" value="${item.getId()}">
 											<div class="form-group">
-												<input type="number" name="trocaQtde" placeholder="Qt. Troca" min="1" max="${item.getQuantidade()}" required data-pristine-required-message="Este campo é obrigatório" data-pristine-number-message="Esse campo precisa ser um número válido" pattern="/^[0-9]+$/" data-pristine-pattern-message="Este campo precisa ser um número válido" cypress-trocaQtde>
+												<input type="number" name="trocaQtde" placeholder="Qt. Troca" min="1" max="${item.getQuantidade() - item.getQuantidadeItensTrocados()}" required data-pristine-required-message="Este campo é obrigatório" data-pristine-number-message="Esse campo precisa ser um número válido" pattern="/^[0-9]+$/" data-pristine-pattern-message="Este campo precisa ser um número válido" cypress-trocaQtde>
 											</div>
 											<button type="submit" cypress-submit>Solicitar Troca</button>
 										</form>
@@ -90,36 +90,6 @@
 							</c:if>
 						</tr>
 					</c:forEach>
-					<!--<tr>
-						<td><img src="" alt="Alice no país das maravilhas"></td>
-						<td>Alice no país das maravilhas</td>
-						<td>R$ 40,00</td>
-						<td>4</td>
-						<td>
-							<form method="post" action="/trabalho-les/solicitarTroca">
-								<input type="hidden" name="id" value="1">
-								<div class="form-group">
-									<input type="number" name="trocaQtde" placeholder="Qt. Troca" min="1" max="4" required data-pristine-required-message="Este campo é obrigatório" data-pristine-number-message="Esse campo precisa ser um número válido" pattern="/^[0-9]+$/" data-pristine-pattern-message="Este campo precisa ser um número válido">
-								</div>
-								<button type="submit">Solicitar Troca</button>
-							</form>
-						</td>
-					</tr>
-					<tr>
-						<td><img src="assets\images\produtos\livro-ficcao.jpg" alt="Alice no país das maravilhas"></td>
-						<td>Alice no país das maravilhas</td>
-						<td>R$ 40,00</td>
-						<td>1</td>
-						<td>
-							<form method="post" action="/trabalho-les/solicitarTroca">
-								<input type="hidden" name="id" value="1">
-								<div class="form-group">
-									<input type="number" name="trocaQtde" placeholder="Qt. Troca" min="1" max="1" required data-pristine-required-message="Este campo é obrigatório" data-pristine-number-message="Esse campo precisa ser um número válido" pattern="/^[0-9]+$/" data-pristine-pattern-message="Este campo precisa ser um número válido">
-								</div>
-								<button type="submit">Solicitar Troca</button>
-							</form>
-						</td>
-					</tr>-->
 				</tbody>
 			</table>
 			<h2>Total: <span class="js-dinheiro">${pedido.getValorTotal()}</span></h2>

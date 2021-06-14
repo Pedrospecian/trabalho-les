@@ -16,9 +16,11 @@ public class ValidacaoTelefones implements IStrategy<Boolean, Telefone[]> {
             return false;
            }
 
-           if (obj[i].getTipoTelefone().getId() == 2 && obj[i].getNumero().length() == 9 && obj[i].getNumero().charAt(0) != 9 ) {
+           if (obj[i].getTipoTelefone().getId() == 2 && obj[i].getNumero().length() == 9 && obj[i].getNumero().charAt(0) != '9' ) {
             System.out.println("deu ruim telefone2!");
             System.out.println(obj[i].getNumero());
+            System.out.println((obj[i].getTipoTelefone().getId() == 2)  + "&&" + (obj[i].getNumero().length() == 9) + "&&" + (obj[i].getNumero().charAt(0) != '9') );
+            System.out.println(obj[i].getNumero().charAt(0));
             return false;
            }
 

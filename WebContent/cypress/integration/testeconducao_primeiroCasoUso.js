@@ -262,7 +262,7 @@ describe('Teste de condução de processo de compra', () => {
     cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/checkout')
     cy.wait(600);
 
-    cy.get('.js-cartoes-wrapper-checkout .box-single:first-child [cypress-valorPagoCartao]').clear().type(1460.0)
+    cy.get('.js-cartoes-wrapper-checkout .box-single:first-child [cypress-valorPagoCartao]').clear().type(1440.0)
     cy.wait(600);
 
     cy.get('.js-cartoes-novos-wrapper .box-single:first-child .js-numero-cartao').type("5206984449283106")
@@ -1045,7 +1045,7 @@ describe('Teste de troca', () => {
         cy.wait(600);
 
         cy.get('tr:first-child [cypress-quantidadeLivroPedido]').should(($lis) => {
-            expect($lis.eq(0)).to.contain('2 -> troca solicitada')
+            expect($lis.eq(0)).to.contain('4 -> troca solicitada')
         })
         cy.wait(600);
 

@@ -24,8 +24,6 @@
 				</div>
 				<button type="submit" cypress-submit>Entrar</button>
 			</form>
-			<a href="/trabalho-les/esqueciMinhaSenha" cypress-esqueciMinhaSenha>Esqueci minha senha</a>
-			<br>
 			<a href="/trabalho-les/novaConta" cypress-novaConta>Nova conta</a>
 		</div>
 	</main>

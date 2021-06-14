@@ -1490,7 +1490,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				pst.executeUpdate();
 
 				StringBuilder sql3 = new StringBuilder();
-				sql3.append("UPDATE carrinhos_produtos quantidadeItensTrocados = quantidadeItensTrocados + ? WHERE carrinhos_produtos.idCarrinhoProduto = ?;");
+				sql3.append("UPDATE carrinhos_produtos set quantidadeItensTrocados = (quantidadeItensTrocados + ?) WHERE carrinhos_produtos.idCarrinhoProduto = ?;");
 
 				pst = connection.prepareStatement(sql3.toString(),
 						Statement.RETURN_GENERATED_KEYS);

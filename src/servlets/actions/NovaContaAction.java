@@ -79,7 +79,7 @@ public class NovaContaAction extends HttpServlet {
 		    		campos[28].getValor(),
 		    		campos[29].getValor());
 
-		    	if (documentos != null && fachada.validarDocumentos(documentos, true) && enderecos != null && fachada.validarEnderecos(enderecos, true)) {
+		    	if (documentos != null && fachada.validarDocumentos(documentos, true) && enderecos != null && fachada.validarEnderecos(enderecos, true) && cartoesCredito != null && fachada.validarCartoesCredito(cartoesCredito) && telefones != null && fachada.validarTelefones(telefones) ) {
 		        
 		        	Cliente cliente = new Cliente((long)1, new Date(), documentos, nome, genero, dataNascimento, new TipoCliente(tipoCliente, new Date(), "", ""), enderecos, status, cartoesCredito, email, senha, telefones);
 
@@ -102,7 +102,7 @@ public class NovaContaAction extends HttpServlet {
 		            resp.addCookie(cookieTipo);
 		            resp.sendRedirect("/trabalho-les/home");
 		        } else {
-					
+					System.out.println("erro ao criar cliente novo");
 		        }
 	        } else {
     	        resp.sendRedirect(req.getHeader("referer") + "?erro=true");

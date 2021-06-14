@@ -7,18 +7,32 @@ import javax.servlet.http.Cookie;
 import utils.Campo;
 
 public class LoginViewHelper {
+	public static Campo getCampoByName(Campo[] campos, String nome) {
+		for (int i = 0; i < campos.length; i++) {
+			if (campos[i].getNome().equals(nome)) {
+				return campos[i];
+			}
+		}
+
+		return null;
+	}
+
 	public boolean isAuthorized(HttpServletRequest req, HttpServletResponse resp, int tipoLogin) {
 		//redireciona o usuario caso ele nao esteja logado
-		Cookie[] cookies = req.getCookies();
+		Cookie[] cks = req.getCookies();
 
 		Campo[] campos = new Campo[4];
+		Cookie[] cookies = new Cookie[4];
 
-		if(cookies == null) {
+		if(cks == null || cks.length < 4) {
 			return false;
 		}
 
-		if(cookies.length < 4) {
-			return false;
+		for (int i = 0; i < cks.length; i++) {
+			if (cks[i].getName().equals("JSESSIONID")) cookies[0] = cks[i];
+			if (cks[i].getName().equals("login_id")) cookies[1] = cks[i];
+			if (cks[i].getName().equals("nome")) cookies[2] = cks[i];
+			if (cks[i].getName().equals("tipo")) cookies[3] = cks[i];
 		}
 
 		campos[0] = new Campo(0, "", true, "", true, "JSESSIONID");
@@ -31,7 +45,7 @@ public class LoginViewHelper {
 			if (campos[i].getValor() == null || campos[i].getValor().equals("")) {
 				return false;
 			}
-		}
+		}		
 
 		if (tipoLogin == 1 && !(campos[3].getValor().equals("funcionario") || campos[3].getValor().equals("admin")) ) {
 			return false;
