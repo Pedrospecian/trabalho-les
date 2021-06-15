@@ -6,7 +6,6 @@ import strategies.CriaFiltragem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
@@ -88,16 +87,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return this.selectVals;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -161,13 +150,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return this.selectVals;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 			return null;
 		}
 	}
@@ -232,18 +214,8 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return this.selectVals;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
-		}
+		} 
 	}
 
 	public void getSolicitacoesAtivacao(Campo[] campos) {
@@ -451,16 +423,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return this.selectVals;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -519,14 +481,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -562,18 +516,9 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return categorias;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
-
 
 	public void insert(EntidadeDominio entidade) {
 		Livro livro = (Livro) entidade;
@@ -658,8 +603,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 
-			Date agora = new Date();  
-
 			pst.setDate(1, new java.sql.Date(livroEstoque.getDataCadastro().getTime()));
 			pst.setInt(2, Math.max(1, livroEstoque.getQuantidade()));
 			pst.setDouble(3, livroEstoque.getCusto());
@@ -700,8 +643,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
-
-			Date agora = new Date();  
 
 			pst.setDate(1, new java.sql.Date(new Date().getTime()));
 			pst.setInt(2, itemCarrinho.getQuantidade());			

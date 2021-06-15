@@ -17,6 +17,7 @@ import model.TipoLogradouro;
 import model.Bandeira;
 import viewHelpers.PedidoViewHelper;
 import facades.FachadaPedido;
+import facades.FachadaCarrinho;
 import facades.FachadaCliente;
 import facades.FachadaSelect;
 import viewHelpers.LoginViewHelper;
@@ -34,8 +35,9 @@ public class Checkout extends HttpServlet {
 		}else{
 			FachadaPedido fachadaPedido = new FachadaPedido();
 			FachadaCliente fachadaCliente = new FachadaCliente();
+			FachadaCarrinho fachadaCarrinho = new FachadaCarrinho();
 
-			Carrinho carrinho = fachadaPedido.selectCarrinho(lvh.getUsuarioLogadoId(req, resp));
+			Carrinho carrinho = fachadaCarrinho.selectCarrinho(lvh.getUsuarioLogadoId(req, resp));
 
 			if (carrinho == null) {
 				resp.sendRedirect("/trabalho-les/home");

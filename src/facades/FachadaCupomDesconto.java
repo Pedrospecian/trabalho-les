@@ -107,4 +107,10 @@ public class FachadaCupomDesconto implements IFachada<CupomDesconto, Campo[]> {
 		return dao.selectSingleVal;
 	}
 
+	public CupomDesconto encontraCupomDesconto(String cupom) {
+		CupomDescontoDAO dao = new CupomDescontoDAO();
+
+		return dao.encontraCupomDesconto(cupom);
+	}
+
 }

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import facades.FachadaCupomTroca;
 import facades.FachadaPedido;
 import utils.ResultadosBusca;
 import viewHelpers.LoginViewHelper;
@@ -22,7 +23,7 @@ public class ListagemSolicitacoesTroca extends HttpServlet {
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
 
-			FachadaPedido fachada = new FachadaPedido();
+			FachadaCupomTroca fachada = new FachadaCupomTroca();
 
 			ResultadosBusca resultadosBusca = fachada.selectSolicitacoesTroca();
 			req.setAttribute("registros", resultadosBusca.getResultados());

@@ -93,11 +93,11 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 		return "";
 	}
 
-	public Carrinho selectCarrinho(long idCliente) {
+	/*public Carrinho selectCarrinho(long idCliente) {
 		PedidoDAO dao = new PedidoDAO();
 		dao.selectCarrinho(idCliente);
 		return dao.selectCarrinhoVal;
-	}
+	}*/
 
 	public boolean validarCompraCampos(Campo[] campos) {
 		return true;
@@ -119,7 +119,7 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 		return rb;
 	}
 
-	public CupomDesconto encontraCupomDesconto(String cupom) {
+	/*public CupomDesconto encontraCupomDesconto(String cupom) {
 		PedidoDAO dao = new PedidoDAO();
 
 		return dao.encontraCupomDesconto(cupom);
@@ -155,7 +155,7 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 		ResultadosBusca rb = new ResultadosBusca(arrl);
 		
 		return rb;
-	}
+	}*/
 
 	public DadosCalculoFrete getDadosCalculoFrete(long idCarrinho) {
 		PedidoDAO dao = new PedidoDAO();
@@ -180,7 +180,7 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 		
 		return arr;
 	}
-
+/*
 	public void removerItemCarrinho(long id, String usuarioResponsavel) {
 		PedidoDAO dao = new PedidoDAO();
 
@@ -206,7 +206,7 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 							 "Alteração de quantidade de item do carrinho");
         log.registrar();
 	}	
-
+*/
 	public String updateStatus(Pedido pedido, String usuarioResponsavel) {
 		PedidoDAO dao = new PedidoDAO();
 		dao.updateStatus(pedido);
@@ -220,7 +220,7 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 
 		return "Status de pedido alterado com sucesso!";
 	}
-
+/*
 	public String adicionarCarrinho(ItemCarrinho itemCarrinho, long idCarrinho, String usuarioResponsavel) {
 		PedidoDAO dao = new PedidoDAO();
 		LivroDAO livroDAO = new LivroDAO();
@@ -241,7 +241,8 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
         log.registrar();
 
 		return "Produto adicionado ao carrinho com sucesso!";
-	}	
+	}
+	*/
 
 	public boolean efetuaCompra(Pedido pedido, CartaoCredito[] cartoes, CupomTroca[] cuponsTroca, String usuarioResponsavel) {
 		PedidoDAO dao = new PedidoDAO();
@@ -295,7 +296,7 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 
 		return false;
 	}
-
+/*
 	public void solicitarTroca(ItemCarrinho itemCarrinho, String usuarioResponsavel) {
 		PedidoDAO dao = new PedidoDAO();
 		dao.solicitarTroca(itemCarrinho);
@@ -355,7 +356,7 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 							 "Entrada no estoque via devolução");
        		log3.registrar();
        	}
-	}
+	}*/
 
 	public void reprovaPedido(Pedido pedido, String usuarioResponsavel) {
 		PedidoDAO dao = new PedidoDAO();

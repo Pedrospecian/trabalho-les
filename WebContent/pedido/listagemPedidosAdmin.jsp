@@ -112,7 +112,9 @@
 								<c:if test = '${registro.getStatus() == 8}'>
 									Reprovado
 								</c:if>
-								(atualizado em <span class="js-date-value">${registro.getDataAlteracao()}</span>)
+								<c:if test = "${registro.getDataAlteracao() != null}">
+									(atualizado em <span class="js-date-value">${registro.getDataAlteracao()}</span>)
+								</c:if>
 							</td>
 							<td cypress-acoesPedido>
 								<a href="/trabalho-les/pedidoAdmin?id=${registro.getId()}&admin" cypress-detalhes-pedido>Ver detalhes</a>

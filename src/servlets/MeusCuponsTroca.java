@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import facades.FachadaCupomTroca;
 import facades.FachadaPedido;
 import model.CupomTroca;
 import utils.Campo;
@@ -28,12 +29,10 @@ public class MeusCuponsTroca extends HttpServlet {
 			Campo[] campos = CupomDescontoViewHelper.getListagemCuponsTrocaCampos(req);
 			
 			campos[4].setValor(String.valueOf(lvh.getUsuarioLogadoId(req, resp)));
-			System.out.println("IDE=================== =  ============");
-			System.out.println(campos[4].getValor());
 
-			FachadaPedido fachada = new FachadaPedido();
+			FachadaCupomTroca fachada = new FachadaCupomTroca();
 
-			ResultadosBusca registros = fachada.listagemCuponsTroca(campos);
+			ResultadosBusca registros = fachada.select(campos);
 			req.setAttribute("registros", registros.getResultados());
 
 			System.out.println(registros.getResultados().size());

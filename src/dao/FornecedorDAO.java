@@ -6,7 +6,6 @@ import strategies.CriaFiltragem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -66,14 +65,6 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return this.selectVals;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -140,7 +131,7 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 			ResultSet rs = pst.executeQuery();
 
-			while (rs.next()) {
+			if (rs.next()) {
 				TipoDocumento tipoDocumento = new TipoDocumento(
 					rs.getLong("documentos.idTipoDocumento"),
 					rs.getDate("tipos_documentos.dataCadastro"),
@@ -206,18 +197,9 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 						endereco);
 				return this.selectSingleVal;
 			}
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}

@@ -52,28 +52,31 @@
 						</td>
 						<td cypress-statusPedido>
 							<c:if test = '${registro.getStatus() == 1}'>
-								Em processamento (atualizado em <span class="js-date-value">${registro.getDataAlteracao()}</span>)
+								Em processamento
 							</c:if>							
 							<c:if test = '${registro.getStatus() == 2}'>
-								Aceito (atualizado em <span class="js-date-value">${registro.getDataAlteracao()}</span>)
+								Aceito
 							</c:if>
 							<c:if test = '${registro.getStatus() == 3}'>
-								Em trânsito (atualizado em <span class="js-date-value">${registro.getDataAlteracao()}</span>)
+								Em trânsito
 							</c:if>
 							<c:if test = '${registro.getStatus() == 4}'>
-								Entregue (atualizado em <span class="js-date-value">${registro.getDataAlteracao()}</span>)
+								Entregue
 							</c:if>
 							<c:if test = '${registro.getStatus() == 5}'>
-								Em troca (atualizado em <span class="js-date-value">${registro.getDataAlteracao()}</span>)
+								Em troca
 							</c:if>
 							<c:if test = '${registro.getStatus() == 6}'>
-								Troca autorizada (atualizado em <span class="js-date-value">${registro.getDataAlteracao()}</span>)
+								Troca autorizada
 							</c:if>
 							<c:if test = '${registro.getStatus() == 7}'>
-								Trocado (atualizado em <span class="js-date-value">${registro.getDataAlteracao()}</span>)
+								Trocado
 							</c:if>
 							<c:if test = '${registro.getStatus() == 8}'>
-								Reprovado (atualizado em <span class="js-date-value">${registro.getDataAlteracao()}</span>)
+								Reprovado
+							</c:if>
+							<c:if test = "${registro.getDataAlteracao() != null}">
+								 (atualizado em <span class="js-date-value">${registro.getDataAlteracao()}</span>)
 							</c:if>
 						</td>
 						<td>

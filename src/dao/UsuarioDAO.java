@@ -6,7 +6,6 @@ import strategies.CriaFiltragemUsuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -35,7 +34,6 @@ public class UsuarioDAO implements IDAO<EntidadeDominio, Campo[]> {
 			ResultSet rs = pst.executeQuery();
 			
 			ArrayList<Usuario> list = new ArrayList();
-			ResultSetMetaData rsmd = rs.getMetaData();
 			
 			while (rs.next()) {
 				Usuario usuario = new Usuario(
@@ -63,14 +61,6 @@ public class UsuarioDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return this.selectVals;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -88,7 +78,7 @@ public class UsuarioDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 			ResultSet rs = pst.executeQuery();
 
-			while (rs.next()) {
+			if (rs.next()) {
 				this.selectSingleVal = new Usuario(
 					rs.getLong("usuarios.id"),
 					rs.getDate("usuarios.dataCadastro"),
@@ -102,20 +92,14 @@ public class UsuarioDAO implements IDAO<EntidadeDominio, Campo[]> {
 							rs.getString("tipos_usuarios.nome"),
 							rs.getString("tipos_usuarios.descricao")
 					));
+				if(connection!=null) {
+					connection.close();
+				}
 				return this.selectSingleVal;
 			}
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -150,7 +134,10 @@ public class UsuarioDAO implements IDAO<EntidadeDominio, Campo[]> {
 			if (rs.next()) idUsuario = rs.getInt(1);
 			usuario.setId(idUsuario);
 			
-			connection.commit();			
+			connection.commit();
+			if(connection!=null) {
+				connection.close();
+			}			
 		} catch (Exception e) {
 			try {
 				if(connection != null) connection.rollback();
@@ -191,7 +178,10 @@ public class UsuarioDAO implements IDAO<EntidadeDominio, Campo[]> {
 			
 			pst.executeUpdate();
 			
-			connection.commit();			
+			connection.commit();
+			if(connection!=null) {
+				connection.close();
+			}			
 		} catch (Exception e) {
 			try {
 				if(connection != null) connection.rollback();
@@ -299,6 +289,9 @@ public class UsuarioDAO implements IDAO<EntidadeDominio, Campo[]> {
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
+				if(connection!=null) {
+					connection.close();
+				}
 				return true;
 			}
 
@@ -349,7 +342,7 @@ public class UsuarioDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 			ResultSet rs = pst.executeQuery();
 
-			while (rs.next()) {
+			if (rs.next()) {
 				TipoUsuario tipoUsuario = new TipoUsuario(rs.getLong("usuarios.idTipoUsuario"), null, "funcionario", "");
 
 				if (tipoUsuario.getId() == 2) {
@@ -368,21 +361,15 @@ public class UsuarioDAO implements IDAO<EntidadeDominio, Campo[]> {
 						"",
 						tipoUsuario
 				);
+				
+				if(connection!=null) {
+					connection.close();
+				}
 				return this.selectSingleVal;
 			}
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}

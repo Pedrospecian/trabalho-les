@@ -6,7 +6,6 @@ import strategies.CriaFiltragem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -92,8 +91,6 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			ResultSet rs = pst.executeQuery();
 			
 			ArrayList<Cliente> list = new ArrayList();
-
-			ResultSetMetaData rsmd = rs.getMetaData();
 			
 			while (rs.next()) {
 				Documento[] documentos = new Documento[1];
@@ -133,14 +130,6 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return this.selectVals;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -226,18 +215,9 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 				);
 				return this.selectSingleVal;
 			}
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -261,7 +241,7 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			CartaoCredito[] cartoesCredito = new CartaoCredito[1];
 			Telefone[] telefones = new Telefone[1];
 
-			while (rs.next()) {
+			if (rs.next()) {
 				this.selectSingleVal = new Cliente(
 						rs.getLong("clientes.id"),
 						null,
@@ -279,19 +259,10 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 				);
 				return this.selectSingleVal;
 			}
+			
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -321,16 +292,6 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return documentos;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -395,16 +356,6 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return enderecos;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -445,16 +396,6 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return cartoesCredito;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -494,19 +435,8 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return telefones;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
-		}
-		
+		}		
 	}
 
 	public void insert(EntidadeDominio entidade) {
@@ -950,18 +880,9 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getString("enderecos.observacoes"));
 				return this.selectSingleEnderecoVal;
 			}
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}

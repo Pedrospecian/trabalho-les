@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import viewHelpers.PedidoViewHelper;
 import model.Carrinho;
+import facades.FachadaCarrinho;
 import facades.FachadaPedido;
 import viewHelpers.LoginViewHelper;
 
@@ -22,7 +23,7 @@ public class VerCarrinho extends HttpServlet {
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
 
-			FachadaPedido fachada = new FachadaPedido();
+			FachadaCarrinho fachada = new FachadaCarrinho();
 
 			Carrinho carrinho = fachada.selectCarrinho(lvh.getUsuarioLogadoId(req, resp));
 			double valorTotal = PedidoViewHelper.calcularTotalCarrinho(carrinho);

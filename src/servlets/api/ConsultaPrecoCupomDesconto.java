@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utils.ResultadosBusca;
+import facades.FachadaCupomDesconto;
 import facades.FachadaPedido;
 
 import model.CupomDesconto;
@@ -20,7 +21,7 @@ public class ConsultaPrecoCupomDesconto extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html");
 		
-		FachadaPedido fachadaPedido = new FachadaPedido();
+		FachadaCupomDesconto fachadaPedido = new FachadaCupomDesconto();
 
 		double valorCupomDesconto = 0;
 

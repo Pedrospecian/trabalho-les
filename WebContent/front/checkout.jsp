@@ -67,9 +67,6 @@
 									${opt.getNome()}
 								</option>
 							</c:forEach>
-							<!--<option value="1">Casa</option>
-							<option value="2">Apartamento</option>
-							<option value="3">Outro...</option>-->
 						</select>
 						<select name="funcaoEndereco" class="js-funcao-endereco">
 							<option value="">Função do endereço</option>
@@ -80,8 +77,6 @@
 									</option>
 								</c:if>
 							</c:forEach>
-							<!-- <option value="2">Endereço de Entrega</option>
-							<option value="3">Endereço de Cobrança e Entrega</option> -->
 						</select>
 						<select name="pais" class="js-pais">
 							<option value="">País</option>
@@ -144,18 +139,6 @@
 		            ...e também pode usar outros cartões!
 		            <input type="hidden" name="numeroCartoesNovos" class="js-numeroCartoesNovos" value="0">
 					<div class="cartao-novo-wrapper js-cartoes-novos-wrapper">
-						<!--<input type="text" name="cartaoNumero" placeholder="Número do cartão" class="js-numero-cartao">
-						<input type="text" name="cartaoNome" placeholder="Nome impresso no cartão" class="js-nome-cartao">
-						<select name="cartaoBandeira" class="js-bandeira-cartao">
-							<option value="">Bandeira do Cartão</option>
-							<option value="1">Visa</option>
-							<option value="2">MasterCard</option>
-						</select>
-						<input type="text" name="cartaoCodigo" placeholder="Código de segurança" class="js-cvv-cartao">
-						<input type="date" name="cartaoValidade" placeholder="Data de validade do cartão" class="js-validade-cartao">
-						<input type="checkbox" name="cadastrarCartao" id="cadastrarCartao">
-						<label for="cadastrarCartao">Associar esse cartão à minha conta</label>
-			            <input type="number" name="valorPagoCartao" min="0" placeholder="Insira o valor que este cartão irá pagar">-->
 					</div>
 					<button type="button" class="js-checkout-new-card">Adicionar outro cartão</button>
 				</div>
@@ -285,7 +268,7 @@
 			                +'</div>';
 
 			      var idCupomTrocaHidden = document.querySelector(".js-arrIdCupomTroca");
-			      idCupomTrocaHidden.value = idCupomTrocaHidden.value + document.querySelector('.js-cupom-troca').value + ',';
+			      idCupomTrocaHidden.value = idCupomTrocaHidden.value + document.querySelector('.js-cupom-troca').value + ",";
 
 			      document.querySelector('.boxes-wrapper.js-boxes-cupons-troca').appendChild(novoCupomTroca);
 
@@ -306,7 +289,7 @@
 			           if (cuponsTrocaArray[i].identificador === identificador) {
 			             indexRemoved = i;
 			           } else {
-			             idCupomTrocaHidden.value = idCupomTrocaHidden.value + cuponsTrocaArray[i].id + ',';
+			             idCupomTrocaHidden.value = idCupomTrocaHidden.value + cuponsTrocaArray[i].id + ",";
 			           }
 			        }
 

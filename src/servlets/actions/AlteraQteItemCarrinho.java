@@ -1,21 +1,13 @@
 package servlets.actions;
 
 import java.io.IOException;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import utils.Campo;
-import facades.FachadaPedido;
-import model.Cliente;
-import model.Livro;
-import model.ItemCarrinho;
-import viewHelpers.PedidoViewHelper;
-import viewHelpers.UsuarioViewHelper;
+import facades.FachadaCarrinho;
 import viewHelpers.LoginViewHelper;
 
 public class AlteraQteItemCarrinho extends HttpServlet {
@@ -30,7 +22,7 @@ public class AlteraQteItemCarrinho extends HttpServlet {
 			resp.setCharacterEncoding("UTF-8");
 			resp.setContentType("text/html");
 			try {
-				FachadaPedido fachada = new FachadaPedido();
+				FachadaCarrinho fachada = new FachadaCarrinho();
 
 				if(req.getParameter("id").matches("^[0-9]+$") && req.getParameter("quantidade").matches("^[0-9]+$")) {
 		        	fachada.alteraQteItemCarrinho(

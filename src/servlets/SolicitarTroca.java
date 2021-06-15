@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import facades.FachadaCupomTroca;
 import facades.FachadaPedido;
 import model.Cliente;
 import model.Livro;
@@ -26,7 +28,7 @@ public class SolicitarTroca extends HttpServlet {
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
 
-			FachadaPedido fachada = new FachadaPedido();
+			FachadaCupomTroca fachada = new FachadaCupomTroca();
 
 			Campo[] campos = PedidoViewHelper.getSolicitarTrocaCampos(req);
 

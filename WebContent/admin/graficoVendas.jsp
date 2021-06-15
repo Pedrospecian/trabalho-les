@@ -65,19 +65,17 @@
 		//preenche as labels com as datas
 		for (let i = 0; i < itensGraficos.length; i++) {
 			console.log(itensGraficos[i].attributes["data-date"].value);
-			if (!datesStr.includes(itensGraficos[i].attributes["data-date"].value+"***")) {
-				datesStr += itensGraficos[i].attributes["data-date"].value+"***";
+			if (!datesStr.includes(itensGraficos[i].attributes["data-date"].value+",")) {
+				datesStr += itensGraficos[i].attributes["data-date"].value+",";
 			}
 
-			if (!labelsStr.includes(itensGraficos[i].attributes["data-label"].value+"***")) {
-				labelsStr += itensGraficos[i].attributes["data-label"].value+"***";
+			if (!labelsStr.includes(itensGraficos[i].attributes["data-label"].value+",")) {
+				labelsStr += itensGraficos[i].attributes["data-label"].value+",";
 			}
 		}
 
-
-
-		var dates = datesStr.split('***');
-		var labels = labelsStr.split('***');
+		var dates = datesStr.split(",");
+		var labels = labelsStr.split(",");
 
 		dates.pop();
 		labels.pop();

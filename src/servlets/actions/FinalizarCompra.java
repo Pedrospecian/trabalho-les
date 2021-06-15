@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import utils.Campo;
 import utils.DadosCalculoFrete;
+import facades.FachadaCarrinho;
 import facades.FachadaCliente;
+import facades.FachadaCupomDesconto;
+import facades.FachadaCupomTroca;
 import facades.FachadaPedido;
 import model.CartaoCredito;
 import model.Cliente;
@@ -28,7 +31,6 @@ import model.TipoResidencia;
 import model.FuncaoEndereco;
 import model.TipoLogradouro;
 import viewHelpers.PedidoViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class FinalizarCompra extends HttpServlet {
@@ -43,11 +45,14 @@ public class FinalizarCompra extends HttpServlet {
 			try {
 				FachadaPedido fachada = new FachadaPedido();
 				FachadaCliente fachadaCliente = new FachadaCliente();
+				FachadaCarrinho fachadaCarrinho = new FachadaCarrinho();
+				FachadaCupomDesconto fachadaCupomDesconto = new FachadaCupomDesconto();
+				FachadaCupomTroca fachadaCupomTroca = new FachadaCupomTroca();
 
 				Campo[] campos = PedidoViewHelper.getFinalizarCompraCampos(req);
 
 				if(fachada.validarCompraCampos(campos)) {
-					Carrinho carrinho = fachada.selectCarrinho(lvh.getUsuarioLogadoId(req, resp));
+					Carrinho carrinho = fachadaCarrinho.selectCarrinho(lvh.getUsuarioLogadoId(req, resp));
 					double valorTotal = PedidoViewHelper.calcularTotalCarrinho(carrinho);
 					Cliente cliente = fachadaCliente.selectSingle(lvh.getUsuarioLogadoId(req, resp), false);
 					Endereco endereco;
@@ -80,7 +85,7 @@ public class FinalizarCompra extends HttpServlet {
 						endereco.setNovo(false);
 					}
 
-					CupomDesconto cupomDesconto = fachada.encontraCupomDesconto(campos[1].getValor());
+					CupomDesconto cupomDesconto = fachadaCupomDesconto.encontraCupomDesconto(campos[1].getValor());
 					CartaoCredito[] cartoesCredito = PedidoViewHelper.organizaCartoesCredito(cliente, req);
 
 
@@ -108,7 +113,7 @@ public class FinalizarCompra extends HttpServlet {
 
 
 					CupomTroca[] cuponsTroca = PedidoViewHelper.createCuponsTrocaFromStrings(campos[16].getValor(), pedido);
-					cuponsTroca = fachada.encontraCuponsTroca(cuponsTroca);
+					cuponsTroca = fachadaCupomTroca.encontraCuponsTroca(cuponsTroca);
 
 					pedido.setCuponsTroca(cuponsTroca);
 

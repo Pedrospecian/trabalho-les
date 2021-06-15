@@ -31,9 +31,6 @@
 								${opt.getNome()}
 							</option>
 						</c:forEach>
-						<!--<option value="1">Fornecedor Exemplo LTDA</option>
-						<option value="2">Livros e Revistas Teste</option>
-						<option value="3">Editora Ininap</option>-->
 					</select>
 				</div>
 				<div class="form-group">

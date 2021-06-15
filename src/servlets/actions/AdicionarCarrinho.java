@@ -2,7 +2,6 @@ package servlets.actions;
 
 import java.io.IOException;
 import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,13 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import utils.Campo;
-import facades.FachadaPedido;
+import facades.FachadaCarrinho;
 import model.Cliente;
 import model.Livro;
 import model.ItemCarrinho;
-import model.Carrinho;
 import viewHelpers.PedidoViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class AdicionarCarrinho extends HttpServlet {
@@ -33,7 +30,7 @@ public class AdicionarCarrinho extends HttpServlet {
 			try {
 				Campo[] campos = PedidoViewHelper.getAdicionarCarrinhoCampos(req);
 
-				FachadaPedido fachada = new FachadaPedido();
+				FachadaCarrinho fachada = new FachadaCarrinho();
 
 				if(fachada.validarCampos(campos)) {
 			        Livro livro = new Livro(Long.parseLong(campos[0].getValor()), new Date(), "", null, null, null, "", "", 0, "", 0, 0, 0, 0, "", 0, "", null, "");

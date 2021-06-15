@@ -1,13 +1,10 @@
 package dao;
 
 import utils.Conexao;
-import strategies.CriaFiltragem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.Bandeira;
@@ -45,7 +42,6 @@ public class SelectDAO {
 			pst = connection.prepareStatement("select * from " + tabelasNomes[numero - 1] +" as a;");
 			ResultSet rs = pst.executeQuery();			
 			ArrayList list = new ArrayList();
-			ResultSetMetaData rsmd = rs.getMetaData();
 
 			switch (numero) {
 			    case 1:
@@ -118,14 +114,6 @@ public class SelectDAO {
 			return this.selectVals;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}

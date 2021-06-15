@@ -97,11 +97,11 @@ if (btnAdicionarCartao) {
       var codigoCartaoHidden = document.querySelector(".js-arrCodigoCartao");
       var validadeCartaoHidden = document.querySelector(".js-arrValidadeCartao");
 
-      numeroCartaoHidden.value = numeroCartaoHidden.value + document.querySelector('.js-numero-cartao').value + ',';
-      nomeCartaoHidden.value = nomeCartaoHidden.value + document.querySelector('.js-nome-cartao').value + ',';
-      bandeiraCartaoHidden.value = bandeiraCartaoHidden.value + document.querySelector('.js-bandeira-cartao').value + ',';
-      codigoCartaoHidden.value = codigoCartaoHidden.value + document.querySelector('.js-cvv-cartao').value + ',';
-      validadeCartaoHidden.value = validadeCartaoHidden.value + document.querySelector('.js-validade-cartao').value + ',';
+      numeroCartaoHidden.value = numeroCartaoHidden.value + document.querySelector('.js-numero-cartao').value + ",";
+      nomeCartaoHidden.value = nomeCartaoHidden.value + document.querySelector('.js-nome-cartao').value + ",";
+      bandeiraCartaoHidden.value = bandeiraCartaoHidden.value + document.querySelector('.js-bandeira-cartao').value + ",";
+      codigoCartaoHidden.value = codigoCartaoHidden.value + document.querySelector('.js-cvv-cartao').value + ",";
+      validadeCartaoHidden.value = validadeCartaoHidden.value + document.querySelector('.js-validade-cartao').value + ",";
 
       document.querySelector('.boxes-wrapper.js-boxes-cartoes').appendChild(novoCartao);
 
@@ -133,11 +133,11 @@ if (btnAdicionarCartao) {
            if (cartoesArray[i].identificador === identificador) {
              indexRemoved = i;
            } else {
-             numeroCartaoHidden.value = numeroCartaoHidden.value + cartoesArray[i].numero + ',';
-             nomeCartaoHidden.value = nomeCartaoHidden.value + cartoesArray[i].nome + ',';
-             bandeiraCartaoHidden.value = bandeiraCartaoHidden.value + cartoesArray[i].bandeira + ',';
-             codigoCartaoHidden.value = codigoCartaoHidden.value + cartoesArray[i].codigo + ',';
-             validadeCartaoHidden.value = validadeCartaoHidden.value + cartoesArray[i].validade + ',';
+             numeroCartaoHidden.value = numeroCartaoHidden.value + cartoesArray[i].numero + ",";
+             nomeCartaoHidden.value = nomeCartaoHidden.value + cartoesArray[i].nome + ",";
+             bandeiraCartaoHidden.value = bandeiraCartaoHidden.value + cartoesArray[i].bandeira + ",";
+             codigoCartaoHidden.value = codigoCartaoHidden.value + cartoesArray[i].codigo + ",";
+             validadeCartaoHidden.value = validadeCartaoHidden.value + cartoesArray[i].validade + ",";
            }
         }
 
@@ -207,21 +207,21 @@ if (btnAdicionarEndereco) {
       var funcaoEnderecoHidden = document.querySelector(".js-arrFuncaoEndereco");
       var observacoesHidden = document.querySelector(".js-arrObservacoes");
 
-      tipoEnderecoHidden.value = tipoEnderecoHidden.value + document.querySelector('.js-tipo-endereco').value + ',';
-      nomeEnderecoHidden.value = nomeEnderecoHidden.value + document.querySelector('.js-nome-endereco').value + ',';
-      cepHidden.value = cepHidden.value + document.querySelector('.js-cep').value + ',';
-      logradouroHidden.value = logradouroHidden.value + document.querySelector('.js-logradouro').value + ',';
-      numeroHidden.value = numeroHidden.value + document.querySelector('.js-numero').value + ',';
-      complementoHidden.value = complementoHidden.value + document.querySelector('.js-complemento').value + ',';
-      bairroHidden.value = bairroHidden.value + document.querySelector('.js-bairro').value + ',';
-      cidadeHidden.value = cidadeHidden.value + document.querySelector('.js-cidade').value + ',';
-      ufHidden.value = ufHidden.value + document.querySelector('.js-uf').value + ',';
-      paisHidden.value = paisHidden.value + document.querySelector('.js-pais').value + ',';
-      observacoesHidden.value = observacoesHidden.value + document.querySelector('.js-observacoes').value + ',';
+      tipoEnderecoHidden.value = tipoEnderecoHidden.value + document.querySelector('.js-tipo-endereco').value + ",";
+      nomeEnderecoHidden.value = nomeEnderecoHidden.value + document.querySelector('.js-nome-endereco').value + ",";
+      cepHidden.value = cepHidden.value + document.querySelector('.js-cep').value + ",";
+      logradouroHidden.value = logradouroHidden.value + document.querySelector('.js-logradouro').value + ",";
+      numeroHidden.value = numeroHidden.value + document.querySelector('.js-numero').value + ",";
+      complementoHidden.value = complementoHidden.value + document.querySelector('.js-complemento').value + ",";
+      bairroHidden.value = bairroHidden.value + document.querySelector('.js-bairro').value + ",";
+      cidadeHidden.value = cidadeHidden.value + document.querySelector('.js-cidade').value + ",";
+      ufHidden.value = ufHidden.value + document.querySelector('.js-uf').value + ",";
+      paisHidden.value = paisHidden.value + document.querySelector('.js-pais').value + ",";
+      observacoesHidden.value = observacoesHidden.value + document.querySelector('.js-observacoes').value + ",";
       
-      tipoResidenciaHidden.value = tipoResidenciaHidden.value + document.querySelector('.js-tipo-residencia').value + ',';
-      tipoLogradouroHidden.value = tipoLogradouroHidden.value + document.querySelector('.js-tipo-logradouro').value + ',';
-      funcaoEnderecoHidden.value = funcaoEnderecoHidden.value + document.querySelector('.js-funcao-endereco').value + ',';
+      tipoResidenciaHidden.value = tipoResidenciaHidden.value + document.querySelector('.js-tipo-residencia').value + ",";
+      tipoLogradouroHidden.value = tipoLogradouroHidden.value + document.querySelector('.js-tipo-logradouro').value + ",";
+      funcaoEnderecoHidden.value = funcaoEnderecoHidden.value + document.querySelector('.js-funcao-endereco').value + ",";
 
       document.querySelector('.boxes-wrapper.js-boxes-enderecos').appendChild(novoEndereco);
 
@@ -284,21 +284,21 @@ if (btnAdicionarEndereco) {
           if (enderecosArray[i].identificador === identificador) {
             indexRemoved = i;
           } else {
-            tipoEnderecoHidden.value = tipoEnderecoHidden.value + enderecosArray[i].tipo + ',';
-            nomeEnderecoHidden.value = nomeEnderecoHidden.value + enderecosArray[i].nome + ',';
-            cepHidden.value = cepHidden.value + enderecosArray[i].cep + ',';
-            logradouroHidden.value = logradouroHidden.value + enderecosArray[i].logradouro + ',';
-            numeroHidden.value = numeroHidden.value + enderecosArray[i].numero + ',';
-            complementoHidden.value = complementoHidden.value + enderecosArray[i].complemento + ',';
-            bairroHidden.value = bairroHidden.value + enderecosArray[i].bairro + ',';
-            cidadeHidden.value = cidadeHidden.value + enderecosArray[i].cidade + ',';
-            ufHidden.value = ufHidden.value + enderecosArray[i].uf + ',';
-            paisHidden.value = paisHidden.value + enderecosArray[i].pais + ',';
-            observacoesHidden.value = observacoesHidden.value + enderecosArray[i].observacoes + ',';
+            tipoEnderecoHidden.value = tipoEnderecoHidden.value + enderecosArray[i].tipo + ",";
+            nomeEnderecoHidden.value = nomeEnderecoHidden.value + enderecosArray[i].nome + ",";
+            cepHidden.value = cepHidden.value + enderecosArray[i].cep + ",";
+            logradouroHidden.value = logradouroHidden.value + enderecosArray[i].logradouro + ",";
+            numeroHidden.value = numeroHidden.value + enderecosArray[i].numero + ",";
+            complementoHidden.value = complementoHidden.value + enderecosArray[i].complemento + ",";
+            bairroHidden.value = bairroHidden.value + enderecosArray[i].bairro + ",";
+            cidadeHidden.value = cidadeHidden.value + enderecosArray[i].cidade + ",";
+            ufHidden.value = ufHidden.value + enderecosArray[i].uf + ",";
+            paisHidden.value = paisHidden.value + enderecosArray[i].pais + ",";
+            observacoesHidden.value = observacoesHidden.value + enderecosArray[i].observacoes + ",";
 
-            tipoResidenciaHidden.value = tipoResidenciaHidden.value + enderecosArray[i].tipoResidencia + ',';
-            tipoLogradouroHidden.value = tipoLogradouroHidden.value + enderecosArray[i].tipoLogradouro + ',';
-            funcaoEnderecoHidden.value = funcaoEnderecoHidden.value + enderecosArray[i].funcaoEndereco + ',';
+            tipoResidenciaHidden.value = tipoResidenciaHidden.value + enderecosArray[i].tipoResidencia + ",";
+            tipoLogradouroHidden.value = tipoLogradouroHidden.value + enderecosArray[i].tipoLogradouro + ",";
+            funcaoEnderecoHidden.value = funcaoEnderecoHidden.value + enderecosArray[i].funcaoEndereco + ",";
           }
         }
 
@@ -336,9 +336,9 @@ if (btnAdicionarDocumento) {
       var numeroDocumentoHidden = document.querySelector(".js-arrNumeroDocumento");
       var validadeDocumentoHidden = document.querySelector(".js-arrValidadeDocumento");
 
-      tipoDocumentoHidden.value = tipoDocumentoHidden.value + document.querySelector('.js-tipo-documento').value + ',';
-      numeroDocumentoHidden.value = numeroDocumentoHidden.value + document.querySelector('.js-numero-documento').value + ',';
-      validadeDocumentoHidden.value = validadeDocumentoHidden.value + document.querySelector('.js-validade-documento').value + ',';
+      tipoDocumentoHidden.value = tipoDocumentoHidden.value + document.querySelector('.js-tipo-documento').value + ",";
+      numeroDocumentoHidden.value = numeroDocumentoHidden.value + document.querySelector('.js-numero-documento').value + ",";
+      validadeDocumentoHidden.value = validadeDocumentoHidden.value + document.querySelector('.js-validade-documento').value + ",";
 
       document.querySelector('.boxes-wrapper.js-boxes-documentos').appendChild(novoDocumento);
 
@@ -364,9 +364,9 @@ if (btnAdicionarDocumento) {
            if (documentosArray[i].identificador === identificador) {
              indexRemoved = i;
            } else {
-             tipoDocumentoHidden.value = tipoDocumentoHidden.value + documentosArray[i].tipo + ',';
-             numeroDocumentoHidden.value = numeroDocumentoHidden.value + documentosArray[i].numero + ',';
-             validadeDocumentoHidden.value = validadeDocumentoHidden.value + documentosArray[i].validade + ',';
+             tipoDocumentoHidden.value = tipoDocumentoHidden.value + documentosArray[i].tipo + ",";
+             numeroDocumentoHidden.value = numeroDocumentoHidden.value + documentosArray[i].numero + ",";
+             validadeDocumentoHidden.value = validadeDocumentoHidden.value + documentosArray[i].validade + ",";
            }
         }
 
@@ -405,9 +405,9 @@ if (btnAdicionarTelefone) {
       var numeroTelefoneHidden = document.querySelector(".js-arrNumeroTelefone");
       var dddTelefoneHidden = document.querySelector(".js-arrDDDTelefone");
 
-      tipoTelefoneHidden.value = tipoTelefoneHidden.value + document.querySelector('.js-tipo-telefone').value + ',';
-      numeroTelefoneHidden.value = numeroTelefoneHidden.value + document.querySelector('.js-numero-telefone').value + ',';
-      dddTelefoneHidden.value = dddTelefoneHidden.value + document.querySelector('.js-ddd-telefone').value + ',';
+      tipoTelefoneHidden.value = tipoTelefoneHidden.value + document.querySelector('.js-tipo-telefone').value + ",";
+      numeroTelefoneHidden.value = numeroTelefoneHidden.value + document.querySelector('.js-numero-telefone').value + ",";
+      dddTelefoneHidden.value = dddTelefoneHidden.value + document.querySelector('.js-ddd-telefone').value + ",";
 
       document.querySelector('.boxes-wrapper.js-boxes-telefones').appendChild(novoTelefone);
 
@@ -433,9 +433,9 @@ if (btnAdicionarTelefone) {
            if (telefonesArray[i].identificador === identificador) {
              indexRemoved = i;
            } else {
-             tipoTelefoneHidden.value = tipoTelefoneHidden.value + telefonesArray[i].tipo + ',';
-             numeroTelefoneHidden.value = numeroTelefoneHidden.value + telefonesArray[i].numero + ',';
-             dddTelefoneHidden.value = dddTelefoneHidden.value + telefonesArray[i].ddd + ',';
+             tipoTelefoneHidden.value = tipoTelefoneHidden.value + telefonesArray[i].tipo + ",";
+             numeroTelefoneHidden.value = numeroTelefoneHidden.value + telefonesArray[i].numero + ",";
+             dddTelefoneHidden.value = dddTelefoneHidden.value + telefonesArray[i].ddd + ",";
            }
         }
 
@@ -467,7 +467,7 @@ if (btnAdicionarCategoria) {
                 </div>`;
 
       var idCategoriaHidden = document.querySelector(".js-arrIdCategoria");
-      idCategoriaHidden.value = idCategoriaHidden.value + document.querySelector('.js-id-categoria').value + ',';
+      idCategoriaHidden.value = idCategoriaHidden.value + document.querySelector('.js-id-categoria').value + ",";
 
       document.querySelector('.boxes-wrapper.js-boxes-categorias').appendChild(novaCategoria);
 
@@ -487,7 +487,7 @@ if (btnAdicionarCategoria) {
            if (categoriasArray[i].identificador === identificador) {
              indexRemoved = i;
            } else {
-             idCategoriaHidden.value = idCategoriaHidden.value + categoriasArray[i].id + ',';
+             idCategoriaHidden.value = idCategoriaHidden.value + categoriasArray[i].id + ",";
            }
         }
 

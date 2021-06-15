@@ -1,7 +1,6 @@
 package dao;
 
 import utils.Conexao;
-import strategies.CriaFiltragemUsuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -51,14 +50,6 @@ public class ConfiguracoesDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return this.selectVals;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -399,7 +390,9 @@ public class ConfiguracoesDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 			pst.executeUpdate();
 			
-			connection.commit();			
+			connection.commit();
+			
+			
 		} catch (Exception e) {
 			try {
 				if(connection != null) connection.rollback();

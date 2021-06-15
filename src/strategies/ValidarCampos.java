@@ -68,7 +68,7 @@ public class ValidarCampos implements IStrategy<Boolean, Campo> {
 
             //array
             case 6:
-                if (campo.getValor().matches("^(.*,)+$") == false) {
+                if (campo.getValor().matches("^(.*|)+$") == false) {
                     campo.setValido(false);
                     campo.setMensagemErro("Esse campo precisa ser um array válido");
                     return false;

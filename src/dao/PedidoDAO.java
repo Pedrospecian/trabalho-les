@@ -60,7 +60,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			ResultSet rs = pst.executeQuery();
 			
 			ArrayList<Pedido> list = new ArrayList();
-			ResultSetMetaData rsmd = rs.getMetaData();
 			
 			while (rs.next()) {
 				Pedido pedido = new Pedido(
@@ -122,7 +121,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			ResultSet rs = pst.executeQuery();
 			
 			ArrayList<Pedido> list = new ArrayList();
-			ResultSetMetaData rsmd = rs.getMetaData();
 			
 			while (rs.next()) {
 				Pedido pedido = new Pedido(
@@ -247,8 +245,10 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				CupomDesconto cupomDesconto = null;
 				CartaoCredito[] cartoesCredito = null;
 				CupomTroca[] cuponsTroca = null;
-				getCarrinhoPorId(rs.getLong("pedidos.idCarrinho"), true);
-				Carrinho carrinho = this.selectCarrinhoVal;
+				
+				CarrinhoDAO crdao = new CarrinhoDAO();
+				crdao.getCarrinhoPorId(rs.getLong("pedidos.idCarrinho"), true);
+				Carrinho carrinho = crdao.selectCarrinhoVal;
 				Pedido pedido = new Pedido(
 					rs.getLong("pedidos.id"),
 					rs.getDate("pedidos.dataCadastro"),
@@ -270,103 +270,10 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 				return this.selectSingleVal;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
+			
 			return null;
-		}
-	}
-
-	public Carrinho selectCarrinho(long idCliente) {
-		PreparedStatement pst = null;
-		try {
-			connection = Conexao.getConnectionMySQL();
-			StringBuilder sql = new StringBuilder();
-			sql.append("select * from carrinhos where carrinhos.idUsuario = ? and carrinhos.status <= 1;");
-			
-			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-			pst.setLong(1, idCliente);
-
-			ResultSet rs = pst.executeQuery();
-
-			if (rs.next()) {
-				int idCarrinho = rs.getInt(1);
-
-				ArrayList<ItemCarrinho> itensCarrinho = new ArrayList();
-
-				StringBuilder sql2 = new StringBuilder();
-				sql2.append("select carrinhos_produtos.idCarrinho, carrinhos_produtos.idCarrinhoProduto, carrinhos_produtos.quantidade, livros.id, livros.titulo, livros.preco, livros.capa from carrinhos_produtos inner join livros on carrinhos_produtos.idProduto = livros.id where carrinhos_produtos.idCarrinho = ?;");
-				
-				pst = connection.prepareStatement(sql2.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-				pst.setLong(1, idCarrinho);
-
-				ResultSet rs2 = pst.executeQuery();
-
-				LivroDAO livrodao = new LivroDAO();
-
-				while (rs2.next()) {
-					Livro livro = new Livro(
-						rs2.getLong("livros.id"),
-						null,
-						rs2.getString("livros.titulo"),
-						null,
-						null,
-						null,
-						"",
-						"",
-						0,
-						"",
-						0,
-						0,
-						0,
-						rs2.getDouble("livros.preco"),
-						"",
-						1,
-						rs2.getString("livros.capa"),
-						null,
-						""
-					);
-					livro.setEstoque(livrodao.contaEstoque(livro, rs2.getLong("carrinhos_produtos.idCarrinho")));
-					ItemCarrinho ic = new ItemCarrinho(
-						rs2.getLong("carrinhos_produtos.idCarrinhoProduto"),
-						null,
-						livro,
-						rs2.getInt("carrinhos_produtos.quantidade"),
-						null
-					);
-
-					itensCarrinho.add(ic);
-				}
-
-				Carrinho carrinho = new Carrinho((long)idCarrinho, rs.getDate(2), itensCarrinho, rs.getInt(4), null);
-				this.selectCarrinhoVal = carrinho;
-				return this.selectCarrinhoVal;
-			}
-
-			
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -450,20 +357,9 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				this.selectCarrinhoVal = carrinho;
 				return this.selectCarrinhoVal;
 			}
-
-			
+			return null;			
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -525,6 +421,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					ResultSet rs2 = pst.executeQuery();
 					
 					LivroDAO livrodao = new LivroDAO();
+					CarrinhoDAO crdao = new CarrinhoDAO();
 
 					while (rs2.next()) {
 						ItemCarrinho itemCarrinho = new ItemCarrinho(
@@ -538,8 +435,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 						arr.add(itemCarrinho);
 
 						livrodao.baixaEstoque(itemCarrinho);
-
-						removeBloqueioCarrinhoInteiro(rs.getLong("pedidos.idCarrinho"));
+						crdao.removeBloqueioCarrinhoInteiro(rs.getLong("pedidos.idCarrinho"));
 					}
 				}
 
@@ -593,7 +489,8 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
-				removeBloqueioCarrinhoInteiro(rs.getInt(1));
+				CarrinhoDAO crdao = new CarrinhoDAO();
+				crdao.removeBloqueioCarrinhoInteiro(rs.getInt(1));
 			}
 
 			connection.commit();						
@@ -695,467 +592,8 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}
 	}
 
-	public void adicionarCarrinho(ItemCarrinho itemCarrinho) {
-		PreparedStatement pst = null;
-		
-		try {
-			connection = Conexao.getConnectionMySQL();
-			connection.setAutoCommit(false);
-
-			//remove o bloqueio do carrinho inativado
-			StringBuilder sqlDelb = new StringBuilder();
-			sqlDelb.append("DELETE FROM bloqueios_produtos where idCarrinho = (select id from carrinhos WHERE status = 0 AND idUsuario = ? limit 1);");	
-
-			pst = connection.prepareStatement(sqlDelb.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-			pst.setLong(1, itemCarrinho.getCliente().getId());
-
-			pst.executeUpdate();
-
-			//remove o carrinho inativado
-			StringBuilder sqlDel = new StringBuilder();
-			sqlDel.append("DELETE FROM carrinhos WHERE status = 0 AND idUsuario = ?;");	
-
-			pst = connection.prepareStatement(sqlDel.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-			pst.setLong(1, itemCarrinho.getCliente().getId());
-
-			pst.executeUpdate();			
-			
-			StringBuilder sql = new StringBuilder();
-			sql.append("SELECT id FROM carrinhos WHERE carrinhos.idUsuario = ? AND carrinhos.status = 1 limit 1;");
-			
-			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-
-			Date agora = new Date(); 
-
-			pst.setLong(1, itemCarrinho.getCliente().getId());
-			
-			ResultSet rs = pst.executeQuery();
-			
-			if (rs.next()) {
-				//adiciona o produto ao carrinho existente
-				adicionaProdutoAoCarrinho(itemCarrinho, rs.getInt(1));
-			} else {
-				//cria um carrinho novo
-				StringBuilder sql2 = new StringBuilder();
-				sql2.append("INSERT INTO carrinhos(dataCadastro, idUsuario, status, dataAlteracao) VALUES (?, ?, ?, ?);");
-				
-				pst = connection.prepareStatement(sql2.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-
-				pst.setDate(1, new java.sql.Date(agora.getTime()));
-				pst.setLong(2, itemCarrinho.getCliente().getId());
-				pst.setInt(3, 1);
-				pst.setDate(4, new java.sql.Date(agora.getTime()));
-				
-				pst.executeUpdate();
-				
-				ResultSet rs2 = pst.getGeneratedKeys();
-				if (rs2.next()) {
-					//adiciona o produto ao carrinho novo
-					adicionaProdutoAoCarrinho(itemCarrinho, rs2.getInt(1));
-				}
-			}
-			
-			connection.commit();			
-		} catch (Exception e) {
-			try {
-				if(connection != null) connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-
-			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	private void adicionaProdutoAoCarrinho(ItemCarrinho itemCarrinho, long id) {
-		PreparedStatement pst = null;
-		
-		try {
-			StringBuilder sql = new StringBuilder();
-			sql.append("SELECT idCarrinhoProduto, quantidade FROM carrinhos_produtos WHERE carrinhos_produtos.idProduto = ? AND carrinhos_produtos.idCarrinho = ? limit 1;");
-			
-			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-
-			Date agora = new Date(); 
-
-			pst.setLong(1, itemCarrinho.getLivro().getId());
-			pst.setLong(2, id);
-			
-			ResultSet rs = pst.executeQuery();
-			
-			if (rs.next()) {
-				//pega a quantidade de estoque do livro a ser inserido
-				LivroDAO livroDAO = new LivroDAO();
-				int estoque = livroDAO.contaEstoque(itemCarrinho.getLivro(), id);
-				//altera a quantidade de itens no carrinho
-				StringBuilder sql2 = new StringBuilder();
-				sql2.append("UPDATE carrinhos_produtos SET quantidade = ? WHERE carrinhos_produtos.idCarrinhoProduto = ?;");
-				
-				pst = connection.prepareStatement(sql2.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-
-				pst.setInt(1, Math.min( rs.getInt(2) + itemCarrinho.getQuantidade(), estoque ) );
-				pst.setLong(2, rs.getInt(1));
-				
-				pst.executeUpdate();
-
-				//altera o bloqueio do carrinho
-				alteraBloqueio(id, Math.min( rs.getInt(2) + itemCarrinho.getQuantidade(), estoque ));
-
-			} else {
-				//adiciona o produto ao carrinho existente
-				StringBuilder sql2 = new StringBuilder();
-				sql2.append("INSERT INTO carrinhos_produtos(idCarrinho, idProduto, quantidade, quantidadeItensTrocados) VALUES (?, ?, ?, 0);");
-				
-				pst = connection.prepareStatement(sql2.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-
-				pst.setLong(1, id);
-				pst.setLong(2, itemCarrinho.getLivro().getId());
-				pst.setInt(3, itemCarrinho.getQuantidade());
-				
-				pst.executeUpdate();
-
-				ResultSet rs2 =  pst.getGeneratedKeys();
-				if(rs2.next()) {
-					//insere o bloqueio do carrinho
-					insereBloqueio(rs2.getInt(1), itemCarrinho.getQuantidade());
-				}
-			}
-
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void insereBloqueio(long idItemCarrinho, int quantidade) {
-		PreparedStatement pst = null;
-		
-		try {
-			StringBuilder sql = new StringBuilder();
-			sql.append("SELECT * FROM carrinhos_produtos WHERE idCarrinhoProduto = ?;");
-			
-			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-
-			Date agora = new Date(); 
-
-			pst.setLong(1, idItemCarrinho);
-			
-			ResultSet rs = pst.executeQuery();
-			
-			if (rs.next()) {
-				StringBuilder sql2 = new StringBuilder();
-				sql2.append("INSERT INTO bloqueios_produtos (dataEntrada, quantidade, idLivro, idCarrinho) VALUES (?, ?, ?, ?);");
-				
-				pst = connection.prepareStatement(sql2.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-
-				pst.setDate(1, new java.sql.Date(new Date().getTime()));
-				pst.setInt(2, quantidade);
-				pst.setLong(3, rs.getLong("carrinhos_produtos.idProduto"));
-				pst.setLong(4, rs.getLong("carrinhos_produtos.idCarrinho"));
-				
-				pst.executeUpdate();
-
-				ResultSet rs2 =  pst.getGeneratedKeys();
-				if(rs2.next()) {
-					StringBuilder sql3 = new StringBuilder();
-					sql3.append("UPDATE carrinhos SET dataAlteracao = ? where id = ?;");
-					
-					pst = connection.prepareStatement(sql3.toString(),
-							Statement.RETURN_GENERATED_KEYS);
-
-					pst.setDate(1, new java.sql.Date(new Date().getTime()));
-					pst.setLong(2, rs.getLong("carrinhos_produtos.idCarrinho"));
-					
-					pst.executeUpdate();
-				}
-			}
-
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void alteraBloqueio(long idItemCarrinho, int quantidade) {
-		PreparedStatement pst = null;
-		
-		try {
-			StringBuilder sql = new StringBuilder();
-			sql.append("SELECT * FROM carrinhos_produtos WHERE idCarrinhoProduto = ?;");
-			
-			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-
-			Date agora = new Date(); 
-
-			pst.setLong(1, idItemCarrinho);
-			
-			ResultSet rs = pst.executeQuery();
-			
-			if (rs.next()) {
-				StringBuilder sql2 = new StringBuilder();
-				sql2.append("UPDATE bloqueios_produtos SET quantidade = ? WHERE idLivro = ? AND idCarrinho = ?;");
-				
-				pst = connection.prepareStatement(sql2.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-
-				pst.setInt(1, quantidade);
-				pst.setLong(2, rs.getLong("carrinhos_produtos.idProduto"));
-				pst.setLong(3, rs.getLong("carrinhos_produtos.idCarrinho"));
-				
-				pst.executeUpdate();
-
-				StringBuilder sql3 = new StringBuilder();
-				sql3.append("UPDATE carrinhos SET dataAlteracao = ? where id = ?;");
-				
-				pst = connection.prepareStatement(sql3.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-
-				pst.setDate(1, new java.sql.Date(new Date().getTime()));
-				pst.setLong(2, rs.getLong("carrinhos_produtos.idCarrinho"));
-				
-				pst.executeUpdate();
-			}
-
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void removeBloqueio(long idItemCarrinho) {
-		PreparedStatement pst = null;
-		
-		try {
-			StringBuilder sql = new StringBuilder();
-			sql.append("SELECT * FROM carrinhos_produtos WHERE idCarrinhoProduto = ?;");
-			
-			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-
-			Date agora = new Date(); 
-
-			pst.setLong(1, idItemCarrinho);
-			
-			ResultSet rs = pst.executeQuery();
-
-			if (rs.next()) {
-				StringBuilder sql2 = new StringBuilder();
-				sql2.append("DELETE FROM bloqueios_produtos WHERE idLivro = ? AND idCarrinho = ?;");
-				
-				pst = connection.prepareStatement(sql2.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-
-				pst.setLong(1, rs.getLong("carrinhos_produtos.idProduto"));
-				pst.setLong(2, rs.getLong("carrinhos_produtos.idCarrinho"));
-
-				pst.executeUpdate();
-
-				StringBuilder sql3 = new StringBuilder();
-				sql3.append("UPDATE carrinhos SET dataAlteracao = ? where id = ?;");
-				
-				pst = connection.prepareStatement(sql3.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-
-				pst.setDate(1, new java.sql.Date(new Date().getTime()));
-				pst.setLong(2, rs.getLong("carrinhos_produtos.idCarrinho"));
-				
-				pst.executeUpdate();
-			}
-
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void removeBloqueioCarrinhoInteiro(long idCarrinho) {
-		PreparedStatement pst = null;		
-		try {
-			StringBuilder sql = new StringBuilder();
-			sql.append("DELETE FROM bloqueios_produtos WHERE idCarrinho = ?;");
-			
-			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-
-			pst.setLong(1, idCarrinho);
-			
-			pst.executeUpdate();
-
-			StringBuilder sql3 = new StringBuilder();
-			sql3.append("UPDATE carrinhos SET dataAlteracao = ? where id = ?;");
-			
-			pst = connection.prepareStatement(sql3.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-
-			pst.setDate(1, new java.sql.Date(new Date().getTime()));
-			pst.setLong(2, idCarrinho);
-			
-			pst.executeUpdate();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void delete(long id) {
 
-	}
-
-	public void alteraQteItemCarrinho(long id, int quantidade) {
-		PreparedStatement pst = null;
-		try {
-			connection = Conexao.getConnectionMySQL();
-			connection.setAutoCommit(false);
-
-			StringBuilder sqlEstoque = new StringBuilder();
-			sqlEstoque.append("SELECT idProduto, idCarrinho from carrinhos_produtos WHERE idCarrinhoProduto = ?;");
-			
-			pst = connection.prepareStatement(sqlEstoque.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-
-			pst.setLong(1, id);
-			
-			ResultSet rs = pst.executeQuery();
-
-			if (rs.next()) {
-				LivroDAO livrodao = new LivroDAO();
-				int estoque = livrodao.contaEstoque(new Livro(rs.getLong("carrinhos_produtos.idProduto"), new Date()), rs.getLong("carrinhos_produtos.idCarrinho"));
-
-				StringBuilder sql = new StringBuilder();
-				sql.append("UPDATE carrinhos_produtos SET quantidade = ? WHERE idCarrinhoProduto = ?");
-				pst = connection.prepareStatement(sql.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-				pst.setInt(1, Math.min(estoque, quantidade));
-				pst.setLong(2, id);
-				pst.executeUpdate();
-
-				//altera o bloqueio do produto
-				alteraBloqueio(id, quantidade);
-				connection.commit();
-			}
-		} catch (Exception e) {
-			System.out.println("Ocorreu um erro ao alterar o registro!");
-			e.printStackTrace();
-		}
-	}
-
-	public void removerItemCarrinho(long id) {
-		PreparedStatement pst = null;
-		try {
-			connection = Conexao.getConnectionMySQL();
-			connection.setAutoCommit(false);
-
-			//remove o bloqueio do item
-			removeBloqueio(id);
-
-			StringBuilder sql = new StringBuilder();
-			sql.append("DELETE FROM carrinhos_produtos WHERE idCarrinhoProduto = ?");
-			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-			pst.setLong(1, id);
-			pst.executeUpdate();
-
-			
-			connection.commit();
-		} catch (Exception e) {
-			System.out.println("Ocorreu um erro ao excluir o registro!");
-			e.printStackTrace();
-		}
-	}
-
-	public CupomDesconto encontraCupomDesconto(String nomeCupomDesconto) {	
-		PreparedStatement pst = null;
-
-		try {
-			StringBuilder sql = new StringBuilder();
-			sql.append("SELECT * from cupons_desconto where nome = ? and dataInicio <= ? and (dataFim is null or dataFim >= ?) and status = 1;");
-			
-			Connection con = Conexao.getConnectionMySQL();
-			con.setAutoCommit(false);
-			pst = con.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-
-			Date agora = new Date(); 
-
-			pst.setString(1, nomeCupomDesconto);
-			pst.setDate(2, new java.sql.Date(agora.getTime()));
-			pst.setDate(3, new java.sql.Date(agora.getTime()));
-			
-			ResultSet rs = pst.executeQuery();
-			
-			if (rs.next()) {
-				CupomDesconto cupomDesconto = new CupomDesconto(
-					rs.getLong("cupons_desconto.id"),
-					rs.getDate("cupons_desconto.dataCadastro"),
-					rs.getString("cupons_desconto.nome"),
-					rs.getDouble("cupons_desconto.valor"),
-					rs.getDate("cupons_desconto.dataInicio"),
-					rs.getDate("cupons_desconto.dataFim"),
-					rs.getInt("cupons_desconto.status")
-				);
-
-				con.commit();
-				
-				return cupomDesconto;
-			} else {
-				return null;
-			}
-		}  catch (Exception e) {
-			System.out.println("Ocorreu um erro ao recuperar o cupom!");
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public CupomTroca encontraCupomTroca(String nomeCupomTroca, long idUsuario) {	
-		PreparedStatement pst = null;
-
-		try {
-			StringBuilder sql = new StringBuilder();
-			sql.append("SELECT * from cupons_troca where idPedido is null and nome = ? and idUsuario = ?;");
-			
-			Connection con = Conexao.getConnectionMySQL();
-			con.setAutoCommit(false);
-			pst = con.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-
-			Date agora = new Date(); 
-
-			pst.setString(1, nomeCupomTroca);
-			pst.setLong(2, idUsuario);
-			
-			ResultSet rs = pst.executeQuery();
-			
-			if (rs.next()) {
-				CupomTroca cupomTroca = new CupomTroca(
-					rs.getLong("cupons_troca.id"),
-					rs.getDate("cupons_troca.dataEntrada"),
-					rs.getString("cupons_troca.nome"),
-					rs.getDouble("cupons_troca.valor"),
-					null
-				);
-				con.commit();
-				return cupomTroca;
-			} else {
-				return null;
-			}
-		}  catch (Exception e) {
-			System.out.println("Ocorreu um erro ao recuperar o cupom!");
-			e.printStackTrace();
-			return null;
-		}
 	}
 
 	private long selectOrInsert(String tableName, String fieldName, String fieldValue, String dependentName, long dependentId) {
@@ -1239,6 +677,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			connection.setAutoCommit(false);
 
 			LivroDAO livrodao = new LivroDAO();
+			CarrinhoDAO crdao = new CarrinhoDAO();
 
 			boolean estoqueTudoCerto = true;
 
@@ -1248,7 +687,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 				if (estoqueLivro < itemCarrinho.getQuantidade()) {
 					estoqueTudoCerto = false;
-					alteraQteItemCarrinho(itemCarrinho.getId(), estoqueLivro);
+					crdao.alteraQteItemCarrinho(itemCarrinho.getId(), estoqueLivro);
 				}
 			}
 
@@ -1280,7 +719,8 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				pst.setNull(6, Types.INTEGER);
 				pst.setNull(9, Types.INTEGER);
 			} else {
-				CupomDesconto cupomDesconto = encontraCupomDesconto(pedido.getCupomDesconto().getNome());
+				CupomDescontoDAO cddao = new CupomDescontoDAO();
+				CupomDesconto cupomDesconto = cddao.encontraCupomDesconto(pedido.getCupomDesconto().getNome());
 				if (cupomDesconto != null) {
 					pst.setLong(6, cupomDesconto.getId());
 					pst.setDouble(9, cupomDesconto.getValor());
@@ -1324,7 +764,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				//salva a relacao cartao x pedido para cada cartao usado na compra
 				salvaRegistroUsoCartoes(pedido);
 				
-				salvaPrecoItensCarrinho(pedido.getCarrinho().getId());
+				salvaPrecoItensCarrinhoMomentoCompra(pedido.getCarrinho().getId());
 
 				//cria um cupom de troca caso o valor dos cupons de troca + desconto ultrapasse o valor do pedido
 				double totalCartoes = 0;
@@ -1349,7 +789,8 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				System.out.println("============== o excesso ==========");
 				System.out.println(excesso);
 				if (excesso < 0) {
-					geraCupomTrocaExcesso(pedido.getCliente().getId(), excesso * (-1));
+					CupomTrocaDAO ctdao = new CupomTrocaDAO();
+					ctdao.geraCupomTrocaExcesso(pedido.getCliente().getId(), excesso * (-1));
 				}
 				connection.commit();
 			}
@@ -1436,605 +877,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		
 	}
 
-	public void usaCuponsTroca(Pedido pedido) throws SQLException, ClassNotFoundException {
-		PreparedStatement pst = null;
-		
-		StringBuilder sql = new StringBuilder();
-		sql.append("UPDATE cupons_troca SET idPedido = ?, status = 0 WHERE id = ?;");
-		
-		for (CupomTroca cupomTroca : pedido.getCuponsTroca()) {
-			System.out.println("estou usando o cupom de troca");
-			System.out.println(cupomTroca.getId());
-
-			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-			pst.setLong(1, pedido.getId());
-			pst.setLong(2, cupomTroca.getId());
-
-			pst.executeUpdate();
-		}
-	}
-
-	public void solicitarTroca(ItemCarrinho itemCarrinho) {
-		//cria um registro na tabela solicitacoes_troca
-		PreparedStatement pst = null;
-
-		try {
-			connection = Conexao.getConnectionMySQL();
-			connection.setAutoCommit(false);
-			StringBuilder sql = new StringBuilder();
-			sql.append("SELECT quantidade from carrinhos_produtos where idCarrinhoProduto = ?");
-		
-			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-
-			Date agora = new Date(); 
-
-			pst.setLong(1, itemCarrinho.getId());
-			
-			ResultSet rs = pst.executeQuery();
-			
-			if (rs.next()) {
-				int quantidadeAtual = rs.getInt(1);
-				itemCarrinho.setQuantidadeItensTrocados( Math.min(quantidadeAtual, itemCarrinho.getQuantidadeItensTrocados()) );
-
-				StringBuilder sql2 = new StringBuilder();
-				sql2.append("INSERT INTO solicitacoes_troca (idItemCarrinho, quantidade, status, dataCadastro) VALUES (?, ?, 0, ?);");
-				
-				pst = connection.prepareStatement(sql2.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-				pst.setLong(1, itemCarrinho.getId());
-				pst.setInt(2, itemCarrinho.getQuantidadeItensTrocados() );
-				pst.setDate(3, new java.sql.Date(agora.getTime()));
-
-				pst.executeUpdate();
-
-				StringBuilder sql3 = new StringBuilder();
-				sql3.append("UPDATE carrinhos_produtos set quantidadeItensTrocados = (quantidadeItensTrocados + ?) WHERE carrinhos_produtos.idCarrinhoProduto = ?;");
-
-				pst = connection.prepareStatement(sql3.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-
-				pst.setInt(1, itemCarrinho.getQuantidadeItensTrocados() );
-				pst.setLong(2, itemCarrinho.getId());
-
-				pst.executeUpdate();
-
-				//altera status do pedido
-				StringBuilder sql4 = new StringBuilder();
-				sql4.append("SELECT pedidos.id from pedidos "+
-				           "INNER JOIN carrinhos on carrinhos.id = pedidos.idCarrinho " +
-						   "INNER JOIN carrinhos_produtos on carrinhos_produtos.idCarrinho = carrinhos.id " +
-				           "WHERE carrinhos_produtos.idCarrinhoProduto = ?;");
-			
-				pst = connection.prepareStatement(sql4.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-
-				pst.setLong(1, itemCarrinho.getId());
-
-				ResultSet rs3 = pst.executeQuery();
-
-				if (rs3.next()) {
-					long idPedido = rs3.getLong(1);
-
-					StringBuilder sql5 = new StringBuilder();
-					sql5.append("UPDATE pedidos SET status = 5 WHERE id = ?;");
-
-					pst = connection.prepareStatement(sql5.toString(),
-							Statement.RETURN_GENERATED_KEYS);
-
-					pst.setLong(1, idPedido);
-
-					pst.executeUpdate();
-				}
-
-				connection.commit();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			try {
-				if(connection != null) connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}			
-		}
-	}
-
-	public void selectSolicitacoesTroca() {
-		PreparedStatement pst = null;
-		try {
-			connection = Conexao.getConnectionMySQL();
-			pst = connection.prepareStatement(
-		    "select solicitacoes_troca.id, solicitacoes_troca.dataCadastro, solicitacoes_troca.quantidade, solicitacoes_troca.status, " +
-		    "       livros.id, livros.capa, livros.titulo, carrinhos_produtos.precoMomentoCompra, " +
-		    "       clientes.id, clientes.nome " +
-			"from solicitacoes_troca " +
-			"inner join carrinhos_produtos on carrinhos_produtos.idCarrinhoProduto = solicitacoes_troca.idItemCarrinho " +
-			"inner join livros on carrinhos_produtos.idProduto = livros.id "+
-			"inner join carrinhos on carrinhos.id = carrinhos_produtos.idCarrinho "+
-			"inner join clientes on clientes.id = carrinhos.idUsuario "+
-			"order by solicitacoes_troca.id desc;");
-			
-			ResultSet rs = pst.executeQuery();
-			
-			ArrayList<SolicitacaoTroca> list = new ArrayList();
-			ResultSetMetaData rsmd = rs.getMetaData();
-			
-			while (rs.next()) {
-				SolicitacaoTroca solicitacaoTroca = new SolicitacaoTroca(
-					rs.getLong("solicitacoes_troca.id"),
-					rs.getDate("solicitacoes_troca.dataCadastro"),
-					new ItemCarrinho(
-						(long)1,
-						null,
-						new Livro(
-							rs.getLong("livros.id"),
-							null,
-							rs.getString("livros.titulo"),
-							rs.getString("livros.capa"),
-							rs.getDouble("carrinhos_produtos.precoMomentoCompra")
-						),
-						0,
-						new Cliente(
-							rs.getLong("clientes.id"),
-							null,
-							null,
-							rs.getString("clientes.nome")
-						)
-					), //itemCarrinho
-					rs.getInt("solicitacoes_troca.quantidade"),
-					rs.getInt("solicitacoes_troca.status")
-				);
-
-				list.add(solicitacaoTroca);
-			}
-
-			this.selectVals = list;
-			
-			pst.close();
-			connection.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
-	}
-
-	public void decidirPedidoTroca(long id, int aprovacao) {
-		PreparedStatement pst = null;
-		
-		try {
-			connection = Conexao.getConnectionMySQL();
-			connection.setAutoCommit(false);
-
-			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE solicitacoes_troca SET status = ? WHERE id = ?;");
-			
-			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-
-			if (aprovacao == 1) { //troca aprovada
-				pst.setInt(1, 1);
-			} else { //troca recusada
-				pst.setInt(1, 4);
-			}
-
-			pst.setLong(2, id);
-
-			pst.executeUpdate();
-
-			if (aprovacao != 1) {
-				devolveItensAoItemCarrinho(id);
-			}
-
-			//altera status pedido
-			StringBuilder sql4 = new StringBuilder();
-			sql4.append("SELECT pedidos.id, pedidos.idUsuario from pedidos "+
-			           "INNER JOIN carrinhos on carrinhos.id = pedidos.idCarrinho " +
-					   "INNER JOIN carrinhos_produtos on carrinhos_produtos.idCarrinho = carrinhos.id " +
-					   "INNER JOIN solicitacoes_troca on solicitacoes_troca.idItemCarrinho = carrinhos_produtos.idCarrinhoProduto " +
-			           "WHERE solicitacoes_troca.id = ?;");
-		
-			pst = connection.prepareStatement(sql4.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-
-			pst.setLong(1, id);
-
-			ResultSet rs3 = pst.executeQuery();
-
-			if (rs3.next()) {
-				long idPedido = rs3.getLong("pedidos.id");
-
-				StringBuilder sql5 = new StringBuilder();
-				sql5.append("UPDATE pedidos SET status = ?, dataAlteracao = ? WHERE id = ?;");
-
-				pst = connection.prepareStatement(sql5.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-
-				if (aprovacao == 1) { //troca aprovada
-					pst.setInt(1, 6);
-				} else { //troca recusada
-					pst.setInt(1, 4);
-				}
-
-				Date agora = new Date();
-				pst.setDate(2, new java.sql.Date(agora.getTime()));
-
-				pst.setLong(3, idPedido);
-
-				pst.executeUpdate();
-
-				//gera a notificacao
-				StringBuilder sql6 = new StringBuilder();
-				sql6.append("INSERT INTO notificacoes (idCliente, descricao, cor, dataCadastro) VALUES (?, ?, ?, ?)");
-
-				pst = connection.prepareStatement(sql6.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-
-				pst.setLong(1, rs3.getLong("pedidos.idUsuario"));
-				
-				if (aprovacao == 1) { //troca aprovada
-					pst.setString(2, "Aviso: um de seus pedidos de troca foi aceito. Confira seus pedidos!");
-					pst.setString(3, "12a901");
-				} else { //troca recusada
-					pst.setString(2, "Aviso: um de seus pedidos de troca foi recusado.");
-					pst.setString(3, "ff0931");
-				}
-
-				pst.setDate(4, new java.sql.Date(new Date().getTime()));
-
-				pst.executeUpdate();
-			}
-
-			connection.commit();
-						
-		} catch (Exception e) {
-			try {
-				if(connection != null) connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-
-			e.printStackTrace();
-		}		
-	}
-
-	private void devolveItensAoItemCarrinho(long id) {
-		PreparedStatement pst = null;
-		try {
-			pst = connection.prepareStatement("select * from solicitacoes_troca inner join carrinhos_produtos on carrinhos_produtos.idCarrinhoProduto = solicitacoes_troca.idItemCarrinho where solicitacoes_troca.id = ?;");
-			
-			pst.setLong(1, id);
-			ResultSet rs = pst.executeQuery();
-						
-			if (rs.next()) {
-				pst = connection.prepareStatement("update carrinhos_produtos set quantidade = ?, quantidadeItensTrocados = ? where idCarrinhoProduto = ?");
-
-				pst.setInt(1, rs.getInt("carrinhos_produtos.quantidade") + rs.getInt("solicitacoes_troca.quantidade"));
-				pst.setInt(2, rs.getInt("carrinhos_produtos.quantidadeItensTrocados") - rs.getInt("solicitacoes_troca.quantidade"));
-				pst.setLong(3, rs.getLong("carrinhos_produtos.idCarrinhoProduto"));
-				
-				pst.executeUpdate();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	
-	}
-
-	public EntidadeDominio[] confirmarRecebimentoTroca(long id, boolean retornarEstoque) {
-		PreparedStatement pst = null;
-		EntidadeDominio[] retorno = new EntidadeDominio[2];
-		
-		try {
-			connection = Conexao.getConnectionMySQL();
-			connection.setAutoCommit(false);
-
-			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE solicitacoes_troca SET status = ? WHERE id = ?;");
-			
-			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-			
-			if (retornarEstoque) {
-				pst.setInt(1, 3);
-			} else {
-				pst.setInt(1, 2);
-			}
-			pst.setLong(2, id);
-
-			pst.executeUpdate();
-
-			if (retornarEstoque) {
-				retorno[1] = retornaItensEstoque(id);
-			}
-
-			//altera status do pedido
-			StringBuilder sql4 = new StringBuilder();
-			sql4.append("SELECT pedidos.id from pedidos "+
-			           "INNER JOIN carrinhos on carrinhos.id = pedidos.idCarrinho " +
-					   "INNER JOIN carrinhos_produtos on carrinhos_produtos.idCarrinho = carrinhos.id " +
-					   "INNER JOIN solicitacoes_troca on solicitacoes_troca.idItemCarrinho = carrinhos_produtos.idCarrinhoProduto " +
-			           "WHERE solicitacoes_troca.idItemCarrinho = ?;");
-		
-			pst = connection.prepareStatement(sql4.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-
-			pst.setLong(1, id);
-
-			ResultSet rs3 = pst.executeQuery();
-
-			if (rs3.next()) {
-				long idPedido = rs3.getLong(1);
-
-				StringBuilder sql5 = new StringBuilder();
-				sql5.append("UPDATE pedidos SET status = 7 WHERE id = ?;");
-
-				pst = connection.prepareStatement(sql5.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-
-				pst.setLong(1, idPedido);
-
-				pst.executeUpdate();
-			}
-
-			retorno[0] = geraCupomTroca(id);
-
-			connection.commit();
-
-			return retorno;
-						
-		} catch (Exception e) {
-			e.printStackTrace();
-			try {
-				if(connection != null) connection.rollback();
-				return null;
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-				return null;
-			}
-		}		
-	}
-	
-	public CupomTroca geraCupomTroca(long id) {
-		PreparedStatement pst = null;
-
-		try {
-			pst = connection.prepareStatement("select * from solicitacoes_troca "+
-				"inner join carrinhos_produtos on carrinhos_produtos.idCarrinhoProduto = solicitacoes_troca.idItemCarrinho "+
-				"inner join livros on livros.id = carrinhos_produtos.idProduto "+
-				"inner join carrinhos on carrinhos.id = carrinhos_produtos.idCarrinho "+
-				"inner join pedidos on pedidos.idCarrinho = carrinhos.id "+
-				"inner join clientes on clientes.id = carrinhos.idUsuario "+
-				"where solicitacoes_troca.id = ?;");
-			
-			pst.setLong(1, id);
-			ResultSet rs = pst.executeQuery();
-						
-			if (rs.next()) {
-				long idUsuario = 0;
-				double valor = 0;
-				
-				StringBuilder sql = new StringBuilder();
-				sql.append("INSERT INTO cupons_troca (dataEntrada, idUsuario, nome, valor, status) VALUES (?, ?, ?, ?, 1);");
-
-				pst = connection.prepareStatement(sql.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-				
-				DateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");  
-
-				String nome = rs.getString("clientes.nome").replaceAll(" ", "").toUpperCase() + dateFormat.format(new Date()) + String.valueOf(rs.getInt("solicitacoes_troca.quantidade") * rs.getDouble("carrinhos_produtos.precoMomentoCompra")).replaceAll(".", "");
-				double valorCT = rs.getInt("solicitacoes_troca.quantidade") * rs.getDouble("carrinhos_produtos.precoMomentoCompra");
-				Pedido pedido = new Pedido(rs.getLong("pedidos.id"), null, null, 0, null, 0, null, null, null, null, 0, 0, "");
-				
-				pst.setDate(1, new java.sql.Date(new Date().getTime()));
-				pst.setLong(2, rs.getLong("clientes.id"));
-				pst.setString(3, nome );
-				pst.setDouble(4, valorCT );
-
-				pst.executeUpdate();
-
-				ResultSet rs2 = pst.getGeneratedKeys();
-				
-				CupomTroca ct = null;
-
-				if(rs2.next()) {
-					ct = new CupomTroca(rs2.getLong(1), new Date(), nome, valorCT, pedido);
-					System.out.println("LOS CUPOINS DE DTROCA");
-				}
-
-				System.out.println("====== ====== deveria alterar o status do pedido para trocado");
-
-				StringBuilder sql2 = new StringBuilder();
-				sql2.append("UPDATE pedidos SET status = 7 WHERE id = ?;");
-
-				pst = connection.prepareStatement(sql2.toString(),
-						Statement.RETURN_GENERATED_KEYS);				
-				pst.setLong(1, rs.getLong("pedidos.id"));
-
-				pst.executeUpdate();				
-
-				return ct;
-			}
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}	
-	}
-
-	public void geraCupomTrocaExcesso(long idCliente, double valor) {
-		PreparedStatement pst = null;
-
-		try {				
-			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO cupons_troca (dataEntrada, idUsuario, nome, valor, status) VALUES (?, ?, ?, ?, ?);");
-
-			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-			
-			DateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");  
-			
-			pst.setDate(1, new java.sql.Date(new Date().getTime()));
-			pst.setLong(2, idCliente);
-			pst.setString(3, "CUPOMTROCA" + idCliente + dateFormat.format(new Date()) + String.valueOf(valor).replaceAll(".", "") );
-			pst.setDouble(4, valor );
-			pst.setInt(5, 1);
-
-			pst.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	
-	}
-
-	public LivroEstoque retornaItensEstoque(long idSolicitacaoTroca) {
-		PreparedStatement pst = null;
-
-		try {
-			pst = connection.prepareStatement("select * from solicitacoes_troca "+
-				"inner join carrinhos_produtos on carrinhos_produtos.idCarrinhoProduto = solicitacoes_troca.idItemCarrinho "+
-				"inner join livros on livros.id = carrinhos_produtos.idProduto "+
-				"inner join carrinhos on carrinhos.id = carrinhos_produtos.idCarrinho "+
-				"inner join clientes on clientes.id = carrinhos.idUsuario "+
-				"where solicitacoes_troca.id = ?;");
-			
-			pst.setLong(1, idSolicitacaoTroca);
-			ResultSet rs = pst.executeQuery();
-						
-			if (rs.next()) {
-				long idUsuario = 0;
-				double valor = 0;
-				
-				StringBuilder sql = new StringBuilder();
-				sql.append("INSERT INTO livros_estoque (dataCadastro, quantidade, custo, dataEntrada, fornecedorId, livroId, tipoMovimentacao, idCliente) VALUES (?, ?, 0, ?, 0, ?, 3, ?);");
-
-				pst = connection.prepareStatement(sql.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-				
-				pst.setDate(1, new java.sql.Date(new Date().getTime()));
-				pst.setLong(2, rs.getInt("solicitacoes_troca.quantidade"));
-				pst.setDate(3, new java.sql.Date(new Date().getTime()));
-				pst.setLong(4, rs.getLong("livros.id"));
-				pst.setLong(5, rs.getLong("clientes.id"));
-
-				pst.executeUpdate();
-
-				ResultSet rs2 = pst.getGeneratedKeys();
-
-				if (rs2.next()) {
-					LivroEstoque le = new LivroEstoque(rs2.getLong(1), new Date(), rs.getInt("solicitacoes_troca.quantidade"), 0, new Date(), null, new Livro(rs.getLong("livros.id"), null), 3);
-					le.setCliente(new Cliente(rs.getLong("clientes.id"), null, null));
-					return le;
-				}
-			}
-
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public CupomTroca[] encontraCuponsTroca(CupomTroca[] cuponsTroca) {
-		PreparedStatement pst = null;
-		try {
-			if (cuponsTroca == null) {
-				return null;
-			}
-			CupomTroca[] ct = new CupomTroca[cuponsTroca.length];
-			Connection con = Conexao.getConnectionMySQL();
-
-			for (int i = 0; i < ct.length; i++) {
-				StringBuilder sql = new StringBuilder();
-				sql.append("select * from cupons_troca where idUsuario = ? and nome = ? and idPedido is null");
-
-				pst = con.prepareStatement(sql.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-			
-				pst.setLong(1, cuponsTroca[i].getPedido().getCliente().getId());
-				pst.setString(2, cuponsTroca[i].getNome());
-
-				ResultSet rs = pst.executeQuery();
-							
-				if (rs.next()) {
-					ct[i] = cuponsTroca[i];
-					ct[i].setValor(rs.getDouble("cupons_troca.valor"));
-					ct[i].setId(rs.getLong("cupons_troca.id"));
-				}
-			}
-
-			return ct;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public void salvaPrecoItensCarrinho(long idCarrinho) {
-		PreparedStatement pst = null;
-		try {
-			Connection con = Conexao.getConnectionMySQL();
-			pst = con.prepareStatement(
-		    "select carrinhos_produtos.idCarrinhoProduto, livros.preco from carrinhos_produtos inner join livros on livros.id = carrinhos_produtos.idProduto where idCarrinho = ?;");
-			
-			pst.setLong(1, idCarrinho);
-
-			ResultSet rs = pst.executeQuery();
-			
-			ArrayList<SolicitacaoTroca> list = new ArrayList();
-			ResultSetMetaData rsmd = rs.getMetaData();
-			
-			while (rs.next()) {
-				pst = connection.prepareStatement("update carrinhos_produtos set precoMomentoCompra = ? where carrinhos_produtos.idCarrinhoProduto = ?");
-
-				pst.setDouble(1, rs.getDouble("livros.preco"));
-				pst.setLong(2, rs.getLong("carrinhos_produtos.idCarrinhoProduto"));
-				
-				pst.executeUpdate();
-			}			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-
-	public ArrayList listagemCuponsTroca(Campo[] campos) {
-		PreparedStatement pst = null;
-		try {
-			CriaFiltragem filtro = new CriaFiltragem();
-			String where = filtro.processa(campos);
-
-			connection = Conexao.getConnectionMySQL();
-			pst = connection.prepareStatement("select * from cupons_troca " + where + " order by id desc;");
-		
-			ResultSet rs = pst.executeQuery();
-			
-			ArrayList<CupomTroca> list = new ArrayList();
-			ResultSetMetaData rsmd = rs.getMetaData();
-			
-			while (rs.next()) {
-				Pedido pedido = new Pedido(rs.getLong("cupons_troca.idPedido"), null);
-
-				CupomTroca cupomTroca = new CupomTroca(
-					rs.getLong("cupons_troca.id"),
-					rs.getDate("cupons_troca.dataEntrada"),
-					rs.getString("cupons_troca.nome"),
-					rs.getDouble("cupons_troca.valor"),
-					pedido
-				);
-
-				list.add(cupomTroca);
-			}
-		
-			this.selectVals = list;
-			
-			pst.close();
-			connection.close();
-
-			return this.selectVals;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
 	public DadosCalculoFrete getDadosCalculoFrete(long idCarrinho) {
 		PreparedStatement pst = null;
 		DadosCalculoFrete dadosCalculoFrete = null;
@@ -2112,7 +954,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			ResultSet rs = pst.executeQuery();
 			
 			ArrayList<ItemGrafico> list = new ArrayList();
-			ResultSetMetaData rsmd = rs.getMetaData();
 			
 			while (rs.next()) {
 				ItemGrafico ig = new ItemGrafico(
@@ -2135,5 +976,52 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			e.printStackTrace();
 			return null;
 		}		
+	}
+
+	public void salvaPrecoItensCarrinhoMomentoCompra(long idCarrinho) {
+		PreparedStatement pst = null;
+		try {
+			Connection con = Conexao.getConnectionMySQL();
+			pst = con.prepareStatement(
+		    "select carrinhos_produtos.idCarrinhoProduto, livros.preco from carrinhos_produtos inner join livros on livros.id = carrinhos_produtos.idProduto where idCarrinho = ?;");
+			
+			pst.setLong(1, idCarrinho);
+
+			ResultSet rs = pst.executeQuery();
+			
+			ArrayList<SolicitacaoTroca> list = new ArrayList();
+			
+			while (rs.next()) {
+				pst = connection.prepareStatement("update carrinhos_produtos set precoMomentoCompra = ? where carrinhos_produtos.idCarrinhoProduto = ?");
+
+				pst.setDouble(1, rs.getDouble("livros.preco"));
+				pst.setLong(2, rs.getLong("carrinhos_produtos.idCarrinhoProduto"));
+				
+				pst.executeUpdate();
+			}			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+
+	public void usaCuponsTroca(Pedido pedido) throws SQLException, ClassNotFoundException {
+		PreparedStatement pst = null;
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append("UPDATE cupons_troca SET idPedido = ?, status = 0 WHERE id = ?;");
+		
+		for (CupomTroca cupomTroca : pedido.getCuponsTroca()) {
+			System.out.println("estou usando o cupom de troca");
+			System.out.println(cupomTroca.getId());
+
+			pst = connection.prepareStatement(sql.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+			pst.setLong(1, pedido.getId());
+			pst.setLong(2, cupomTroca.getId());
+
+			pst.executeUpdate();
+		}
 	}
 }

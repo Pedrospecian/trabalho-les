@@ -6,22 +6,11 @@ import strategies.CriaFiltragem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
-import model.Pais;
-import model.Estado;
-import model.Cidade;
-import model.Bairro;
-import model.Endereco;
-import model.Cliente;
-import model.Documento;
-import model.TipoCliente;
-import model.TipoDocumento;
-import model.TipoEndereco;
 import model.EntidadeDominio;
 import model.CupomDesconto;
 
@@ -238,6 +227,50 @@ public class CupomDescontoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		} catch (Exception e) {
 			System.out.println("Ocorreu um erro ao excluir o registro!");
 			e.printStackTrace();
+		}
+	}
+
+	public CupomDesconto encontraCupomDesconto(String nomeCupomDesconto) {	
+		PreparedStatement pst = null;
+
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("SELECT * from cupons_desconto where nome = ? and dataInicio <= ? and (dataFim is null or dataFim >= ?) and status = 1;");
+			
+			Connection con = Conexao.getConnectionMySQL();
+			con.setAutoCommit(false);
+			pst = con.prepareStatement(sql.toString(),
+					Statement.RETURN_GENERATED_KEYS);
+
+			Date agora = new Date(); 
+
+			pst.setString(1, nomeCupomDesconto);
+			pst.setDate(2, new java.sql.Date(agora.getTime()));
+			pst.setDate(3, new java.sql.Date(agora.getTime()));
+			
+			ResultSet rs = pst.executeQuery();
+			
+			if (rs.next()) {
+				CupomDesconto cupomDesconto = new CupomDesconto(
+					rs.getLong("cupons_desconto.id"),
+					rs.getDate("cupons_desconto.dataCadastro"),
+					rs.getString("cupons_desconto.nome"),
+					rs.getDouble("cupons_desconto.valor"),
+					rs.getDate("cupons_desconto.dataInicio"),
+					rs.getDate("cupons_desconto.dataFim"),
+					rs.getInt("cupons_desconto.status")
+				);
+
+				con.commit();
+				
+				return cupomDesconto;
+			} else {
+				return null;
+			}
+		}  catch (Exception e) {
+			System.out.println("Ocorreu um erro ao recuperar o cupom!");
+			e.printStackTrace();
+			return null;
 		}
 	}
 }

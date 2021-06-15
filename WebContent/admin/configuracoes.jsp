@@ -16,7 +16,7 @@
 		<div class="container">
 			<div class="configuracoes-d-flex">
 				<h1>Configurações</h1>
-				<a href="/trabalho-les/resetarConfiguracoes" class="button-finalizar">Restaurar padrão</a>
+				<a href="/trabalho-les/resetarConfiguracoes" class="button-finalizar" cypress-restaurarPadrao>Restaurar padrão</a>
 			</div>
 			<form action="/trabalho-les/alterarConfiguracoes" class="js-pristine-validation">
 				<!-- O sistema deve inativar livros sem estoque

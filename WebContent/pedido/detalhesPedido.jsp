@@ -17,28 +17,31 @@
 			<h1>Pedido #${pedido.getId()}</h1>
 			Status do pedido: 
 			<c:if test = '${pedido.getStatus() == 1}'>
-				Em processamento (atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
+				Em processamento
 			</c:if>							
 			<c:if test = '${pedido.getStatus() == 2}'>
-				Aceito (atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
+				Aceito
 			</c:if>
 			<c:if test = '${pedido.getStatus() == 3}'>
-				Em trânsito (atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
+				Em trânsito
 			</c:if>
 			<c:if test = '${pedido.getStatus() == 4}'>
-				Entregue (atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
+				Entregue
 			</c:if>
 			<c:if test = '${pedido.getStatus() == 5}'>
-				Em troca (atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
+				Em troca
 			</c:if>
 			<c:if test = '${pedido.getStatus() == 6}'>
-				Troca autorizada (atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
+				Troca autorizada
 			</c:if>
 			<c:if test = '${pedido.getStatus() == 7}'>
-				Trocado (atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
+				Trocado
 			</c:if>
 			<c:if test = '${pedido.getStatus() == 8}'>
-				Reprovado (atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
+				Reprovado
+			</c:if>
+			<c:if test="${pedido.getDataAlteracao() != null}">
+				(atualizado em <span class="js-date-value">${pedido.getDataAlteracao()}</span>)
 			</c:if>
 			<h2>Produtos</h2>
 			<table class="carrinho-itens" cellpadding="0" cellspacing="0">

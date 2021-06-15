@@ -1,19 +1,13 @@
 package servlets.actions;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import utils.Campo;
-import facades.FachadaCliente;
-import facades.FachadaPedido;
-import model.Cliente;
-import viewHelpers.ClienteViewHelper;
-import viewHelpers.UsuarioViewHelper;
+import facades.FachadaCupomTroca;
 import viewHelpers.LoginViewHelper;
 
 public class DecidirPedidoTroca extends HttpServlet {
@@ -28,7 +22,7 @@ public class DecidirPedidoTroca extends HttpServlet {
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
 
-			FachadaPedido fachada = new FachadaPedido();
+			FachadaCupomTroca fachada = new FachadaCupomTroca();
 
 			if (req.getParameter("id").matches("^[0-9]+$") && req.getParameter("autorizar").matches("^[0-9]$")) {
 				fachada.decidirPedidoTroca(Long.parseLong(req.getParameter("id")), Integer.parseInt(req.getParameter("autorizar")), LoginViewHelper.getLogInfo(req, resp));

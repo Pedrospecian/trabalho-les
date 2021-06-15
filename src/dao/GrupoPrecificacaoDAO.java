@@ -9,14 +9,12 @@ import strategies.CriaFiltragem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
 import dao.IDAO;
-
 
 import utils.ResultadosBusca;
 import utils.Campo;
@@ -56,16 +54,6 @@ public class GrupoPrecificacaoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return this.selectVals;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -96,16 +84,6 @@ public class GrupoPrecificacaoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pst != null) pst.close();
-				if(connection != null) connection.close();
-
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-
 			return null;
 		}
 	}
@@ -192,9 +170,7 @@ public class GrupoPrecificacaoDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 			while (rs.next()) {
 				alteraPreco(rs.getLong("livros.id"));
-			}
-
-		
+			}		
 		} catch (Exception e) {
 			try {
 				if(connection != null) connection.rollback();

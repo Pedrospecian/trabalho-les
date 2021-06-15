@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utils.ResultadosBusca;
+import facades.FachadaCupomTroca;
 import facades.FachadaPedido;
 import viewHelpers.LoginViewHelper;
 
@@ -22,11 +23,11 @@ public class ConsultaPrecoCupomTroca extends HttpServlet {
 		resp.setContentType("text/html");
 		LoginViewHelper lvh = new LoginViewHelper();
 		
-		FachadaPedido fachadaPedido = new FachadaPedido();
+		FachadaCupomTroca fachada = new FachadaCupomTroca();
 
 		double valorCupomTroca = 0;
 
-		CupomTroca cupom = fachadaPedido.encontraCupomTroca(req.getParameter("cupomTroca"), lvh.getUsuarioLogadoId(req, resp));
+		CupomTroca cupom = fachada.encontraCupomTroca(req.getParameter("cupomTroca"), lvh.getUsuarioLogadoId(req, resp));
 
 		if (cupom != null) {
 			valorCupomTroca = cupom.getValor();

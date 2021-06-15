@@ -64,11 +64,16 @@ public class LivroViewHelper {
 	public static Campo[] getListagemEstoqueCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[7];
 
+		String custo = req.getParameter("custo");
+		if (custo != null) {
+			custo = custo.replace(',', '.');
+		}
+
 		campos[0] = new Campo(1, req.getParameter("fornecedor"), true, "", true, "fornecedores.id");
 		campos[1] = new Campo(1, req.getParameter("usuarioResponsavel"), true, "", true, "livros_estoque.idUsuarioAdmin");
 		campos[2] = new Campo(3, req.getParameter("dataEntrada"), true, "", true, "livros_estoque.dataEntrada");
 		campos[3] = new Campo(1, req.getParameter("tipoMovimentacao"), true, "", true, "livros_estoque.tipoMovimentacao");
-		campos[4] = new Campo(1, req.getParameter("custo"), true, "", true, "livros_estoque.custo");
+		campos[4] = new Campo(1, custo, true, "", true, "livros_estoque.custo");
 		campos[5] = new Campo(1, req.getParameter("id"), true, "", true, "livros_estoque.livroId");
 		campos[6] = new Campo(1, req.getParameter("clienteResponsavel"), true, "", true, "livros_estoque.idCliente");
 
@@ -164,7 +169,7 @@ public class LivroViewHelper {
 
 		campos[0] = new Campo(1, req.getParameter("idLivro"), true, "", true, "idLivro");
 		campos[1] = new Campo(1, req.getParameter("quantidade"), true, "", true, "quantidade");
-		campos[2] = new Campo(555, req.getParameter("custo"), true, "", true, "custo");
+		campos[2] = new Campo(555, req.getParameter("custo").replace(',', '.'), true, "", true, "custo");
 		campos[3] = new Campo(1, req.getParameter("fornecedor"), true, "", true, "fornecedor");
 		campos[4] = new Campo(3, req.getParameter("dataEntrada"), true, "", true, "dataEntrada");
 
@@ -214,6 +219,10 @@ public class LivroViewHelper {
 
 		if (arrCategoriasIdsStr.length > 0) {
 			Categoria[] categorias = new Categoria[arrCategoriasIdsStr.length];
+			
+			for (int i = 0; i < categorias.length; i++) {
+				System.out.println(arrCategoriasIdsStr[i]);
+			}
 
 			for (int i = 0; i < categorias.length; i++) {
 				categorias[i] = new Categoria(Long.parseLong(arrCategoriasIdsStr[i]), new Date(), "");
