@@ -12,7 +12,6 @@ import utils.Campo;
 import facades.FachadaFornecedor;
 import model.Fornecedor;
 import viewHelpers.FornecedorViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class AlterarFornecedorStatusAction extends HttpServlet {
@@ -25,7 +24,8 @@ public class AlterarFornecedorStatusAction extends HttpServlet {
 		}else{
 			resp.setContentType("text/html");		    
 			try {
-				Campo[] campos = FornecedorViewHelper.getAlterarFornecedorStatusActionCampos(req);
+				FornecedorViewHelper vh = new FornecedorViewHelper();
+				Campo[] campos = vh.alterarStatusCampos(req);
 
 				FachadaFornecedor fachada = new FachadaFornecedor();
 

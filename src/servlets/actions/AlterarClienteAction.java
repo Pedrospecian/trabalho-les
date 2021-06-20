@@ -18,7 +18,6 @@ import model.Documento;
 import model.TipoCliente;
 import model.Telefone;
 import viewHelpers.ClienteViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class AlterarClienteAction extends HttpServlet {
@@ -33,7 +32,8 @@ public class AlterarClienteAction extends HttpServlet {
 			resp.setCharacterEncoding("UTF-8");
 			resp.setContentType("text/html");
 			try {
-				Campo[] campos = ClienteViewHelper.getAlterarClienteActionCampos(req);
+				ClienteViewHelper vh = new ClienteViewHelper();
+				Campo[] campos = vh.alterarCampos(req);
 
 				FachadaCliente fachada = new FachadaCliente();
 

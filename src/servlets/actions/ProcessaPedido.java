@@ -12,7 +12,6 @@ import utils.Campo;
 import facades.FachadaPedido;
 import model.Pedido;
 import viewHelpers.PedidoViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class ProcessaPedido extends HttpServlet {
@@ -29,7 +28,8 @@ public class ProcessaPedido extends HttpServlet {
 
 		    
 			try {
-				Campo[] campos = PedidoViewHelper.getAlterarPedidoStatusActionCampos(req);
+				PedidoViewHelper vh = new PedidoViewHelper();
+				Campo[] campos = vh.alterarStatusCampos(req);
 
 				FachadaPedido fachada = new FachadaPedido();
 

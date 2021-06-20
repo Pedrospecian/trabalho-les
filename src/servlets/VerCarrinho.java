@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import viewHelpers.PedidoViewHelper;
 import model.Carrinho;
 import facades.FachadaCarrinho;
-import facades.FachadaPedido;
 import viewHelpers.LoginViewHelper;
 
 public class VerCarrinho extends HttpServlet {

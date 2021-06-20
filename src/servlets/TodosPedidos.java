@@ -27,8 +27,8 @@ public class TodosPedidos extends HttpServlet {
 
 			FachadaCliente fachadaCliente = new FachadaCliente();
 			FachadaPedido fachadaPedido = new FachadaPedido();
-
-			Campo[] camposBusca = PedidoViewHelper.getListagemPedidosCampos(req);
+			PedidoViewHelper vh = new PedidoViewHelper();
+			Campo[] camposBusca = vh.listagemCampos(req);
 
 			Cliente cliente = null;
 			ResultadosBusca resultadosBusca;

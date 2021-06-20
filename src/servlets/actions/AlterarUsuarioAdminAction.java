@@ -2,7 +2,6 @@ package servlets.actions;
 
 import java.io.IOException;
 import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,7 +27,8 @@ public class AlterarUsuarioAdminAction extends HttpServlet {
 			resp.setCharacterEncoding("UTF-8");
 			resp.setContentType("text/html");
 			try {
-				Campo[] campos = UsuarioViewHelper.getAlterarUsuarioActionCampos(req);
+				UsuarioViewHelper vh = new UsuarioViewHelper();
+				Campo[] campos = vh.alterarCampos(req);
 
 				FachadaUsuario fachada = new FachadaUsuario();
 

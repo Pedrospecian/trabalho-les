@@ -1,12 +1,15 @@
 package viewHelpers;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
+import model.TipoUsuario;
+import model.Usuario;
 import utils.Campo;
 
-public class UsuarioViewHelper {
-	public static Campo[] getListagemUsuariosCampos(HttpServletRequest req) {
+public class UsuarioViewHelper implements IViewHelper<Usuario> {
+	public Campo[] listagemCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[4];
 
 		String resultadosPorPagina = "10";
@@ -23,7 +26,7 @@ public class UsuarioViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getCadastroUsuarioActionCampos(HttpServletRequest req) {
+	public Campo[] cadastroCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[6];
 
 		campos[0] = new Campo(8, req.getParameter("senha"), true, "", true, "senha");
@@ -47,7 +50,7 @@ public class UsuarioViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getAlterarUsuarioActionCampos(HttpServletRequest req) {
+	public Campo[] alterarCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[5]; 
 
 		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
@@ -59,12 +62,23 @@ public class UsuarioViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getAlterarUsuarioStatusActionCampos(HttpServletRequest req) {
+	public Campo[] alterarStatusCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[2];
 
 		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
 		campos[1] = new Campo(1, req.getParameter("status"), true, "", true, "status");
 
 		return campos;
+	}
+	
+	public Usuario instancia(Campo[] campos) {
+		String nome = campos[2].getValor();
+		String email = campos[3].getValor();
+        int status = Integer.parseInt(campos[4].getValor());
+        String senha = campos[0].getValor();
+        TipoUsuario tipoUsuario = new TipoUsuario(Long.parseLong(campos[5].getValor()), new Date(), "", "");
+
+    	Usuario usuario = new Usuario((long)1, new Date(), nome, email, status, senha, tipoUsuario);
+    	return usuario;
 	}
 }

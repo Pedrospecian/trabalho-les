@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import facades.FachadaCupomTroca;
+import facades.FachadaTroca;
 import viewHelpers.LoginViewHelper;
 
 public class DecidirPedidoTroca extends HttpServlet {
@@ -22,7 +22,7 @@ public class DecidirPedidoTroca extends HttpServlet {
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
 
-			FachadaCupomTroca fachada = new FachadaCupomTroca();
+			FachadaTroca fachada = new FachadaTroca();
 
 			if (req.getParameter("id").matches("^[0-9]+$") && req.getParameter("autorizar").matches("^[0-9]$")) {
 				fachada.decidirPedidoTroca(Long.parseLong(req.getParameter("id")), Integer.parseInt(req.getParameter("autorizar")), LoginViewHelper.getLogInfo(req, resp));

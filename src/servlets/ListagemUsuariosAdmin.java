@@ -24,7 +24,8 @@ public class ListagemUsuariosAdmin extends HttpServlet {
 		if(!lvh.isAuthorized(req, resp, 1)){
 			resp.sendRedirect("/trabalho-les/home");
 		}else{
-	        Campo[] campos = UsuarioViewHelper.getListagemUsuariosCampos(req);
+			UsuarioViewHelper vh = new UsuarioViewHelper();
+	        Campo[] campos = vh.listagemCampos(req);
 
 	        FachadaUsuario fachada = new FachadaUsuario();
 	        ResultadosBusca resultadosBusca = fachada.select(campos);

@@ -13,7 +13,6 @@ import facades.FachadaSelect;
 import utils.Campo;
 import utils.ResultadosBusca;
 import viewHelpers.ClienteViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 import model.Genero;
 import model.TipoCliente;
@@ -29,7 +28,8 @@ public class ListagemClientes extends HttpServlet {
         }else{
             req.setCharacterEncoding("UTF-8");
             resp.setCharacterEncoding("UTF-8");
-            Campo[] campos = ClienteViewHelper.getListagemClientesCampos(req);
+            ClienteViewHelper vh = new ClienteViewHelper();
+            Campo[] campos = vh.listagemCampos(req);
 
             FachadaCliente fachada = new FachadaCliente();
             FachadaSelect fachadaS = new FachadaSelect();

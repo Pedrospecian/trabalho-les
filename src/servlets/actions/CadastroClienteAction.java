@@ -1,8 +1,6 @@
 package servlets.actions;
 
 import java.io.IOException;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,9 +15,7 @@ import model.Cliente;
 import model.Endereco;
 import model.Documento;
 import model.Telefone;
-import model.TipoCliente;
 import viewHelpers.ClienteViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class CadastroClienteAction extends HttpServlet {
@@ -35,24 +31,16 @@ public class CadastroClienteAction extends HttpServlet {
 			resp.setCharacterEncoding("UTF-8");
 			resp.setContentType("text/html");
 			try {
-				Campo[] campos = ClienteViewHelper.getCadastroClienteActionCampos(req);
+				ClienteViewHelper vh = new ClienteViewHelper();
+				Campo[] campos = vh.cadastroCampos(req);
 
-				for (int i = 0; i < campos.length; i++) {
+				/*for (int i = 0; i < campos.length; i++) {
 					System.out.println(campos[i].getNome() + " => " + campos[i].getValor());
-				}
+				}*/
 
-				FachadaCliente fachada = new FachadaCliente();
-				
-				String email = campos[30].getValor();
+				FachadaCliente fachada = new FachadaCliente();			
 
-				if(fachada.validarCampos(campos) && fachada.validaEmailExistente(email)) {
-					String nome = campos[0].getValor();
-			        int genero = Integer.parseInt(campos[1].getValor());
-			        Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(campos[2].getValor());
-			        long tipoCliente = Long.parseLong(campos[3].getValor());
-			        int status = Integer.parseInt(campos[4].getValor());
-			        String senha = campos[31].getValor();
-
+				if(fachada.validarCampos(campos) && fachada.validaEmailExistente(campos[30].getValor())) {
 			        Documento[] documentos = ClienteViewHelper.createDocumentosFromStrings(
 			        							campos[5].getValor(),
 			        							campos[6].getValor(),
@@ -89,9 +77,7 @@ public class CadastroClienteAction extends HttpServlet {
 			    	 && enderecos != null && fachada.validarEnderecos(enderecos, true)
 			    	 && cartoesCredito != null && fachada.validarCartoesCredito(cartoesCredito)
 			    	 && telefones != null && fachada.validarTelefones(telefones)) {
-			        
-			        	Cliente cliente = new Cliente((long)1, new Date(), documentos, nome, genero, dataNascimento, new TipoCliente(tipoCliente, new Date(), "", ""), enderecos, status, cartoesCredito, email, senha, telefones);
-
+			    	 	Cliente cliente = vh.instanciaCliente(campos, documentos, enderecos, cartoesCredito, telefones);
 			        	fachada.insert(cliente, LoginViewHelper.getLogInfo(req, resp));
 
 			        	for (int i = 0; i < cartoesCredito.length; i++) {
@@ -104,10 +90,10 @@ public class CadastroClienteAction extends HttpServlet {
 			        	resp.sendRedirect("/trabalho-les/listagemClientes");
 			        } else {
 			        	System.out.println("Ocorreu um erro ao inserir o cliente!");
-			        	System.out.println(documentos == null);
+			        	/*System.out.println(documentos == null);
 			        	System.out.println(enderecos == null);
 			        	System.out.println(cartoesCredito == null);
-			        	System.out.println(telefones == null);
+			        	System.out.println(telefones == null);*/
 			        }
 		        } else {
 

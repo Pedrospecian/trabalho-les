@@ -22,7 +22,8 @@ public class ListagemFornecedor extends HttpServlet {
 		}else{
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
-			Campo[] campos = FornecedorViewHelper.getListagemFornecedorCampos(req);
+			FornecedorViewHelper vh = new FornecedorViewHelper();
+			Campo[] campos = vh.listagemCampos(req);
 			FachadaFornecedor fachada = new FachadaFornecedor();
 			ResultadosBusca resultados = fachada.select(campos);
 			req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));

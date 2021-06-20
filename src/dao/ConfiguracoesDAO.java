@@ -54,14 +54,6 @@ public class ConfiguracoesDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}
 	}
 
-	public void insert(EntidadeDominio entidade) {
-		
-	}
-
-	public void update(EntidadeDominio entidade) {
-
-	}
-
 	public void updateConfiguracoes(Configuracao[] configuracoes) {
 		PreparedStatement pst = null;
 		
@@ -147,10 +139,6 @@ public class ConfiguracoesDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}
 	}
 
-	public void delete(long id) {
-
-	}
-
 	public void implantarDominio() {
 		PreparedStatement pst = null;
 		
@@ -203,7 +191,11 @@ public class ConfiguracoesDAO implements IDAO<EntidadeDominio, Campo[]> {
 			sql4.append("INSERT IGNORE INTO categorias (id, dataCadastro, nome) VALUES " +
 			"(1, ?, 'cat1'), " +
 			"(2, ?, 'cat 2'), " +
-			"(3, ?, 'categoria #3');");
+			"(3, ?, 'categoria #3')," +
+			"(4, ?, 'Receitas'), " +
+			"(5, ?, 'Terror'), " +
+			"(6, ?, 'Aventura'), " +
+			"(7, ?, 'categoria sete');");
 			
 			pst = connection.prepareStatement(sql4.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -211,6 +203,10 @@ public class ConfiguracoesDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setDate(1, agora );
 			pst.setDate(2, agora );
 			pst.setDate(3, agora );
+			pst.setDate(4, agora );
+			pst.setDate(5, agora );
+			pst.setDate(6, agora );
+			pst.setDate(7, agora );
 
 			pst.executeUpdate();
 
@@ -409,5 +405,17 @@ public class ConfiguracoesDAO implements IDAO<EntidadeDominio, Campo[]> {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void insert(EntidadeDominio entidade) {
+		
+	}
+
+	public void update(EntidadeDominio entidade) {
+
+	}
+
+	public void delete(long id) {
+
 	}
 }

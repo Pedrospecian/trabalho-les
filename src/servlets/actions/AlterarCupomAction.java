@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import utils.Campo;
 import facades.FachadaCupomDesconto;
 import model.CupomDesconto;
-import model.Endereco;
-import model.Documento;
-import model.TipoCliente;
 import viewHelpers.CupomDescontoViewHelper;
 import viewHelpers.LoginViewHelper;
 
@@ -30,7 +27,8 @@ public class AlterarCupomAction extends HttpServlet {
 			resp.setCharacterEncoding("UTF-8");
 			resp.setContentType("text/html");
 			try {
-				Campo[] campos = CupomDescontoViewHelper.getAlterarCupomActionCampos(req);
+				CupomDescontoViewHelper vh = new CupomDescontoViewHelper();
+				Campo[] campos = vh.alterarCampos(req);
 
 				FachadaCupomDesconto fachada = new FachadaCupomDesconto();
 

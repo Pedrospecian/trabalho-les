@@ -1,6 +1,8 @@
 package dao;
 
+import utils.Campo;
 import utils.Conexao;
+import utils.ResultadosBusca;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import model.Bandeira;
+import model.EntidadeDominio;
 import model.TipoCliente;
 import model.TipoDocumento;
 import model.TipoEndereco;
@@ -18,7 +21,7 @@ import model.FuncaoEndereco;
 import model.TipoUsuario;
 import model.Genero;
 
-public class SelectDAO {
+public class SelectDAO implements IDAO<EntidadeDominio, Campo[]>{
 	private Connection connection = null;
 	public ArrayList selectVals;
 
@@ -116,5 +119,21 @@ public class SelectDAO {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public void insert(EntidadeDominio entidade) {
+		
+	}
+
+	public void update(EntidadeDominio entidade) {
+
+	}
+
+	public void delete(long id) {
+
+	}
+	
+	public ArrayList select(Campo[] campos) {
+		return null;
 	}
 }

@@ -93,7 +93,7 @@
 					<input type="date" name="dataFim" placeholder="Data de fim" required data-pristine-required-message="Este campo é obrigatório" cypress-dataFim>
 				</div>
 				<div class="form-group">
-					<select name="tipo">
+					<select name="tipo" cypress-tipo>
 						<option value="categoria">Por categoria</option>
 						<option value="livro">Por livro</option>
 					</select>

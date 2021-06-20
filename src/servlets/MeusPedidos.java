@@ -26,7 +26,9 @@ public class MeusPedidos extends HttpServlet {
 			
 			FachadaPedido fachadaPedido = new FachadaPedido();
 			
-			Campo[] camposBusca = PedidoViewHelper.getListagemPedidosCampos(req);
+			PedidoViewHelper vh = new PedidoViewHelper();
+			
+			Campo[] camposBusca = vh.listagemCampos(req);
 
 			ResultadosBusca resultadosBusca = fachadaPedido.selectPedidosPorCliente(lvh.getUsuarioLogadoId(req, resp), camposBusca);
 			String linksPaginacao = "";

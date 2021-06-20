@@ -2,11 +2,14 @@ package viewHelpers;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import model.EntidadeDominio;
+
 import javax.servlet.http.Cookie;
 
 import utils.Campo;
 
-public class LoginViewHelper {
+public class LoginViewHelper implements IViewHelper<EntidadeDominio> {
 	public static Campo getCampoByName(Campo[] campos, String nome) {
 		for (int i = 0; i < campos.length; i++) {
 			if (campos[i].getNome().equals(nome)) {
@@ -154,4 +157,24 @@ public class LoginViewHelper {
 
 		return loginfo[0] + " (id: " + loginfo[1] + ", tipo: " + loginfo[2] + ")";
 	}
+
+	public Campo[] alterarCampos(HttpServletRequest req) {
+    	return null;
+    }
+
+	public Campo[] alterarStatusCampos(HttpServletRequest req) {
+    	return null;
+    }
+
+    public Campo[] cadastroCampos(HttpServletRequest req) {
+    	return null;
+    }
+
+    public Campo[] listagemCampos(HttpServletRequest req) {
+    	return null;
+    }
+    
+    public EntidadeDominio instancia(Campo[] campos) {
+    	return null;
+    }
 }

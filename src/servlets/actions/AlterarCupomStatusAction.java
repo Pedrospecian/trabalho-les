@@ -12,7 +12,6 @@ import utils.Campo;
 import facades.FachadaCupomDesconto;
 import model.CupomDesconto;
 import viewHelpers.CupomDescontoViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class AlterarCupomStatusAction extends HttpServlet {
@@ -27,7 +26,8 @@ public class AlterarCupomStatusAction extends HttpServlet {
 
 		    resp.sendRedirect("/trabalho-les/listagemCupons");
 			try {
-				Campo[] campos = CupomDescontoViewHelper.getAlterarCupomStatusActionCampos(req);
+				CupomDescontoViewHelper vh = new CupomDescontoViewHelper();
+				Campo[] campos = vh.alterarStatusCampos(req);
 
 				FachadaCupomDesconto fachada = new FachadaCupomDesconto();
 

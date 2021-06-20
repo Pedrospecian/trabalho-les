@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import viewHelpers.LoginViewHelper;
-import model.GrupoPrecificacao;
 import facades.FachadaGrupoPrecificacao;
 import viewHelpers.GrupoPrecificacaoViewHelper;
 import utils.Campo;
@@ -23,7 +22,8 @@ public class ListagemGrupoPrecificacao extends HttpServlet {
 		}else{
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
-			Campo[] campos = GrupoPrecificacaoViewHelper.getListagemGrupoPrecificacao(req);
+			GrupoPrecificacaoViewHelper vh = new GrupoPrecificacaoViewHelper();
+			Campo[] campos =vh.listagemCampos(req);
 
             FachadaGrupoPrecificacao fachada = new FachadaGrupoPrecificacao();
             ResultadosBusca resultadosBusca = fachada.select(campos);

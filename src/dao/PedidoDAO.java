@@ -4,16 +4,13 @@ import utils.Conexao;
 import utils.DadosCalculoFrete;
 import utils.ItemGrafico;
 import strategies.CriaFiltragem;
-import strategies.CriaFiltragemUsuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -112,7 +109,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		PreparedStatement pst = null;
 		try {
 			connection = Conexao.getConnectionMySQL();
-			CriaFiltragemUsuario filtro = new CriaFiltragemUsuario();
+			CriaFiltragem filtro = new CriaFiltragem();
 			String where = filtro.processa(campos);
 			connection = Conexao.getConnectionMySQL();
 			pst = connection.prepareStatement("select * from pedidos inner join carrinhos on carrinhos.id = pedidos.idCarrinho inner join clientes on clientes.id = pedidos.idUsuario where pedidos.idUsuario = ? "+ where +" order by pedidos.id desc;");
@@ -789,7 +786,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				System.out.println("============== o excesso ==========");
 				System.out.println(excesso);
 				if (excesso < 0) {
-					CupomTrocaDAO ctdao = new CupomTrocaDAO();
+					TrocaDAO ctdao = new TrocaDAO();
 					ctdao.geraCupomTrocaExcesso(pedido.getCliente().getId(), excesso * (-1));
 				}
 				connection.commit();
@@ -942,7 +939,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			}
 			pst = connection.prepareStatement("SELECT " + nomeTipo + ", livros_estoque.livroId, livros_estoque.dataCadastro, sum(livros_estoque.quantidade) as total FROM livros_estoque " +
 				joinCat + 
-				" WHERE livros_estoque.tipoMovimentacao = 2 and livros_estoque.dataCadastro >= ? and livros_estoque.dataCadastro <= ? group by livros_estoque.dataCadastro;");
+				" WHERE livros_estoque.tipoMovimentacao = 2 and livros_estoque.dataCadastro >= ? and livros_estoque.dataCadastro <= ? group by livros_estoque.livroId, livros_estoque.dataCadastro;");
 
 
 			Date dataInicio = new SimpleDateFormat("yyyy-MM-dd").parse(campos[0].getValor());
@@ -962,6 +959,8 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					campos[2].getValor().equals("categoria") ? 2 : 1,
 					rs.getString(nomeTipo)
 				);
+
+				System.out.println("ITEMGRAFICO => " + rs.getInt("total") + "/" + rs.getDate("livros_estoque.dataCadastro") + "/" + rs.getString(nomeTipo));
 
 				list.add(ig);
 			}

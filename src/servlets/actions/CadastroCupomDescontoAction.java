@@ -1,8 +1,6 @@
 package servlets.actions;
 
 import java.io.IOException;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -30,18 +28,13 @@ public class CadastroCupomDescontoAction extends HttpServlet {
 			resp.setCharacterEncoding("UTF-8");
 			resp.setContentType("text/html");
 			try {
-				Campo[] campos = CupomDescontoViewHelper.getCadastroCupomActionCampos(req);
+				CupomDescontoViewHelper vh = new CupomDescontoViewHelper();
+				Campo[] campos = vh.cadastroCampos(req);
 
 				FachadaCupomDesconto fachada = new FachadaCupomDesconto();
 
 				if(fachada.validarCampos(campos)) {
-					String nome = campos[0].getValor();
-			        double valor = Double.parseDouble(campos[1].getValor());
-			        int status = Integer.parseInt(campos[2].getValor());
-			        Date dataInicio = new SimpleDateFormat("yyyy-MM-dd").parse(campos[3].getValor());		       	
-			        Date dataFim = new SimpleDateFormat("yyyy-MM-dd").parse(campos[4].getValor());
-
-		        	CupomDesconto cupom = new CupomDesconto((long)1, new Date(), nome, valor, dataInicio, dataFim, status);
+		        	CupomDesconto cupom = vh.instancia(campos);
 
 		        	fachada.insert(cupom, LoginViewHelper.getLogInfo(req, resp));
 		        	resp.sendRedirect("/trabalho-les/listagemCupons");

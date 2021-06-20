@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import facades.FachadaCupomTroca;
+import facades.FachadaTroca;
 import viewHelpers.LoginViewHelper;
 
 public class ConfirmarRecebimentoTroca extends HttpServlet {
@@ -22,7 +22,7 @@ public class ConfirmarRecebimentoTroca extends HttpServlet {
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
 
-			FachadaCupomTroca fachada = new FachadaCupomTroca();
+			FachadaTroca fachada = new FachadaTroca();
 
 			fachada.confirmarRecebimentoTroca(Long.parseLong(req.getParameter("id")), req.getParameter("retornarEstoque") != null, LoginViewHelper.getLogInfo(req, resp));
 

@@ -15,7 +15,6 @@ import model.Livro;
 import utils.Campo;
 import utils.ResultadosBusca;
 import viewHelpers.LivroViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class ListagemEstoque extends HttpServlet {

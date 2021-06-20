@@ -2,7 +2,6 @@ package servlets.actions;
 
 import java.io.IOException;
 import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,9 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import utils.Campo;
 import facades.FachadaGrupoPrecificacao;
 import model.GrupoPrecificacao;
-import model.Endereco;
-import model.Documento;
-import model.TipoCliente;
 import viewHelpers.GrupoPrecificacaoViewHelper;
 import viewHelpers.LoginViewHelper;
 
@@ -30,7 +26,8 @@ public class AlteraGrupoPrecificacaoAction extends HttpServlet {
 			resp.setCharacterEncoding("UTF-8");
 			resp.setContentType("text/html");
 			try {
-				Campo[] campos = GrupoPrecificacaoViewHelper.getAlterarGrupoPrecificacaoActionCampos(req);
+				GrupoPrecificacaoViewHelper vh = new GrupoPrecificacaoViewHelper();
+				Campo[] campos = vh.alterarCampos(req);
 
 				FachadaGrupoPrecificacao fachada = new FachadaGrupoPrecificacao();
 

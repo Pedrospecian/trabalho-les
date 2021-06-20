@@ -9,10 +9,12 @@ import utils.Campo;
 import model.Pais;
 import model.Estado;
 import model.Cidade;
+import model.Cliente;
 import model.Bandeira;
 import model.CartaoCredito;
 import model.Bairro;
 import model.Endereco;
+import model.EntidadeDominio;
 import model.Documento;
 import model.TipoDocumento;
 import model.TipoEndereco;
@@ -20,11 +22,11 @@ import model.TipoTelefone;
 import model.TipoLogradouro;
 import model.TipoResidencia;
 import model.Telefone;
+import model.TipoCliente;
 import model.FuncaoEndereco;
-import utils.ResultadosBusca;
 
-public class ClienteViewHelper {
-	public static Campo[] getListagemClientesCampos(HttpServletRequest req) {
+public class ClienteViewHelper implements IViewHelper<EntidadeDominio> {
+	public Campo[] listagemCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[8];
 
 		String resultadosPorPagina = "10";
@@ -45,7 +47,7 @@ public class ClienteViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getAlterarClienteStatusActionCampos(HttpServletRequest req) {
+	public Campo[] alterarStatusCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[2];
 
 		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
@@ -54,7 +56,7 @@ public class ClienteViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getCadastroClienteActionCampos(HttpServletRequest req) {
+	public Campo[] cadastroCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[34];
 
 		campos[0] = new Campo(0, req.getParameter("nome"), true, "", true, "nome");
@@ -103,7 +105,7 @@ public class ClienteViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getAlterarClienteActionCampos(HttpServletRequest req) {
+	public Campo[] alterarCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[37]; 
 
 		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
@@ -397,4 +399,26 @@ public class ClienteViewHelper {
 		
 		return campos;
 	}
+	
+	public EntidadeDominio instancia(Campo[] campos) {
+    	return null;
+    }
+
+    public Cliente instanciaCliente(Campo[] campos, Documento[] documentos, Endereco[] enderecos, CartaoCredito[] cartoesCredito, Telefone[] telefones) {
+    	try {
+    		String nome = campos[0].getValor();
+	        int genero = Integer.parseInt(campos[1].getValor());
+	        Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(campos[2].getValor());
+	        long tipoCliente = Long.parseLong(campos[3].getValor());
+	        int status = Integer.parseInt(campos[4].getValor());
+	        String email = campos[30].getValor();
+	        String senha = campos[31].getValor();
+        
+        	Cliente cliente = new Cliente((long)1, new Date(), documentos, nome, genero, dataNascimento, new TipoCliente(tipoCliente, new Date(), "", ""), enderecos, status, cartoesCredito, email, senha, telefones);
+			return cliente;
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    		return null;
+    	}
+    }
 }

@@ -6,18 +6,10 @@ import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 
 import utils.Campo;
-import model.Pais;
-import model.Estado;
-import model.Cidade;
-import model.Bairro;
-import model.Endereco;
-import model.Documento;
-import model.TipoDocumento;
-import model.TipoEndereco;
-import utils.ResultadosBusca;
+import model.CupomDesconto;
 
-public class CupomDescontoViewHelper {
-	public static Campo[] getListagemCuponsCampos(HttpServletRequest req) {
+public class CupomDescontoViewHelper implements IViewHelper<CupomDesconto>{
+	public Campo[] listagemCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[6];
 
 		String resultadosPorPagina = "10";
@@ -54,7 +46,7 @@ public class CupomDescontoViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getAlterarCupomStatusActionCampos(HttpServletRequest req) {
+	public Campo[] alterarStatusCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[2];
 
 		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
@@ -63,7 +55,7 @@ public class CupomDescontoViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getCadastroCupomActionCampos(HttpServletRequest req) {
+	public Campo[] cadastroCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[5];
 
 		campos[0] = new Campo(0, req.getParameter("nome"), true, "", true, "nome");
@@ -75,7 +67,7 @@ public class CupomDescontoViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getAlterarCupomActionCampos(HttpServletRequest req) {
+	public Campo[] alterarCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[6]; 
 
 		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
@@ -86,6 +78,22 @@ public class CupomDescontoViewHelper {
 		campos[5] = new Campo(3, req.getParameter("dataFim"), true, "", true, "dataFim");
 
 		return campos;
+	}
+
+	public CupomDesconto instancia(Campo[] campos) {
+		try {
+			String nome = campos[0].getValor();
+	        double valor = Double.parseDouble(campos[1].getValor());
+	        int status = Integer.parseInt(campos[2].getValor());
+	        Date dataInicio = new SimpleDateFormat("yyyy-MM-dd").parse(campos[3].getValor());
+	        Date dataFim = new SimpleDateFormat("yyyy-MM-dd").parse(campos[4].getValor());
+	
+	    	CupomDesconto cupom = new CupomDesconto((long)1, new Date(), nome, valor, dataInicio, dataFim, status);
+	    	return cupom;
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    		return null;
+    	}
 	}
 
 }

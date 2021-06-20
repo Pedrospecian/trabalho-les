@@ -12,7 +12,6 @@ import utils.Campo;
 import facades.FachadaGrupoPrecificacao;
 import model.GrupoPrecificacao;
 import viewHelpers.GrupoPrecificacaoViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class AlterarGrupoPrecificacaoStatusAction extends HttpServlet {
@@ -27,7 +26,8 @@ public class AlterarGrupoPrecificacaoStatusAction extends HttpServlet {
 
 		    resp.sendRedirect("/trabalho-les/listagemGruposPrecificacao");
 			try {
-				Campo[] campos = GrupoPrecificacaoViewHelper.getAlterarGrupoPrecificacaoStatusActionCampos(req);
+				GrupoPrecificacaoViewHelper vh = new GrupoPrecificacaoViewHelper();
+				Campo[] campos = vh.alterarStatusCampos(req);
 
 				FachadaGrupoPrecificacao fachada = new FachadaGrupoPrecificacao();
 

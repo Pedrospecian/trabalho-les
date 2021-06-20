@@ -6,7 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import facades.FachadaPedido;
 import facades.FachadaCliente;
 import model.Cliente;
 import viewHelpers.LoginViewHelper;
@@ -24,8 +23,9 @@ public class ListagemPedidosAdmin extends HttpServlet {
 		}else{
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
+			PedidoViewHelper vh = new PedidoViewHelper();
 
-			Campo[] camposBusca = PedidoViewHelper.getListagemPedidosCampos(req);
+			Campo[] camposBusca = vh.listagemCampos(req);
 
 
 			FachadaCliente fachadaCliente = new FachadaCliente();

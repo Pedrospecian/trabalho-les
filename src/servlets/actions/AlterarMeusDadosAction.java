@@ -18,7 +18,6 @@ import model.Documento;
 import model.TipoCliente;
 import model.Telefone;
 import viewHelpers.ClienteViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class AlterarMeusDadosAction extends HttpServlet {
@@ -33,8 +32,8 @@ public class AlterarMeusDadosAction extends HttpServlet {
 			resp.setCharacterEncoding("UTF-8");
 			resp.setContentType("text/html");
 			try {
-				System.out.println("AlterarMeusDadosAction");
-				Campo[] campos = ClienteViewHelper.getAlterarClienteActionCampos(req);
+				ClienteViewHelper vh = new ClienteViewHelper();
+				Campo[] campos = vh.alterarCampos(req);
 
 				FachadaCliente fachada = new FachadaCliente();
 

@@ -1,28 +1,18 @@
 package strategies;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
-import facades.FachadaPedido;
 import utils.DadosCalculoFrete;
 
 public class CalculaValorFrete implements IStrategy<Double[], DadosCalculoFrete> {

@@ -7,11 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import facades.FachadaCupomTroca;
-import facades.FachadaPedido;
+import facades.FachadaTroca;
 import model.Cliente;
-import model.Livro;
-import java.util.Date;
 import model.ItemCarrinho;
 import utils.Campo;
 import viewHelpers.PedidoViewHelper;
@@ -28,7 +25,7 @@ public class SolicitarTroca extends HttpServlet {
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
 
-			FachadaCupomTroca fachada = new FachadaCupomTroca();
+			FachadaTroca fachada = new FachadaTroca();
 
 			Campo[] campos = PedidoViewHelper.getSolicitarTrocaCampos(req);
 

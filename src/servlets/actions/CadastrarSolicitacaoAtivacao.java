@@ -1,8 +1,6 @@
 package servlets.actions;
 
 import java.io.IOException;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,13 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import utils.Campo;
 import facades.FachadaLivro;
-import facades.FachadaPedido;
-import model.Cliente;
 import model.Livro;
-import model.ItemCarrinho;
-import model.Carrinho;
 import viewHelpers.LivroViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 import model.CategoriaAtivacao;
 import model.SolicitacaoAtivacaoLivro;

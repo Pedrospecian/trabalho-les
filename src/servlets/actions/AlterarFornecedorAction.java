@@ -2,7 +2,6 @@ package servlets.actions;
 
 import java.io.IOException;
 import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +26,8 @@ public class AlterarFornecedorAction extends HttpServlet {
 			resp.setCharacterEncoding("UTF-8");
 			resp.setContentType("text/html");
 			try {
-				Campo[] campos = FornecedorViewHelper.getAlterarFornecedorActionCampos(req);
+				FornecedorViewHelper vh = new FornecedorViewHelper();
+				Campo[] campos = vh.alterarCampos(req);
 
 				FachadaFornecedor fachada = new FachadaFornecedor();
 

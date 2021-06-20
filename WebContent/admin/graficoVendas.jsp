@@ -23,7 +23,7 @@
 					<input type="date" name="dataFim" placeholder="Data de fim" required data-pristine-required-message="Este campo é obrigatório" cypress-dataFim value="${dataFim}">
 				</div>
 				<div class="form-group">
-					<select name="tipo">
+					<select name="tipo" cypress-tipo>
 						<option value="categoria" ${tipo.equals("categoria") ? "selected" : ""}>Por categoria</option>
 						<option value="livro" ${tipo.equals("livro") ? "selected" : ""}>Por livro</option>
 					</select>
@@ -54,8 +54,7 @@
 	<script type="text/javascript" src="assets/js/vendor/Chart.bundle.min.js"></script>
 	<script type="text/javascript" src="assets/js/main.js"></script>
 	<script type="text/javascript">
-		const cores = ['#ee1000', '#22ccff', '#3440e9', '#73ff32', '#e220fe', '#eac221', '#28cf90'];
-		const coresBg = ['#ee100040', '#22ccff40', '#3440e940', '#73ff3240', '#e220fe40', '#eac22140', '#28cf9040'];
+		const cores = ['#ee1000', '#33aaee', '#3440e9', '#73ff32', '#e220fe', '#eac221', '#08af50', '#432100', '#657442'];
 		var ctx = document.getElementById('myChart');
 
 		var itensGraficos = document.querySelectorAll('.js-itensGraficos');
@@ -91,7 +90,7 @@
 				data: [],
 				borderWidth: 1,
 				borderColor: cores[i % cores.length],
-				backgroundColor: coresBg[i % coresBg.length]
+				backgroundColor: cores[i % cores.length] + "40"
 			});
 		}
 

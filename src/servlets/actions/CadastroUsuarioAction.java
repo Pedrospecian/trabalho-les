@@ -1,8 +1,6 @@
 package servlets.actions;
 
 import java.io.IOException;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import utils.Campo;
 
 import facades.FachadaUsuario;
-import model.TipoUsuario;
 import model.Usuario;
 import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
@@ -30,19 +27,13 @@ public class CadastroUsuarioAction extends HttpServlet {
 			resp.setCharacterEncoding("UTF-8");
 			resp.setContentType("text/html");
 			try {
-				Campo[] campos = UsuarioViewHelper.getCadastroUsuarioActionCampos(req);
+				UsuarioViewHelper vh = new UsuarioViewHelper();
+				Campo[] campos = vh.cadastroCampos(req);
 
 				FachadaUsuario fachada = new FachadaUsuario();
 
-			    String email = campos[3].getValor();
-
-				if(fachada.validarCampos(campos, true) && fachada.validaEmailExistente(email)) {
-					String nome = campos[2].getValor();
-			        int status = Integer.parseInt(campos[4].getValor());
-			        String senha = campos[0].getValor();
-			        TipoUsuario tipoUsuario = new TipoUsuario(Long.parseLong(campos[5].getValor()), new Date(), "", "");
-
-		        	Usuario usuario = new Usuario((long)1, new Date(), nome, email, status, senha, tipoUsuario);
+				if(fachada.validarCampos(campos, true) && fachada.validaEmailExistente(campos[3].getValor())) {
+					Usuario usuario = vh.instancia(campos);
 
 		        	fachada.insert(usuario, LoginViewHelper.getLogInfo(req, resp));
 		        	resp.sendRedirect("/trabalho-les/listagemUsuariosAdmin");

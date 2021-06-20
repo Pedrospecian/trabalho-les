@@ -7,9 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import facades.FachadaCupomTroca;
-import facades.FachadaPedido;
-import model.Pedido;
+import facades.FachadaTroca;
 import utils.Campo;
 import utils.ResultadosBusca;
 import viewHelpers.LoginViewHelper;
@@ -28,7 +26,7 @@ public class ListagemCuponsTroca extends HttpServlet {
 
 			Campo[] campos = CupomDescontoViewHelper.getListagemCuponsTrocaCampos(req);
 
-			FachadaCupomTroca fachada = new FachadaCupomTroca();
+			FachadaTroca fachada = new FachadaTroca();
 
 			ResultadosBusca registros = fachada.select(campos);
 			req.setAttribute("registros", registros.getResultados());

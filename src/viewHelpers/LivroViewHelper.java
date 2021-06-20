@@ -1,23 +1,24 @@
 package viewHelpers;
 
 import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
 
 import utils.Campo;
+import model.Autor;
 import model.Categoria;
+import model.Editora;
+import model.GrupoPrecificacao;
 import model.Livro;
-import utils.ResultadosBusca;
 
-public class LivroViewHelper {
+public class LivroViewHelper implements IViewHelper<Livro> {
 	public static Campo[] getListagemLivrosCamposHeader(HttpServletRequest req) {
 		Campo[] campos = new Campo[1];
 		campos[0] = new Campo(0, req.getParameter("term"), true, "", true, "titulo");
 		return campos;
 	}
 
-	public static Campo[] getListagemLivrosCampos(HttpServletRequest req) {
+	public Campo[] listagemCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[16];
 
 		String resultadosPorPagina = "10";
@@ -80,7 +81,7 @@ public class LivroViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getAlterarLivroStatusActionCampos(HttpServletRequest req) {
+	public Campo[] alterarStatusCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[2];
 
 		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
@@ -89,7 +90,7 @@ public class LivroViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getCadastroLivroActionCampos(HttpServletRequest req) {
+	public Campo[] cadastroCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[18];
 
 		campos[0] = new Campo(0, req.getParameter("titulo"), true, "", true, "titulo");
@@ -118,7 +119,7 @@ public class LivroViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getAlterarLivroActionCampos(HttpServletRequest req) {
+	public Campo[] alterarCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[19]; 
 
 		campos[0] = new Campo(0, req.getParameter("titulo"), true, "", true, "titulo");
@@ -144,24 +145,6 @@ public class LivroViewHelper {
 
 
 		return campos;
-	}
-
-	public static int getResultadosPorPagina(Campo campo) {
-		if (campo == null || campo.getValor() == null || campo.getValor().equals("") || campo.getValor().matches("^[0-9]+$") == false) {
-            return 10;
-        } else {
-        	return Integer.parseInt(campo.getValor());
-        }
-	}
-
-	public static String[] getLinksPaginacao(int linksPaginacaoCount, int resultadosPorPagina) {
-		String[] linksPaginacao = new String[linksPaginacaoCount];
-
-        for (int i = 0; i < linksPaginacao.length; i++) {
-        	linksPaginacao[i] = "paginaAtual=" + (i + 1) + "&resultadosPorPagina=" + resultadosPorPagina;
-        }
-
-        return linksPaginacao;
 	}
 
 	public static Campo[] getCadastrarEstoqueActionCampos(HttpServletRequest req) {
@@ -251,5 +234,34 @@ public class LivroViewHelper {
 		}
 	}
 
+	public Livro instancia(Campo[] campos) {
+		try {
+			String titulo = campos[0].getValor();
+	        int status = Integer.parseInt(campos[13].getValor());
+	        Autor autor = new Autor(Long.parseLong(campos[1].getValor()), new Date(), "", "");
+	        Editora editora = new Editora(Long.parseLong(campos[2].getValor()), new Date(), "", "");
+	        Categoria[] categorias = LivroViewHelper.createCategoriasFromStrings(campos[16].getValor());
+	        String capa = campos[3].getValor();
+	        String ano = campos[4].getValor();
+	        String isbn = campos[5].getValor();
+	        int numeroPaginas = Integer.parseInt(campos[6].getValor());
+	        String sinopse = campos[7].getValor();
+	        double altura = Double.parseDouble(campos[8].getValor());
+	        double peso = Double.parseDouble(campos[9].getValor());
+	        double profundidade = Double.parseDouble(campos[10].getValor());
+	        double preco = Double.parseDouble(campos[11].getValor());
+	        double largura = Double.parseDouble(campos[17].getValor());
+	        String codigoBarras = campos[12].getValor();
+	        GrupoPrecificacao grupoPrecificacao = new GrupoPrecificacao(Long.parseLong(campos[14].getValor()), new Date(), "", 1, 1);
+	        String edicao = campos[15].getValor();
+	        
+	    	Livro livro = new Livro((long)1, new Date(), titulo, autor, editora, categorias, ano, isbn, numeroPaginas, sinopse, altura, peso, profundidade, preco, codigoBarras, status, capa, grupoPrecificacao, edicao);
+	    	livro.setLargura(largura);
+	    	return livro;
+	    } catch(Exception e) {
+	    	e.printStackTrace();
+	    	return null;
+	    }
+	}
 	
 }

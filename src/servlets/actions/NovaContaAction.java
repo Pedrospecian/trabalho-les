@@ -1,8 +1,6 @@
 package servlets.actions;
 
 import java.io.IOException;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -18,9 +16,7 @@ import model.Cliente;
 import model.Endereco;
 import model.Telefone;
 import model.Documento;
-import model.TipoCliente;
 import viewHelpers.ClienteViewHelper;
-import viewHelpers.UsuarioViewHelper;
 
 public class NovaContaAction extends HttpServlet {
 	private static final long serialVersionUID = 12;
@@ -31,22 +27,12 @@ public class NovaContaAction extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html");
 		try {
-			Campo[] campos = ClienteViewHelper.getCadastroClienteActionCampos(req);
-
+			ClienteViewHelper vh = new ClienteViewHelper();
+			Campo[] campos = vh.cadastroCampos(req);
 			campos[4].setValor("1");
-
 			FachadaCliente fachada = new FachadaCliente();
 
-		    String email = campos[30].getValor();
-
-			if(fachada.validarCampos(campos) && fachada.validaEmailExistente(email)) {
-				String nome = campos[0].getValor();
-		        int genero = Integer.parseInt(campos[1].getValor());
-		        Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(campos[2].getValor());
-		        long tipoCliente = Long.parseLong(campos[3].getValor());
-		        int status = Integer.parseInt(campos[4].getValor());
-		        String senha = campos[31].getValor();
-
+			if(fachada.validarCampos(campos) && fachada.validaEmailExistente(campos[30].getValor())) {
 		        Documento[] documentos = ClienteViewHelper.createDocumentosFromStrings(
 		        							campos[5].getValor(),
 		        							campos[6].getValor(),
@@ -80,10 +66,8 @@ public class NovaContaAction extends HttpServlet {
 		    		campos[29].getValor());
 
 		    	if (documentos != null && fachada.validarDocumentos(documentos, true) && enderecos != null && fachada.validarEnderecos(enderecos, true) && cartoesCredito != null && fachada.validarCartoesCredito(cartoesCredito) && telefones != null && fachada.validarTelefones(telefones) ) {
-		        
-		        	Cliente cliente = new Cliente((long)1, new Date(), documentos, nome, genero, dataNascimento, new TipoCliente(tipoCliente, new Date(), "", ""), enderecos, status, cartoesCredito, email, senha, telefones);
-
-		        	fachada.insert(cliente, "cliente novo");
+		        	Cliente cliente = vh.instanciaCliente(campos, documentos, enderecos, cartoesCredito, telefones);
+			        fachada.insert(cliente, "cliente novo");
 
 		        	for (int i = 0; i < cartoesCredito.length; i++) {
 		        		if (cartoesCredito[i].getNumero().equals(campos[33].getValor())) {

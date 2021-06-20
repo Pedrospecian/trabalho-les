@@ -6,24 +6,16 @@ import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 
 import utils.Campo;
-import model.Pais;
 import model.Pedido;
-import model.Estado;
-import model.Cidade;
 import model.Cliente;
-import model.Bairro;
 import model.Bandeira;
-import model.Endereco;
-import model.Documento;
-import model.TipoDocumento;
-import model.TipoEndereco;
+import model.EntidadeDominio;
 import model.Carrinho;
 import model.CartaoCredito;
-import utils.ResultadosBusca;
 import model.ItemCarrinho;
 import model.CupomTroca;
 
-public class PedidoViewHelper {
+public class PedidoViewHelper implements IViewHelper<EntidadeDominio> {
 	public static Campo[] getAdicionarCarrinhoCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[2];
 
@@ -33,7 +25,7 @@ public class PedidoViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getFinalizarCompraCampos(HttpServletRequest req) {
+	public Campo[] cadastroCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[18];
 
 		campos[0] = new Campo(1, req.getParameter("enderecoEntrega"), true, "", true, "enderecoEntrega");
@@ -92,7 +84,7 @@ public class PedidoViewHelper {
 		return total;
 	}
 
-	public static Campo[] getAlterarPedidoStatusActionCampos(HttpServletRequest req) {
+	public Campo[] alterarStatusCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[1];
 
 		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
@@ -146,7 +138,7 @@ public class PedidoViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getListagemPedidosCampos(HttpServletRequest req) {
+	public Campo[] listagemCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[4];
 
 		String resultadosPorPagina = "10";
@@ -172,4 +164,12 @@ public class PedidoViewHelper {
 
 		return campos;
 	}
+
+	public Campo[] alterarCampos(HttpServletRequest req) {
+		return null;
+	}
+	
+	public EntidadeDominio instancia(Campo[] campos) {
+    	return null;
+    }
 }

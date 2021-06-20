@@ -22,7 +22,8 @@ public class ListagemCupons extends HttpServlet {
 		}else{
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
-			Campo[] campos = CupomDescontoViewHelper.getListagemCuponsCampos(req);
+			CupomDescontoViewHelper vh = new CupomDescontoViewHelper();
+			Campo[] campos = vh.listagemCampos(req);
 
             FachadaCupomDesconto fachada = new FachadaCupomDesconto();
             ResultadosBusca resultadosBusca = fachada.select(campos);  

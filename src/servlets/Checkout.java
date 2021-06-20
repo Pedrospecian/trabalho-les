@@ -16,7 +16,6 @@ import model.FuncaoEndereco;
 import model.TipoLogradouro;
 import model.Bandeira;
 import viewHelpers.PedidoViewHelper;
-import facades.FachadaPedido;
 import facades.FachadaCarrinho;
 import facades.FachadaCliente;
 import facades.FachadaSelect;
@@ -33,7 +32,6 @@ public class Checkout extends HttpServlet {
 		if(!lvh.isAuthorized(req, resp, 2)){
 			resp.sendRedirect("/trabalho-les/home");
 		}else{
-			FachadaPedido fachadaPedido = new FachadaPedido();
 			FachadaCliente fachadaCliente = new FachadaCliente();
 			FachadaCarrinho fachadaCarrinho = new FachadaCarrinho();
 

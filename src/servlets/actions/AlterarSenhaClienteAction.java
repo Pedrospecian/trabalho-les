@@ -12,7 +12,6 @@ import utils.Campo;
 import facades.FachadaCliente;
 import model.Cliente;
 import viewHelpers.ClienteViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class AlterarSenhaClienteAction extends HttpServlet {

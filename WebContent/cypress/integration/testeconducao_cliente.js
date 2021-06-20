@@ -1,8 +1,8 @@
 let port = "8080";
-let cpf = "38802748942"; //alterar o cpf a cada teste novo
-let cnpj = "37796588000141"; //alterar o cnpj a cada teste novo
-let email = "te_st_de1aw1q123@tep1ste.com.br" //alterar o email a cada teste novo
-let waitTime = 10;
+let cpf = "76654964314"; //alterar o cpf a cada teste novo
+let cnpj = "47554422000172"; //alterar o cnpj a cada teste novo
+let email = "te_123@testte.com.br" //alterar o email a cada teste novo
+let waitTime = 600;
 
 describe('Teste de criação de conta de cliente', () => {
   it('Cadastra um cliente novo', () => {

@@ -24,7 +24,8 @@ public class AlterarUsuarioAdminStatusAction extends HttpServlet {
 		}else{
 			resp.setContentType("text/html");
 			try {
-				Campo[] campos = UsuarioViewHelper.getAlterarUsuarioStatusActionCampos(req);
+				UsuarioViewHelper vh = new UsuarioViewHelper();
+				Campo[] campos = vh.alterarStatusCampos(req);
 
 				FachadaUsuario fachada = new FachadaUsuario();
 

@@ -13,7 +13,7 @@ import utils.DadosCalculoFrete;
 import facades.FachadaCarrinho;
 import facades.FachadaCliente;
 import facades.FachadaCupomDesconto;
-import facades.FachadaCupomTroca;
+import facades.FachadaTroca;
 import facades.FachadaPedido;
 import model.CartaoCredito;
 import model.Cliente;
@@ -47,9 +47,10 @@ public class FinalizarCompra extends HttpServlet {
 				FachadaCliente fachadaCliente = new FachadaCliente();
 				FachadaCarrinho fachadaCarrinho = new FachadaCarrinho();
 				FachadaCupomDesconto fachadaCupomDesconto = new FachadaCupomDesconto();
-				FachadaCupomTroca fachadaCupomTroca = new FachadaCupomTroca();
-
-				Campo[] campos = PedidoViewHelper.getFinalizarCompraCampos(req);
+				FachadaTroca fachadaCupomTroca = new FachadaTroca();
+				
+				PedidoViewHelper vh = new PedidoViewHelper();
+				Campo[] campos = vh.cadastroCampos(req);
 
 				if(fachada.validarCompraCampos(campos)) {
 					Carrinho carrinho = fachadaCarrinho.selectCarrinho(lvh.getUsuarioLogadoId(req, resp));
@@ -87,8 +88,6 @@ public class FinalizarCompra extends HttpServlet {
 
 					CupomDesconto cupomDesconto = fachadaCupomDesconto.encontraCupomDesconto(campos[1].getValor());
 					CartaoCredito[] cartoesCredito = PedidoViewHelper.organizaCartoesCredito(cliente, req);
-
-
 					DadosCalculoFrete dadosCalculoFrete = fachada.getDadosCalculoFrete( carrinho.getId() );
 
 					dadosCalculoFrete.setTipoServico((campos[17].getValor()));
@@ -110,7 +109,6 @@ public class FinalizarCompra extends HttpServlet {
 							(int)valorFrete[1],
 							campos[17].getValor()
 					);
-
 
 					CupomTroca[] cuponsTroca = PedidoViewHelper.createCuponsTrocaFromStrings(campos[16].getValor(), pedido);
 					cuponsTroca = fachadaCupomTroca.encontraCuponsTroca(cuponsTroca);

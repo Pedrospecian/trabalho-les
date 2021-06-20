@@ -13,15 +13,10 @@ import utils.Campo;
 
 import facades.FachadaLivro;
 import model.Livro;
-import model.Autor;
 import model.LivroEstoque;
-import model.Editora;
 import model.Fornecedor;
-import model.GrupoPrecificacao;
-import model.Categoria;
 import model.Usuario;
 import viewHelpers.LivroViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class CadastrarEstoqueAction extends HttpServlet {

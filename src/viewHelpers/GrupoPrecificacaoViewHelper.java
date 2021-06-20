@@ -1,12 +1,14 @@
 package viewHelpers;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
+import model.GrupoPrecificacao;
 import utils.Campo;
 
-public class GrupoPrecificacaoViewHelper {
-	public static Campo[] getListagemGrupoPrecificacao(HttpServletRequest req) {
+public class GrupoPrecificacaoViewHelper implements IViewHelper<GrupoPrecificacao>{
+	public Campo[] listagemCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[4];
 
 		String resultadosPorPagina = "10";
@@ -23,7 +25,7 @@ public class GrupoPrecificacaoViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getAlterarGrupoPrecificacaoStatusActionCampos(HttpServletRequest req) {
+	public Campo[] alterarStatusCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[2];
 
 		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
@@ -32,7 +34,7 @@ public class GrupoPrecificacaoViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getCadastroGrupoPrecificacao(HttpServletRequest req) {
+	public Campo[] cadastroCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[3];
 
 		campos[0] = new Campo(0, req.getParameter("nome"), true, "", true, "nome");
@@ -42,7 +44,7 @@ public class GrupoPrecificacaoViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getAlterarGrupoPrecificacaoActionCampos(HttpServletRequest req) {
+	public Campo[] alterarCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[4];
 
 		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
@@ -53,22 +55,13 @@ public class GrupoPrecificacaoViewHelper {
 		return campos;
 	}
 
-	public static int getResultadosPorPagina(Campo campo) {
-		if (campo == null || campo.getValor() == null || campo.getValor().equals("") || campo.getValor().matches("^[0-9]+$") == false) {
-            return 10;
-        } else {
-        	return Integer.parseInt(campo.getValor());
-        }
-	}
+	public GrupoPrecificacao instancia(Campo[] campos) {
+		String nome = campos[0].getValor();
+        double valor = Double.parseDouble(campos[1].getValor());
+        int status = Integer.parseInt(campos[2].getValor());
 
-	public static String[] getLinksPaginacao(int linksPaginacaoCount, int resultadosPorPagina) {
-		String[] linksPaginacao = new String[linksPaginacaoCount];
-
-        for (int i = 0; i < linksPaginacao.length; i++) {
-        	linksPaginacao[i] = "paginaAtual=" + (i + 1) + "&resultadosPorPagina=" + resultadosPorPagina;
-        }
-
-        return linksPaginacao;
+    	GrupoPrecificacao gp = new GrupoPrecificacao((long)1, new Date(), nome, valor, status);
+    	return gp;
 	}
 
 	

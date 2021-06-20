@@ -1,8 +1,6 @@
 package servlets.actions;
 
 import java.io.IOException;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -30,18 +28,15 @@ public class CadastroGrupoPrecificacaoAction extends HttpServlet {
 			resp.setCharacterEncoding("UTF-8");
 			resp.setContentType("text/html");
 			try {
-				Campo[] campos = GrupoPrecificacaoViewHelper.getCadastroGrupoPrecificacao(req);
+				GrupoPrecificacaoViewHelper vh = new GrupoPrecificacaoViewHelper();
+				Campo[] campos = vh.cadastroCampos(req);
 
 				FachadaGrupoPrecificacao fachada = new FachadaGrupoPrecificacao();
 
 				if(fachada.validarCampos(campos)) {
-					String nome = campos[0].getValor();
-			        double valor = Double.parseDouble(campos[1].getValor());
-			        int status = Integer.parseInt(campos[2].getValor());
+		        	GrupoPrecificacao gp = vh.instancia(campos);
 
-		        	GrupoPrecificacao cupom = new GrupoPrecificacao((long)1, new Date(), nome, valor, status);
-
-		        	fachada.insert(cupom, LoginViewHelper.getLogInfo(req, resp));
+		        	fachada.insert(gp, LoginViewHelper.getLogInfo(req, resp));
 		        	resp.sendRedirect("/trabalho-les/listagemGruposPrecificacao");
 		        } else {
 	    	       

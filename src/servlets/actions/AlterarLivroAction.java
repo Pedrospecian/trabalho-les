@@ -2,7 +2,6 @@ package servlets.actions;
 
 import java.io.IOException;
 import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +17,6 @@ import model.Editora;
 import model.GrupoPrecificacao;
 import model.Categoria;
 import viewHelpers.LivroViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class AlterarLivroAction extends HttpServlet {
@@ -34,7 +32,8 @@ public class AlterarLivroAction extends HttpServlet {
 			resp.setCharacterEncoding("UTF-8");
 			resp.setContentType("text/html");
 			try {
-				Campo[] campos = LivroViewHelper.getAlterarLivroActionCampos(req);
+				LivroViewHelper vh = new LivroViewHelper();
+				Campo[] campos = vh.alterarCampos(req);
 
 				FachadaLivro fachada = new FachadaLivro();
 
@@ -66,8 +65,8 @@ public class AlterarLivroAction extends HttpServlet {
 
 		        	livro.setLargura(largura);
 
-		        	System.out.println("a largura =============== ==============");
-		        	System.out.println(livro.getLargura());
+		        	/*System.out.println("a largura =============== ==============");
+		        	System.out.println(livro.getLargura());*/
 
 			        fachada.update(livro, LoginViewHelper.getLogInfo(req, resp));
 

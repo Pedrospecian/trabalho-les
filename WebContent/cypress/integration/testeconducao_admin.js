@@ -1,8 +1,8 @@
 let port = "8080";
-let cpf = "63128164436"; //alterar o cpf a cada teste novo
-let emailCliente = "a2xasaaaw3bcaaa@teaste.com.br" //alterar o email a cada teste novo
-let emailAdmin = "ateaswaaaabcaaaadmin3@teste.com.br" //alterar o email a cada teste novo
-let waitTime = 10;
+let cpf = "77634778818"; //alterar o cpf a cada teste novo
+let emailCliente = "a_tcliadmaaa@teaste.com.br" //alterar o email a cada teste novo
+let emailAdmin = "atadmiadmin3@teste.com.br" //alterar o email a cada teste novo
+let waitTime = 600;
 
 describe('Teste de condução de CRUD de clientes', () => {
   it('Cadastra um cliente', () => {

@@ -8,19 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import utils.Campo;
 import model.Pais;
 import model.Estado;
+import model.Fornecedor;
 import model.FuncaoEndereco;
 import model.Cidade;
 import model.Bairro;
 import model.Endereco;
+import model.EntidadeDominio;
 import model.Documento;
 import model.TipoDocumento;
 import model.TipoEndereco;
 import model.TipoLogradouro;
 import model.TipoResidencia;
-import utils.ResultadosBusca;
 
-public class FornecedorViewHelper {
-	public static Campo[] getListagemFornecedorCampos(HttpServletRequest req) {
+public class FornecedorViewHelper implements IViewHelper<EntidadeDominio>{
+	public Campo[] listagemCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[4];
 
 		String resultadosPorPagina = "10";
@@ -37,7 +38,7 @@ public class FornecedorViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getAlterarFornecedorStatusActionCampos(HttpServletRequest req) {
+	public Campo[] alterarStatusCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[2];
 
 		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
@@ -46,7 +47,7 @@ public class FornecedorViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getCadastroFornecedorActionCampos(HttpServletRequest req) {
+	public Campo[] cadastroCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[20];
 
 		campos[0] = new Campo(0, req.getParameter("nome"), true, "", true, "nome");
@@ -75,7 +76,7 @@ public class FornecedorViewHelper {
 		return campos;
 	}
 
-	public static Campo[] getAlterarFornecedorActionCampos(HttpServletRequest req) {
+	public Campo[] alterarCampos(HttpServletRequest req) {
 		Campo[] campos = new Campo[4]; 
 
 		campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
@@ -85,4 +86,61 @@ public class FornecedorViewHelper {
 
 		return campos;
 	}
+	
+	public EntidadeDominio instancia(Campo[] campos) {
+    	return null;
+    }
+
+    public Endereco instanciaEndereco(Campo[] campos) {
+    	Pais pais = new Pais(Long.parseLong(campos[14].getValor()), null, null);
+		Estado estado = new Estado(0, null, campos[13].getValor(), pais);
+		Cidade cidade = new Cidade(0, null, campos[12].getValor(), estado);
+		Bairro bairro = new Bairro(0, null, campos[11].getValor(), cidade);
+		TipoEndereco tipoEndereco = new TipoEndereco(Long.parseLong(campos[6].getValor()), null, null, null);
+
+		TipoResidencia tipoResidencia = new TipoResidencia(Long.parseLong(campos[16].getValor()), null, null, null);
+		FuncaoEndereco funcaoEndereco = new FuncaoEndereco(Long.parseLong(campos[17].getValor()), null, null, null);
+		TipoLogradouro tipoLogradouro = new TipoLogradouro(Long.parseLong(campos[18].getValor()), null, null, null);
+
+		Endereco endereco = new Endereco(
+			0,
+			null,
+			campos[8].getValor(),
+			campos[9].getValor(),
+			campos[7].getValor(),
+			campos[10].getValor(),
+			bairro,
+			tipoEndereco,
+			campos[15].getValor(),
+			tipoResidencia,
+			funcaoEndereco,
+			tipoLogradouro,
+			campos[19].getValor());
+
+		return endereco;
+    }
+
+    public Documento instanciaDocumento(Campo[] campos) {
+    	try {
+	    	Documento documento = new Documento(
+				        					(long)1,
+				        					null,
+				        					campos[4].getValor(),
+				        					new SimpleDateFormat("yyyy-MM-dd").parse(campos[5].getValor()),
+				        					new TipoDocumento(Long.parseLong(campos[3].getValor()), null, null, null)
+			);
+			return documento;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+    }
+
+    public Fornecedor instanciaFornecedor(Campo[] campos, Documento documento, Endereco endereco) {
+    	String nome = campos[0].getValor();
+		String email = campos[1].getValor();
+        int status = Integer.parseInt(campos[2].getValor());
+        Fornecedor fornecedor = new Fornecedor((long)1, new Date(), nome, email, status, documento, endereco);
+        return fornecedor;
+    }
 }

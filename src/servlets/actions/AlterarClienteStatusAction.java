@@ -12,7 +12,6 @@ import utils.Campo;
 import facades.FachadaCliente;
 import model.Cliente;
 import viewHelpers.ClienteViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class AlterarClienteStatusAction extends HttpServlet {
@@ -25,7 +24,8 @@ public class AlterarClienteStatusAction extends HttpServlet {
 		}else{
 			resp.setContentType("text/html");
 			try {
-				Campo[] campos = ClienteViewHelper.getAlterarClienteStatusActionCampos(req);
+				ClienteViewHelper vh = new ClienteViewHelper();
+				Campo[] campos = vh.alterarStatusCampos(req);
 
 				FachadaCliente fachada = new FachadaCliente();
 

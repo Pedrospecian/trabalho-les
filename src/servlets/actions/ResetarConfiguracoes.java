@@ -1,25 +1,13 @@
 package servlets.actions;
 
 import java.io.IOException;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import utils.Campo;
-import facades.FachadaCliente;
 import facades.FachadaConfiguracoes;
-import model.CartaoCredito;
-import model.Cliente;
-import model.Configuracao;
-import model.Endereco;
-import model.Documento;
-import model.TipoCliente;
-import viewHelpers.ConfiguracoesViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class ResetarConfiguracoes extends HttpServlet {

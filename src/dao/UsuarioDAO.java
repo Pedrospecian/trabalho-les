@@ -1,7 +1,7 @@
 package dao;
 
 import utils.Conexao;
-import strategies.CriaFiltragemUsuario;
+import strategies.CriaFiltragem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,7 +26,7 @@ public class UsuarioDAO implements IDAO<EntidadeDominio, Campo[]> {
 		PreparedStatement pst = null;
 		try {
 			connection = Conexao.getConnectionMySQL();
-			CriaFiltragemUsuario filtro = new CriaFiltragemUsuario();
+			CriaFiltragem filtro = new CriaFiltragem();
 			String where = filtro.processa(campos);
 			
 			pst = connection.prepareStatement("select * from usuarios inner join tipos_usuarios on tipos_usuarios.id = usuarios.idTipoUsuario " + where + " order by usuarios.id desc;");

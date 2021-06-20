@@ -12,7 +12,6 @@ import facades.FachadaGrupoPrecificacao;
 import utils.Campo;
 import utils.ResultadosBusca;
 import viewHelpers.LivroViewHelper;
-import viewHelpers.UsuarioViewHelper;
 import viewHelpers.LoginViewHelper;
 
 public class ListagemLivros extends HttpServlet {
@@ -25,7 +24,8 @@ public class ListagemLivros extends HttpServlet {
                 if(!lvh.isAuthorized(req, resp, 5)){
                         resp.sendRedirect("/trabalho-les/home");
                 }else{
-                        Campo[] campos = LivroViewHelper.getListagemLivrosCampos(req);
+                		LivroViewHelper vh = new LivroViewHelper();
+                        Campo[] campos = vh.listagemCampos(req);
 
                         FachadaLivro fachada = new FachadaLivro();
                         FachadaGrupoPrecificacao fachadaGrupoPrecificacao = new FachadaGrupoPrecificacao();
