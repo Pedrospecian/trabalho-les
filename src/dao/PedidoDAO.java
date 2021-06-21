@@ -694,14 +694,16 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		        	totalCupomDesconto = pedido.getCupomDesconto().getValor();
 		        }
 
+		        connection.commit();
+		        connection.close();
+
 				double excesso = Math.floor((pedido.getValorTotal() + pedido.getValorFrete() - totalCartoes - totalCuponsTroca - totalCupomDesconto) * 100) / 100;
 				System.out.println("============== o excesso ==========");
 				System.out.println(excesso);
 				if (excesso < 0) {
 					TrocaDAO ctdao = new TrocaDAO();
 					ctdao.geraCupomTrocaExcesso(pedido.getCliente().getId(), excesso * (-1));
-				}
-				connection.commit();
+				}				
 			}
 
 			return true;		
@@ -851,7 +853,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			}
 			pst = connection.prepareStatement("SELECT " + nomeTipo + ", livros_estoque.livroId, livros_estoque.dataCadastro, sum(livros_estoque.quantidade) as total FROM livros_estoque " +
 				joinCat + 
-				" WHERE livros_estoque.tipoMovimentacao = 2 and livros_estoque.dataCadastro >= ? and livros_estoque.dataCadastro <= ? group by livros_estoque.livroId, livros_estoque.dataCadastro;");
+				" WHERE livros_estoque.tipoMovimentacao = 2 and livros_estoque.dataCadastro >= ? and livros_estoque.dataCadastro <= ? group by livros_estoque.livroId, livros_estoque.dataCadastro order by livros_estoque.dataCadastro;");
 
 
 			Date dataInicio = new SimpleDateFormat("yyyy-MM-dd").parse(campos[0].getValor());

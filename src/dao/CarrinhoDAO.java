@@ -240,10 +240,13 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setLong(1, itemCarrinho.getCliente().getId());
 			
 			ResultSet rs = pst.executeQuery();
+
+			boolean adicionaProdutoAoCarrinho = false;
+			int id = 0;
 			
 			if (rs.next()) {
-				//adiciona o produto ao carrinho existente
-				adicionaProdutoAoCarrinho(itemCarrinho, rs.getInt(1));
+				id = rs.getInt(1);
+				adicionaProdutoAoCarrinho = true;
 			} else {
 				//cria um carrinho novo
 				StringBuilder sql2 = new StringBuilder();
@@ -260,16 +263,19 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				pst.executeUpdate();
 				
 				ResultSet rs2 = pst.getGeneratedKeys();
-				if (rs2.next()) {
-					//adiciona o produto ao carrinho novo
-					adicionaProdutoAoCarrinho(itemCarrinho, rs2.getInt(1));
+				if (rs2.next()) {				
+					id = rs2.getInt(1);
+					adicionaProdutoAoCarrinho = true;
 				}
 			}
 			
 			connection.commit();
-
 			pst.close();
-			connection.close();			
+			connection.close();	
+
+			if (adicionaProdutoAoCarrinho) {
+				adicionaProdutoAoCarrinho(itemCarrinho, id);
+			}		
 		} catch (Exception e) {
 			try {
 				if(connection != null) {
@@ -295,16 +301,24 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		PreparedStatement pst = null;
 		
 		try {
+			Connection con = Conexao.getConnectionMySQL();
+			con.setAutoCommit(false);
 			StringBuilder sql = new StringBuilder();
 			sql.append("SELECT idCarrinhoProduto, quantidade FROM carrinhos_produtos WHERE carrinhos_produtos.idProduto = ? AND carrinhos_produtos.idCarrinho = ? limit 1;");
 			
-			pst = connection.prepareStatement(sql.toString(),
+			pst = con.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 
 			pst.setLong(1, itemCarrinho.getLivro().getId());
 			pst.setLong(2, id);
 			
 			ResultSet rs = pst.executeQuery();
+
+			int acao = 0;
+			long idItemCarrinho = 0;
+			int quantidade = 0;
+
+			System.out.println("FILHO DUMA PUTA FUNCIONA CARALHO");
 			
 			if (rs.next()) {
 				//pega a quantidade de estoque do livro a ser inserido
@@ -314,7 +328,7 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				StringBuilder sql2 = new StringBuilder();
 				sql2.append("UPDATE carrinhos_produtos SET quantidade = ? WHERE carrinhos_produtos.idCarrinhoProduto = ?;");
 				
-				pst = connection.prepareStatement(sql2.toString(),
+				pst = con.prepareStatement(sql2.toString(),
 						Statement.RETURN_GENERATED_KEYS);
 
 				pst.setInt(1, Math.min( rs.getInt(2) + itemCarrinho.getQuantidade(), estoque ) );
@@ -322,15 +336,19 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				
 				pst.executeUpdate();
 
+				System.out.println("a");
+
 				//altera o bloqueio do carrinho
-				alteraBloqueio(id, Math.min( rs.getInt(2) + itemCarrinho.getQuantidade(), estoque ));
+				acao = 1;
+				idItemCarrinho = id;
+				quantidade = Math.min( rs.getInt(2) + itemCarrinho.getQuantidade(), estoque );
 
 			} else {
 				//adiciona o produto ao carrinho existente
 				StringBuilder sql2 = new StringBuilder();
 				sql2.append("INSERT INTO carrinhos_produtos(idCarrinho, idProduto, quantidade, quantidadeItensTrocados) VALUES (?, ?, ?, 0);");
 				
-				pst = connection.prepareStatement(sql2.toString(),
+				pst = con.prepareStatement(sql2.toString(),
 						Statement.RETURN_GENERATED_KEYS);
 
 				pst.setLong(1, id);
@@ -339,14 +357,28 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				
 				pst.executeUpdate();
 
+				System.out.println("b");
+
 				ResultSet rs2 =  pst.getGeneratedKeys();
 				if(rs2.next()) {
 					//insere o bloqueio do carrinho
-					insereBloqueio(rs2.getInt(1), itemCarrinho.getQuantidade());
+					acao = 2;
+					idItemCarrinho = rs2.getInt(1);
+					quantidade = itemCarrinho.getQuantidade();
 				}
 			}
 
+			con.commit();
 			pst.close();
+			con.close();
+
+			if (acao == 1) {
+				alteraBloqueio(idItemCarrinho, quantidade);
+			}
+
+			if (acao == 2) {
+				insereBloqueio(idItemCarrinho, quantidade);
+			}
 
 		}catch(Exception e) {
 			e.printStackTrace();

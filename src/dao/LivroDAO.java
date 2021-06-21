@@ -711,12 +711,16 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			}
 
 			ResultSet rs = pst.executeQuery();
-
+			int quantidade = 0;
+			
 			if (rs.next()) {
-				return rs.getInt(1);
-			} else {
-				return 0;
+				quantidade = rs.getInt(1);
 			}
+
+			pst.close();
+			connection.close();
+			
+			return quantidade;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
@@ -735,12 +739,16 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setLong(1, livro.getId());
 
 			ResultSet rs = pst.executeQuery();
-
+			int quantidade = 0;
+			
 			if (rs.next()) {
-				return rs.getInt(1);
-			} else {
-				return 0;
+				quantidade = rs.getInt(1);
 			}
+
+			pst.close();
+			connection.close();
+			
+			return quantidade;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;

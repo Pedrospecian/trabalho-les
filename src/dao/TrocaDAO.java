@@ -55,6 +55,7 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 				connection.close();
 				return cupomTroca;
 			} else {
+				connection.close();
 				return null;
 			}
 		}  catch (Exception e) {
@@ -242,11 +243,6 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 			pst.executeUpdate();
 
-			if (aprovacao != 1) {
-				CarrinhoDAO crdao = new CarrinhoDAO();
-				crdao.devolveItensAoItemCarrinho(id);
-			}
-
 			//altera status pedido
 			StringBuilder sql4 = new StringBuilder();
 			sql4.append("SELECT pedidos.id, pedidos.idUsuario from pedidos "+
@@ -308,7 +304,12 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 			connection.commit();
 			pst.close();
-			connection.close();						
+			connection.close();	
+
+			if (aprovacao != 1) {
+				CarrinhoDAO crdao = new CarrinhoDAO();
+				crdao.devolveItensAoItemCarrinho(id);
+			}					
 		} catch (Exception e) {
 			try {
 				if(connection != null) {
@@ -377,13 +378,13 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 				pst.setLong(1, idPedido);
 
 				pst.executeUpdate();
-			}
-
-			retorno[0] = geraCupomTroca(id);
+			}			
 
 			con.commit();
 			pst.close();
 			con.close();
+
+			retorno[0] = geraCupomTroca(id);
 
 			return retorno;
 						
