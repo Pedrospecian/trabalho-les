@@ -317,8 +317,6 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			int acao = 0;
 			long idItemCarrinho = 0;
 			int quantidade = 0;
-
-			System.out.println("FILHO DUMA PUTA FUNCIONA CARALHO");
 			
 			if (rs.next()) {
 				//pega a quantidade de estoque do livro a ser inserido
