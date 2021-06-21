@@ -29,29 +29,34 @@ public class PedidoViewHelper implements IViewHelper<EntidadeDominio> {
 		Campo[] campos = new Campo[18];
 
 		campos[0] = new Campo(1, req.getParameter("enderecoEntrega"), true, "", true, "enderecoEntrega");
-		campos[1] = new Campo(0, req.getParameter("cupomDesconto"), true, "", true, "CupomDesconto");
+		campos[1] = new Campo(0, req.getParameter("cupomDesconto"), true, "", false, "CupomDesconto");
 		campos[17] = new Campo(0, req.getParameter("tipoFrete"), true, "", true, "tipoFrete");
 
 		boolean enderecoObrigatorio = false;
 
-		if (Long.parseLong(req.getParameter("enderecoEntrega")) == 0) {
+		if (req.getParameter("enderecoEntrega").equals("0")) {
 			enderecoObrigatorio = true;
 		}
 
-		campos[2] = new Campo(1, req.getParameter("nomeEndereco"), true, "", enderecoObrigatorio, "nomeEndereco");
+		System.out.println("ENDERECO OBRIGATORIO =================== ============ ");
+		System.out.println(req.getParameter("enderecoEntrega"));
+		System.out.println(enderecoObrigatorio);
+		System.out.println("ENDERECO OBRIGATORIO =================== ============ ");
+
+		campos[2] = new Campo(0, req.getParameter("nomeEndereco"), true, "", enderecoObrigatorio, "nomeEndereco");
 		campos[3] = new Campo(1, req.getParameter("tipoEndereco"), true, "", enderecoObrigatorio, "tipoEndereco");
 		campos[4] = new Campo(1, req.getParameter("tipoResidencia"), true, "", enderecoObrigatorio, "tipoResidencia");
 		campos[5] = new Campo(1, req.getParameter("funcaoEndereco"), true, "", enderecoObrigatorio, "funcaoEndereco");
 		campos[6] = new Campo(1, req.getParameter("pais"), true, "", enderecoObrigatorio, "pais");
 		campos[7] = new Campo(1, req.getParameter("tipoLogradouro"), true, "", enderecoObrigatorio, "tipoLogradouro");
-		campos[8] = new Campo(1, req.getParameter("logradouro"), true, "", enderecoObrigatorio, "logradouro");
-		campos[9] = new Campo(1, req.getParameter("numero"), true, "", enderecoObrigatorio, "numero");
-		campos[10] = new Campo(1, req.getParameter("complemento"), true, "", false, "complemento");
-		campos[11] = new Campo(1, req.getParameter("bairro"), true, "", enderecoObrigatorio, "bairro");
-		campos[12] = new Campo(1, req.getParameter("cidade"), true, "", enderecoObrigatorio, "cidade");
-		campos[13] = new Campo(1, req.getParameter("estado"), true, "", enderecoObrigatorio, "estado");
-		campos[14] = new Campo(1, req.getParameter("observacoes"), true, "", false, "observacoes");
-		campos[15] = new Campo(1, req.getParameter("cep"), true, "", enderecoObrigatorio, "cep");
+		campos[8] = new Campo(0, req.getParameter("logradouro"), true, "", enderecoObrigatorio, "logradouro");
+		campos[9] = new Campo(0, req.getParameter("numero"), true, "", enderecoObrigatorio, "numero");
+		campos[10] = new Campo(0, req.getParameter("complemento"), true, "", false, "complemento");
+		campos[11] = new Campo(0, req.getParameter("bairro"), true, "", enderecoObrigatorio, "bairro");
+		campos[12] = new Campo(0, req.getParameter("cidade"), true, "", enderecoObrigatorio, "cidade");
+		campos[13] = new Campo(0, req.getParameter("estado"), true, "", enderecoObrigatorio, "estado");
+		campos[14] = new Campo(0, req.getParameter("observacoes"), true, "", false, "observacoes");
+		campos[15] = new Campo(5, req.getParameter("cep"), true, "", enderecoObrigatorio, "cep");
 		//cupons de desconto
 		campos[16] = new Campo(6, req.getParameter("arrIdCupomTroca"), true, "", false, "cuponsTroca");
 		

@@ -21,7 +21,7 @@ import utils.Campo;
 public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 	private Connection connection = null;
 	public ArrayList selectVals;
-	public Usuario selectSingleVal;
+	//public Usuario selectSingleVal;
 	public Carrinho selectCarrinhoVal;
 
 	public ArrayList select(Campo[] campos) {
@@ -93,8 +93,14 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 				Carrinho carrinho = new Carrinho((long)idCarrinho, rs.getDate(2), itensCarrinho, rs.getInt(4), null);
 				this.selectCarrinhoVal = carrinho;
+
+				pst.close();
+				connection.close();
 				return this.selectCarrinhoVal;
 			}
+
+			pst.close();
+			connection.close();
 			
 			return null;			
 		} catch (Exception e) {
@@ -180,8 +186,15 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 				Carrinho carrinho = new Carrinho((long)id, rs.getDate(2), itensCarrinho, rs.getInt(4), null);
 				this.selectCarrinhoVal = carrinho;
+
+				pst.close();
+				connection.close();
+
 				return this.selectCarrinhoVal;
 			}
+
+			pst.close();
+			connection.close();
 			return null;			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -253,10 +266,16 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				}
 			}
 			
-			connection.commit();			
+			connection.commit();
+
+			pst.close();
+			connection.close();			
 		} catch (Exception e) {
 			try {
-				if(connection != null) connection.rollback();
+				if(connection != null) {
+					connection.rollback();
+					connection.close();
+				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -327,6 +346,8 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				}
 			}
 
+			pst.close();
+
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -336,10 +357,12 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		PreparedStatement pst = null;
 		
 		try {
+			Connection con = Conexao.getConnectionMySQL();
+			con.setAutoCommit(false);
 			StringBuilder sql = new StringBuilder();
 			sql.append("SELECT * FROM carrinhos_produtos WHERE idCarrinhoProduto = ?;");
 			
-			pst = connection.prepareStatement(sql.toString(),
+			pst = con.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 
 			pst.setLong(1, idItemCarrinho);
@@ -350,7 +373,7 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				StringBuilder sql2 = new StringBuilder();
 				sql2.append("INSERT INTO bloqueios_produtos (dataEntrada, quantidade, idLivro, idCarrinho) VALUES (?, ?, ?, ?);");
 				
-				pst = connection.prepareStatement(sql2.toString(),
+				pst = con.prepareStatement(sql2.toString(),
 						Statement.RETURN_GENERATED_KEYS);
 
 				pst.setDate(1, new java.sql.Date(new Date().getTime()));
@@ -365,7 +388,7 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					StringBuilder sql3 = new StringBuilder();
 					sql3.append("UPDATE carrinhos SET dataAlteracao = ? where id = ?;");
 					
-					pst = connection.prepareStatement(sql3.toString(),
+					pst = con.prepareStatement(sql3.toString(),
 							Statement.RETURN_GENERATED_KEYS);
 
 					pst.setDate(1, new java.sql.Date(new Date().getTime()));
@@ -374,6 +397,9 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					pst.executeUpdate();
 				}
 			}
+			con.commit();
+			pst.close();
+			con.close();
 
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -384,10 +410,12 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		PreparedStatement pst = null;
 		
 		try {
+			Connection con = Conexao.getConnectionMySQL();
+			con.setAutoCommit(false);
 			StringBuilder sql = new StringBuilder();
 			sql.append("SELECT * FROM carrinhos_produtos WHERE idCarrinhoProduto = ?;");
 			
-			pst = connection.prepareStatement(sql.toString(),
+			pst = con.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 
 			pst.setLong(1, idItemCarrinho);
@@ -398,7 +426,7 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				StringBuilder sql2 = new StringBuilder();
 				sql2.append("UPDATE bloqueios_produtos SET quantidade = ? WHERE idLivro = ? AND idCarrinho = ?;");
 				
-				pst = connection.prepareStatement(sql2.toString(),
+				pst = con.prepareStatement(sql2.toString(),
 						Statement.RETURN_GENERATED_KEYS);
 
 				pst.setInt(1, quantidade);
@@ -410,7 +438,7 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				StringBuilder sql3 = new StringBuilder();
 				sql3.append("UPDATE carrinhos SET dataAlteracao = ? where id = ?;");
 				
-				pst = connection.prepareStatement(sql3.toString(),
+				pst = con.prepareStatement(sql3.toString(),
 						Statement.RETURN_GENERATED_KEYS);
 
 				pst.setDate(1, new java.sql.Date(new Date().getTime()));
@@ -418,6 +446,10 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				
 				pst.executeUpdate();
 			}
+
+			con.commit();
+			pst.close();
+			con.close();
 
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -428,10 +460,12 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		PreparedStatement pst = null;
 		
 		try {
+			Connection con = Conexao.getConnectionMySQL();
+			con.setAutoCommit(false);
 			StringBuilder sql = new StringBuilder();
 			sql.append("SELECT * FROM carrinhos_produtos WHERE idCarrinhoProduto = ?;");
 			
-			pst = connection.prepareStatement(sql.toString(),
+			pst = con.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 
 			pst.setLong(1, idItemCarrinho);
@@ -442,7 +476,7 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				StringBuilder sql2 = new StringBuilder();
 				sql2.append("DELETE FROM bloqueios_produtos WHERE idLivro = ? AND idCarrinho = ?;");
 				
-				pst = connection.prepareStatement(sql2.toString(),
+				pst = con.prepareStatement(sql2.toString(),
 						Statement.RETURN_GENERATED_KEYS);
 
 				pst.setLong(1, rs.getLong("carrinhos_produtos.idProduto"));
@@ -453,7 +487,7 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				StringBuilder sql3 = new StringBuilder();
 				sql3.append("UPDATE carrinhos SET dataAlteracao = ? where id = ?;");
 				
-				pst = connection.prepareStatement(sql3.toString(),
+				pst = con.prepareStatement(sql3.toString(),
 						Statement.RETURN_GENERATED_KEYS);
 
 				pst.setDate(1, new java.sql.Date(new Date().getTime()));
@@ -461,6 +495,9 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				
 				pst.executeUpdate();
 			}
+			con.commit();
+			pst.close();
+			con.close();
 
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -470,12 +507,12 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 	protected void removeBloqueioCarrinhoInteiro(long idCarrinho) {
 		PreparedStatement pst = null;		
 		try {
-			connection = Conexao.getConnectionMySQL();
-			connection.setAutoCommit(false);
+			Connection con = Conexao.getConnectionMySQL();
+			con.setAutoCommit(false);
 			StringBuilder sql = new StringBuilder();
 			sql.append("DELETE FROM bloqueios_produtos WHERE idCarrinho = ?;");
 			
-			pst = connection.prepareStatement(sql.toString(),
+			pst = con.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 
 			pst.setLong(1, idCarrinho);
@@ -485,14 +522,17 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			StringBuilder sql3 = new StringBuilder();
 			sql3.append("UPDATE carrinhos SET dataAlteracao = ? where id = ?;");
 			
-			pst = connection.prepareStatement(sql3.toString(),
+			pst = con.prepareStatement(sql3.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 
 			pst.setDate(1, new java.sql.Date(new Date().getTime()));
 			pst.setLong(2, idCarrinho);
 			
 			pst.executeUpdate();
-			connection.commit();
+			con.commit();
+
+			pst.close();
+			con.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -530,6 +570,9 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				alteraBloqueio(id, quantidade);
 				connection.commit();
 			}
+
+			pst.close();
+			connection.close();
 		} catch (Exception e) {
 			System.out.println("Ocorreu um erro ao alterar o registro!");
 			e.printStackTrace();
@@ -551,9 +594,11 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					Statement.RETURN_GENERATED_KEYS);
 			pst.setLong(1, id);
 			pst.executeUpdate();
-
 			
 			connection.commit();
+
+			pst.close();
+			connection.close();
 		} catch (Exception e) {
 			System.out.println("Ocorreu um erro ao excluir o registro!");
 			e.printStackTrace();
@@ -563,13 +608,15 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 	protected void devolveItensAoItemCarrinho(long id) {
 		PreparedStatement pst = null;
 		try {
-			pst = connection.prepareStatement("select * from solicitacoes_troca inner join carrinhos_produtos on carrinhos_produtos.idCarrinhoProduto = solicitacoes_troca.idItemCarrinho where solicitacoes_troca.id = ?;");
+			Connection con = Conexao.getConnectionMySQL();
+			con.setAutoCommit(false);
+			pst = con.prepareStatement("select * from solicitacoes_troca inner join carrinhos_produtos on carrinhos_produtos.idCarrinhoProduto = solicitacoes_troca.idItemCarrinho where solicitacoes_troca.id = ?;");
 			
 			pst.setLong(1, id);
 			ResultSet rs = pst.executeQuery();
 						
 			if (rs.next()) {
-				pst = connection.prepareStatement("update carrinhos_produtos set quantidade = ?, quantidadeItensTrocados = ? where idCarrinhoProduto = ?");
+				pst = con.prepareStatement("update carrinhos_produtos set quantidade = ?, quantidadeItensTrocados = ? where idCarrinhoProduto = ?");
 
 				pst.setInt(1, rs.getInt("carrinhos_produtos.quantidade") + rs.getInt("solicitacoes_troca.quantidade"));
 				pst.setInt(2, rs.getInt("carrinhos_produtos.quantidadeItensTrocados") - rs.getInt("solicitacoes_troca.quantidade"));
@@ -577,11 +624,12 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				
 				pst.executeUpdate();
 			}
+			pst.close();
+			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
 	}
-
 
 	public void insert(EntidadeDominio entidade) {
 		

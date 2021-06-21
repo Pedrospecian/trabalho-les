@@ -59,8 +59,8 @@
 						</option>
 					</c:forEach>
 				</select>
-				<input type="number" min="1" name="resultadosPorPagina" placeholder="Resultados por página" value="${campos[15].getValor()}" >
-				<button type="submit">Buscar</button>
+				<input type="number" min="1" cypress-resultadosPorPagina name="resultadosPorPagina" placeholder="Resultados por página" value="${campos[15].getValor()}" >
+				<button type="submit" cypress-submitFiltragem>Buscar</button>
 			</form>
 			<c:if test = "${registros.size() > 0}">
 				<div class="listagem-livros">

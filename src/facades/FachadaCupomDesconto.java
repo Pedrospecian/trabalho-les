@@ -11,7 +11,6 @@ import utils.Log;
 import utils.ResultadosBusca;
 
 public class FachadaCupomDesconto implements IFachada<CupomDesconto, Campo[]> {
-
 	public boolean validarCampos(Campo[] campos) {
 		ValidarCampos validarCampos = new ValidarCampos();
 

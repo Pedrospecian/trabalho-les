@@ -31,8 +31,6 @@ public class FornecedorDAO implements IDAO<EntidadeDominio, Campo[]> {
 	private Connection connection = null;
 	public ArrayList selectVals;
 	public Fornecedor selectSingleVal;
-	public Documento selectDocumentoVal;
-	public Endereco selectEnderecoVal;
 
 	public ArrayList select(Campo[] campos) {
 		PreparedStatement pst = null;

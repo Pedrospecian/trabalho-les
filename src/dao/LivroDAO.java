@@ -747,7 +747,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}
 	}
 
-
 	public void update(EntidadeDominio entidade) {
 		Livro livro = (Livro) entidade;
 		PreparedStatement pst = null;
@@ -1397,4 +1396,3 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}
 	}	
 }
-

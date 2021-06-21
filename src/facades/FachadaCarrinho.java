@@ -32,7 +32,7 @@ import strategies.VerificarCamposCpf;
 import strategies.CalculaValorFrete;
 import model.Pedido;
 
-public class FachadaCarrinho implements IFachada<Cliente, Campo[]> {
+public class FachadaCarrinho implements IFachada<EntidadeDominio, Campo[]> {
 	public boolean validarCampos(Campo[] campos) {
 		ValidarCampos validarCampos = new ValidarCampos();
 
@@ -54,15 +54,15 @@ public class FachadaCarrinho implements IFachada<Cliente, Campo[]> {
 		return null;
 	}
 
-	public String insert(Cliente cliente, String usuarioResponsavel) {
+	public String insert(EntidadeDominio entidadeDominio, String usuarioResponsavel) {
 		return "";
 	}
 
-	public String delete(Cliente cliente, String usuarioResponsavel) {
+	public String delete(EntidadeDominio entidadeDominio, String usuarioResponsavel) {
 		return "";
 	}
 
-	public String update(Cliente cliente, String usuarioResponsavel) {
+	public String update(EntidadeDominio entidadeDominio, String usuarioResponsavel) {
 		return "";
 	}
 
@@ -96,7 +96,6 @@ public class FachadaCarrinho implements IFachada<Cliente, Campo[]> {
 							 "Alteração de quantidade de item do carrinho");
         log.registrar();
 	}	
-
 
 	public String adicionarCarrinho(ItemCarrinho itemCarrinho, long idCarrinho, String usuarioResponsavel) {
 		CarrinhoDAO dao = new CarrinhoDAO();

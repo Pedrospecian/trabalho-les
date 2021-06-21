@@ -42,7 +42,6 @@ public class FachadaGrupoPrecificacao implements IFachada< GrupoPrecificacao, Ca
 		dao.selectSingle(id);
 		return dao.selectSingleVal;
 	}
-
 	
 	public String insert(GrupoPrecificacao grupoprecificacao, String usuarioResponsavel) {
 		try {

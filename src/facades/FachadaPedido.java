@@ -31,15 +31,14 @@ import strategies.VerificarCamposCpf;
 import strategies.CalculaValorFrete;
 import model.Pedido;
 
-public class FachadaPedido implements IFachada<Cliente, Campo[]> {
-
+public class FachadaPedido implements IFachada<Pedido, Campo[]> {
 	public boolean validarCampos(Campo[] campos) {
 		ValidarCampos validarCampos = new ValidarCampos();
 
 		boolean camposValidos = true;
 
 		for(int i = 0; i < campos.length; i++) {
-			if (validarCampos.processa(campos[i]) == false) {
+			if (campos[i].getObrigatorio() && validarCampos.processa(campos[i]) == false) {
 				System.out.println("ERRO");
 				System.out.println(campos[i].getNome());
 				System.out.println(campos[i].getValor());
@@ -66,42 +65,9 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 		return dao.selectSingleVal;
 	}
 
-	public boolean validarDocumentos(Documento[] documentos, boolean precisaValidarCpf) {
-		ValidacaoDocumentos val = new ValidacaoDocumentos();
-		ClienteDAO dao = new ClienteDAO();
-		VerificarCamposCpf ver = new VerificarCamposCpf();
-		boolean cpfValido = !precisaValidarCpf || ver.processa(documentos);
-
-		return val.processa(documentos) && !dao.documentosExistem(documentos) && cpfValido;
-	}
-
-	public boolean validarEnderecos(Endereco[] enderecos) {
-		ValidacaoEnderecos val = new ValidacaoEnderecos();
-
-		return val.processa(enderecos);
-	}
-
-	public String insert(Cliente cliente, String usuarioResponsavel) {
-		return "";
-	}
-
-	public String delete(Cliente cliente, String usuarioResponsavel) {
-		return "";
-	}
-
-	public String update(Cliente cliente, String usuarioResponsavel) {
-		return "";
-	}
-
-	/*public Carrinho selectCarrinho(long idCliente) {
-		PedidoDAO dao = new PedidoDAO();
-		dao.selectCarrinho(idCliente);
-		return dao.selectCarrinhoVal;
-	}*/
-
-	public boolean validarCompraCampos(Campo[] campos) {
+	/*public boolean validarCompraCampos(Campo[] campos) {
 		return true;
-	}
+	}*/
 
 	public boolean validarValorCompra(Pedido pedido) {
 		ValidarValorCompra val = new ValidarValorCompra();
@@ -118,44 +84,6 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 
 		return rb;
 	}
-
-	/*public CupomDesconto encontraCupomDesconto(String cupom) {
-		PedidoDAO dao = new PedidoDAO();
-
-		return dao.encontraCupomDesconto(cupom);
-	}
-
-	public CupomTroca encontraCupomTroca(String cupom, long idUsuario) {
-		PedidoDAO dao = new PedidoDAO();
-
-		return dao.encontraCupomTroca(cupom, idUsuario);
-	}
-
-	public ResultadosBusca selectSolicitacoesTroca() {
-		PedidoDAO dao = new PedidoDAO();
-
-		dao.selectSolicitacoesTroca();
-		ArrayList arrl = dao.selectVals;
-		ResultadosBusca rb = new ResultadosBusca(arrl);
-
-		return rb;
-	}
-
-
-	public CupomTroca[] encontraCuponsTroca(CupomTroca[] cuponsTroca) {
-		PedidoDAO dao = new PedidoDAO();
-		return dao.encontraCuponsTroca(cuponsTroca);
-	}
-
-	public ResultadosBusca listagemCuponsTroca(Campo[] campos) {
-		PedidoDAO dao = new PedidoDAO();
-
-		dao.listagemCuponsTroca(campos);
-		ArrayList arrl = dao.selectVals;
-		ResultadosBusca rb = new ResultadosBusca(arrl);
-		
-		return rb;
-	}*/
 
 	public DadosCalculoFrete getDadosCalculoFrete(long idCarrinho) {
 		PedidoDAO dao = new PedidoDAO();
@@ -176,37 +104,11 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 		PedidoDAO dao = new PedidoDAO();
 
 		dao.gerarGrafico(campos);
-		ArrayList<ItemGrafico> arr = dao.selectGerarGraficoVals;
+		ArrayList<ItemGrafico> arr = dao.selectVals;
 		
 		return arr;
 	}
-/*
-	public void removerItemCarrinho(long id, String usuarioResponsavel) {
-		PedidoDAO dao = new PedidoDAO();
 
-		dao.removerItemCarrinho(id);
-
-		Log log = new Log(usuarioResponsavel,
-							 "ItemCarrinho {id: " + id +
-							 "}",
-							 "Exclusão de item do carrinho");
-        log.registrar();
-	}
-
-	public void alteraQteItemCarrinho(long id, int quantidade, String usuarioResponsavel) {
-		PedidoDAO dao = new PedidoDAO();
-		LivroDAO livroDAO = new LivroDAO();
-
-		dao.alteraQteItemCarrinho(id, quantidade);
-
-		Log log = new Log(usuarioResponsavel,
-							 "ItemCarrinho {id: " + id +							 
-							 			  ", quantidade: " + quantidade + 
-							 "}",
-							 "Alteração de quantidade de item do carrinho");
-        log.registrar();
-	}	
-*/
 	public String updateStatus(Pedido pedido, String usuarioResponsavel) {
 		PedidoDAO dao = new PedidoDAO();
 		dao.updateStatus(pedido);
@@ -220,29 +122,6 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 
 		return "Status de pedido alterado com sucesso!";
 	}
-/*
-	public String adicionarCarrinho(ItemCarrinho itemCarrinho, long idCarrinho, String usuarioResponsavel) {
-		PedidoDAO dao = new PedidoDAO();
-		LivroDAO livroDAO = new LivroDAO();
-
-		int estoque = livroDAO.contaEstoque(new Livro(itemCarrinho.getLivro().getId(), new Date()), idCarrinho);
-
-		itemCarrinho.setQuantidade( Math.min(itemCarrinho.getQuantidade(), estoque) );
-
-		dao.adicionarCarrinho(itemCarrinho);
-
-		Log log = new Log(usuarioResponsavel,
-							 "ItemCarrinho {id: " + itemCarrinho.getId() +
-						   ", idCarrinho: " + idCarrinho + 
-						   ", idLivro: " + itemCarrinho.getLivro().getId() + 
-						   ", quantidade: " + itemCarrinho.getQuantidade() + 
-							 "}",
-							 "Produto adicionado ao carrinho");
-        log.registrar();
-
-		return "Produto adicionado ao carrinho com sucesso!";
-	}
-	*/
 
 	public boolean efetuaCompra(Pedido pedido, CartaoCredito[] cartoes, CupomTroca[] cuponsTroca, String usuarioResponsavel) {
 		PedidoDAO dao = new PedidoDAO();
@@ -296,67 +175,6 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 
 		return false;
 	}
-/*
-	public void solicitarTroca(ItemCarrinho itemCarrinho, String usuarioResponsavel) {
-		PedidoDAO dao = new PedidoDAO();
-		dao.solicitarTroca(itemCarrinho);
-
-		Log log = new Log(usuarioResponsavel,
-							 "SolicitacaoTroca {idItemCarrinho: " + itemCarrinho.getId() +
-						   ", quantidadeItensTrocados: " + itemCarrinho.getQuantidadeItensTrocados() + 
-							 "}",
-							 "Inserção de solicitação de troca");
-        log.registrar();
-	}
-
-	public void decidirPedidoTroca(long id, int aprovacao, String usuarioResponsavel) {
-		PedidoDAO dao = new PedidoDAO();
-		dao.decidirPedidoTroca(id, aprovacao);
-
-		Log log = new Log(usuarioResponsavel,
-							 "SolicitacaoTroca {id: " + id +
-						   ", aprovacao: " + aprovacao + 
-							 "}",
-							 "Decisão acerca de pedido de troca");
-        log.registrar();
-	}
-
-	public void confirmarRecebimentoTroca(long id, boolean retornarEstoque, String usuarioResponsavel) {
-		PedidoDAO dao = new PedidoDAO();
-		EntidadeDominio[] retornos = dao.confirmarRecebimentoTroca(id, retornarEstoque);
-
-		Log log = new Log(usuarioResponsavel,
-							 "SolicitacaoTroca {id: " + id +
-						   ", retornarEstoque: " + retornarEstoque + 
-							 "}",
-							 "Confirmação de recebimento de troca");
-        log.registrar();
-
-        CupomTroca ct = (CupomTroca) retornos[0];
-
-        //registra criacao de cupom de troca
-        Log log2 = new Log(usuarioResponsavel,
-							 "CupomTroca {id: " + ct.getId() +
-						   ", nome: " + ct.getNome() + 
-						   ", valor: " + ct.getValor() + 
-						   ", pedido: " + ct.getPedido().getId() + 
-							 "}",
-							 "Geração de cupom de troca");
-        log2.registrar();
-
-        //registra as entradas de estoque
-        if (retornos[1] != null) {
-        	LivroEstoque le = (LivroEstoque) retornos[1];
-        	Log log3 = new Log(usuarioResponsavel,
-							 "LivroEstoque {id: " + le.getId() +
-						   ", quantidade: " + le.getQuantidade() +
-						   ", dataEntrada: " + le.getDataEntrada() + 
-						   ", livro: " + le.getLivro().getId() + 
-							 "}",
-							 "Entrada no estoque via devolução");
-       		log3.registrar();
-       	}
-	}*/
 
 	public void reprovaPedido(Pedido pedido, String usuarioResponsavel) {
 		PedidoDAO dao = new PedidoDAO();
@@ -402,5 +220,17 @@ public class FachadaPedido implements IFachada<Cliente, Campo[]> {
 							 "Baixas de estoque via aceite de compra");
        		log3.registrar();
         }
-	}	
+	}
+
+	public String insert(Pedido pedido, String usuarioResponsavel) {
+		return "";
+	}
+
+	public String delete(Pedido pedido, String usuarioResponsavel) {
+		return "";
+	}
+
+	public String update(Pedido pedido, String usuarioResponsavel) {
+		return "";
+	}
 }

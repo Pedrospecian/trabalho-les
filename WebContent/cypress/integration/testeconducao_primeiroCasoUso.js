@@ -887,6 +887,10 @@ describe('Teste de troca', () => {
             cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemLivros')
             cy.wait(waitTime);
 
+            cy.get('[cypress-resultadosPorPagina]').clear().type('100')
+            cy.get('[cypress-submitFiltragem]').click()
+
+
             cy.get('tr[data-id="7"] td[data-estoque]').then($estoque => {
                 const estoqueAnterior = $estoque.text()        
 
@@ -927,6 +931,9 @@ describe('Teste de troca', () => {
                 cy.wait(waitTime);
                 cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemLivros')
                 cy.wait(waitTime);
+
+                cy.get('[cypress-resultadosPorPagina]').clear().type('100')
+                cy.get('[cypress-submitFiltragem]').click()
 
                 cy.get('tr[data-id="7"] td[data-estoque]').should(($list) => {
                     expect($list.eq(0)).to.contain(parseInt(estoqueAnterior) + 1)
@@ -1058,6 +1065,9 @@ describe('Teste de troca', () => {
         cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemLivros')
         cy.wait(waitTime);
 
+        cy.get('[cypress-resultadosPorPagina]').clear().type('100')
+        cy.get('[cypress-submitFiltragem]').click()
+
         cy.get('tr[data-id="7"] td[data-estoque]').then($estoque => {
             const estoqueAnterior = $estoque.text()        
 
@@ -1087,6 +1097,8 @@ describe('Teste de troca', () => {
             cy.url().should('include', 'http://localhost:' + port + '/trabalho-les/listagemLivros')
             cy.wait(waitTime);
 
+            cy.get('[cypress-resultadosPorPagina]').clear().type('100')
+            cy.get('[cypress-submitFiltragem]').click()
 
             cy.get('tr[data-id="7"] td[data-estoque]').should(($lis) => {
                 expect($lis.eq(0)).to.contain(estoqueAnterior)

@@ -52,7 +52,7 @@ public class FinalizarCompra extends HttpServlet {
 				PedidoViewHelper vh = new PedidoViewHelper();
 				Campo[] campos = vh.cadastroCampos(req);
 
-				if(fachada.validarCompraCampos(campos)) {
+				if(fachada.validarCampos(campos)) {
 					Carrinho carrinho = fachadaCarrinho.selectCarrinho(lvh.getUsuarioLogadoId(req, resp));
 					double valorTotal = PedidoViewHelper.calcularTotalCarrinho(carrinho);
 					Cliente cliente = fachadaCliente.selectSingle(lvh.getUsuarioLogadoId(req, resp), false);

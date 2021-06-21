@@ -35,9 +35,8 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 			StringBuilder sql = new StringBuilder();
 			sql.append("SELECT * from cupons_troca where idPedido is null and nome = ? and idUsuario = ?;");
 			
-			Connection con = Conexao.getConnectionMySQL();
-			con.setAutoCommit(false);
-			pst = con.prepareStatement(sql.toString(),
+			connection = Conexao.getConnectionMySQL();
+			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 
 			pst.setString(1, nomeCupomTroca);
@@ -53,7 +52,7 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getDouble("cupons_troca.valor"),
 					null
 				);
-				con.commit();
+				connection.close();
 				return cupomTroca;
 			} else {
 				return null;
@@ -61,6 +60,14 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}  catch (Exception e) {
 			System.out.println("Ocorreu um erro ao recuperar o cupom!");
 			e.printStackTrace();
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			
 			return null;
 		}
 	}
@@ -140,10 +147,15 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 				connection.commit();
 			}
+			pst.close();
+			connection.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			try {
-				if(connection != null) connection.rollback();
+				if(connection != null) {
+					connection.rollback();
+					connection.close();
+				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}			
@@ -295,10 +307,14 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 			}
 
 			connection.commit();
-						
+			pst.close();
+			connection.close();						
 		} catch (Exception e) {
 			try {
-				if(connection != null) connection.rollback();
+				if(connection != null) {
+					connection.rollback();
+					connection.close();
+				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -312,13 +328,13 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 		EntidadeDominio[] retorno = new EntidadeDominio[2];
 		
 		try {
-			connection = Conexao.getConnectionMySQL();
-			connection.setAutoCommit(false);
+			Connection con = Conexao.getConnectionMySQL();
+			con.setAutoCommit(false);
 
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE solicitacoes_troca SET status = ? WHERE id = ?;");
 			
-			pst = connection.prepareStatement(sql.toString(),
+			pst = con.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 			
 			if (retornarEstoque) {
@@ -342,7 +358,7 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 					   "INNER JOIN solicitacoes_troca on solicitacoes_troca.idItemCarrinho = carrinhos_produtos.idCarrinhoProduto " +
 			           "WHERE solicitacoes_troca.idItemCarrinho = ?;");
 		
-			pst = connection.prepareStatement(sql4.toString(),
+			pst = con.prepareStatement(sql4.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 
 			pst.setLong(1, id);
@@ -355,7 +371,7 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 				StringBuilder sql5 = new StringBuilder();
 				sql5.append("UPDATE pedidos SET status = 7 WHERE id = ?;");
 
-				pst = connection.prepareStatement(sql5.toString(),
+				pst = con.prepareStatement(sql5.toString(),
 						Statement.RETURN_GENERATED_KEYS);
 
 				pst.setLong(1, idPedido);
@@ -365,19 +381,15 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 
 			retorno[0] = geraCupomTroca(id);
 
-			connection.commit();
+			con.commit();
+			pst.close();
+			con.close();
 
 			return retorno;
 						
 		} catch (Exception e) {
 			e.printStackTrace();
-			try {
-				if(connection != null) connection.rollback();
-				return null;
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-				return null;
-			}
+			return null;
 		}		
 	}
 	
@@ -385,7 +397,9 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 		PreparedStatement pst = null;
 
 		try {
-			pst = connection.prepareStatement("select * from solicitacoes_troca "+
+			Connection con = Conexao.getConnectionMySQL();
+			con.setAutoCommit(false);
+			pst = con.prepareStatement("select * from solicitacoes_troca "+
 				"inner join carrinhos_produtos on carrinhos_produtos.idCarrinhoProduto = solicitacoes_troca.idItemCarrinho "+
 				"inner join livros on livros.id = carrinhos_produtos.idProduto "+
 				"inner join carrinhos on carrinhos.id = carrinhos_produtos.idCarrinho "+
@@ -400,7 +414,7 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 				StringBuilder sql = new StringBuilder();
 				sql.append("INSERT INTO cupons_troca (dataEntrada, idUsuario, nome, valor, status) VALUES (?, ?, ?, ?, 1);");
 
-				pst = connection.prepareStatement(sql.toString(),
+				pst = con.prepareStatement(sql.toString(),
 						Statement.RETURN_GENERATED_KEYS);
 				
 				DateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");  
@@ -427,14 +441,22 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 				StringBuilder sql2 = new StringBuilder();
 				sql2.append("UPDATE pedidos SET status = 7 WHERE id = ?;");
 
-				pst = connection.prepareStatement(sql2.toString(),
+				pst = con.prepareStatement(sql2.toString(),
 						Statement.RETURN_GENERATED_KEYS);				
 				pst.setLong(1, rs.getLong("pedidos.id"));
 
-				pst.executeUpdate();				
+				pst.executeUpdate();
+				
+				con.commit();
+
+				pst.close();
+				con.close();
 
 				return ct;
 			}
+
+			pst.close();
+			con.close();
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -445,11 +467,13 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 	public void geraCupomTrocaExcesso(long idCliente, double valor) {
 		PreparedStatement pst = null;
 
-		try {				
+		try {
+			Connection con = Conexao.getConnectionMySQL();
+			con.setAutoCommit(false);
 			StringBuilder sql = new StringBuilder();
 			sql.append("INSERT INTO cupons_troca (dataEntrada, idUsuario, nome, valor, status) VALUES (?, ?, ?, ?, ?);");
 
-			pst = connection.prepareStatement(sql.toString(),
+			pst = con.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 			
 			DateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");  
@@ -461,6 +485,9 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setInt(5, 1);
 
 			pst.executeUpdate();
+			con.commit();
+			pst.close();
+			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
@@ -470,7 +497,9 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 		PreparedStatement pst = null;
 
 		try {
-			pst = connection.prepareStatement("select * from solicitacoes_troca "+
+			Connection con = Conexao.getConnectionMySQL();
+			con.setAutoCommit(false);
+			pst = con.prepareStatement("select * from solicitacoes_troca "+
 				"inner join carrinhos_produtos on carrinhos_produtos.idCarrinhoProduto = solicitacoes_troca.idItemCarrinho "+
 				"inner join livros on livros.id = carrinhos_produtos.idProduto "+
 				"inner join carrinhos on carrinhos.id = carrinhos_produtos.idCarrinho "+
@@ -484,7 +513,7 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 				StringBuilder sql = new StringBuilder();
 				sql.append("INSERT INTO livros_estoque (dataCadastro, quantidade, custo, dataEntrada, fornecedorId, livroId, tipoMovimentacao, idCliente) VALUES (?, ?, 0, ?, 0, ?, 3, ?);");
 
-				pst = connection.prepareStatement(sql.toString(),
+				pst = con.prepareStatement(sql.toString(),
 						Statement.RETURN_GENERATED_KEYS);
 				
 				pst.setDate(1, new java.sql.Date(new Date().getTime()));
@@ -500,9 +529,17 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 				if (rs2.next()) {
 					LivroEstoque le = new LivroEstoque(rs2.getLong(1), new Date(), rs.getInt("solicitacoes_troca.quantidade"), 0, new Date(), null, new Livro(rs.getLong("livros.id"), null), 3);
 					le.setCliente(new Cliente(rs.getLong("clientes.id"), null, null));
+
+					con.commit();
+					pst.close();
+					con.close();
 					return le;
 				}
 			}
+
+			con.commit();
+			pst.close();
+			con.close();
 
 			return null;
 		} catch (Exception e) {
@@ -538,6 +575,9 @@ public class TrocaDAO implements IDAO<EntidadeDominio, Campo[]> {
 					ct[i].setId(rs.getLong("cupons_troca.id"));
 				}
 			}
+
+			pst.close();
+			con.close();
 
 			return ct;
 		} catch (Exception e) {

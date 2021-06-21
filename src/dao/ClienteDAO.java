@@ -40,7 +40,7 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 	public Documento[] selectDocumentosVal;
 	public Endereco[] selectEnderecosVal;
 	public CartaoCredito[] selectCartoesCreditoVal;
-	private Telefone[] selectTelefonesVal;
+	public Telefone[] selectTelefonesVal;
 
 	public ArrayList selectNotificacao(long idCliente){
 		PreparedStatement pst = null;
@@ -221,7 +221,6 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return null;
 		}
 	}
-
 	
 	public Cliente recuperaClienteLogin(String email, String senha) {
 		PreparedStatement pst = null;
@@ -592,7 +591,6 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			if (rsInsert.next()) documento.setId(rsInsert.getLong(1));
 		}
 	}
-
 
 	private void salvaCartoesCredito(Cliente cliente) throws SQLException, ClassNotFoundException {
 		PreparedStatement pst = null;

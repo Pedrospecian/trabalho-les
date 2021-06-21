@@ -59,7 +59,6 @@ public class CupomDescontoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			return null;
 		}
 	}
-
 			
 	public CupomDesconto selectSingle(long id) {
 		PreparedStatement pst = null;

@@ -12,7 +12,7 @@ import utils.Campo;
 import utils.ResultadosBusca;
 import utils.Log;
 
-public class FachadaTroca implements IFachada<Cliente, Campo[]> {
+public class FachadaTroca implements IFachada<EntidadeDominio, Campo[]> {
 	public ResultadosBusca select(Campo[] campos) {
 		TrocaDAO dao = new TrocaDAO();
 
@@ -23,15 +23,15 @@ public class FachadaTroca implements IFachada<Cliente, Campo[]> {
 		return rb;
 	}
 
-	public String insert(Cliente cliente, String usuarioResponsavel) {
+	public String insert(EntidadeDominio entidadeDominio, String usuarioResponsavel) {
 		return "";
 	}
 
-	public String delete(Cliente cliente, String usuarioResponsavel) {
+	public String delete(EntidadeDominio entidadeDominio, String usuarioResponsavel) {
 		return "";
 	}
 
-	public String update(Cliente cliente, String usuarioResponsavel) {
+	public String update(EntidadeDominio entidadeDominio, String usuarioResponsavel) {
 		return "";
 	}
 

@@ -12,7 +12,6 @@ import utils.Log;
 import utils.ResultadosBusca;
 
 public class FachadaUsuario implements IFachada<Usuario, Campo[]> {
-
 	public boolean validarCampos(Campo[] campos, boolean validarSenha) {
 		ValidarCampos validarCampos = new ValidarCampos();
 
@@ -148,5 +147,4 @@ public class FachadaUsuario implements IFachada<Usuario, Campo[]> {
 		dao.recuperaUsuarioLogin(email, cript.processa(senha));
 		return dao.selectSingleVal;
 	}
-
 }

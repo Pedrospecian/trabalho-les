@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import utils.Log;
 
 public class FachadaLivro implements IFachada< Livro, Campo[]> {
-
 	public boolean validarCampos(Campo[] campos) {
 		ValidarCampos validarCampos = new ValidarCampos();
 

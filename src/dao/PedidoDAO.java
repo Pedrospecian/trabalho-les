@@ -41,9 +41,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 	private Connection connection = null;
 	public ArrayList selectVals;
 	public Pedido selectSingleVal;
-	public Carrinho selectCarrinhoVal;
 	public DadosCalculoFrete selectDadosCalculoFreteSingle;
-	public ArrayList<ItemGrafico> selectGerarGraficoVals;
 
 	public ArrayList select(Campo[] campos) {
 		PreparedStatement pst = null;
@@ -269,92 +267,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 			}
 			
 			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public Carrinho getCarrinhoPorId(long id, boolean posCompra) {
-		PreparedStatement pst = null;
-		try {
-			connection = Conexao.getConnectionMySQL();
-			StringBuilder sql = new StringBuilder();
-			sql.append("select * from carrinhos where carrinhos.id = ?;");
-			
-			pst = connection.prepareStatement(sql.toString(),
-					Statement.RETURN_GENERATED_KEYS);
-			pst.setLong(1, id);
-
-			ResultSet rs = pst.executeQuery();
-
-			if (rs.next()) {
-
-				ArrayList<ItemCarrinho> itensCarrinho = new ArrayList();
-
-				StringBuilder sql2 = new StringBuilder();
-				sql2.append("select carrinhos_produtos.precoMomentoCompra, " +
-					"carrinhos_produtos.idCarrinhoProduto, carrinhos_produtos.quantidadeItensTrocados, "+
-					"carrinhos_produtos.quantidade, livros.id, livros.titulo, livros.preco, livros.capa "+
-					"from carrinhos_produtos inner join livros on carrinhos_produtos.idProduto = livros.id where carrinhos_produtos.idCarrinho = ?;");
-				
-				pst = connection.prepareStatement(sql2.toString(),
-						Statement.RETURN_GENERATED_KEYS);
-				pst.setLong(1, id);
-
-				ResultSet rs2 = pst.executeQuery();
-
-				LivroDAO livrodao = new LivroDAO();
-
-				while (rs2.next()) {
-					double precoLivro;
-
-					if (posCompra) {
-						precoLivro = rs2.getDouble("carrinhos_produtos.precoMomentoCompra");
-					} else {
-						precoLivro = rs2.getDouble("livros.preco");
-					}
-
-					Livro livro = new Livro(
-						rs2.getLong("livros.id"),
-						null,
-						rs2.getString("livros.titulo"),
-						null,
-						null,
-						null,
-						"",
-						"",
-						0,
-						"",
-						0,
-						0,
-						0,
-						precoLivro,
-						"",
-						1,
-						rs2.getString("livros.capa"),
-						null,
-						""
-					);
-
-					ItemCarrinho ic = new ItemCarrinho(
-						rs2.getLong("carrinhos_produtos.idCarrinhoProduto"),
-						null,
-						livro,
-						rs2.getInt("carrinhos_produtos.quantidade"),
-						null
-					);
-
-					ic.setQuantidadeItensTrocados(rs2.getInt("carrinhos_produtos.quantidadeItensTrocados"));
-
-					itensCarrinho.add(ic);
-				}
-
-				Carrinho carrinho = new Carrinho((long)id, rs.getDate(2), itensCarrinho, rs.getInt(4), null);
-				this.selectCarrinhoVal = carrinho;
-				return this.selectCarrinhoVal;
-			}
-			return null;			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -965,12 +877,12 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				list.add(ig);
 			}
 			
-			this.selectGerarGraficoVals = list;
+			this.selectVals = list;
 			
 			pst.close();
 			connection.close();
 			
-			return this.selectGerarGraficoVals;
+			return this.selectVals;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -1003,7 +915,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		}
 		
 	}
-
 
 	public void usaCuponsTroca(Pedido pedido) throws SQLException, ClassNotFoundException {
 		PreparedStatement pst = null;

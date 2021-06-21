@@ -22,7 +22,6 @@ import strategies.ValidacaoEnderecosCadastro;
 import utils.Log;
 
 public class FachadaCliente implements IFachada<Cliente, Campo[]> {
-
 	public boolean validarSenha(Campo[] campos) {
 		if(!campos[0].getValor().equals(campos[1].getValor())) {
 			System.out.println("Eh necessario digitar a nova senha duas vezes.");
