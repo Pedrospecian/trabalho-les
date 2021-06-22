@@ -11,7 +11,7 @@ public class ValidacaoCartoesCredito implements IStrategy<Boolean, CartaoCredito
             || obj[i].getDataExpiracao() == null
             || obj[i].getBandeira() == null
             || obj[i].getBandeira().getId() <= 0) {
-            System.out.println("deu ruim cartao!");
+            System.out.println("Erro ao validar cartao!");
             System.out.println(obj[i].getNumero());
             return false;
            }

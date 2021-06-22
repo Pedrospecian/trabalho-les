@@ -88,7 +88,7 @@
 										${registro.getEmail()}
 									</span>
 								</td>
-								<td>${1 == registro.getGenero() ? 'Masculino' : 'Feminino'}</td>
+								<td>${1 == registro.getGenero().getId() ? 'Masculino' : 'Feminino'}</td>
 								<td>
 									<span class="js-date-value">
 										${registro.getDataNascimento()}

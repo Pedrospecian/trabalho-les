@@ -3,7 +3,6 @@ package model;
 import java.util.Date;
 
 public class Catbase extends EntidadeDominio {
-
 	private String nome;
 	
 	public void setNome(String nome) {

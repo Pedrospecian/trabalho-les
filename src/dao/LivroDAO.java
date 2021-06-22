@@ -176,7 +176,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			ArrayList<Livro> list = new ArrayList();
 			
 			while (rs.next()) {
-				System.out.println(where);
 				Livro livro = new Livro(
 					rs.getLong("livros.id"), 
 					rs.getDate("livros.dataCadastro"), 
@@ -233,8 +232,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 				       "inner join usuarios on solicitacoes_ativacao_livro.idUsuario = usuarios.id " +
 				       where +
 				       " order by solicitacoes_ativacao_livro.id desc");
-
-			System.out.println( where);
 			
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
@@ -447,9 +444,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			if (rs.next()) {
 				this.getCategoriasDoLivro(rs.getLong("livros.id"));
 				Categoria[] categorias = this.selectCategoriasVal;
-
-				System.out.println("as categorias");
-				System.out.println(categorias.length);
 
 				Livro livro = new Livro(
 					rs.getLong("livros.id"),
@@ -790,9 +784,6 @@ public class LivroDAO implements IDAO<EntidadeDominio, Campo[]> {
 			pst.setDouble(10, livro.getAltura());
 			pst.setDouble(11, livro.getLargura());
 			pst.setDouble(12, livro.getPeso());
-
-			System.out.println("a largura 2  ====    ==========");
-			System.out.println(livro.getLargura());
 
 			pst.setDouble(13, livro.getProfundidade());
 			pst.setString(14, livro.getCodigoBarras());

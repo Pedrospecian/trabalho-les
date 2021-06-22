@@ -8,6 +8,7 @@ public class Carrinho extends EntidadeDominio {
 	private ArrayList<ItemCarrinho> itensCarrinho;
 	private int status;
 	private Cliente cliente;
+	private Date dataAlteracao;
 
 	public void setItensCarrinho(ArrayList<ItemCarrinho> itensCarrinho) {
 		this.itensCarrinho = itensCarrinho;
@@ -31,6 +32,14 @@ public class Carrinho extends EntidadeDominio {
 	
 	public Cliente getCliente() {
 		return this.cliente;
+	}
+
+	public void setDataAlteracao(Date dataAlteracao) {
+		this.dataAlteracao = dataAlteracao;
+	}
+	
+	public Date getDataAlteracao() {
+		return this.dataAlteracao;
 	}
 	
 	public Carrinho(long id, Date dataCadastro, ArrayList<ItemCarrinho> itensCarrinho, int status, Cliente cliente) {

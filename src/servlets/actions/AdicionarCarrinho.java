@@ -35,7 +35,7 @@ public class AdicionarCarrinho extends HttpServlet {
 				if(fachada.validarCampos(campos)) {
 			        Livro livro = new Livro(Long.parseLong(campos[0].getValor()), new Date(), "", null, null, null, "", "", 0, "", 0, 0, 0, 0, "", 0, "", null, "");
 					int quantidade = Integer.parseInt(campos[1].getValor());
-			        Cliente cliente = new Cliente(lvh.getUsuarioLogadoId(req, resp), new Date(), null, "", 0, null, null, null, 0, null, null, null, null);
+			        Cliente cliente = new Cliente(lvh.getUsuarioLogadoId(req, resp), new Date(), null, "", null, null, null, null, 0, null, null, null, null);
 
 			        ItemCarrinho itemCarrinho = new ItemCarrinho((long)1, new Date(), livro, quantidade, cliente);
 

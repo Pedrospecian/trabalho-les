@@ -334,8 +334,6 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				
 				pst.executeUpdate();
 
-				System.out.println("a");
-
 				//altera o bloqueio do carrinho
 				acao = 1;
 				idItemCarrinho = id;
@@ -354,8 +352,6 @@ public class CarrinhoDAO implements IDAO<EntidadeDominio, Campo[]> {
 				pst.setInt(3, itemCarrinho.getQuantidade());
 				
 				pst.executeUpdate();
-
-				System.out.println("b");
 
 				ResultSet rs2 =  pst.getGeneratedKeys();
 				if(rs2.next()) {

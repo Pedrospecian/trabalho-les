@@ -26,12 +26,10 @@
 					<select name="genero" required data-pristine-required-message="Este campo é obrigatório" cypress-genero>
 						<option value="">Gênero</option>
 						<c:forEach var="opt" items="${generos}">
-							<option value="${opt.getId()}" ${opt.getId() == cliente.getGenero() ? 'selected=\"selected\"' : ''}>
+							<option value="${opt.getId()}" ${opt.getId() == cliente.getGenero().getId() ? 'selected=\"selected\"' : ''}>
 								${opt.getNome()}
 							</option>
 						</c:forEach>
-						<!--<option value="1" ${1 == cliente.getGenero() ? 'selected=\"selected\"' : ''}>Masculino</option>
-						<option value="2" ${2 == cliente.getGenero() ? 'selected=\"selected\"' : ''}>Feminino</option>-->
 					</select>
 				</div>
 				<div class="form-group">

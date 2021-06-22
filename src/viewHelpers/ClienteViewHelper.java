@@ -24,6 +24,7 @@ import model.TipoResidencia;
 import model.Telefone;
 import model.TipoCliente;
 import model.FuncaoEndereco;
+import model.Genero;
 
 public class ClienteViewHelper implements IViewHelper<EntidadeDominio> {
 	public Campo[] listagemCampos(HttpServletRequest req) {
@@ -407,7 +408,7 @@ public class ClienteViewHelper implements IViewHelper<EntidadeDominio> {
     public Cliente instanciaCliente(Campo[] campos, Documento[] documentos, Endereco[] enderecos, CartaoCredito[] cartoesCredito, Telefone[] telefones) {
     	try {
     		String nome = campos[0].getValor();
-	        int genero = Integer.parseInt(campos[1].getValor());
+	        Genero genero = new Genero(Long.parseLong(campos[1].getValor()), null, null);
 	        Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(campos[2].getValor());
 	        long tipoCliente = Long.parseLong(campos[3].getValor());
 	        int status = Integer.parseInt(campos[4].getValor());

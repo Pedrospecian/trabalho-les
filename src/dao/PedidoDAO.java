@@ -23,6 +23,7 @@ import model.TipoResidencia;
 import model.EntidadeDominio;
 import model.Estado;
 import model.FuncaoEndereco;
+import model.Genero;
 import model.ItemCarrinho;
 import model.Bairro;
 import model.Carrinho;
@@ -65,7 +66,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 						rs.getDate("clientes.dataCadastro"),
 						null,
 						rs.getString("clientes.nome"),
-						rs.getInt("clientes.genero"),
+						new Genero(rs.getInt("clientes.genero"), null, null),
 						rs.getDate("clientes.dataNascimento"),
 						null,
 						null,
@@ -126,7 +127,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 						rs.getDate("clientes.dataCadastro"),
 						null,
 						rs.getString("clientes.nome"),
-						rs.getInt("clientes.genero"),
+						new Genero(rs.getInt("clientes.genero"), null, null),
 						rs.getDate("clientes.dataNascimento"),
 						null,
 						null,
@@ -698,8 +699,7 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		        connection.close();
 
 				double excesso = Math.floor((pedido.getValorTotal() + pedido.getValorFrete() - totalCartoes - totalCuponsTroca - totalCupomDesconto) * 100) / 100;
-				System.out.println("============== o excesso ==========");
-				System.out.println(excesso);
+
 				if (excesso < 0) {
 					TrocaDAO ctdao = new TrocaDAO();
 					ctdao.geraCupomTrocaExcesso(pedido.getCliente().getId(), excesso * (-1));
@@ -874,8 +874,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 					rs.getString(nomeTipo)
 				);
 
-				System.out.println("ITEMGRAFICO => " + rs.getInt("total") + "/" + rs.getDate("livros_estoque.dataCadastro") + "/" + rs.getString(nomeTipo));
-
 				list.add(ig);
 			}
 			
@@ -925,9 +923,6 @@ public class PedidoDAO implements IDAO<EntidadeDominio, Campo[]> {
 		sql.append("UPDATE cupons_troca SET idPedido = ?, status = 0 WHERE id = ?;");
 		
 		for (CupomTroca cupomTroca : pedido.getCuponsTroca()) {
-			System.out.println("estou usando o cupom de troca");
-			System.out.println(cupomTroca.getId());
-
 			pst = connection.prepareStatement(sql.toString(),
 					Statement.RETURN_GENERATED_KEYS);
 			pst.setLong(1, pedido.getId());

@@ -29,6 +29,7 @@ import model.EntidadeDominio;
 import model.TipoResidencia;
 import model.TipoLogradouro;
 import model.FuncaoEndereco;
+import model.Genero;
 import model.Notificacao;
 import utils.Campo;
 
@@ -103,7 +104,7 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 						rs.getDate("clientes.dataCadastro"),
 						documentos, 
 						rs.getString("clientes.nome"),
-						rs.getInt("clientes.genero"),
+						new Genero(rs.getInt("clientes.genero"), null, null),
 						rs.getDate("clientes.dataNascimento"),
 						new TipoCliente(rs.getLong("clientes.idTipoCliente"),
 								rs.getDate("tipos_clientes.dataCadastro"),
@@ -203,7 +204,7 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 						rs.getLong("clientes.id"),
 						rs.getDate("clientes.dataCadastro"),
 						documentos, rs.getString("clientes.nome"),
-						rs.getInt("clientes.genero"),
+						new Genero(rs.getInt("clientes.genero"), null, null),
 						rs.getDate("clientes.dataNascimento"),
 						new TipoCliente(rs.getLong("clientes.idTipoCliente"), new Date(), "", ""),
 						enderecos,
@@ -246,7 +247,7 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 						null,
 						documentos,
 						rs.getString("clientes.nome"),
-						0, 
+						null, 
 						null,
 						null,
 						enderecos,
@@ -455,7 +456,7 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 			Date agora = new Date(); 
 
 			pst.setString(1, cliente.getNome());
-			pst.setInt(2, cliente.getGenero());
+			pst.setLong(2, cliente.getGenero().getId());
 			pst.setDate(3, new java.sql.Date(cliente.getDataNascimento().getTime()));
 			pst.setLong(4, cliente.getTipoCliente().getId());
 			pst.setDate(5, new java.sql.Date(agora.getTime()));
@@ -657,7 +658,7 @@ public class ClienteDAO implements IDAO<EntidadeDominio, Campo[]> {
 					Statement.RETURN_GENERATED_KEYS);
 
 			pst.setString(1, cliente.getNome());
-			pst.setInt(2, cliente.getGenero());
+			pst.setLong(2, cliente.getGenero().getId());
 			pst.setDate(3, new java.sql.Date(cliente.getDataNascimento().getTime()));
 			pst.setLong(4, cliente.getTipoCliente().getId());
 			pst.setInt(5, cliente.getStatus());

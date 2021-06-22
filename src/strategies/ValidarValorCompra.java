@@ -53,19 +53,6 @@ public class ValidarValorCompra implements IStrategy<Boolean, Pedido> {
             }
         }
 
-        System.out.println("COM A FLOOOR =================================================================");
-        
-        System.out.println((Math.floor(totalCartoes * 100) / 100));
-        System.out.println((Math.floor(( pedido.getValorTotal() + pedido.getValorFrete()) * 100) / 100));
-        System.out.println((Math.floor((pedido.getValorTotal() + pedido.getValorFrete() - totalCuponsTroca - valorCupomDesconto) * 100) / 100));
-
-
-        System.out.println("SEM A FLOOOR =================================================================");
-
-        System.out.println(totalCartoes);
-        System.out.println(pedido.getValorTotal() + pedido.getValorFrete());
-        System.out.println(pedido.getValorTotal() + pedido.getValorFrete() - totalCuponsTroca - valorCupomDesconto);
-
         if (valorCupomDesconto > 0 && (totalCartoes - (Math.floor(( pedido.getValorTotal() + pedido.getValorFrete()) * 100) / 100)) == 0) {
             System.out.println("CUPOM DE DESCONTO DESNECESSARIO");
             return false;

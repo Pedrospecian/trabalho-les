@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 21-Jun-2021 às 18:26
+-- Tempo de geração: 22-Jun-2021 às 21:54
 -- Versão do servidor: 10.4.13-MariaDB
 -- versão do PHP: 7.4.8
 
@@ -293,7 +293,13 @@ INSERT INTO `bloqueios_produtos` (`id`, `dataEntrada`, `quantidade`, `idLivro`, 
 (615, '2021-06-21', 5, 7, 425),
 (616, '2021-06-21', 1, 9, 425),
 (619, '2021-06-21', 5, 7, 428),
-(620, '2021-06-21', 1, 9, 428);
+(620, '2021-06-21', 1, 9, 428),
+(624, '2021-06-22', 5, 7, 431),
+(625, '2021-06-22', 1, 9, 431),
+(628, '2021-06-22', 5, 7, 434),
+(629, '2021-06-22', 1, 9, 434),
+(632, '2021-06-22', 5, 7, 437),
+(633, '2021-06-22', 1, 9, 437);
 
 -- --------------------------------------------------------
 
@@ -691,7 +697,15 @@ INSERT INTO `carrinhos` (`id`, `dataCadastro`, `idUsuario`, `status`, `dataAlter
 (428, '2021-06-21', 91, 2, '2021-06-21'),
 (429, '2021-06-21', 91, 2, '2021-06-21'),
 (430, '2021-06-21', 91, 2, '2021-06-21'),
-(431, '2021-06-21', 91, 1, '2021-06-21');
+(431, '2021-06-21', 91, 2, '2021-06-22'),
+(432, '2021-06-22', 91, 2, '2021-06-22'),
+(433, '2021-06-22', 91, 2, '2021-06-22'),
+(434, '2021-06-22', 91, 2, '2021-06-22'),
+(435, '2021-06-22', 91, 2, '2021-06-22'),
+(436, '2021-06-22', 91, 2, '2021-06-22'),
+(437, '2021-06-22', 91, 2, '2021-06-22'),
+(438, '2021-06-22', 91, 2, '2021-06-22'),
+(439, '2021-06-22', 91, 2, '2021-06-22');
 
 -- --------------------------------------------------------
 
@@ -1192,7 +1206,19 @@ INSERT INTO `carrinhos_produtos` (`idCarrinhoProduto`, `idCarrinho`, `idProduto`
 (752, 428, 7, 5, 0, 300),
 (753, 428, 9, 1, 0, 12),
 (754, 429, 7, 5, 4, 300),
-(755, 430, 7, 2, 0, 300);
+(755, 430, 7, 2, 0, 300),
+(757, 431, 7, 5, 0, 300),
+(758, 431, 9, 1, 0, 12),
+(759, 432, 7, 5, 4, 300),
+(760, 433, 7, 2, 0, 300),
+(761, 434, 7, 5, 0, 300),
+(762, 434, 9, 1, 0, 12),
+(763, 435, 7, 5, 4, 300),
+(764, 436, 7, 2, 0, 300),
+(765, 437, 7, 5, 0, 300),
+(766, 437, 9, 1, 0, 12),
+(767, 438, 7, 5, 4, 300),
+(768, 439, 7, 2, 0, 300);
 
 -- --------------------------------------------------------
 
@@ -1215,8 +1241,8 @@ CREATE TABLE `cartoes_aprovados` (
 --
 
 INSERT INTO `cartoes_aprovados` (`id`, `nome`, `numero`, `dataExpiracao`, `cvv`, `idBandeira`, `limiteDisponivel`) VALUES
-(1, 'teste', '1111222233334444', '2022-11-11', '111', 2, 30697.32),
-(2, 'cartao novo teste', '5206984449283106', '2022-08-26', '536', 2, 6400);
+(1, 'teste', '1111222233334444', '2022-11-11', '111', 2, 96377.32),
+(2, 'cartao novo teste', '5206984449283106', '2022-08-26', '536', 2, 20340);
 
 -- --------------------------------------------------------
 
@@ -1370,7 +1396,11 @@ INSERT INTO `cartoes_credito` (`id`, `dataCadastro`, `nome`, `numero`, `dataExpi
 (133, '2021-06-21', 'cartao novo teste', '5206984449283106', '2022-08-26', '536', 2, NULL),
 (134, '2021-06-21', 'cartao novo teste', '5206984449283106', '2022-08-26', '536', 2, NULL),
 (135, '2021-06-21', 'cartao novo teste', '5206984449283106', '2022-08-26', '536', 2, NULL),
-(136, '2021-06-21', 'cartao novo teste', '5206984449283106', '2022-08-26', '536', 2, NULL);
+(136, '2021-06-21', 'cartao novo teste', '5206984449283106', '2022-08-26', '536', 2, NULL),
+(138, '2021-06-22', 'Teste', '1111222233334444', '2030-12-31', '123', 1, 124),
+(139, '2021-06-22', 'cartao novo teste', '5206984449283106', '2022-08-26', '536', 2, NULL),
+(140, '2021-06-22', 'cartao novo teste', '5206984449283106', '2022-08-26', '536', 2, NULL),
+(141, '2021-06-22', 'cartao novo teste', '5206984449283106', '2022-08-26', '536', 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -1532,7 +1562,8 @@ INSERT INTO `clientes` (`id`, `dataCadastro`, `nome`, `genero`, `dataNascimento`
 (120, '2021-06-15', 'teste', 1, '1988-03-12', 1, 1, 'a2xsaaa3bcaaa@teaste.com.br', '482bbb67b697aeda87f533c21953ef24', 117),
 (121, '2021-06-15', 'teste', 1, '1988-03-12', 1, 1, 'a2xsaaaw3bcaaa@teaste.com.br', '482bbb67b697aeda87f533c21953ef24', 118),
 (122, '2021-06-15', 'teste', 1, '1988-03-12', 1, 1, 'a2xasaaaw3bcaaa@teaste.com.br', '482bbb67b697aeda87f533c21953ef24', 119),
-(123, '2021-06-15', 'teste', 1, '1988-03-12', 1, 1, 'te_st_de1aw1q123@tep1ste.com.br', '4855ea8cc89222a94d593ccd806240c3', 121);
+(123, '2021-06-15', 'teste', 1, '1988-03-12', 1, 1, 'te_st_de1aw1q123@tep1ste.com.br', '4855ea8cc89222a94d593ccd806240c3', 121),
+(124, '2021-06-22', 'teste', 1, '1988-03-12', 1, 1, 'te_a123@testte.com.br', '4855ea8cc89222a94d593ccd806240c3', 138);
 
 -- --------------------------------------------------------
 
@@ -1677,9 +1708,9 @@ INSERT INTO `cupons_troca` (`id`, `dataEntrada`, `idUsuario`, `nome`, `valor`, `
 (101, '2021-06-04', 91, 'CUPOMTROCA9120214404104420', 27.8, 1, NULL),
 (102, '2021-06-04', 91, 'TESTECLIEANTE20214904104907', 600, 1, NULL),
 (103, '2021-06-04', 91, 'TESTECLIEANTE20215004105012', 600, 1, NULL),
-(104, '2021-06-01', 91, 'CUPOMTROCA9120214125074130', 50, 0, 423),
+(104, '2021-06-01', 91, 'CUPOMTROCA9120214125074130', 50, 0, NULL),
 (105, '2021-06-04', 91, 'CUPOMTROCA9120212504112527', 8.1, 1, NULL),
-(106, '2021-06-01', 91, 'TESTELOGINHO20213825053846', 17, 0, 423),
+(106, '2021-06-01', 91, 'TESTELOGINHO20213825053846', 17, 0, NULL),
 (107, '2021-06-04', 91, 'CUPOMTROCA9120213204113244', 15.1, 1, NULL),
 (108, '2021-06-04', 91, 'CUPOMTROCA9120214104114149', 15.1, 1, NULL),
 (109, '2021-06-04', 91, 'TESTECLIEANTE20214704114741', 600, 1, NULL),
@@ -1765,7 +1796,16 @@ INSERT INTO `cupons_troca` (`id`, `dataEntrada`, `idUsuario`, `nome`, `valor`, `
 (190, '2021-06-21', 91, 'TESTECLIEANTE20213321093322', 300, 1, NULL),
 (191, '2021-06-21', 91, 'CUPOMTROCA9120214521094522', 5.1, 1, NULL),
 (192, '2021-06-21', 91, 'TESTECLIEANTE20214621094626', 300, 1, NULL),
-(193, '2021-06-21', 91, 'TESTECLIEANTE20214621094646', 300, 1, NULL);
+(193, '2021-06-21', 91, 'TESTECLIEANTE20214621094646', 300, 1, NULL),
+(194, '2021-06-22', 91, 'CUPOMTROCA9120214322034311', 5.1, 1, NULL),
+(195, '2021-06-22', 91, 'TESTECLIEANTE20214422034449', 300, 1, NULL),
+(196, '2021-06-22', 91, 'TESTECLIEANTE20214522034511', 300, 1, NULL),
+(197, '2021-06-22', 91, 'CUPOMTROCA9120215022035029', 5.1, 1, NULL),
+(198, '2021-06-22', 91, 'TESTECLIEANTE20215122035152', 300, 1, NULL),
+(199, '2021-06-22', 91, 'TESTECLIEANTE20215222035212', 300, 1, NULL),
+(200, '2021-06-22', 91, 'CUPOMTROCA9120211422041449', 5.1, 1, NULL),
+(201, '2021-06-22', 91, 'TESTECLIEANTE20211822041859', 300, 1, NULL),
+(202, '2021-06-22', 91, 'TESTECLIEANTE20212022042008', 300, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -1855,7 +1895,9 @@ INSERT INTO `documentos` (`id`, `dataCadastro`, `codigo`, `validade`, `idTipoDoc
 (149, '2021-06-15', '15778585144', '2022-03-31', 1, 121),
 (150, '2021-06-15', '63128164436', '2022-03-31', 1, 122),
 (151, '2021-06-15', '38802748942', '2022-03-31', 1, 123),
-(152, '2021-06-15', '37796588000141', '2022-03-31', 2, 123);
+(152, '2021-06-15', '37796588000141', '2022-03-31', 2, 123),
+(153, '2021-06-22', '62780220104', '2022-03-31', 1, 124),
+(154, '2021-06-22', '21488880000167', '2022-03-31', 2, 124);
 
 -- --------------------------------------------------------
 
@@ -2054,7 +2096,12 @@ INSERT INTO `enderecos` (`id`, `dataCadastro`, `nome`, `logradouro`, `numero`, `
 (225, '2021-06-21', 'Casa da minha tia', 'Rua teste', '6012', '', '12345-678', 2, 1, 91, 1, 2, 1, ''),
 (226, '2021-06-21', 'Casa da minha tia', 'Rua teste', '6012', '', '12345-678', 2, 1, 91, 1, 2, 1, ''),
 (227, '2021-06-21', 'Casa da minha tia', 'Rua teste', '6012', '', '12345-678', 2, 1, 91, 1, 2, 1, ''),
-(228, '2021-06-21', 'Casa da minha tia', 'Rua teste', '6012', '', '12345-678', 2, 1, 91, 1, 2, 1, '');
+(228, '2021-06-21', 'Casa da minha tia', 'Rua teste', '6012', '', '12345-678', 2, 1, 91, 1, 2, 1, ''),
+(230, '2021-06-22', 'Endereço Teste', 'Rua teste', '12', '', '08780-228', 3, 1, 124, 1, 2, 1, ''),
+(231, '2021-06-22', 'Endereço Teste', 'Rua teste', '12', '', '12345-678', 3, 1, 124, 1, 1, 1, ''),
+(232, '2021-06-22', 'Casa da minha tia', 'Rua teste', '6012', '', '12345-678', 2, 1, 91, 1, 2, 1, ''),
+(233, '2021-06-22', 'Casa da minha tia', 'Rua teste', '6012', '', '12345-678', 2, 1, 91, 1, 2, 1, ''),
+(234, '2021-06-22', 'Casa da minha tia', 'Rua teste', '6012', '', '12345-678', 2, 1, 91, 1, 2, 1, '');
 
 -- --------------------------------------------------------
 
@@ -2650,18 +2697,13 @@ INSERT INTO `livros_estoque` (`id`, `dataCadastro`, `quantidade`, `custo`, `data
 (371, '2021-06-21', 1, 0, '2021-06-21', 0, 7, 3, 91, NULL),
 (372, '2021-06-21', 5, 0, '2021-06-21', 0, 7, 2, NULL, NULL),
 (373, '2021-06-21', 1, 0, '2021-06-21', 0, 7, 3, 91, NULL),
-(374, '2021-06-21', 1, 1, '1999-11-11', 4, 33, 1, NULL, 60);
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `logs`
---
-
-CREATE TABLE `logs` (
-  `id` bigint(20) NOT NULL,
-  `dataCadastro` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+(374, '2021-06-21', 1, 1, '1999-11-11', 4, 33, 1, NULL, 60),
+(375, '2021-06-22', 5, 0, '2021-06-22', 0, 7, 2, NULL, NULL),
+(376, '2021-06-22', 1, 0, '2021-06-22', 0, 7, 3, 91, NULL),
+(377, '2021-06-22', 5, 0, '2021-06-22', 0, 7, 2, NULL, NULL),
+(378, '2021-06-22', 1, 0, '2021-06-22', 0, 7, 3, 91, NULL),
+(379, '2021-06-22', 5, 0, '2021-06-22', 0, 7, 2, NULL, NULL),
+(380, '2021-06-22', 1, 0, '2021-06-22', 0, 7, 3, 91, NULL);
 
 -- --------------------------------------------------------
 
@@ -2676,6 +2718,13 @@ CREATE TABLE `notificacoes` (
   `descricao` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `cor` varchar(6) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Extraindo dados da tabela `notificacoes`
+--
+
+INSERT INTO `notificacoes` (`id`, `dataCadastro`, `idCliente`, `descricao`, `cor`) VALUES
+(184, '2021-06-22', 91, 'Aviso: um de seus pedidos de troca foi aceito. Confira seus pedidos!', '12a901');
 
 -- --------------------------------------------------------
 
@@ -2839,7 +2888,7 @@ INSERT INTO `pedidos` (`id`, `dataCadastro`, `idUsuario`, `status`, `idEndereco`
 (126, '2021-05-09', 91, 7, 102, 159.5, 1, 123, 260, 10, 2, '04014', NULL),
 (127, '2021-05-09', 91, 8, 102, 95.3, NULL, 124, 104, NULL, 2, '04014', NULL),
 (128, '2021-05-09', 91, 1, 102, 440.9, NULL, 125, 624, NULL, 2, '04014', NULL),
-(129, '2021-05-09', 91, 5, 102, 159.5, 1, 126, 260, 10, 2, '04014', NULL),
+(129, '2021-05-09', 91, 7, 102, 159.5, 1, 126, 260, 10, 2, '04014', NULL),
 (130, '2021-05-09', 91, 8, 102, 95.3, NULL, 127, 104, NULL, 2, '04014', NULL),
 (131, '2021-05-09', 91, 1, 102, 440.9, NULL, 128, 624, NULL, 2, '04014', NULL),
 (132, '2021-05-09', 91, 5, 102, 159.5, 1, 129, 260, 10, 2, '04014', NULL),
@@ -3093,7 +3142,16 @@ INSERT INTO `pedidos` (`id`, `dataCadastro`, `idUsuario`, `status`, `idEndereco`
 (421, '2021-06-21', 91, 8, 102, 73, NULL, 427, 600, NULL, 2, '04014', NULL),
 (422, '2021-06-21', 91, 1, 102, 300.2, NULL, 428, 1512, NULL, 2, '04014', NULL),
 (423, '2021-06-21', 91, 7, 228, 31.9, 1, 429, 1500, 10, 1, '04014', '2021-06-21'),
-(424, '2021-06-21', 91, 8, 102, 73, NULL, 430, 600, NULL, 2, '04014', NULL);
+(424, '2021-06-21', 91, 8, 102, 73, NULL, 430, 600, NULL, 2, '04014', NULL),
+(425, '2021-06-22', 91, 1, 102, 300.2, NULL, 431, 1512, NULL, 2, '04014', NULL),
+(426, '2021-06-22', 91, 7, 232, 31.9, 1, 432, 1500, 10, 1, '04014', '2021-06-22'),
+(427, '2021-06-22', 91, 8, 102, 73, NULL, 433, 600, NULL, 2, '04014', NULL),
+(428, '2021-06-22', 91, 1, 102, 300.2, NULL, 434, 1512, NULL, 2, '04014', NULL),
+(429, '2021-06-22', 91, 7, 233, 31.9, 1, 435, 1500, 10, 1, '04014', '2021-06-22'),
+(430, '2021-06-22', 91, 8, 102, 73, NULL, 436, 600, NULL, 2, '04014', NULL),
+(431, '2021-06-22', 91, 1, 102, 300.2, NULL, 437, 1512, NULL, 2, '04014', NULL),
+(432, '2021-06-22', 91, 7, 234, 31.9, 1, 438, 1500, 10, 1, '04014', '2021-06-22'),
+(433, '2021-06-22', 91, 8, 102, 73, NULL, 439, 600, NULL, 2, '04014', NULL);
 
 -- --------------------------------------------------------
 
@@ -3598,7 +3656,19 @@ INSERT INTO `pedidos_cartoes` (`idPedidoProduto`, `idPedido`, `idCartao`, `valor
 (484, 422, 14, 1812.2),
 (485, 423, 14, 1440),
 (486, 423, 136, 20),
-(487, 424, 15, 673);
+(487, 424, 15, 673),
+(488, 425, 14, 1812.2),
+(489, 426, 14, 1440),
+(490, 426, 139, 20),
+(491, 427, 15, 673),
+(492, 428, 14, 1812.2),
+(493, 429, 14, 1440),
+(494, 429, 140, 20),
+(495, 430, 15, 673),
+(496, 431, 14, 1812.2),
+(497, 432, 14, 1440),
+(498, 432, 141, 20),
+(499, 433, 15, 673);
 
 -- --------------------------------------------------------
 
@@ -3853,7 +3923,16 @@ INSERT INTO `solicitacoes_troca` (`id`, `dataCadastro`, `idItemCarrinho`, `quant
 (208, '2021-06-21', 750, 1, 3),
 (209, '2021-06-21', 754, 2, 4),
 (210, '2021-06-21', 754, 1, 3),
-(211, '2021-06-21', 754, 1, 2);
+(211, '2021-06-21', 754, 1, 2),
+(212, '2021-06-22', 759, 2, 4),
+(213, '2021-06-22', 759, 1, 3),
+(214, '2021-06-22', 759, 1, 2),
+(215, '2021-06-22', 763, 2, 4),
+(216, '2021-06-22', 763, 1, 3),
+(217, '2021-06-22', 763, 1, 2),
+(218, '2021-06-22', 767, 2, 4),
+(219, '2021-06-22', 767, 1, 3),
+(220, '2021-06-22', 767, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -3914,7 +3993,8 @@ INSERT INTO `telefones` (`id`, `dataCadastro`, `idTipoTelefone`, `idUsuario`, `d
 (42, '2021-06-15', 1, 120, '11', '56125678'),
 (43, '2021-06-15', 1, 121, '11', '56125678'),
 (44, '2021-06-15', 1, 122, '11', '56125678'),
-(46, '2021-06-15', 2, 123, '11', '912345678');
+(46, '2021-06-15', 2, 123, '11', '912345678'),
+(48, '2021-06-22', 2, 124, '11', '912345678');
 
 -- --------------------------------------------------------
 
@@ -4277,12 +4357,6 @@ ALTER TABLE `livros_estoque`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `logs`
---
-ALTER TABLE `logs`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Índices para tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
@@ -4404,19 +4478,19 @@ ALTER TABLE `bandeiras`
 -- AUTO_INCREMENT de tabela `bloqueios_produtos`
 --
 ALTER TABLE `bloqueios_produtos`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=624;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=636;
 
 --
 -- AUTO_INCREMENT de tabela `carrinhos`
 --
 ALTER TABLE `carrinhos`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=432;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=440;
 
 --
 -- AUTO_INCREMENT de tabela `carrinhos_produtos`
 --
 ALTER TABLE `carrinhos_produtos`
-  MODIFY `idCarrinhoProduto` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=757;
+  MODIFY `idCarrinhoProduto` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=769;
 
 --
 -- AUTO_INCREMENT de tabela `cartoes_aprovados`
@@ -4428,7 +4502,7 @@ ALTER TABLE `cartoes_aprovados`
 -- AUTO_INCREMENT de tabela `cartoes_credito`
 --
 ALTER TABLE `cartoes_credito`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- AUTO_INCREMENT de tabela `categorias`
@@ -4458,7 +4532,7 @@ ALTER TABLE `cidades`
 -- AUTO_INCREMENT de tabela `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT de tabela `configuracoes`
@@ -4476,13 +4550,13 @@ ALTER TABLE `cupons_desconto`
 -- AUTO_INCREMENT de tabela `cupons_troca`
 --
 ALTER TABLE `cupons_troca`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=194;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=203;
 
 --
 -- AUTO_INCREMENT de tabela `documentos`
 --
 ALTER TABLE `documentos`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 
 --
 -- AUTO_INCREMENT de tabela `editoras`
@@ -4494,7 +4568,7 @@ ALTER TABLE `editoras`
 -- AUTO_INCREMENT de tabela `enderecos`
 --
 ALTER TABLE `enderecos`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=229;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=235;
 
 --
 -- AUTO_INCREMENT de tabela `estados`
@@ -4542,19 +4616,13 @@ ALTER TABLE `livros_categorias`
 -- AUTO_INCREMENT de tabela `livros_estoque`
 --
 ALTER TABLE `livros_estoque`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=375;
-
---
--- AUTO_INCREMENT de tabela `logs`
---
-ALTER TABLE `logs`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=381;
 
 --
 -- AUTO_INCREMENT de tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=185;
 
 --
 -- AUTO_INCREMENT de tabela `paises`
@@ -4566,13 +4634,13 @@ ALTER TABLE `paises`
 -- AUTO_INCREMENT de tabela `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=425;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=434;
 
 --
 -- AUTO_INCREMENT de tabela `pedidos_cartoes`
 --
 ALTER TABLE `pedidos_cartoes`
-  MODIFY `idPedidoProduto` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=488;
+  MODIFY `idPedidoProduto` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=500;
 
 --
 -- AUTO_INCREMENT de tabela `solicitacoes_ativacao_livro`
@@ -4590,13 +4658,13 @@ ALTER TABLE `solicitacoes_inativacao_livro`
 -- AUTO_INCREMENT de tabela `solicitacoes_troca`
 --
 ALTER TABLE `solicitacoes_troca`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=212;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
 
 --
 -- AUTO_INCREMENT de tabela `telefones`
 --
 ALTER TABLE `telefones`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT de tabela `tipos_clientes`

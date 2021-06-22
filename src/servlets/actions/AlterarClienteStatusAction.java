@@ -33,7 +33,7 @@ public class AlterarClienteStatusAction extends HttpServlet {
 			        long id = Long.parseLong(campos[0].getValor());
 					int status = Integer.parseInt(campos[1].getValor());
 		        
-		        	Cliente cliente = new Cliente(id, new Date(), null, "", 1, new Date(), null, null, status, null, null, null, null);
+		        	Cliente cliente = new Cliente(id, new Date(), null, "", null, new Date(), null, null, status, null, null, null, null);
 		        	fachada.updateStatus(cliente, LoginViewHelper.getLogInfo(req, resp));
 		        	resp.sendRedirect("/trabalho-les/listagemClientes");
 		        } else {

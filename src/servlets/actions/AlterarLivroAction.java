@@ -26,7 +26,6 @@ public class AlterarLivroAction extends HttpServlet {
 		LoginViewHelper lvh = new LoginViewHelper();
 		if(!lvh.isAuthorized(req, resp, 5)){
 			resp.sendRedirect("/trabalho-les/home");
-			System.out.println("nao foi. ... . .. .");
 		}else{
 			req.setCharacterEncoding("UTF-8");
 			resp.setCharacterEncoding("UTF-8");
@@ -64,9 +63,6 @@ public class AlterarLivroAction extends HttpServlet {
 		        	Livro livro = new Livro(id, new Date(), titulo, autor, editora, categorias, ano, isbn, numeroPaginas, sinopse, altura, peso, profundidade, preco, codigoBarras, status, capa, grupoPrecificacao, edicao);
 
 		        	livro.setLargura(largura);
-
-		        	/*System.out.println("a largura =============== ==============");
-		        	System.out.println(livro.getLargura());*/
 
 			        fachada.update(livro, LoginViewHelper.getLogInfo(req, resp));
 

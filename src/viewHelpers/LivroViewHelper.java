@@ -113,9 +113,6 @@ public class LivroViewHelper implements IViewHelper<Livro> {
 		campos[16] = new Campo(6, req.getParameter("arrIdCategoria"), true, "", false, "arrIdCategoria");
 		campos[17] = new Campo(555, req.getParameter("largura"), true, "", true, "largura");
 		
-		System.out.println("a capa VVV");
-		System.out.println(campos[3].getValor());
-
 		return campos;
 	}
 

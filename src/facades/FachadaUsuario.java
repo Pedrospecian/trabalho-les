@@ -27,7 +27,7 @@ public class FachadaUsuario implements IFachada<Usuario, Campo[]> {
 		}
 
 		if (validarSenha && !campos[0].getValor().equals(campos[1].getValor())) {
-			System.out.println("Eh necessario digitar a nova senha duas vezes.");
+			System.out.println("É necessario digitar a nova senha duas vezes.");
 			camposValidos = false;
 		}
 		

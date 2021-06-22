@@ -38,11 +38,6 @@ public class PedidoViewHelper implements IViewHelper<EntidadeDominio> {
 			enderecoObrigatorio = true;
 		}
 
-		System.out.println("ENDERECO OBRIGATORIO =================== ============ ");
-		System.out.println(req.getParameter("enderecoEntrega"));
-		System.out.println(enderecoObrigatorio);
-		System.out.println("ENDERECO OBRIGATORIO =================== ============ ");
-
 		campos[2] = new Campo(0, req.getParameter("nomeEndereco"), true, "", enderecoObrigatorio, "nomeEndereco");
 		campos[3] = new Campo(1, req.getParameter("tipoEndereco"), true, "", enderecoObrigatorio, "tipoEndereco");
 		campos[4] = new Campo(1, req.getParameter("tipoResidencia"), true, "", enderecoObrigatorio, "tipoResidencia");

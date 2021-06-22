@@ -1,5 +1,5 @@
 let port = "8080";
-let waitTime = 1;
+let waitTime = 600;
 
 describe('Teste de condução de processo de compra', () => {
   it('Acessa um livro', () => {

@@ -5,7 +5,7 @@ import java.util.Date;
 public class Cliente extends Pessoa {
 
 	private String nome;
-	private int genero;
+	private Genero genero;
 	private Date dataNascimento;
 	private int status;
 	private TipoCliente tipoCliente;
@@ -24,11 +24,11 @@ public class Cliente extends Pessoa {
 		return this.nome;
 	}
 	
-	public void setGenero(int genero) {
+	public void setGenero(Genero genero) {
 		this.genero = genero;
 	}
 	
-	public int getGenero() {
+	public Genero getGenero() {
 		return this.genero;
 	}
 	
@@ -119,7 +119,7 @@ public class Cliente extends Pessoa {
 		this.senha = senha;
 	}
 	
-	public Cliente(long id, Date dataCadastro, Documento[] documentos, String nome, int genero, Date dataNascimento, TipoCliente tipoCliente, Endereco[] enderecos, int status, CartaoCredito[] cartoesCredito, String email, String senha, Telefone[] telefones) {
+	public Cliente(long id, Date dataCadastro, Documento[] documentos, String nome, Genero genero, Date dataNascimento, TipoCliente tipoCliente, Endereco[] enderecos, int status, CartaoCredito[] cartoesCredito, String email, String senha, Telefone[] telefones) {
 		super(id, dataCadastro, documentos);
 		this.nome = nome;
 		this.genero = genero;

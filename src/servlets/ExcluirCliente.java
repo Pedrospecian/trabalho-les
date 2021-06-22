@@ -26,7 +26,7 @@ public class ExcluirCliente extends HttpServlet {
 			campos[0] = new Campo(1, req.getParameter("id"), true, "", true, "id");
 
 			if(fachada.validarCampos(campos)) {            
-	        	Cliente cliente = new Cliente(Long.parseLong(campos[0].getValor()), new Date(), null, "", 0, new Date(), null, null, 0, null, null, null, null);
+	        	Cliente cliente = new Cliente(Long.parseLong(campos[0].getValor()), new Date(), null, "", null, new Date(), null, null, 0, null, null, null, null);
 	        	fachada.delete(cliente, LoginViewHelper.getLogInfo(req, resp));
 	        	req.setAttribute("headerHTML", lvh.getHeader(req, resp, 1));
 	        	resp.sendRedirect("/trabalho-les/listagemClientes");

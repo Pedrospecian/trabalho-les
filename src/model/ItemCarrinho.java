@@ -29,17 +29,17 @@ public class ItemCarrinho extends EntidadeDominio {
 		this.cliente = cliente;
 	}
 
+	public Cliente getCliente() {
+		return this.cliente;
+	}
+
 	public int getQuantidadeItensTrocados() {
 		return this.quantidadeItensTrocados;
 	}
 
 	public void setQuantidadeItensTrocados(int quantidadeItensTrocados) {
 		this.quantidadeItensTrocados = quantidadeItensTrocados;
-	}
-	
-	public Cliente getCliente() {
-		return this.cliente;
-	}
+	}	
 	
 	public ItemCarrinho(long id, Date dataCadastro, Livro livro, int quantidade, Cliente cliente) {
 		super(id, dataCadastro);

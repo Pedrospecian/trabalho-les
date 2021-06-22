@@ -24,7 +24,7 @@ import utils.Log;
 public class FachadaCliente implements IFachada<Cliente, Campo[]> {
 	public boolean validarSenha(Campo[] campos) {
 		if(!campos[0].getValor().equals(campos[1].getValor())) {
-			System.out.println("Eh necessario digitar a nova senha duas vezes.");
+			System.out.println("É necessario digitar a nova senha duas vezes.");
 			return false;
 		}
 
@@ -83,8 +83,6 @@ public class FachadaCliente implements IFachada<Cliente, Campo[]> {
 
 		boolean retorno = val.processa(documentos) && !dao.documentosExistem(documentos) && cpfValido;
 
-		System.out.println("sera que deu certo os documento?");
-		System.out.println(retorno);
 		return retorno;
 	}
 
@@ -190,7 +188,7 @@ public class FachadaCliente implements IFachada<Cliente, Campo[]> {
 							 ", nome: " + cliente.getNome() + 
 							 ", email: " + cliente.getEmail() + 
 							 ", senha: " + cliente.getSenha() + 
-							 ", genero: " + cliente.getGenero() + 
+							 ", genero: " + cliente.getGenero().getId() + 
 							 ", dataNascimento: " + cliente.getDataNascimento() + 
 							 ", status: " + cliente.getStatus() + 
 							 ", tipoCliente: " + cliente.getTipoCliente().getId() + 
@@ -295,7 +293,7 @@ public class FachadaCliente implements IFachada<Cliente, Campo[]> {
 							 "Cliente {id: " + cliente.getId() +
 							 ", nome: " + cliente.getNome() + 
 							 ", email: " + cliente.getEmail() + 
-							 ", genero: " + cliente.getGenero() + 
+							 ", genero: " + cliente.getGenero().getId() + 
 							 ", dataNascimento: " + cliente.getDataNascimento() + 
 							 ", status: " + cliente.getStatus() + 
 							 ", tipoCliente: " + cliente.getTipoCliente().getId() + 

@@ -14,6 +14,7 @@ import facades.FachadaCliente;
 import model.CartaoCredito;
 import model.Cliente;
 import model.Endereco;
+import model.Genero;
 import model.Documento;
 import model.TipoCliente;
 import model.Telefone;
@@ -40,7 +41,7 @@ public class AlterarClienteAction extends HttpServlet {
 				if(fachada.validarCampos(campos)) {
 			        long id = Long.parseLong(campos[0].getValor());
 					String nome = campos[1].getValor();
-			        int genero = Integer.parseInt(campos[2].getValor());
+			        Genero genero = new Genero(Long.parseLong(campos[2].getValor()), null, null);
 			        Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(campos[3].getValor());
 			        long tipoCliente = Long.parseLong(campos[4].getValor());
 			        int status = Integer.parseInt(campos[5].getValor());

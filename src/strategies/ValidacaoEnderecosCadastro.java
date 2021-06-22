@@ -16,7 +16,7 @@ public class ValidacaoEnderecosCadastro implements IStrategy<Boolean, Endereco[]
             || obj[i].getBairro().getCidade().getDescricao().trim().equals("")
             || obj[i].getBairro().getCidade().getEstado().getDescricao().trim().equals("")
             || obj[i].getBairro().getCidade().getEstado().getPais().getId() <= 0) {
-            System.out.println("deu ruim endereco!");
+            System.out.println("Erro ao validar endereco!");
             System.out.println(obj[i].getLogradouro());
             return false;
            }

@@ -113,7 +113,6 @@ public class Pedido extends EntidadeDominio {
 		return this.tipoServico;
 	}
 
-
 	public Pedido(long id, Date dataCadastro) {
 		super(id, dataCadastro);
 	}

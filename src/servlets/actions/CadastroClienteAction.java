@@ -34,10 +34,6 @@ public class CadastroClienteAction extends HttpServlet {
 				ClienteViewHelper vh = new ClienteViewHelper();
 				Campo[] campos = vh.cadastroCampos(req);
 
-				/*for (int i = 0; i < campos.length; i++) {
-					System.out.println(campos[i].getNome() + " => " + campos[i].getValor());
-				}*/
-
 				FachadaCliente fachada = new FachadaCliente();			
 
 				if(fachada.validarCampos(campos) && fachada.validaEmailExistente(campos[30].getValor())) {
@@ -90,10 +86,6 @@ public class CadastroClienteAction extends HttpServlet {
 			        	resp.sendRedirect("/trabalho-les/listagemClientes");
 			        } else {
 			        	System.out.println("Ocorreu um erro ao inserir o cliente!");
-			        	/*System.out.println(documentos == null);
-			        	System.out.println(enderecos == null);
-			        	System.out.println(cartoesCredito == null);
-			        	System.out.println(telefones == null);*/
 			        }
 		        } else {
 
