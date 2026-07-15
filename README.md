@@ -52,6 +52,21 @@ WebContent/
 
 **Fluxo típico de requisição:** `Servlet` → `Facade` → `DAO` (+ `Strategy` para validações) → banco de dados; o retorno passa por um `ViewHelper` antes de ser exibido na `JSP`.
 
+### Diagrama de arquitetura
+
+```mermaid
+flowchart LR
+    Browser["Navegador (JSP / assets)"] -->|HTTP request| Servlet["Servlets<br/>(controllers / actions / api)"]
+    Servlet --> Strategy["Strategies<br/>(validações e regras isoladas)"]
+    Servlet --> Facade["Facades<br/>(orquestração de regras de negócio)"]
+    Facade --> DAO["DAOs<br/>(acesso a dados via JDBC)"]
+    DAO --> DB[("MySQL / MariaDB<br/>les_db")]
+    Facade --> ViewHelper["ViewHelpers<br/>(preparação de dados p/ exibição)"]
+    ViewHelper --> Servlet
+    Servlet -->|forward| JSP["Views JSP"]
+    JSP --> Browser
+```
+
 ## Tecnologias
 
 - **Java 8** (JDK 1.8)
@@ -87,6 +102,40 @@ O schema completo (tabelas, procedures e dados iniciais) está no arquivo `les_d
 ### Testes end-to-end
 
 Os testes Cypress estão em `WebContent/cypress`. Para executá-los, é necessário ter Node.js instalado e o Cypress configurado no projeto (arquivo `cypress.json` já presente), apontando para a aplicação em execução.
+
+## Deploy em produção
+
+O projeto gera um artefato `.war` padrão de aplicação Java EE, podendo ser publicado em qualquer servidor compatível com Servlet 3.0 (Tomcat 7+, Jetty, etc.). Passos gerais:
+
+1. **Gerar o WAR**
+   - Pelo Eclipse: clique com o botão direito no projeto → `Export` → `WAR File`, selecione o destino e gere o arquivo (ex.: `trabalho-les.war`).
+   - Via linha de comando, empacotando manualmente o conteúdo de `WebContent` (incluindo `WEB-INF/classes` com as classes compiladas) em um `.war`.
+
+2. **Provisionar o banco de dados**
+   - Suba uma instância MySQL/MariaDB no ambiente de produção.
+   - Importe o schema com `mysql -u <usuario> -p les_db < les_db.sql` (ou equivalente no MariaDB).
+   - Crie um usuário de banco dedicado (evite usar `root`) e restrinja privilégios ao necessário.
+
+3. **Ajustar a conexão com o banco**
+   - Atualize `src/utils/Conexao.java` (ou externalize as credenciais, se for evoluir o projeto) para apontar para o host, usuário e senha do banco de produção, em vez dos valores padrão de desenvolvimento (`localhost`, `root`, senha em branco).
+   - Recompile o projeto após a alteração.
+
+4. **Configurar o servidor de aplicação**
+   - Instale o Tomcat 7+ (ou versão compatível) no servidor de produção.
+   - Copie o driver JDBC (`mysql-connector-java-*.jar`, já presente em `WEB-INF/lib`). Além disso, verifique se a versão é compatível com a versão do banco em produção.
+   - Ajuste memória/heap da JVM conforme a carga esperada (`-Xms` / `-Xmx`).
+
+5. **Publicar a aplicação**
+   - Copie o `.war` gerado para a pasta `webapps/` do Tomcat (deploy automático) ou publique via o *Tomcat Manager*.
+   - Verifique os logs do Tomcat (`logs/catalina.out`) e o log de atividades da aplicação (`logs/logAtividades.txt`) para confirmar que a inicialização ocorreu sem erros.
+
+6. **Itens recomendados antes de ir para produção**
+   - Trocar credenciais padrão (usuário `root` sem senha) por credenciais fortes e específicas do ambiente.
+   - Configurar HTTPS (via proxy reverso como Nginx/Apache ou diretamente no conector do Tomcat).
+   - Revisar o agendamento das *stored procedures* (`inativarCarrinhos`, `inativarLivros`). Em produção, elas normalmente devem ser executadas por um job/scheduler do próprio banco (event scheduler do MySQL/MariaDB) ou por uma tarefa externa (cron).
+   - Definir rotação/monitoramento do arquivo `logs/logAtividades.txt`, que cresce indefinidamente.
+
+> **Observação:** por se tratar de um projeto acadêmico, não há um pipeline de CI/CD nem arquivos de configuração de ambiente (`.env`, profiles de produção) prontos. Os passos acima descrevem o caminho manual equivalente ao que a estrutura atual do projeto permite.
 
 ## Estrutura de logs
 
